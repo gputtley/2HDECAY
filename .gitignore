@@ -1,0 +1,7 @@
+__pycache__/
+*.stackdump
+*.gch
+*.o
+*.mod
+*.exe
+*.a
