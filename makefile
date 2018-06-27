@@ -485,3 +485,4 @@ electroweakCorrections: constants.o $(SELFENERGIESUSU)/SelfAA.o $(SELFENERGIESUS
 
 clean:
 	rm -f *.o
+	rm -rf ./*.o
