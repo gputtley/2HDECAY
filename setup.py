@@ -230,7 +230,14 @@ def createMakefile(pathToMakefile, relativePathToLoopTools, relativePathToLoopTo
 	makefile.write("\tcounterterms.o $(PARAMETERS)/getParameters.o electroweakCorrections.o $(LFlags) -o electroweakCorrections" + applicationEnding + "\n\n")
 	makefile.write("clean:\n")
 	makefile.write("\trm -f *.o\n")
-	makefile.write("\trm -rf ./*.o\n")
+	makefile.write("\trm -f $(SELFENERGIESALT)/*.o\n")
+	makefile.write("\trm -f $(SELFENERGIESUSU)/*.o\n")
+	makefile.write("\trm -f $(SELFENERGIESDERIV)/*.o\n")
+	makefile.write("\trm -f $(PROCESSDEPENDENTSCHEME)/*.o\n")
+	makefile.write("\trm -f $(TADPOLES)/*.o\n")
+	for singleProcess in processDirList:
+		makefile.write("\trm -f $(PROCESS" + singleProcess.upper() + ")/*.o\n")
+
 	makefile.close()
 
 def createElectroweakCorrections():
@@ -711,7 +718,6 @@ if missingFiles:
 makeWanted = CommonFunctions.queryBoolean("Do you want to make the program now (the make process may take a few minutes)?")
 if makeWanted:
 	print('Making 2HDECAY...\n')
-	subprocess.call('make')
 	try:
 		subprocess.check_output('make')
 		print('\nMaking process terminated.\n')
@@ -720,6 +726,17 @@ if makeWanted:
 else:
 	print('Make process skipped.\n')
 
+# Cleaning the installation
+makeWanted = CommonFunctions.queryBoolean("Do you want to make clean?")
+if makeWanted:
+	print('Cleaning 2HDECAY...\n')
+	try:
+		subprocess.check_output('make clean')
+		print('\nCleaning process terminated.\n')
+	except subprocess.CalledProcessError as e:
+		print(e.output)
+else:
+	print('Make clean process skipped.\n')
 
 
 # Calculate the vertex corrections used for the process-dependent scheme of alpha and beta
