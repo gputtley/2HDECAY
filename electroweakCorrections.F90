@@ -255,35 +255,6 @@ program electroweakCorrections
 			outputFileContent = trim(outputFileContent) // "DifWidthUsuProcDep3,"
 			outputFileContent = trim(outputFileContent) // "DifWidthAltProcDep3\n"
 
-			do point = 1, maxPoint, 1
-				! Set the 2HDM parameters according to the current point in phase-space
-				MHH = MHHList(point)
-				MA0 = MA0List(point)
-				MHp = MHpList(point)
-				MHH = MHHList(point)
-				alpha = alphaList(point)
-				beta = betaList(point)
-				CA = CAList(point)
-				SA = SAList(point)
-				TA = TAList(point)
-				CB = CBList(point)
-				SB = SBList(point)
-				TB = TBList(point)
-				S2A = S2AList(point)
-				C2A = C2AList(point)
-				S2B = S2BList(point)
-				C2B = C2BList(point)
-				CAB = CABList(point)
-				SAB = SABList(point)
-				CBA = CBAList(point)
-				SBA = SBAList(point)
-				Yuk1 = Yuk1List(point)
-				Yuk2 = Yuk2List(point)
-				Yuk3 = Yuk3List(point)
-				m12squared = m12squaredList(point)
-				Lambda5 = Lambda5List(point)
-				TypeOf2HDM = TypeOf2HDMList(point)
-
 				! Print out the current point in phase-space (debug mode only)
 				if (debugModeOn) then
 					write (*,*) "MW: ", MW
@@ -301,14 +272,36 @@ program electroweakCorrections
 					write (*,*) "MC: ", MC
 					write (*,*) "MB: ", MB
 					write (*,*) "MT: ", MT
+					write (*,*) "CKM11: ", CKM11
+					write (*,*) "CKM12: ", CKM12
+					write (*,*) "CKM13: ", CKM13
+					write (*,*) "CKM21: ", CKM21
+					write (*,*) "CKM22: ", CKM22
+					write (*,*) "CKM23: ", CKM23
+					write (*,*) "CKM31: ", CKM31
+					write (*,*) "CKM32: ", CKM32
+					write (*,*) "CKM33: ", CKM33
+					write (*,*) "CKMC11: ", CKMC11
+					write (*,*) "CKMC12: ", CKMC12
+					write (*,*) "CKMC13: ", CKMC13
+					write (*,*) "CKMC21: ", CKMC21
+					write (*,*) "CKMC22: ", CKMC22
+					write (*,*) "CKMC23: ", CKMC23
+					write (*,*) "CKMC31: ", CKMC31
+					write (*,*) "CKMC32: ", CKMC32
+					write (*,*) "CKMC33: ", CKMC33
 					write (*,*) "Mh0: ", Mh0
 					write (*,*) "MHH: ", MHH
 					write (*,*) "MA0: ", MA0
 					write (*,*) "MHp: ", MHp
 					write (*,*) "alpha: ", alpha
 					write (*,*) "beta: ", beta
+					write (*,*) "SA: ", SA
 					write (*,*) "CA: ", CA
+					write (*,*) "TA: ", TA
+					write (*,*) "SB: ", SB
 					write (*,*) "CB: ", CB
+					write (*,*) "TB: ", TB
 					write (*,*) "Yuk1: ", Yuk1
 					write (*,*) "Yuk2: ", Yuk2
 					write (*,*) "Yuk3: ", Yuk3
@@ -316,25 +309,6 @@ program electroweakCorrections
 					write (*,*) "2HDM Type: ", TypeOf2HDM
 					write (*,*) "InputScale: ", InputScale
 				end if
-
-				! Calculate the square of the 2HDM input parameters
-				MHH2 = MHH**2
-				MA02 = MA0**2
-				MHp2 = MHp**2
-				CA2 = CA**2
-				SA2 = SA**2
-				TA2 = TA**2
-				TB2 = TB**2
-				SB2 = SB**2
-				CB2 = CB**2
-				C2A2 = C2A**2
-				S2A2 = S2A**2
-				C2B2 = C2B**2
-				S2B2 = S2B**2
-				CAB2 = CAB**2
-				SAB2 = SAB**2
-				CBA2 = CBA**2
-				SBA2 = SBA**2
 
 				! PROCESS A0 -> B,BBar
 					! Kinematic prefactor together with the symmetry factor of the process
@@ -4073,7 +4047,7 @@ program electroweakCorrections
 				outputFileContent = trim(outputFileContent) // (trim(tempVal) // ",")
 				write( tempVal, '(ES18.10E3)' ) Lambda5
 				outputFileContent = trim(outputFileContent) // (trim(tempVal) // ",")
-				write( tempVal, '(I1)' ) TypeOf2HDM
+				write( tempVal, '(I1)' ) int(TypeOf2HDM)
 				outputFileContent = trim(outputFileContent) // (trim(tempVal) // ",")
 				write( tempVal, '(ES18.10E3)' ) InputScale
 				outputFileContent = trim(outputFileContent) // (trim(tempVal) // ",")
@@ -4151,7 +4125,6 @@ program electroweakCorrections
 						outputFileContent = trim(outputFileContent) // (trim(tempVal) // ",")
 					end if
 				end do
-			end do
 
 			! Write the results to the output file
 			open(unit=44, file=trim(pathToOutputFiles)//trim(targetName), status='new', &

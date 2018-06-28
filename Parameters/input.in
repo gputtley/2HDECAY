@@ -32,3 +32,10 @@
 "CKMC32" -0.0405
 "CKMC33" 0.99914
 "InputScale" 1.0
+"MHH" 700.0
+"MA0" 450.0
+"MHp" 200.0
+"alpha" 0.1
+"tanBeta" 2.5
+"m12Sq" 200.0
+"2HDMType" 1.0

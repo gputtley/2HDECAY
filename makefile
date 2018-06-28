@@ -490,6 +490,7 @@ clean:
 	rm -f $(SELFENERGIESDERIV)/*.o
 	rm -f $(PROCESSDEPENDENTSCHEME)/*.o
 	rm -f $(TADPOLES)/*.o
+	rm -f $(PARAMETERS)/*.o
 	rm -f $(PROCESSA0TOBBBAR)/*.o
 	rm -f $(PROCESSA0TOCCBAR)/*.o
 	rm -f $(PROCESSA0TODDBAR)/*.o
