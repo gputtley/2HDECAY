@@ -21,7 +21,13 @@ module constants
 	double precision :: UVDelta = 0D0
 	double precision :: InputScale
 
+	! 2HDM type, input parameter type (1: masses and alpha are given; 2: lambda1 to lambda5 are given) and renormalization scheme
+	integer :: TypeOf2HDM
+	integer :: parameterType
+	integer :: RenormScheme
+
     ! Standard Model parameters; the values are stored in the input file in the ./Parameters/input folder (1101.0593 [hep-ph], 1503.07589 [hep-ex],  Chin. Phys. C38 (2014) 090001)
+	double precision :: GFermi
     double precision :: Mh0
 	double precision :: MW
 	double precision :: MZ
@@ -98,7 +104,11 @@ module constants
 	double precision :: Yuk3
 	double precision :: Lambda5
 	double precision :: m12squared
-	double precision :: TypeOf2HDM
+	double precision :: hdecayLam1
+	double precision :: hdecayLam2
+	double precision :: hdecayLam3
+	double precision :: hdecayLam4
+	double precision :: hdecayLam5
 
     ! Squared 2HDM-specific parameters
     double precision :: MHH2

@@ -61,8 +61,32 @@ if __name__ == "__main__":		# This is necessary for correct parallelisation unde
 	''')
 
 	
+	# Copy the file name to the result folder
+	print("Copying input files into output folder...\n")
+	filenameIn = "Parameters" + os.sep + "hdecay.in"
+	filenameOut = "Results" + os.sep + "hdecay.in"
+	copyfile(filenameIn, filenameOut)
+	print("Copying of input files done.\n")
 	
+	# Calculate the electroweak corrections
+	print("Calculating electroweak corrections...\n")
 	prompt = ['electroweakCorrections', '0', '0', '0', '1', 'InputFiles' + os.sep + 'input.in', 'test.txt']
 	subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
+	print("Calculation of electroweak corrections done.\n")
+
+	# Replace the newline character in each file with a proper newline
+	print("Postprocessing output file...\n")
+	fileHandler = open(filenameOut, "r")
+	convertedFile = ''
+	for line in fileHandler:
+		# Convert the literal newlines to actual ones
+		convertedFile += line.replace('\\n', '\n')
+	fileHandler.close()
+
+	# Store the results file in the correct directory
+	fileHandler = open(filenameOut, "w")
+	fileHandler.write(convertedFile)
+	fileHandler.close()
+	print("Postprocessing of output files done.\n")
 
 	sys.exit()

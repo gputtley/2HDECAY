@@ -1,0 +1,5 @@
+Änderungen am Inputfile:
+
+- Zeile 55: Renormierungsschema hinzugefügt (0: alle werden berechnet; 1-14: gewähltes Schema wird berechnet)
+
+- Zeile 59: Input-Skala \mu (in GeV) wurde hinzugefügt (ist für HDECAY irrelevant, aber für mich in den elektroschwachen Korrekturen notwendig)
