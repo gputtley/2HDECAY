@@ -61,7 +61,7 @@ if __name__ == "__main__":		# This is necessary for correct parallelisation unde
 	''')
 
 	
-	# Copy the file name to the result folder
+	# Copy the file name to the result folder and truncate it at the end
 	print("Copying input files into output folder...\n")
 	filenameIn = "Parameters" + os.sep + "hdecay.in"
 	filenameOut = "Results" + os.sep + "hdecay.in"
@@ -78,9 +78,16 @@ if __name__ == "__main__":		# This is necessary for correct parallelisation unde
 	print("Postprocessing output file...\n")
 	fileHandler = open(filenameOut, "r")
 	convertedFile = ''
+	lineCount = 1
 	for line in fileHandler:
-		# Convert the literal newlines to actual ones
-		convertedFile += line.replace('\\n', '\n')
+		# Convert the literal newlines to actual ones and remove the leading whitespace from the Fortran output
+		if (lineCount == 117):
+			lineToReplace = line.replace('\\n', '\n')[1:]
+		else:
+			lineToReplace = line.replace('\\n', '\n')
+		convertedFile += lineToReplace
+		print(lineToReplace)
+		lineCount += 1
 	fileHandler.close()
 
 	# Store the results file in the correct directory

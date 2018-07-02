@@ -249,7 +249,10 @@ def createElectroweakCorrections():
 	processDir = "BuildingBlocks" + os.sep + "Processes"
 	processList = os.listdir(processDir)
 	processDescriptionList = []
+	longestName = 0
 	for pickProcess in processList:
+		if len(pickProcess) > longestName:
+			longestName = len(pickProcess)
 		processDescFilePath = processDir + os.sep + pickProcess + os.sep + "processDescription.txt"
 		if not os.path.isfile(processDescFilePath):
 			print('Error: process description file for process {} not found! Please add the processDescription.txt file first to the {} folder. Terminating the setup of 2HDECAY now. Setup incomplete.'.format(pickProcess, pickProcess))
@@ -477,11 +480,17 @@ def createElectroweakCorrections():
 	electroweakCorrectionsFile.write('\t\t\t\tend if\n\n')
 	
 	for x in range(0, len(processDescriptionList)):
+		starString = ""
+		for y in range(0, (32 - len(processDescriptionList[x][1]))):
+			starString += "*"
+		additionalWhitespaces = ""
+		for y in range(0, (longestName - len(processDescriptionList[x][0]))):
+			additionalWhitespaces += " "
 		electroweakCorrectionsFile.write('\t\t\t\t! PROCESS ' + processDescriptionList[x][1] + '\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\t! Prepare the output file content\n')
-		electroweakCorrectionsFile.write('\t\t\t\t\toutputFileContent = trim(outputFileContent) // "*******************"\n')
+		electroweakCorrectionsFile.write('\t\t\t\t\toutputFileContent = trim(outputFileContent) // "**************"\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\toutputFileContent = trim(outputFileContent) // " ' + processDescriptionList[x][1] + '"\n')
-		electroweakCorrectionsFile.write('\t\t\t\t\toutputFileContent = trim(outputFileContent) // " *************************\\n"\n')
+		electroweakCorrectionsFile.write('\t\t\t\t\toutputFileContent = trim(outputFileContent) // " (electroweak corrections) ' + starString + '\\n"\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\t! Kinematic prefactor together with the symmetry factor of the process\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\twrite (*,*) "----- ' + processDescriptionList[x][1] + ' -----"\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\tm1 = ' + processDescriptionList[x][2] + '\n')
@@ -493,7 +502,7 @@ def createElectroweakCorrections():
 		electroweakCorrectionsFile.write('\t\t\t\t\t\ttreeLevelWidth = 0D0\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\t\t! Write the tree-level width to the output file\n')
 		electroweakCorrectionsFile.write("\t\t\t\t\t\twrite( tempVal, '(ES23.15E3)' ) treeLevelWidth\n")
-		electroweakCorrectionsFile.write('\t\t\t\t\t\toutputFileContent = trim(outputFileContent) // "' + processDescriptionList[x][0] + 'LO    ="\n')
+		electroweakCorrectionsFile.write('\t\t\t\t\t\toutputFileContent = trim(outputFileContent) // "' + processDescriptionList[x][0] + 'LO    ' + additionalWhitespaces + '="\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\t\toutputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\\n")\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\t\tdo m = 1, maxNumberSchemes, 1\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\t\t\tNLOWidth(m) = 0D0\n')
@@ -502,9 +511,9 @@ def createElectroweakCorrections():
 		electroweakCorrectionsFile.write("\t\t\t\t\t\t\twrite( tempVal2, '(I1)' ) m\n")
 		electroweakCorrectionsFile.write("\t\t\t\t\t\t\twrite( tempVal3, '(I1)' ) (m-10)\n")
 		electroweakCorrectionsFile.write("\t\t\t\t\t\t\tif (m .lt. 10) then\n")
-		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\toutputFileContent = trim(outputFileContent) // "' + processDescriptionList[x][0] + 'NLO" // trim(tempVal2) // "  ="\n')
+		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\toutputFileContent = trim(outputFileContent) // "' + processDescriptionList[x][0] + 'NLO" // trim(tempVal2) // "  ' + additionalWhitespaces + '="\n')
 		electroweakCorrectionsFile.write("\t\t\t\t\t\t\telse\n")
-		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\toutputFileContent = trim(outputFileContent) // "' + processDescriptionList[x][0] + 'NLO" // "1" // trim(tempVal3) // " ="\n')
+		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\toutputFileContent = trim(outputFileContent) // "' + processDescriptionList[x][0] + 'NLO" // "1" // trim(tempVal3) // " ' + additionalWhitespaces + '="\n')
 		electroweakCorrectionsFile.write("\t\t\t\t\t\t\tend if\n")
 		electroweakCorrectionsFile.write('\t\t\t\t\t\t\toutputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\\n")\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\t\tend do\n')		
@@ -513,7 +522,7 @@ def createElectroweakCorrections():
 		electroweakCorrectionsFile.write('\t\t\t\t\t\ttreeLevelWidth = 0D0\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\t\t! Write the tree-level width to the output file\n')
 		electroweakCorrectionsFile.write("\t\t\t\t\t\twrite( tempVal, '(ES23.15E3)' ) treeLevelWidth\n")
-		electroweakCorrectionsFile.write('\t\t\t\t\t\toutputFileContent = trim(outputFileContent) // "' + processDescriptionList[x][0] + 'LO    ="\n')
+		electroweakCorrectionsFile.write('\t\t\t\t\t\toutputFileContent = trim(outputFileContent) // "' + processDescriptionList[x][0] + 'LO    ' + additionalWhitespaces + '="\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\t\toutputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\\n")\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\t\tdo m = 1, maxNumberSchemes, 1\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\t\t\tNLOWidth(m) = 0D0\n')
@@ -522,9 +531,9 @@ def createElectroweakCorrections():
 		electroweakCorrectionsFile.write("\t\t\t\t\t\t\twrite( tempVal2, '(I1)' ) m\n")
 		electroweakCorrectionsFile.write("\t\t\t\t\t\t\twrite( tempVal3, '(I1)' ) (m-10)\n")
 		electroweakCorrectionsFile.write("\t\t\t\t\t\t\tif (m .lt. 10) then\n")
-		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\toutputFileContent = trim(outputFileContent) // "' + processDescriptionList[x][0] + 'NLO" // trim(tempVal2) // "  ="\n')
+		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\toutputFileContent = trim(outputFileContent) // "' + processDescriptionList[x][0] + 'NLO" // trim(tempVal2) // "  ' + additionalWhitespaces + '="\n')
 		electroweakCorrectionsFile.write("\t\t\t\t\t\t\telse\n")
-		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\toutputFileContent = trim(outputFileContent) // "' + processDescriptionList[x][0] + 'NLO" // "1" // trim(tempVal3) // " ="\n')
+		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\toutputFileContent = trim(outputFileContent) // "' + processDescriptionList[x][0] + 'NLO" // "1" // trim(tempVal3) // " ' + additionalWhitespaces + '="\n')
 		electroweakCorrectionsFile.write("\t\t\t\t\t\t\tend if\n")
 		electroweakCorrectionsFile.write('\t\t\t\t\t\t\toutputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\\n")\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\t\tend do\n')
@@ -545,7 +554,7 @@ def createElectroweakCorrections():
 
 		electroweakCorrectionsFile.write('\t\t\t\t\t\t! Write the tree-level width to the output file\n')
 		electroweakCorrectionsFile.write("\t\t\t\t\t\twrite( tempVal, '(ES23.15E3)' ) treeLevelWidth\n")
-		electroweakCorrectionsFile.write('\t\t\t\t\t\toutputFileContent = trim(outputFileContent) // "' + processDescriptionList[x][0] + 'LO    ="\n')
+		electroweakCorrectionsFile.write('\t\t\t\t\t\toutputFileContent = trim(outputFileContent) // "' + processDescriptionList[x][0] + 'LO    ' + additionalWhitespaces + '="\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\t\toutputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\\n")\n')
 		
 		electroweakCorrectionsFile.write('\t\t\t\t\t\t! Get the full NLO decay width for all schemes\n')
@@ -570,9 +579,9 @@ def createElectroweakCorrections():
 		electroweakCorrectionsFile.write("\t\t\t\t\t\t\twrite( tempVal2, '(I1)' ) m\n")
 		electroweakCorrectionsFile.write("\t\t\t\t\t\t\twrite( tempVal3, '(I1)' ) (m-10)\n")
 		electroweakCorrectionsFile.write("\t\t\t\t\t\t\tif (m .lt. 10) then\n")
-		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\toutputFileContent = trim(outputFileContent) // "' + processDescriptionList[x][0] + 'NLO" // trim(tempVal2) // "  ="\n')
+		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\toutputFileContent = trim(outputFileContent) // "' + processDescriptionList[x][0] + 'NLO" // trim(tempVal2) // "  ' + additionalWhitespaces + '="\n')
 		electroweakCorrectionsFile.write("\t\t\t\t\t\t\telse\n")
-		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\toutputFileContent = trim(outputFileContent) // "' + processDescriptionList[x][0] + 'NLO" // "1" // trim(tempVal3) // " ="\n')
+		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\toutputFileContent = trim(outputFileContent) // "' + processDescriptionList[x][0] + 'NLO" // "1" // trim(tempVal3) // " ' + additionalWhitespaces + '="\n')
 		electroweakCorrectionsFile.write("\t\t\t\t\t\t\tend if\n")
 		electroweakCorrectionsFile.write('\t\t\t\t\t\t\toutputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\\n")\n')
 

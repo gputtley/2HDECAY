@@ -253,9 +253,9 @@ program electroweakCorrections
 
 				! PROCESS A0 -> B,BBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " A0 -> B,BBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- A0 -> B,BBar -----"
 					m1 = MA0
@@ -268,7 +268,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toBBBarLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toBBBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -277,9 +277,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -289,7 +289,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toBBBarLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toBBBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -298,9 +298,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -321,7 +321,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toBBBarLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toBBBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -344,9 +344,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -362,9 +362,9 @@ program electroweakCorrections
 
 				! PROCESS A0 -> C,CBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " A0 -> C,CBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- A0 -> C,CBar -----"
 					m1 = MA0
@@ -377,7 +377,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toCCBarLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toCCBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -386,9 +386,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -398,7 +398,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toCCBarLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toCCBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -407,9 +407,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -430,7 +430,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toCCBarLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toCCBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -453,9 +453,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -471,9 +471,9 @@ program electroweakCorrections
 
 				! PROCESS A0 -> D,DBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " A0 -> D,DBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- A0 -> D,DBar -----"
 					m1 = MA0
@@ -486,7 +486,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toDDBarLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toDDBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -495,9 +495,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toDDBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toDDBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toDDBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toDDBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -507,7 +507,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toDDBarLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toDDBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -516,9 +516,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toDDBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toDDBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toDDBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toDDBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -539,7 +539,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toDDBarLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toDDBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -562,9 +562,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toDDBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toDDBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toDDBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toDDBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -580,9 +580,9 @@ program electroweakCorrections
 
 				! PROCESS A0 -> El,ElBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " A0 -> El,ElBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ******************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- A0 -> El,ElBar -----"
 					m1 = MA0
@@ -595,7 +595,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toElElBarLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toElElBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -604,9 +604,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toElElBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toElElBarNLO" // trim(tempVal2) // "     ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toElElBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toElElBarNLO" // "1" // trim(tempVal3) // "    ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -616,7 +616,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toElElBarLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toElElBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -625,9 +625,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toElElBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toElElBarNLO" // trim(tempVal2) // "     ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toElElBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toElElBarNLO" // "1" // trim(tempVal3) // "    ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -648,7 +648,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toElElBarLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toElElBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -671,9 +671,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toElElBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toElElBarNLO" // trim(tempVal2) // "     ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toElElBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toElElBarNLO" // "1" // trim(tempVal3) // "    ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -689,9 +689,9 @@ program electroweakCorrections
 
 				! PROCESS A0 -> HH,Z0
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " A0 -> HH,Z0"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) *********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- A0 -> HH,Z0 -----"
 					m1 = MA0
@@ -704,7 +704,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toHHZ0LO    ="
+						outputFileContent = trim(outputFileContent) // "A0toHHZ0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -713,9 +713,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -725,7 +725,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toHHZ0LO    ="
+						outputFileContent = trim(outputFileContent) // "A0toHHZ0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -734,9 +734,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -757,7 +757,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toHHZ0LO    ="
+						outputFileContent = trim(outputFileContent) // "A0toHHZ0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -780,9 +780,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -798,9 +798,9 @@ program electroweakCorrections
 
 				! PROCESS A0 -> Hm,Wp
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " A0 -> Hm,Wp"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) *********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- A0 -> Hm,Wp -----"
 					m1 = MA0
@@ -813,7 +813,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toHmWpLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toHmWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -822,9 +822,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -834,7 +834,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toHmWpLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toHmWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -843,9 +843,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -866,7 +866,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toHmWpLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toHmWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -889,9 +889,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -907,9 +907,9 @@ program electroweakCorrections
 
 				! PROCESS A0 -> Mu,MuBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " A0 -> Mu,MuBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ******************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- A0 -> Mu,MuBar -----"
 					m1 = MA0
@@ -922,7 +922,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toMuMuBarLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toMuMuBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -931,9 +931,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // trim(tempVal2) // "     ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -943,7 +943,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toMuMuBarLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toMuMuBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -952,9 +952,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // trim(tempVal2) // "     ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -975,7 +975,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toMuMuBarLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toMuMuBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -998,9 +998,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // trim(tempVal2) // "     ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1016,9 +1016,9 @@ program electroweakCorrections
 
 				! PROCESS A0 -> S,SBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " A0 -> S,SBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- A0 -> S,SBar -----"
 					m1 = MA0
@@ -1031,7 +1031,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toSSBarLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toSSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -1040,9 +1040,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1052,7 +1052,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toSSBarLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toSSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -1061,9 +1061,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1084,7 +1084,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toSSBarLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toSSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -1107,9 +1107,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1125,9 +1125,9 @@ program electroweakCorrections
 
 				! PROCESS A0 -> Tau,TauBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " A0 -> Tau,TauBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ****************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- A0 -> Tau,TauBar -----"
 					m1 = MA0
@@ -1140,7 +1140,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toTauTauBarLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toTauTauBarLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -1149,9 +1149,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // trim(tempVal2) // "   ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1161,7 +1161,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toTauTauBarLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toTauTauBarLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -1170,9 +1170,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // trim(tempVal2) // "   ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1193,7 +1193,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toTauTauBarLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toTauTauBarLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -1216,9 +1216,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // trim(tempVal2) // "   ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1234,9 +1234,9 @@ program electroweakCorrections
 
 				! PROCESS A0 -> T,TBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " A0 -> T,TBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- A0 -> T,TBar -----"
 					m1 = MA0
@@ -1249,7 +1249,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toTTBarLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toTTBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -1258,9 +1258,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1270,7 +1270,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toTTBarLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toTTBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -1279,9 +1279,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1302,7 +1302,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toTTBarLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toTTBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -1325,9 +1325,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1343,9 +1343,9 @@ program electroweakCorrections
 
 				! PROCESS A0 -> U,UBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " A0 -> U,UBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- A0 -> U,UBar -----"
 					m1 = MA0
@@ -1358,7 +1358,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toUUBarLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toUUBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -1367,9 +1367,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toUUBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toUUBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toUUBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toUUBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1379,7 +1379,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toUUBarLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toUUBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -1388,9 +1388,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toUUBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toUUBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toUUBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toUUBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1411,7 +1411,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toUUBarLO    ="
+						outputFileContent = trim(outputFileContent) // "A0toUUBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -1434,9 +1434,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toUUBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toUUBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toUUBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toUUBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1452,9 +1452,9 @@ program electroweakCorrections
 
 				! PROCESS A0 -> Z0,h0
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " A0 -> Z0,h0"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) *********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- A0 -> Z0,h0 -----"
 					m1 = MA0
@@ -1467,7 +1467,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toZ0h0LO    ="
+						outputFileContent = trim(outputFileContent) // "A0toZ0h0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -1476,9 +1476,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1488,7 +1488,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toZ0h0LO    ="
+						outputFileContent = trim(outputFileContent) // "A0toZ0h0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -1497,9 +1497,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1520,7 +1520,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "A0toZ0h0LO    ="
+						outputFileContent = trim(outputFileContent) // "A0toZ0h0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -1543,9 +1543,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1561,9 +1561,9 @@ program electroweakCorrections
 
 				! PROCESS h0 -> A0,A0
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " h0 -> A0,A0"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) *********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- h0 -> A0,A0 -----"
 					m1 = Mh0
@@ -1576,7 +1576,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toA0A0LO    ="
+						outputFileContent = trim(outputFileContent) // "h0toA0A0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -1585,9 +1585,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1597,7 +1597,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toA0A0LO    ="
+						outputFileContent = trim(outputFileContent) // "h0toA0A0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -1606,9 +1606,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1629,7 +1629,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toA0A0LO    ="
+						outputFileContent = trim(outputFileContent) // "h0toA0A0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -1652,9 +1652,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1670,9 +1670,9 @@ program electroweakCorrections
 
 				! PROCESS h0 -> A0,Z0
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " h0 -> A0,Z0"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) *********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- h0 -> A0,Z0 -----"
 					m1 = Mh0
@@ -1685,7 +1685,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toA0Z0LO    ="
+						outputFileContent = trim(outputFileContent) // "h0toA0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -1694,9 +1694,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1706,7 +1706,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toA0Z0LO    ="
+						outputFileContent = trim(outputFileContent) // "h0toA0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -1715,9 +1715,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1738,7 +1738,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toA0Z0LO    ="
+						outputFileContent = trim(outputFileContent) // "h0toA0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -1761,9 +1761,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1779,9 +1779,9 @@ program electroweakCorrections
 
 				! PROCESS h0 -> B,BBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " h0 -> B,BBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- h0 -> B,BBar -----"
 					m1 = Mh0
@@ -1794,7 +1794,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toBBBarLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toBBBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -1803,9 +1803,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1815,7 +1815,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toBBBarLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toBBBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -1824,9 +1824,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1847,7 +1847,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toBBBarLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toBBBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -1870,9 +1870,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1888,9 +1888,9 @@ program electroweakCorrections
 
 				! PROCESS h0 -> C,CBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " h0 -> C,CBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- h0 -> C,CBar -----"
 					m1 = Mh0
@@ -1903,7 +1903,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toCCBarLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toCCBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -1912,9 +1912,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1924,7 +1924,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toCCBarLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toCCBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -1933,9 +1933,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1956,7 +1956,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toCCBarLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toCCBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -1979,9 +1979,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -1997,9 +1997,9 @@ program electroweakCorrections
 
 				! PROCESS h0 -> D,DBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " h0 -> D,DBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- h0 -> D,DBar -----"
 					m1 = Mh0
@@ -2012,7 +2012,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toDDBarLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toDDBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -2021,9 +2021,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toDDBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toDDBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toDDBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toDDBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -2033,7 +2033,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toDDBarLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toDDBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -2042,9 +2042,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toDDBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toDDBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toDDBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toDDBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -2065,7 +2065,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toDDBarLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toDDBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -2088,9 +2088,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toDDBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toDDBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toDDBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toDDBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -2106,9 +2106,9 @@ program electroweakCorrections
 
 				! PROCESS h0 -> El,ElBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " h0 -> El,ElBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ******************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- h0 -> El,ElBar -----"
 					m1 = Mh0
@@ -2121,7 +2121,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toElElBarLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toElElBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -2130,9 +2130,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toElElBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toElElBarNLO" // trim(tempVal2) // "     ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toElElBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toElElBarNLO" // "1" // trim(tempVal3) // "    ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -2142,7 +2142,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toElElBarLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toElElBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -2151,9 +2151,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toElElBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toElElBarNLO" // trim(tempVal2) // "     ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toElElBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toElElBarNLO" // "1" // trim(tempVal3) // "    ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -2174,7 +2174,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toElElBarLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toElElBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -2197,9 +2197,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toElElBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toElElBarNLO" // trim(tempVal2) // "     ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toElElBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toElElBarNLO" // "1" // trim(tempVal3) // "    ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -2215,9 +2215,9 @@ program electroweakCorrections
 
 				! PROCESS h0 -> HH,HH
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " h0 -> HH,HH"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) *********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- h0 -> HH,HH -----"
 					m1 = Mh0
@@ -2230,7 +2230,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toHHHHLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toHHHHLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -2239,9 +2239,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toHHHHNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toHHHHNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toHHHHNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toHHHHNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -2251,7 +2251,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toHHHHLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toHHHHLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -2260,9 +2260,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toHHHHNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toHHHHNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toHHHHNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toHHHHNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -2283,7 +2283,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toHHHHLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toHHHHLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -2306,9 +2306,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toHHHHNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toHHHHNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toHHHHNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toHHHHNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -2324,9 +2324,9 @@ program electroweakCorrections
 
 				! PROCESS h0 -> Hm,Hp
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " h0 -> Hm,Hp"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) *********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- h0 -> Hm,Hp -----"
 					m1 = Mh0
@@ -2339,7 +2339,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toHmHpLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toHmHpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -2348,9 +2348,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -2360,7 +2360,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toHmHpLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toHmHpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -2369,9 +2369,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -2392,7 +2392,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toHmHpLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toHmHpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -2415,9 +2415,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -2433,9 +2433,9 @@ program electroweakCorrections
 
 				! PROCESS h0 -> Hp,Wm
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " h0 -> Hp,Wm"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) *********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- h0 -> Hp,Wm -----"
 					m1 = Mh0
@@ -2448,7 +2448,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toHpWmLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toHpWmLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -2457,9 +2457,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -2469,7 +2469,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toHpWmLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toHpWmLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -2478,9 +2478,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -2501,7 +2501,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toHpWmLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toHpWmLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -2524,9 +2524,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -2542,9 +2542,9 @@ program electroweakCorrections
 
 				! PROCESS h0 -> Mu,MuBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " h0 -> Mu,MuBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ******************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- h0 -> Mu,MuBar -----"
 					m1 = Mh0
@@ -2557,7 +2557,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toMuMuBarLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toMuMuBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -2566,9 +2566,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // trim(tempVal2) // "     ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -2578,7 +2578,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toMuMuBarLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toMuMuBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -2587,9 +2587,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // trim(tempVal2) // "     ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -2610,7 +2610,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toMuMuBarLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toMuMuBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -2633,9 +2633,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // trim(tempVal2) // "     ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -2651,9 +2651,9 @@ program electroweakCorrections
 
 				! PROCESS h0 -> S,SBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " h0 -> S,SBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- h0 -> S,SBar -----"
 					m1 = Mh0
@@ -2666,7 +2666,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toSSBarLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toSSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -2675,9 +2675,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -2687,7 +2687,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toSSBarLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toSSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -2696,9 +2696,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -2719,7 +2719,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toSSBarLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toSSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -2742,9 +2742,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -2760,9 +2760,9 @@ program electroweakCorrections
 
 				! PROCESS h0 -> Tau,TauBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " h0 -> Tau,TauBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ****************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- h0 -> Tau,TauBar -----"
 					m1 = Mh0
@@ -2775,7 +2775,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toTauTauBarLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toTauTauBarLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -2784,9 +2784,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // trim(tempVal2) // "   ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -2796,7 +2796,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toTauTauBarLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toTauTauBarLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -2805,9 +2805,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // trim(tempVal2) // "   ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -2828,7 +2828,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toTauTauBarLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toTauTauBarLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -2851,9 +2851,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // trim(tempVal2) // "   ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -2869,9 +2869,9 @@ program electroweakCorrections
 
 				! PROCESS h0 -> T,TBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " h0 -> T,TBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- h0 -> T,TBar -----"
 					m1 = Mh0
@@ -2884,7 +2884,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toTTBarLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toTTBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -2893,9 +2893,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -2905,7 +2905,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toTTBarLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toTTBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -2914,9 +2914,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -2937,7 +2937,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toTTBarLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toTTBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -2960,9 +2960,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -2978,9 +2978,9 @@ program electroweakCorrections
 
 				! PROCESS h0 -> U,UBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " h0 -> U,UBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- h0 -> U,UBar -----"
 					m1 = Mh0
@@ -2993,7 +2993,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toUUBarLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toUUBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -3002,9 +3002,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toUUBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toUUBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toUUBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toUUBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3014,7 +3014,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toUUBarLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toUUBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -3023,9 +3023,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toUUBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toUUBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toUUBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toUUBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3046,7 +3046,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toUUBarLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toUUBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -3069,9 +3069,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toUUBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toUUBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toUUBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toUUBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3087,9 +3087,9 @@ program electroweakCorrections
 
 				! PROCESS h0 -> Wm,Wp
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " h0 -> Wm,Wp"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) *********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- h0 -> Wm,Wp -----"
 					m1 = Mh0
@@ -3102,7 +3102,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toWmWpLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toWmWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -3111,9 +3111,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3123,7 +3123,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toWmWpLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toWmWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -3132,9 +3132,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3155,7 +3155,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toWmWpLO    ="
+						outputFileContent = trim(outputFileContent) // "h0toWmWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -3178,9 +3178,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3196,9 +3196,9 @@ program electroweakCorrections
 
 				! PROCESS h0 -> Z0,Z0
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " h0 -> Z0,Z0"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) *********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- h0 -> Z0,Z0 -----"
 					m1 = Mh0
@@ -3211,7 +3211,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toZ0Z0LO    ="
+						outputFileContent = trim(outputFileContent) // "h0toZ0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -3220,9 +3220,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3232,7 +3232,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toZ0Z0LO    ="
+						outputFileContent = trim(outputFileContent) // "h0toZ0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -3241,9 +3241,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3264,7 +3264,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toZ0Z0LO    ="
+						outputFileContent = trim(outputFileContent) // "h0toZ0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -3287,9 +3287,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3305,9 +3305,9 @@ program electroweakCorrections
 
 				! PROCESS HH -> A0,A0
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " HH -> A0,A0"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) *********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- HH -> A0,A0 -----"
 					m1 = MHH
@@ -3320,7 +3320,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoA0A0LO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoA0A0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -3329,9 +3329,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3341,7 +3341,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoA0A0LO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoA0A0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -3350,9 +3350,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3373,7 +3373,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoA0A0LO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoA0A0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -3396,9 +3396,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3414,9 +3414,9 @@ program electroweakCorrections
 
 				! PROCESS HH -> A0,Z0
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " HH -> A0,Z0"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) *********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- HH -> A0,Z0 -----"
 					m1 = MHH
@@ -3429,7 +3429,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoA0Z0LO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoA0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -3438,9 +3438,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3450,7 +3450,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoA0Z0LO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoA0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -3459,9 +3459,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3482,7 +3482,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoA0Z0LO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoA0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -3505,9 +3505,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3523,9 +3523,9 @@ program electroweakCorrections
 
 				! PROCESS HH -> B,BBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " HH -> B,BBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- HH -> B,BBar -----"
 					m1 = MHH
@@ -3538,7 +3538,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoBBBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoBBBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -3547,9 +3547,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3559,7 +3559,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoBBBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoBBBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -3568,9 +3568,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3591,7 +3591,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoBBBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoBBBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -3614,9 +3614,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3632,9 +3632,9 @@ program electroweakCorrections
 
 				! PROCESS HH -> C,CBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " HH -> C,CBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- HH -> C,CBar -----"
 					m1 = MHH
@@ -3647,7 +3647,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoCCBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoCCBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -3656,9 +3656,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3668,7 +3668,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoCCBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoCCBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -3677,9 +3677,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3700,7 +3700,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoCCBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoCCBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -3723,9 +3723,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3741,9 +3741,9 @@ program electroweakCorrections
 
 				! PROCESS HH -> D,DBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " HH -> D,DBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- HH -> D,DBar -----"
 					m1 = MHH
@@ -3756,7 +3756,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoDDBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoDDBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -3765,9 +3765,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoDDBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoDDBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoDDBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoDDBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3777,7 +3777,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoDDBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoDDBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -3786,9 +3786,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoDDBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoDDBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoDDBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoDDBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3809,7 +3809,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoDDBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoDDBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -3832,9 +3832,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoDDBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoDDBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoDDBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoDDBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3850,9 +3850,9 @@ program electroweakCorrections
 
 				! PROCESS HH -> El,ElBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " HH -> El,ElBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ******************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- HH -> El,ElBar -----"
 					m1 = MHH
@@ -3865,7 +3865,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoElElBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoElElBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -3874,9 +3874,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoElElBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoElElBarNLO" // trim(tempVal2) // "     ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoElElBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoElElBarNLO" // "1" // trim(tempVal3) // "    ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3886,7 +3886,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoElElBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoElElBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -3895,9 +3895,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoElElBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoElElBarNLO" // trim(tempVal2) // "     ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoElElBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoElElBarNLO" // "1" // trim(tempVal3) // "    ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3918,7 +3918,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoElElBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoElElBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -3941,9 +3941,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoElElBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoElElBarNLO" // trim(tempVal2) // "     ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoElElBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoElElBarNLO" // "1" // trim(tempVal3) // "    ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3959,9 +3959,9 @@ program electroweakCorrections
 
 				! PROCESS HH -> h0,h0
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " HH -> h0,h0"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) *********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- HH -> h0,h0 -----"
 					m1 = MHH
@@ -3974,7 +3974,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoh0h0LO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoh0h0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -3983,9 +3983,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -3995,7 +3995,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoh0h0LO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoh0h0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -4004,9 +4004,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -4027,7 +4027,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoh0h0LO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoh0h0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -4050,9 +4050,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -4068,9 +4068,9 @@ program electroweakCorrections
 
 				! PROCESS HH -> Hm,Hp
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " HH -> Hm,Hp"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) *********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- HH -> Hm,Hp -----"
 					m1 = MHH
@@ -4083,7 +4083,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoHmHpLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoHmHpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -4092,9 +4092,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -4104,7 +4104,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoHmHpLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoHmHpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -4113,9 +4113,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -4136,7 +4136,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoHmHpLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoHmHpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -4159,9 +4159,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -4177,9 +4177,9 @@ program electroweakCorrections
 
 				! PROCESS HH -> Hp,Wm
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " HH -> Hp,Wm"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) *********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- HH -> Hp,Wm -----"
 					m1 = MHH
@@ -4192,7 +4192,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoHpWmLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoHpWmLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -4201,9 +4201,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -4213,7 +4213,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoHpWmLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoHpWmLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -4222,9 +4222,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -4245,7 +4245,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoHpWmLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoHpWmLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -4268,9 +4268,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -4286,9 +4286,9 @@ program electroweakCorrections
 
 				! PROCESS HH -> Mu,MuBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " HH -> Mu,MuBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ******************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- HH -> Mu,MuBar -----"
 					m1 = MHH
@@ -4301,7 +4301,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoMuMuBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoMuMuBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -4310,9 +4310,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // trim(tempVal2) // "     ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -4322,7 +4322,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoMuMuBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoMuMuBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -4331,9 +4331,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // trim(tempVal2) // "     ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -4354,7 +4354,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoMuMuBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoMuMuBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -4377,9 +4377,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // trim(tempVal2) // "     ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -4395,9 +4395,9 @@ program electroweakCorrections
 
 				! PROCESS HH -> S,SBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " HH -> S,SBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- HH -> S,SBar -----"
 					m1 = MHH
@@ -4410,7 +4410,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoSSBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoSSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -4419,9 +4419,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -4431,7 +4431,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoSSBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoSSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -4440,9 +4440,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -4463,7 +4463,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoSSBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoSSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -4486,9 +4486,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -4504,9 +4504,9 @@ program electroweakCorrections
 
 				! PROCESS HH -> Tau,TauBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " HH -> Tau,TauBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ****************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- HH -> Tau,TauBar -----"
 					m1 = MHH
@@ -4519,7 +4519,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoTauTauBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoTauTauBarLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -4528,9 +4528,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // trim(tempVal2) // "   ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -4540,7 +4540,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoTauTauBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoTauTauBarLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -4549,9 +4549,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // trim(tempVal2) // "   ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -4572,7 +4572,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoTauTauBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoTauTauBarLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -4595,9 +4595,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // trim(tempVal2) // "   ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -4613,9 +4613,9 @@ program electroweakCorrections
 
 				! PROCESS HH -> T,TBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " HH -> T,TBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- HH -> T,TBar -----"
 					m1 = MHH
@@ -4628,7 +4628,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoTTBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoTTBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -4637,9 +4637,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -4649,7 +4649,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoTTBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoTTBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -4658,9 +4658,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -4681,7 +4681,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoTTBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoTTBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -4704,9 +4704,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -4722,9 +4722,9 @@ program electroweakCorrections
 
 				! PROCESS HH -> U,UBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " HH -> U,UBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- HH -> U,UBar -----"
 					m1 = MHH
@@ -4737,7 +4737,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoUUBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoUUBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -4746,9 +4746,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoUUBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoUUBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoUUBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoUUBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -4758,7 +4758,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoUUBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoUUBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -4767,9 +4767,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoUUBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoUUBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoUUBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoUUBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -4790,7 +4790,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoUUBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoUUBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -4813,9 +4813,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoUUBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoUUBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoUUBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoUUBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -4831,9 +4831,9 @@ program electroweakCorrections
 
 				! PROCESS HH -> Wm,Wp
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " HH -> Wm,Wp"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) *********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- HH -> Wm,Wp -----"
 					m1 = MHH
@@ -4846,7 +4846,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoWmWpLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoWmWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -4855,9 +4855,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -4867,7 +4867,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoWmWpLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoWmWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -4876,9 +4876,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -4899,7 +4899,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoWmWpLO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoWmWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -4922,9 +4922,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -4940,9 +4940,9 @@ program electroweakCorrections
 
 				! PROCESS HH -> Z0,Z0
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " HH -> Z0,Z0"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) *********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- HH -> Z0,Z0 -----"
 					m1 = MHH
@@ -4955,7 +4955,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoZ0Z0LO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoZ0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -4964,9 +4964,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -4976,7 +4976,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoZ0Z0LO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoZ0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -4985,9 +4985,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5008,7 +5008,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HHtoZ0Z0LO    ="
+						outputFileContent = trim(outputFileContent) // "HHtoZ0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -5031,9 +5031,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5049,9 +5049,9 @@ program electroweakCorrections
 
 				! PROCESS Hp -> A0,Wp
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " Hp -> A0,Wp"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) *********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- Hp -> A0,Wp -----"
 					m1 = MHp
@@ -5064,7 +5064,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoA0WpLO    ="
+						outputFileContent = trim(outputFileContent) // "HptoA0WpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -5073,9 +5073,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5085,7 +5085,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoA0WpLO    ="
+						outputFileContent = trim(outputFileContent) // "HptoA0WpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -5094,9 +5094,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5117,7 +5117,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoA0WpLO    ="
+						outputFileContent = trim(outputFileContent) // "HptoA0WpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -5140,9 +5140,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5158,9 +5158,9 @@ program electroweakCorrections
 
 				! PROCESS Hp -> BBar,C
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " Hp -> BBar,C"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- Hp -> BBar,C -----"
 					m1 = MHp
@@ -5173,7 +5173,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoBBarCLO    ="
+						outputFileContent = trim(outputFileContent) // "HptoBBarCLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -5182,9 +5182,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5194,7 +5194,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoBBarCLO    ="
+						outputFileContent = trim(outputFileContent) // "HptoBBarCLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -5203,9 +5203,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5226,7 +5226,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoBBarCLO    ="
+						outputFileContent = trim(outputFileContent) // "HptoBBarCLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -5249,9 +5249,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5267,9 +5267,9 @@ program electroweakCorrections
 
 				! PROCESS Hp -> BBar,T
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " Hp -> BBar,T"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- Hp -> BBar,T -----"
 					m1 = MHp
@@ -5282,7 +5282,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoBBarTLO    ="
+						outputFileContent = trim(outputFileContent) // "HptoBBarTLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -5291,9 +5291,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5303,7 +5303,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoBBarTLO    ="
+						outputFileContent = trim(outputFileContent) // "HptoBBarTLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -5312,9 +5312,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5335,7 +5335,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoBBarTLO    ="
+						outputFileContent = trim(outputFileContent) // "HptoBBarTLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -5358,9 +5358,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5376,9 +5376,9 @@ program electroweakCorrections
 
 				! PROCESS Hp -> BBar,U
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " Hp -> BBar,U"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- Hp -> BBar,U -----"
 					m1 = MHp
@@ -5391,7 +5391,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoBBarULO    ="
+						outputFileContent = trim(outputFileContent) // "HptoBBarULO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -5400,9 +5400,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5412,7 +5412,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoBBarULO    ="
+						outputFileContent = trim(outputFileContent) // "HptoBBarULO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -5421,9 +5421,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5444,7 +5444,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoBBarULO    ="
+						outputFileContent = trim(outputFileContent) // "HptoBBarULO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -5467,9 +5467,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5485,9 +5485,9 @@ program electroweakCorrections
 
 				! PROCESS Hp -> C,DBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " Hp -> C,DBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- Hp -> C,DBar -----"
 					m1 = MHp
@@ -5500,7 +5500,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoCDBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HptoCDBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -5509,9 +5509,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5521,7 +5521,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoCDBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HptoCDBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -5530,9 +5530,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5553,7 +5553,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoCDBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HptoCDBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -5576,9 +5576,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5594,9 +5594,9 @@ program electroweakCorrections
 
 				! PROCESS Hp -> C,SBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " Hp -> C,SBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- Hp -> C,SBar -----"
 					m1 = MHp
@@ -5609,7 +5609,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoCSBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HptoCSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -5618,9 +5618,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5630,7 +5630,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoCSBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HptoCSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -5639,9 +5639,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5662,7 +5662,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoCSBarLO    ="
+						outputFileContent = trim(outputFileContent) // "HptoCSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -5685,9 +5685,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5703,9 +5703,9 @@ program electroweakCorrections
 
 				! PROCESS Hp -> DBar,T
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " Hp -> DBar,T"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- Hp -> DBar,T -----"
 					m1 = MHp
@@ -5718,7 +5718,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoDBarTLO    ="
+						outputFileContent = trim(outputFileContent) // "HptoDBarTLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -5727,9 +5727,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5739,7 +5739,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoDBarTLO    ="
+						outputFileContent = trim(outputFileContent) // "HptoDBarTLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -5748,9 +5748,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5771,7 +5771,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoDBarTLO    ="
+						outputFileContent = trim(outputFileContent) // "HptoDBarTLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -5794,9 +5794,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5812,9 +5812,9 @@ program electroweakCorrections
 
 				! PROCESS Hp -> DBar,U
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " Hp -> DBar,U"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- Hp -> DBar,U -----"
 					m1 = MHp
@@ -5827,7 +5827,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoDBarULO    ="
+						outputFileContent = trim(outputFileContent) // "HptoDBarULO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -5836,9 +5836,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoDBarUNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoDBarUNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoDBarUNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoDBarUNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5848,7 +5848,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoDBarULO    ="
+						outputFileContent = trim(outputFileContent) // "HptoDBarULO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -5857,9 +5857,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoDBarUNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoDBarUNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoDBarUNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoDBarUNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5880,7 +5880,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoDBarULO    ="
+						outputFileContent = trim(outputFileContent) // "HptoDBarULO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -5903,9 +5903,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoDBarUNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoDBarUNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoDBarUNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoDBarUNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5921,9 +5921,9 @@ program electroweakCorrections
 
 				! PROCESS Hp -> ElBar,NeuE
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " Hp -> ElBar,NeuE"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ****************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- Hp -> ElBar,NeuE -----"
 					m1 = MHp
@@ -5936,7 +5936,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoElBarNeuELO    ="
+						outputFileContent = trim(outputFileContent) // "HptoElBarNeuELO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -5945,9 +5945,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoElBarNeuENLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoElBarNeuENLO" // trim(tempVal2) // "   ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoElBarNeuENLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoElBarNeuENLO" // "1" // trim(tempVal3) // "  ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5957,7 +5957,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoElBarNeuELO    ="
+						outputFileContent = trim(outputFileContent) // "HptoElBarNeuELO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -5966,9 +5966,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoElBarNeuENLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoElBarNeuENLO" // trim(tempVal2) // "   ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoElBarNeuENLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoElBarNeuENLO" // "1" // trim(tempVal3) // "  ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -5989,7 +5989,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoElBarNeuELO    ="
+						outputFileContent = trim(outputFileContent) // "HptoElBarNeuELO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -6012,9 +6012,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoElBarNeuENLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoElBarNeuENLO" // trim(tempVal2) // "   ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoElBarNeuENLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoElBarNeuENLO" // "1" // trim(tempVal3) // "  ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -6030,9 +6030,9 @@ program electroweakCorrections
 
 				! PROCESS Hp -> HH,Wp
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " Hp -> HH,Wp"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) *********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- Hp -> HH,Wp -----"
 					m1 = MHp
@@ -6045,7 +6045,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoHHWpLO    ="
+						outputFileContent = trim(outputFileContent) // "HptoHHWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -6054,9 +6054,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -6066,7 +6066,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoHHWpLO    ="
+						outputFileContent = trim(outputFileContent) // "HptoHHWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -6075,9 +6075,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -6098,7 +6098,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoHHWpLO    ="
+						outputFileContent = trim(outputFileContent) // "HptoHHWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -6121,9 +6121,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -6139,9 +6139,9 @@ program electroweakCorrections
 
 				! PROCESS Hp -> MuBar,NeuM
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " Hp -> MuBar,NeuM"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ****************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- Hp -> MuBar,NeuM -----"
 					m1 = MHp
@@ -6154,7 +6154,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMLO    ="
+						outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -6163,9 +6163,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // trim(tempVal2) // "   ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // "1" // trim(tempVal3) // "  ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -6175,7 +6175,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMLO    ="
+						outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -6184,9 +6184,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // trim(tempVal2) // "   ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // "1" // trim(tempVal3) // "  ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -6207,7 +6207,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMLO    ="
+						outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -6230,9 +6230,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // trim(tempVal2) // "   ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // "1" // trim(tempVal3) // "  ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -6248,9 +6248,9 @@ program electroweakCorrections
 
 				! PROCESS Hp -> NeuT,TauBar
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " Hp -> NeuT,TauBar"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ***************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- Hp -> NeuT,TauBar -----"
 					m1 = MHp
@@ -6357,9 +6357,9 @@ program electroweakCorrections
 
 				! PROCESS Hp -> SBar,T
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " Hp -> SBar,T"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- Hp -> SBar,T -----"
 					m1 = MHp
@@ -6372,7 +6372,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoSBarTLO    ="
+						outputFileContent = trim(outputFileContent) // "HptoSBarTLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -6381,9 +6381,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -6393,7 +6393,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoSBarTLO    ="
+						outputFileContent = trim(outputFileContent) // "HptoSBarTLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -6402,9 +6402,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -6425,7 +6425,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoSBarTLO    ="
+						outputFileContent = trim(outputFileContent) // "HptoSBarTLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -6448,9 +6448,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -6466,9 +6466,9 @@ program electroweakCorrections
 
 				! PROCESS Hp -> SBar,U
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " Hp -> SBar,U"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) ********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- Hp -> SBar,U -----"
 					m1 = MHp
@@ -6481,7 +6481,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoSBarULO    ="
+						outputFileContent = trim(outputFileContent) // "HptoSBarULO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -6490,9 +6490,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -6502,7 +6502,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoSBarULO    ="
+						outputFileContent = trim(outputFileContent) // "HptoSBarULO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -6511,9 +6511,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -6534,7 +6534,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoSBarULO    ="
+						outputFileContent = trim(outputFileContent) // "HptoSBarULO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -6557,9 +6557,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // trim(tempVal2) // "       ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // "1" // trim(tempVal3) // "      ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -6575,9 +6575,9 @@ program electroweakCorrections
 
 				! PROCESS Hp -> Wp,h0
 					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "*******************"
+					outputFileContent = trim(outputFileContent) // "**************"
 					outputFileContent = trim(outputFileContent) // " Hp -> Wp,h0"
-					outputFileContent = trim(outputFileContent) // " *************************\n"
+					outputFileContent = trim(outputFileContent) // " (electroweak corrections) *********************\n"
 					! Kinematic prefactor together with the symmetry factor of the process
 					write (*,*) "----- Hp -> Wp,h0 -----"
 					m1 = MHp
@@ -6590,7 +6590,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoWph0LO    ="
+						outputFileContent = trim(outputFileContent) // "HptoWph0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -6599,9 +6599,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -6611,7 +6611,7 @@ program electroweakCorrections
 						treeLevelWidth = 0D0
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoWph0LO    ="
+						outputFileContent = trim(outputFileContent) // "HptoWph0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						do m = 1, maxNumberSchemes, 1
 							NLOWidth(m) = 0D0
@@ -6620,9 +6620,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
@@ -6643,7 +6643,7 @@ program electroweakCorrections
 
 						! Write the tree-level width to the output file
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "HptoWph0LO    ="
+						outputFileContent = trim(outputFileContent) // "HptoWph0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						! Get the full NLO decay width for all schemes
 						do m = 1, maxNumberSchemes, 1
@@ -6666,9 +6666,9 @@ program electroweakCorrections
 							write( tempVal2, '(I1)' ) m
 							write( tempVal3, '(I1)' ) (m-10)
 							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // trim(tempVal2) // "  ="
+								outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // trim(tempVal2) // "        ="
 							else
-								outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // "1" // trim(tempVal3) // " ="
+								outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // "1" // trim(tempVal3) // "       ="
 							end if
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
 						end do
