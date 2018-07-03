@@ -486,6 +486,10 @@ def createElectroweakCorrections():
 		additionalWhitespaces = ""
 		for y in range(0, (longestName - len(processDescriptionList[x][0]))):
 			additionalWhitespaces += " "
+		if (((processDescriptionList[x][1].split('->'))[1].strip().split(','))[0] == ((processDescriptionList[x][1].split('->'))[1].strip().split(','))[1]):
+			symmetryFactor = "2"
+		else:
+			symmetryFactor = "1"
 		electroweakCorrectionsFile.write('\t\t\t\t! PROCESS ' + processDescriptionList[x][1] + '\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\t! Prepare the output file content\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\toutputFileContent = trim(outputFileContent) // "**************"\n')
@@ -539,7 +543,7 @@ def createElectroweakCorrections():
 		electroweakCorrectionsFile.write('\t\t\t\t\t\tend do\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\telse\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\t\t! Kinematic prefactor\n')
-		electroweakCorrectionsFile.write('\t\t\t\t\t\tprefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &\n')
+		electroweakCorrectionsFile.write('\t\t\t\t\t\tprefactor = 1D0/' + symmetryFactor + 'D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\t&  - 2D0*m2**2*m3**2 )/(16D0*PI*m1**3)\n\n')
 		
 		electroweakCorrectionsFile.write('\t\t\t\t\t\t! Calculate the NLO ingredients\n')

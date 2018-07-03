@@ -11,7 +11,7 @@ program electroweakCorrections
 	character(300), parameter :: pathToOutputFiles = 'Results\\'
 	integer arguments(5)
 	integer, parameter :: maxNumberSchemes = 14
-	logical :: debugModeOn = .true.
+	logical :: debugModeOn = .false.
 	double precision prefactor, treeLevelWidth, NLOWidth(maxNumberSchemes), fullamplitude(maxNumberSchemes)
 	double precision NLOVCwidth, NLOVCwoIRwidth, NLOIRonlywidth
 	double precision A0toBBBarTree, A0toBBBarCT, A0toBBBarReal
@@ -1614,7 +1614,7 @@ program electroweakCorrections
 						end do
 					else
 						! Kinematic prefactor
-						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
+						prefactor = 1D0/2D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
 								&  - 2D0*m2**2*m3**2 )/(16D0*PI*m1**3)
 
 						! Calculate the NLO ingredients
@@ -2268,7 +2268,7 @@ program electroweakCorrections
 						end do
 					else
 						! Kinematic prefactor
-						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
+						prefactor = 1D0/2D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
 								&  - 2D0*m2**2*m3**2 )/(16D0*PI*m1**3)
 
 						! Calculate the NLO ingredients
@@ -3249,7 +3249,7 @@ program electroweakCorrections
 						end do
 					else
 						! Kinematic prefactor
-						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
+						prefactor = 1D0/2D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
 								&  - 2D0*m2**2*m3**2 )/(16D0*PI*m1**3)
 
 						! Calculate the NLO ingredients
@@ -3358,7 +3358,7 @@ program electroweakCorrections
 						end do
 					else
 						! Kinematic prefactor
-						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
+						prefactor = 1D0/2D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
 								&  - 2D0*m2**2*m3**2 )/(16D0*PI*m1**3)
 
 						! Calculate the NLO ingredients
@@ -4012,7 +4012,7 @@ program electroweakCorrections
 						end do
 					else
 						! Kinematic prefactor
-						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
+						prefactor = 1D0/2D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
 								&  - 2D0*m2**2*m3**2 )/(16D0*PI*m1**3)
 
 						! Calculate the NLO ingredients
@@ -4993,7 +4993,7 @@ program electroweakCorrections
 						end do
 					else
 						! Kinematic prefactor
-						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
+						prefactor = 1D0/2D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
 								&  - 2D0*m2**2*m3**2 )/(16D0*PI*m1**3)
 
 						! Calculate the NLO ingredients

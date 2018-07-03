@@ -54,7 +54,7 @@ MEP      = 450.D0
   PARAM: 1 (masses), 2 (lambda_i)
 
 PARAM    = 1
-TYPE     = 1
+TYPE     = 2
 RENSCHEM = 0
 ********************
 TGBET2HDM= 1.0D0
@@ -65,7 +65,7 @@ ALPHA_H  = -0.14D0
 MHL      = 125.D0
 MHH      = 210.D0
 MHA      = 130.D0
-MH+-     = 130.D0
+MH+-     = 330.D0
 ******************** PARAM=2:
 LAMBDA1  = 2.6885665050462264D0
 LAMBDA2  = 0.000156876030254505681D0
