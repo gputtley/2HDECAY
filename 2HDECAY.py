@@ -34,6 +34,12 @@ import CommonFunctions			# Provides common, often used functions for different s
 #		 Functions		  #
 #-------------------------#
 
+#-------------------------#
+#		 Settings		  #
+#-------------------------#
+# WARNING: do not change these settings if you do not know what they do!
+lineToInsert = 118	# This is the line at which the original input file ends and at which we append the electroweak corrections
+
 
 #----------------------------#
 #		 Main Program		 #
@@ -59,7 +65,6 @@ if __name__ == "__main__":		# This is necessary for correct parallelisation unde
 	|                                       |
 	+---------------------------------------+
 	''')
-
 	
 	# Copy the file name to the result folder and truncate it at the end
 	print("Copying input files into output folder...\n")
@@ -81,12 +86,12 @@ if __name__ == "__main__":		# This is necessary for correct parallelisation unde
 	lineCount = 1
 	for line in fileHandler:
 		# Convert the literal newlines to actual ones and remove the leading whitespace from the Fortran output
-		if (lineCount == 117):
+		if (lineCount == lineToInsert):
 			lineToReplace = line.replace('\\n', '\n')[1:]
 		else:
 			lineToReplace = line.replace('\\n', '\n')
 		convertedFile += lineToReplace
-		print(lineToReplace)
+		# print(lineToReplace)
 		lineCount += 1
 	fileHandler.close()
 

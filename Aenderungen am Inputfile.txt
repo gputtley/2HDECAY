@@ -1,10 +1,12 @@
 ﻿Änderungen am Inputfile:
 
-- Zeile 55: Renormierungsschema hinzugefügt (0: alle werden berechnet; 1-14: gewähltes Schema wird berechnet)
+- Zeile 25: inverse Feinstrukturkonstante bei der Z-Masse hinzugefügt (dient für meine elektroschwachen Korrekturen als Input; GF, welches in HDECAY verwendet wird, wird hieraus berechnet)
 
-- Zeile 59: Input-Skala \mu (in GeV) wurde hinzugefügt (ist für HDECAY irrelevant, aber für mich in den elektroschwachen Korrekturen notwendig)
+- Zeile 56: Renormierungsschema hinzugefügt (0: alle werden berechnet; 1-14: gewähltes Schema wird berechnet)
 
-- ab Zeile 117: LO- und NLO-Zerfallsbreiten der elektroschwachen Korrekturen hinzugefügt. Dabei gibt LO die tatsächliche partielle Zerfallsbreite auf LO an und NLO die tatsächliche volle partielle Zerfallsbreite auf NLO. Falls du nur die Differenz von der LO-Zerfallsbreite haben möchtest, musst du also subtrahieren:
+- Zeile 60: Input-Skala \mu (in GeV) wurde hinzugefügt (ist für HDECAY irrelevant, aber für mich in den elektroschwachen Korrekturen notwendig)
+
+- ab Zeile 118: LO- und NLO-Zerfallsbreiten der elektroschwachen Korrekturen hinzugefügt. Dabei gibt LO die tatsächliche partielle Zerfallsbreite auf LO an und NLO die tatsächliche volle partielle Zerfallsbreite auf NLO. Falls du nur die Differenz von der LO-Zerfallsbreite haben möchtest, musst du also subtrahieren:
 	(NLO-Anteil) = (NLO) - (LO)
 wobei (LO) und (NLO) hier für die Ergebnisse stehen, die mein Programm in das Output-File schreibt.
 Falls du einen multiplikativen Faktor deltaEW haben möchtest, wäre es entsprechend

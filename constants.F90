@@ -27,7 +27,7 @@ module constants
 	integer :: RenormScheme
 
     ! Standard Model parameters; the values are stored in the input file in the ./Parameters/input folder (1101.0593 [hep-ph], 1503.07589 [hep-ex],  Chin. Phys. C38 (2014) 090001)
-	double precision :: GFermi
+	double precision :: alphaAtMZ
     double precision :: Mh0
 	double precision :: MW
 	double precision :: MZ

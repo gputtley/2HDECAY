@@ -422,7 +422,7 @@ def createElectroweakCorrections():
 	electroweakCorrectionsFile.write('\t\t\t\t\twrite (*,*) "MZ: ", MZ\n')
 	electroweakCorrectionsFile.write('\t\t\t\t\twrite (*,*) "SW: ", SW\n')
 	electroweakCorrectionsFile.write('\t\t\t\t\twrite (*,*) "CW: ", CW\n')
-	electroweakCorrectionsFile.write('\t\t\t\t\twrite (*,*) "GFermi: ", GFermi\n')
+	electroweakCorrectionsFile.write('\t\t\t\t\twrite (*,*) "alphaAtMZ: ", alphaAtMZ\n')
 	electroweakCorrectionsFile.write('\t\t\t\t\twrite (*,*) "EL: ", EL\n')
 	electroweakCorrectionsFile.write('\t\t\t\t\twrite (*,*) "vev: ", (2D0*MW*SW/EL)\n')
 	electroweakCorrectionsFile.write('\t\t\t\t\twrite (*,*) "ME: ", ME\n')

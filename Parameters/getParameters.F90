@@ -100,14 +100,15 @@ subroutine getParameters(filePath)
 
             ! Read the muon mass
             read(42, *) dump, dump2, MM
-            
+
             ! Skip a line
             read(42, *)
             
-            ! Read the fermi constant
-            read(42, *) dump, dump2, GFermi
-
-            ! Skip two lines
+            ! Read the inverse fine-structure constant at the Z mass
+            read(42, *) dump, dump2, alphaAtMZ
+            
+            ! Skip three lines
+            read(42, *)
             read(42, *)
             read(42, *)
 
@@ -207,20 +208,25 @@ subroutine getParameters(filePath)
         end if
     close(42)
     
-    ! ! The light quark masses MU and MD and the electron mass ME are set to zero in HDECAY; we use very small values here to avoid numerical instability 
+    ! The light quark masses MU and MD and the electron mass ME are set to zero in HDECAY; we use very small values here to avoid numerical instability
+    ! IMPORTANT: especially the light quarks u and d should not have exactly the same small mass, because in this case, terms like 1/(MU2 - MD2) become numerically unstable
     MU = 1.0e-5
     MD = 1.5e-5
     ME = 1.8e-5
 
-    ! ! Calculate the sine and cosine of the Weinberg angle through MW and MZ 
+    ! Calculate the sine and cosine of the Weinberg angle through MW and MZ 
     CW = MW/MZ 
     SW = DSQRT(1D0 - CW**2)
 
-    ! Calculate the electromagnetic coupling constant out of the fundamental constants GF, MZ, MW 
-    ! (this is the HDECAY convention; the fine-structure constant 1/alpha, also given in the input file, is only used once for the decay to gamma gamma)
-    EL = DSQRT(8D0*GFermi*SW**2*MW**2/DSQRT(2D0))
+    ! Take the inverse of the read-in fine-structure constant (in the input file, we provide 1/alphaAtMZ, not alphaAtMZ!)
+    ! alphaAtMZ = 1D0/alphaAtMZ
 
-    ! ! Set the complex values of the CKM matrix to the non-complex ones (we do not consider CP violation)
+    ! Calculate the electromagnetic coupling constant out of the fundamental constants alphaAtMZ, MZ, MW 
+    ! (This set is our convention; in HDECAY, we use GF instead of alphaAtMZ. The difference between the two is minimal, 
+    ! and we can use the tree-level formula EL = DSQRT(8D0*GFermi*SW**2*MW**2/DSQRT(2D0)) to switch from our scheme to the one used in HDECAY)
+    EL = DSQRT(4D0*PI*alphaAtMZ)
+
+    ! Set the complex values of the CKM matrix to the non-complex ones (we do not consider CP violation)
     CKMC11 = CKM11
     CKMC12 = CKM12
     CKMC13 = CKM13
