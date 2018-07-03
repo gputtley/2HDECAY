@@ -78,8 +78,8 @@ subroutine getParameters(filePath)
             ! read(42, *) dump, m12squared
             ! read(42, *) dump, TypeOf2HDM
 
-            ! ! In the input file, the SM block does begin after line 17
-            do m = 1, 17, 1
+            ! ! In the input file, the SM block does begin at line 18
+            do m = 1, 18, 1
 				read(42, *)
 			end do
 
@@ -107,7 +107,8 @@ subroutine getParameters(filePath)
             ! Read the inverse fine-structure constant at the Z mass
             read(42, *) dump, dump2, alphaAtMZ
             
-            ! Skip three lines
+            ! Skip four lines
+            read(42, *)
             read(42, *)
             read(42, *)
             read(42, *)
