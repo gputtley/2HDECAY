@@ -10,7 +10,7 @@ subroutine getParameters(filePath)
     logical fileExists
     character isContinue
     character(50), intent(in) :: filePath
-    character(300), parameter :: pathToInputFiles = 'Parameters\\'
+    character(300), parameter :: pathToInputFiles = 'Results\\'
     integer m
     double precision M11SqPot, M22SqPot, M12SqPot, tmpMass
 
@@ -86,11 +86,15 @@ subroutine getParameters(filePath)
             ! Read the s quark mass
             read(42, *) dump, dump2, MS
 
+            ! Skip two lines
+            read(42, *)
+            read(42, *)
+
             ! Read the c quark mass
             read(42, *) dump, dump2, MC
 
             ! Read the b quark mass
-            read(42, *) dump, MB
+            read(42, *) dump, dump2, MB
 
             ! Read the t quark mass
             read(42, *) dump, dump2, MT

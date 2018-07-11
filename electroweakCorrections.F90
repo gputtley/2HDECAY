@@ -11,7 +11,7 @@ program electroweakCorrections
 	character(300), parameter :: pathToOutputFiles = 'Results\\'
 	integer arguments(5)
 	integer, parameter :: maxNumberSchemes = 14
-	logical :: debugModeOn = .false.
+	logical :: debugModeOn = .true.
 	double precision prefactor, treeLevelWidth, NLOWidth(maxNumberSchemes), fullamplitude(maxNumberSchemes)
 	double precision NLOVCwidth, NLOVCwoIRwidth, NLOIRonlywidth
 	double precision A0toBBBarTree, A0toBBBarCT, A0toBBBarReal

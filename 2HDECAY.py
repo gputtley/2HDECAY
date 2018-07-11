@@ -39,11 +39,13 @@ import CommonFunctions			# Provides common, often used functions for different s
 #		 Settings		  #
 #-------------------------#
 # WARNING: do not change these settings if you do not know what they do!
-lineToInsert = 120		# This is the line at which the original input file ends and at which we append the electroweak corrections
-lineWhereAlphaAtMZ = 26	# This is the line at which in the original input file the fine-structure constant at the Z boson mass MZ is specified
-lineWhereGFCalc = 28	# This is the line at which in the original input file the calculated Fermi constant GFCALC is specified
-lineWhereMZ = 31		# This is the line at which in the original input file the Z boson mass MZ is specified
-lineWhereMW = 32		# This is the line at which in the original input file the W boson mass MW is specified
+lineToInsert = 122		# This is the line at which the temporary input file ends and at which we append the electroweak corrections
+lineWhereAlphaAtMZ = 26 # This is the line at which in the temporary input file the fine-structure constant at the Z boson mass MZ is specified
+lineWhereGFCalc = 28	# This is the line at which in the temporary input file the calculated Fermi constant GFCALC is specified
+lineWhereMZ = 31		# This is the line at which in the temporary input file the Z boson mass MZ is specified
+lineWhereMW = 32		# This is the line at which in the temporary input file the W boson mass MW is specified
+lineWhereOSMC = 22		# This is the line at which the OS MC value has to be inserted in the temporary input file
+lineWhereOSMB = 23		# This is the line at which the OS MB value has to be inserted in the temporary input file
 
 #----------------------------#
 #		 Main Program		 #
@@ -93,11 +95,22 @@ if __name__ == "__main__":		# This is necessary for correct parallelisation unde
 	# Write a copy of the file to the output folder, but replace GFCALC in the file with the calculated value
 	GFcalc = pi/sqrt(2)*alphaAtMZ/(massMW**2*(1-massMW**2/massMZ**2))
 	GFline = "GFCALC   = " + str(GFcalc) + "\n"
+	MCOSCalc = 1.4313133996282703	# Temporary
+	MBOSCalc = 4.8413133996282705	# Temporary
+	MCOSline = "MCOSCALC = " + str(MCOSCalc) + "\n"
+	MBOSline = "MBOSCALC = " + str(MBOSCalc) + "\n"
 	lineCount = 1
 	convertedFile = ''
 	for line in convertedFileHandler:
 		if lineCount == lineWhereGFCalc:
 			convertedFile += GFline
+		elif lineCount == lineWhereOSMC:
+			convertedFile += MCOSline
+			convertedFile += MBOSline
+			convertedFile += line
+		# elif lineCount == lineWhereOSMB:
+		# 	convertedFile += MBOSline
+		# 	convertedFile += line
 		else:
 			convertedFile += line
 		lineCount += 1
@@ -108,7 +121,7 @@ if __name__ == "__main__":		# This is necessary for correct parallelisation unde
 	
 	# Calculate the electroweak corrections
 	print("Calculating electroweak corrections...\n")
-	prompt = ['electroweakCorrections', '0', '0', '0', '1', 'InputFiles' + os.sep + 'input.in', 'test.txt']
+	prompt = ['electroweakCorrections', '0', '0', '0', '1', 'Results' + os.sep + 'hdecay.in', 'test.txt']
 	subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
 	print("Calculation of electroweak corrections done.\n")
 
