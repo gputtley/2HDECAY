@@ -1,2 +1,5 @@
-Hp -> HH,Wp
+H+ -> W H
 MHp,MHH,MW
+1
+47
+1

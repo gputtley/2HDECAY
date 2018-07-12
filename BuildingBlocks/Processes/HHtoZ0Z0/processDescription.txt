@@ -1,2 +1,5 @@
-HH -> Z0,Z0
+H -> ZZ
 MHH,MZ,MZ
+1
+21
+2

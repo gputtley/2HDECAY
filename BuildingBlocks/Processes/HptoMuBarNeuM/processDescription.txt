@@ -1,2 +1,5 @@
-Hp -> MuBar,NeuM
+H+ -> mubar nu
 MHp,MM,0
+1
+38
+1

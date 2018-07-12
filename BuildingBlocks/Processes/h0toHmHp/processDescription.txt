@@ -1,2 +1,5 @@
-h0 -> Hm,Hp
+h -> H+ H-
 Mh0,MHp,MHp
+1
+13
+1

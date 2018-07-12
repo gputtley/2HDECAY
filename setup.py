@@ -248,7 +248,7 @@ def createElectroweakCorrections():
 	# Get the process list and the list of masses 
 	processDir = "BuildingBlocks" + os.sep + "Processes"
 	processList = os.listdir(processDir)
-	processDescriptionList = []
+	processDescriptionList = [None] * len(processList)
 	longestName = 0
 	for pickProcess in processList:
 		if len(pickProcess) > longestName:
@@ -261,8 +261,13 @@ def createElectroweakCorrections():
 			lines = [line.rstrip('\n') for line in open(processDescFilePath)]
 			massString = lines[1]
 			massStringList = massString.split(',')
-			processDesc = [pickProcess, lines[0], massStringList[0], massStringList[1], massStringList[2]]
-			processDescriptionList.append(processDesc)
+			symmetryFactorString = (lines[4].split())[0]
+			processDesc = [pickProcess, lines[0], massStringList[0], massStringList[1], massStringList[2], symmetryFactorString]
+			isIncluded = (lines[2].split())[0]
+			wantedPosition = int((lines[3].split())[0]) - 1
+			if isIncluded == '1':
+				processDescriptionList[wantedPosition] = processDesc
+	processDescriptionList = [x for x in processDescriptionList if x is not None]
 
 	# Print the electroweakCorrections.F90 file
 	electroweakCorrectionsFile = open("electroweakCorrections.F90", 'w')
@@ -281,7 +286,7 @@ def createElectroweakCorrections():
 	electroweakCorrectionsFile.write("\tcharacter(300), parameter :: pathToOutputFiles = 'Results\\\\'\n")
 	electroweakCorrectionsFile.write("\tinteger arguments(5)\n")
 	electroweakCorrectionsFile.write("\tinteger, parameter :: maxNumberSchemes = 14\n")
-	electroweakCorrectionsFile.write("\tlogical :: debugModeOn = .false.\n")
+	electroweakCorrectionsFile.write("\tlogical :: debugModeOn = .true.\n")
 	electroweakCorrectionsFile.write("\tdouble precision prefactor, treeLevelWidth, NLOWidth(maxNumberSchemes), fullamplitude(maxNumberSchemes)\n")
 	electroweakCorrectionsFile.write("\tdouble precision NLOVCwidth, NLOVCwoIRwidth, NLOIRonlywidth\n")
 	for x in range(0, len(processDescriptionList)):
@@ -486,10 +491,7 @@ def createElectroweakCorrections():
 		additionalWhitespaces = ""
 		for y in range(0, (longestName - len(processDescriptionList[x][0]))):
 			additionalWhitespaces += " "
-		if (((processDescriptionList[x][1].split('->'))[1].strip().split(','))[0] == ((processDescriptionList[x][1].split('->'))[1].strip().split(','))[1]):
-			symmetryFactor = "2"
-		else:
-			symmetryFactor = "1"
+		symmetryFactor = processDescriptionList[x][5]
 		electroweakCorrectionsFile.write('\t\t\t\t! PROCESS ' + processDescriptionList[x][1] + '\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\t! Prepare the output file content\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\toutputFileContent = trim(outputFileContent) // "**************"\n')

@@ -1,2 +1,5 @@
-HH -> Hp,Wm
+H -> H+ W-
 MHH,MHp,MW
+1
+25
+1

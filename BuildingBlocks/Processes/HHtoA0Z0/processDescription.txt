@@ -1,2 +1,5 @@
-HH -> A0,Z0
+H -> ZA
 MHH,MA0,MZ
+1
+24
+1

@@ -1,2 +1,5 @@
-A0 -> Mu,MuBar
+A -> mu,mu
 MA0,MM,MM
+1
+29
+1

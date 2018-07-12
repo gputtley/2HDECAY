@@ -1,2 +1,5 @@
-A0 -> S,SBar
+A -> ss
 MA0,MS,MS
+1
+30
+1

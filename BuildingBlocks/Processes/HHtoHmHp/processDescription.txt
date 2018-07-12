@@ -1,2 +1,5 @@
-HH -> Hm,Hp
+H -> H+ H-
 MHH,MHp,MHp
+1
+26
+1

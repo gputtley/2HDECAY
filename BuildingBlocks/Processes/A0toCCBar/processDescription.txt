@@ -1,2 +1,5 @@
-A0 -> C,CBar
+A -> cc
 MA0,MC,MC
+1
+31
+1

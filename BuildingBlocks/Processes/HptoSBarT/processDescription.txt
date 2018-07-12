@@ -1,2 +1,5 @@
-Hp -> SBar,T
+H+ -> sbar t
 MHp,MS,MT
+1
+44
+1

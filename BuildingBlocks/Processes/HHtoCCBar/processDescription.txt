@@ -1,2 +1,5 @@
-HH -> C,CBar
+H -> cc
 MHH,MC,MC
+1
+18
+1

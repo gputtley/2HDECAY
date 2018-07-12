@@ -1,2 +1,5 @@
-HH -> Mu,MuBar
+H -> mu mu
 MHH,MM,MM
+1
+16
+1

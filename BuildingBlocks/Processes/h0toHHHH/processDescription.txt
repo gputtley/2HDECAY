@@ -1,2 +1,5 @@
-h0 -> HH,HH
+h -> HH
 Mh0,MHH,MHH
+1
+9
+2

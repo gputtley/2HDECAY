@@ -1,2 +1,5 @@
-Hp -> DBar,T
+H+ -> dbar t
 MHp,MD,MT
+1
+45
+1

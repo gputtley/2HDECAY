@@ -1,2 +1,5 @@
-Hp -> NeuT,TauBar
+H+ -> taubar nu
 MHp,0,ML
+1
+37
+1

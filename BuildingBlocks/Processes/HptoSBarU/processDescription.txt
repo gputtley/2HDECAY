@@ -1,2 +1,5 @@
-Hp -> SBar,U
+H+ -> sbar u
 MHp,MS,MU
+1
+39
+1

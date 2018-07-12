@@ -1,2 +1,5 @@
-HH -> T,TBar
+H -> tt
 MHH,MT,MT
+1
+19
+1

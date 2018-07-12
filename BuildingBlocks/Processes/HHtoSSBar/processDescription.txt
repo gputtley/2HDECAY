@@ -1,2 +1,5 @@
-HH -> S,SBar
+H -> ss
 MHH,MS,MS
+1
+17
+1

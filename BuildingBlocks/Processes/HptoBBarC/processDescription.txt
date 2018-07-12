@@ -1,2 +1,5 @@
-Hp -> BBar,C
+H+ -> bbar c
 MHp,MB,MC
+1
+36
+1

@@ -1,2 +1,5 @@
-HH -> B,BBar
+H -> bb
 MHH,MB,MB
+1
+14
+1

@@ -1,2 +1,5 @@
-A0 -> B,BBar
+A -> bb
 MA0,MB,MB
+1
+27
+1
