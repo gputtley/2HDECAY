@@ -2,6 +2,9 @@ module constants
     implicit none
     save
 
+	! Integer for choosing whether the electroweak corrections should be calculated or not
+	integer :: omitELCorr
+
     ! Imaginary unit for convenience
     double complex, parameter :: I = (0D0, 1D0)
 

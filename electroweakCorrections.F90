@@ -168,6 +168,7 @@ program electroweakCorrections
 			outputFileContent = ""
 				! Print out the current point in phase-space (debug mode only)
 				if (debugModeOn) then
+					write (*,*) "omitELCorr: ", omitELCorr
 					write (*,*) "MW: ", MW
 					write (*,*) "MZ: ", MZ
 					write (*,*) "SW: ", SW
@@ -240,7 +241,27 @@ program electroweakCorrections
 					m2 = MB
 					m3 = MB
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process h -> bb are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "h0toBBBarLO         ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // trim(tempVal2) // "       ="
+							else
+								outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process h -> bb has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -349,7 +370,27 @@ program electroweakCorrections
 					m2 = ML
 					m3 = ML
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process h -> tau tau are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "h0toTauTauBarLO     ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // trim(tempVal2) // "   ="
+							else
+								outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process h -> tau tau has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -458,7 +499,27 @@ program electroweakCorrections
 					m2 = MM
 					m3 = MM
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process h -> mu mu are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "h0toMuMuBarLO       ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // trim(tempVal2) // "     ="
+							else
+								outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process h -> mu mu has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -567,7 +628,27 @@ program electroweakCorrections
 					m2 = MS
 					m3 = MS
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process h -> ss are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "h0toSSBarLO         ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // trim(tempVal2) // "       ="
+							else
+								outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process h -> ss has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -676,7 +757,27 @@ program electroweakCorrections
 					m2 = MC
 					m3 = MC
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process h -> cc are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "h0toCCBarLO         ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // trim(tempVal2) // "       ="
+							else
+								outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process h -> cc has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -785,7 +886,27 @@ program electroweakCorrections
 					m2 = MT
 					m3 = MT
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process h -> tt are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "h0toTTBarLO         ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // trim(tempVal2) // "       ="
+							else
+								outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process h -> tt has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -894,7 +1015,27 @@ program electroweakCorrections
 					m2 = MW
 					m3 = MW
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process h -> WW are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "h0toWmWpLO          ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // trim(tempVal2) // "        ="
+							else
+								outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // "1" // trim(tempVal3) // "       ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process h -> WW has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -1003,7 +1144,27 @@ program electroweakCorrections
 					m2 = MZ
 					m3 = MZ
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process h -> ZZ are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "h0toZ0Z0LO          ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // trim(tempVal2) // "        ="
+							else
+								outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process h -> ZZ has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -1112,7 +1273,27 @@ program electroweakCorrections
 					m2 = MHH
 					m3 = MHH
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process h -> HH are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "h0toHHHHLO          ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "h0toHHHHNLO" // trim(tempVal2) // "        ="
+							else
+								outputFileContent = trim(outputFileContent) // "h0toHHHHNLO" // "1" // trim(tempVal3) // "       ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process h -> HH has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -1221,7 +1402,27 @@ program electroweakCorrections
 					m2 = MA0
 					m3 = MA0
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process h -> AA are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "h0toA0A0LO          ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // trim(tempVal2) // "        ="
+							else
+								outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // "1" // trim(tempVal3) // "       ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process h -> AA has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -1330,7 +1531,27 @@ program electroweakCorrections
 					m2 = MA0
 					m3 = MZ
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process h -> ZA are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "h0toA0Z0LO          ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // trim(tempVal2) // "        ="
+							else
+								outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // "1" // trim(tempVal3) // "       ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process h -> ZA has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -1439,7 +1660,27 @@ program electroweakCorrections
 					m2 = MHp
 					m3 = MW
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process h -> H+ W- are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "h0toHpWmLO          ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // trim(tempVal2) // "        ="
+							else
+								outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // "1" // trim(tempVal3) // "       ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process h -> H+ W- has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -1548,7 +1789,27 @@ program electroweakCorrections
 					m2 = MHp
 					m3 = MHp
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process h -> H+ H- are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "h0toHmHpLO          ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // trim(tempVal2) // "        ="
+							else
+								outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // "1" // trim(tempVal3) // "       ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process h -> H+ H- has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -1657,7 +1918,27 @@ program electroweakCorrections
 					m2 = MB
 					m3 = MB
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process H -> bb are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "HHtoBBBarLO         ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // trim(tempVal2) // "       ="
+							else
+								outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // "1" // trim(tempVal3) // "      ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H -> bb has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -1766,7 +2047,27 @@ program electroweakCorrections
 					m2 = ML
 					m3 = ML
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process H -> tautau are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "HHtoTauTauBarLO     ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // trim(tempVal2) // "   ="
+							else
+								outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H -> tautau has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -1875,7 +2176,27 @@ program electroweakCorrections
 					m2 = MM
 					m3 = MM
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process H -> mu mu are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "HHtoMuMuBarLO       ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // trim(tempVal2) // "     ="
+							else
+								outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H -> mu mu has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -1984,7 +2305,27 @@ program electroweakCorrections
 					m2 = MS
 					m3 = MS
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process H -> ss are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "HHtoSSBarLO         ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // trim(tempVal2) // "       ="
+							else
+								outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // "1" // trim(tempVal3) // "      ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H -> ss has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -2093,7 +2434,27 @@ program electroweakCorrections
 					m2 = MC
 					m3 = MC
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process H -> cc are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "HHtoCCBarLO         ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // trim(tempVal2) // "       ="
+							else
+								outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // "1" // trim(tempVal3) // "      ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H -> cc has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -2202,7 +2563,27 @@ program electroweakCorrections
 					m2 = MT
 					m3 = MT
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process H -> tt are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "HHtoTTBarLO         ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // trim(tempVal2) // "       ="
+							else
+								outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // "1" // trim(tempVal3) // "      ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H -> tt has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -2311,7 +2692,27 @@ program electroweakCorrections
 					m2 = MW
 					m3 = MW
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process H -> WW are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "HHtoWmWpLO          ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // trim(tempVal2) // "        ="
+							else
+								outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // "1" // trim(tempVal3) // "       ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H -> WW has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -2420,7 +2821,27 @@ program electroweakCorrections
 					m2 = MZ
 					m3 = MZ
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process H -> ZZ are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "HHtoZ0Z0LO          ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // trim(tempVal2) // "        ="
+							else
+								outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H -> ZZ has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -2529,7 +2950,27 @@ program electroweakCorrections
 					m2 = Mh0
 					m3 = Mh0
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process H -> hh are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "HHtoh0h0LO          ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // trim(tempVal2) // "        ="
+							else
+								outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // "1" // trim(tempVal3) // "       ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H -> hh has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -2638,7 +3079,27 @@ program electroweakCorrections
 					m2 = MA0
 					m3 = MA0
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process H -> AA are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "HHtoA0A0LO          ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // trim(tempVal2) // "        ="
+							else
+								outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // "1" // trim(tempVal3) // "       ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H -> AA has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -2747,7 +3208,27 @@ program electroweakCorrections
 					m2 = MA0
 					m3 = MZ
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process H -> ZA are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "HHtoA0Z0LO          ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // trim(tempVal2) // "        ="
+							else
+								outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // "1" // trim(tempVal3) // "       ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H -> ZA has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -2856,7 +3337,27 @@ program electroweakCorrections
 					m2 = MHp
 					m3 = MW
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process H -> H+ W- are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "HHtoHpWmLO          ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // trim(tempVal2) // "        ="
+							else
+								outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // "1" // trim(tempVal3) // "       ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H -> H+ W- has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -2965,7 +3466,27 @@ program electroweakCorrections
 					m2 = MHp
 					m3 = MHp
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process H -> H+ H- are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "HHtoHmHpLO          ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // trim(tempVal2) // "        ="
+							else
+								outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // "1" // trim(tempVal3) // "       ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H -> H+ H- has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -3074,7 +3595,27 @@ program electroweakCorrections
 					m2 = MB
 					m3 = MB
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process A -> bb are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "A0toBBBarLO         ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // trim(tempVal2) // "       ="
+							else
+								outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process A -> bb has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -3183,7 +3724,27 @@ program electroweakCorrections
 					m2 = ML
 					m3 = ML
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process A -> tau,tau are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "A0toTauTauBarLO     ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // trim(tempVal2) // "   ="
+							else
+								outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process A -> tau,tau has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -3292,7 +3853,27 @@ program electroweakCorrections
 					m2 = MM
 					m3 = MM
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process A -> mu,mu are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "A0toMuMuBarLO       ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // trim(tempVal2) // "     ="
+							else
+								outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process A -> mu,mu has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -3401,7 +3982,27 @@ program electroweakCorrections
 					m2 = MS
 					m3 = MS
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process A -> ss are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "A0toSSBarLO         ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // trim(tempVal2) // "       ="
+							else
+								outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process A -> ss has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -3510,7 +4111,27 @@ program electroweakCorrections
 					m2 = MC
 					m3 = MC
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process A -> cc are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "A0toCCBarLO         ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // trim(tempVal2) // "       ="
+							else
+								outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process A -> cc has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -3619,7 +4240,27 @@ program electroweakCorrections
 					m2 = MT
 					m3 = MT
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process A -> tt are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "A0toTTBarLO         ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // trim(tempVal2) // "       ="
+							else
+								outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process A -> tt has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -3728,7 +4369,27 @@ program electroweakCorrections
 					m2 = MZ
 					m3 = Mh0
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process A -> Zh are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "A0toZ0h0LO          ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // trim(tempVal2) // "        ="
+							else
+								outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // "1" // trim(tempVal3) // "       ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process A -> Zh has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -3837,7 +4498,27 @@ program electroweakCorrections
 					m2 = MHH
 					m3 = MZ
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process A -> ZH are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "A0toHHZ0LO          ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // trim(tempVal2) // "        ="
+							else
+								outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // "1" // trim(tempVal3) // "       ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process A -> ZH has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -3946,7 +4627,27 @@ program electroweakCorrections
 					m2 = MHp
 					m3 = MW
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process A -> H- W+ are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "A0toHmWpLO          ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // trim(tempVal2) // "        ="
+							else
+								outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // "1" // trim(tempVal3) // "       ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process A -> H- W+ has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -4055,7 +4756,27 @@ program electroweakCorrections
 					m2 = MB
 					m3 = MC
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process H+ -> bbar c are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "HptoBBarCLO         ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // trim(tempVal2) // "       ="
+							else
+								outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // "1" // trim(tempVal3) // "      ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H+ -> bbar c has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -4164,7 +4885,27 @@ program electroweakCorrections
 					m2 = 0
 					m3 = ML
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process H+ -> taubar nu are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarLO    ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // trim(tempVal2) // "  ="
+							else
+								outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // "1" // trim(tempVal3) // " ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H+ -> taubar nu has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -4273,7 +5014,27 @@ program electroweakCorrections
 					m2 = MM
 					m3 = 0
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process H+ -> mubar nu are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMLO     ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // trim(tempVal2) // "   ="
+							else
+								outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // "1" // trim(tempVal3) // "  ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H+ -> mubar nu has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -4382,7 +5143,27 @@ program electroweakCorrections
 					m2 = MS
 					m3 = MU
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process H+ -> sbar u are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "HptoSBarULO         ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // trim(tempVal2) // "       ="
+							else
+								outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // "1" // trim(tempVal3) // "      ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H+ -> sbar u has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -4491,7 +5272,27 @@ program electroweakCorrections
 					m2 = MC
 					m3 = MS
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process H+ -> sbar c are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "HptoCSBarLO         ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // trim(tempVal2) // "       ="
+							else
+								outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // "1" // trim(tempVal3) // "      ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H+ -> sbar c has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -4600,7 +5401,27 @@ program electroweakCorrections
 					m2 = MB
 					m3 = MT
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process H+ -> bbar t are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "HptoBBarTLO         ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // trim(tempVal2) // "       ="
+							else
+								outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // "1" // trim(tempVal3) // "      ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H+ -> bbar t has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -4709,7 +5530,27 @@ program electroweakCorrections
 					m2 = MC
 					m3 = MD
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process H+ -> dbar c are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "HptoCDBarLO         ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // trim(tempVal2) // "       ="
+							else
+								outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // "1" // trim(tempVal3) // "      ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H+ -> dbar c has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -4818,7 +5659,27 @@ program electroweakCorrections
 					m2 = MB
 					m3 = MU
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process H+ -> bbar u are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "HptoBBarULO         ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // trim(tempVal2) // "       ="
+							else
+								outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // "1" // trim(tempVal3) // "      ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H+ -> bbar u has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -4927,7 +5788,27 @@ program electroweakCorrections
 					m2 = MS
 					m3 = MT
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process H+ -> sbar t are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "HptoSBarTLO         ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // trim(tempVal2) // "       ="
+							else
+								outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // "1" // trim(tempVal3) // "      ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H+ -> sbar t has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -5036,7 +5917,27 @@ program electroweakCorrections
 					m2 = MD
 					m3 = MT
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process H+ -> dbar t are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "HptoDBarTLO         ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // trim(tempVal2) // "       ="
+							else
+								outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // "1" // trim(tempVal3) // "      ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H+ -> dbar t has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -5145,7 +6046,27 @@ program electroweakCorrections
 					m2 = MW
 					m3 = Mh0
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process H+ -> W h are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "HptoWph0LO          ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // trim(tempVal2) // "        ="
+							else
+								outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // "1" // trim(tempVal3) // "       ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H+ -> W h has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -5254,7 +6175,27 @@ program electroweakCorrections
 					m2 = MHH
 					m3 = MW
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process H+ -> W H are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "HptoHHWpLO          ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // trim(tempVal2) // "        ="
+							else
+								outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // "1" // trim(tempVal3) // "       ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H+ -> W H has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
@@ -5363,7 +6304,27 @@ program electroweakCorrections
 					m2 = MA0
 					m3 = MW
 					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (m1 .LE. 0D0) then
+					if (omitELCorr .EQ. 1) then
+						write (*,*) "The electroweak corrections to the process H+ -> W A are not calculated since OMIT ELW2 is set to 1."
+						treeLevelWidth = 0D0
+						! Write the tree-level width to the output file
+						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+						outputFileContent = trim(outputFileContent) // "HptoA0WpLO          ="
+						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						do m = 1, maxNumberSchemes, 1
+							NLOWidth(m) = 0D0
+							! Write the NLO width to the output file
+							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+							write( tempVal2, '(I1)' ) m
+							write( tempVal3, '(I1)' ) (m-10)
+							if (m .lt. 10) then
+								outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // trim(tempVal2) // "        ="
+							else
+								outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // "1" // trim(tempVal3) // "       ="
+							end if
+							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end do
+					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H+ -> W A has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
 						treeLevelWidth = 0D0
