@@ -105,6 +105,9 @@ module constants
     double precision :: Yuk1
 	double precision :: Yuk2
 	double precision :: Yuk3
+    double precision :: Yuk4
+	double precision :: Yuk5
+	double precision :: Yuk6
 	double precision :: Lambda5
 	double precision :: m12squared
 	double precision :: hdecayLam1

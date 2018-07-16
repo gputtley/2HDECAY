@@ -218,6 +218,9 @@ program electroweakCorrections
 					write (*,*) "Yuk1: ", Yuk1
 					write (*,*) "Yuk2: ", Yuk2
 					write (*,*) "Yuk3: ", Yuk3
+					write (*,*) "Yuk4: ", Yuk4
+					write (*,*) "Yuk5: ", Yuk5
+					write (*,*) "Yuk6: ", Yuk6
 					write (*,*) "m12squared: ", m12squared
 					write (*,*) "2HDM Type: ", TypeOf2HDM
 					write (*,*) "InputScale: ", InputScale

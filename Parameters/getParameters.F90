@@ -35,48 +35,6 @@ subroutine getParameters(filePath)
     ! Read the input file
     open(unit=42, file=trim(pathToInputFiles)//'hdecay.in', iostat=statOpen)
         if (statOpen == 0) then
-            ! Old input file format
-            ! read(42, *) dump, Mh0
-            ! read(42, *) dump, MW
-            ! read(42, *) dump, MZ
-            ! read(42, *) dump, ME
-            ! read(42, *) dump, MM
-            ! read(42, *) dump, ML
-            ! read(42, *) dump, MU
-            ! read(42, *) dump, MC
-            ! read(42, *) dump, MT
-            ! read(42, *) dump, MD
-            ! read(42, *) dump, MS
-            ! read(42, *) dump, MB
-            ! read(42, *) dump, EL
-            ! read(42, *) dump, SW
-            ! read(42, *) dump, CW
-            ! read(42, *) dump, CKM11
-            ! read(42, *) dump, CKM12
-            ! read(42, *) dump, CKM13
-            ! read(42, *) dump, CKM21
-            ! read(42, *) dump, CKM22
-            ! read(42, *) dump, CKM23
-            ! read(42, *) dump, CKM31
-            ! read(42, *) dump, CKM32
-            ! read(42, *) dump, CKM33
-            ! read(42, *) dump, CKMC11
-            ! read(42, *) dump, CKMC12
-            ! read(42, *) dump, CKMC13
-            ! read(42, *) dump, CKMC21
-            ! read(42, *) dump, CKMC22
-            ! read(42, *) dump, CKMC23
-            ! read(42, *) dump, CKMC31
-            ! read(42, *) dump, CKMC32
-            ! read(42, *) dump, CKMC33
-            ! read(42, *) dump, InputScale
-            ! read(42, *) dump, MHH
-            ! read(42, *) dump, MA0
-            ! read(42, *) dump, MHp
-            ! read(42, *) dump, alpha
-            ! read(42, *) dump, TB
-            ! read(42, *) dump, m12squared
-            ! read(42, *) dump, TypeOf2HDM
 
             ! Skip the first five lines
             do m = 1, 5, 1
@@ -331,10 +289,30 @@ subroutine getParameters(filePath)
         Yuk1 = CA/SB
         Yuk2 = SA/SB
         Yuk3 = - 1D0/TB
+        Yuk4 = CA/SB
+        Yuk5 = SA/SB
+        Yuk6 = - 1D0/TB
+    else if (TypeOf2HDM == 2) then
+        Yuk1 = - SA/CB
+        Yuk2 = CA/CB
+        Yuk3 = TB
+        Yuk4 = - SA/CB
+        Yuk5 = CA/CB
+        Yuk6 = TB
+    else if (TypeOf2HDM == 3) then
+        Yuk1 = CA/SB
+        Yuk2 = SA/SB
+        Yuk3 = - 1D0/TB
+        Yuk4 = - SA/CB
+        Yuk5 = CA/CB
+        Yuk6 = TB
     else
         Yuk1 = - SA/CB
         Yuk2 = CA/CB
         Yuk3 = TB
+        Yuk4 = CA/SB
+        Yuk5 = SA/SB
+        Yuk6 = - 1D0/TB
     end if
 
     ! Generate the square of the additional input parameters
@@ -355,99 +333,5 @@ subroutine getParameters(filePath)
     SAB2 = SAB**2
     CBA2 = CBA**2
     SBA2 = SBA**2
-
-    ! ! Check if the 2HDM input file exists
-    ! inquire(file=trim(pathToInputFiles)//trim(filePath), exist=fileExists2HDM)
-    ! if (.not. fileExists2HDM) then
-    !     do
-    !         print *, "ERROR: Could not find the 2HDM input parameter file!"
-    !         print *, ">>> Do you want to continue with the evaluation of the program? [y/n]"
-    !         read (*,*) isContinue
-    !         if (isContinue == 'n') then
-    !             print *, "Termination requested by user. 2HDECAY will be terminated now."
-    !             stop
-    !         else if (isContinue == 'y') then
-    !             exit
-    !         else
-    !             print *, "Invalid character. Enter y or n."
-    !         end if
-    !     end do
-    ! end if
-
-    ! ! Read the 2HDM input parameters
-    ! open(unit=43, file=trim(pathToInputFiles)//trim(filePath), iostat=statOpen)
-    !     if (statOpen == 0) then
-    !         do
-    !             ! Read the parameters from the current line
-    !             ! read(43, *, iostat=statRead) MHHTemp, dump2, MA0Temp, MHpTemp, alphaTemp, TBTemp, dump2, dump2, dump2, &
-    !             !     & dump2, dump2, dump2, dump2, m12squaredTemp
-    !             read(43, *, iostat=statRead) MHHTemp, MA0Temp, MHpTemp, alphaTemp, TBTemp, m12squaredTemp, TypeOf2HDMTemp
-
-    !             ! Stop reading the file at end-of-file
-    !             if (statRead /= 0) exit
-    !             !if (currentLine == 1000) exit
-
-    !             !print *, "Reading line ", currentLine, "..."
-
-    !             ! If end-of-file is not reached yet, copy the values into the lists
-    !             MHHList(currentLine) = MHHTemp
-    !             MA0List(currentLine) = MA0Temp
-    !             MHpList(currentLine) = MHpTemp
-    !             alphaList(currentLine) = alphaTemp
-    !             TBList(currentLine) = TBTemp
-    !             m12squaredList(currentLine) = m12squaredTemp
-    !             TypeOf2HDMList(currentLine) = TypeOf2HDMTemp
-
-    !             ! Calculate the current beta with the given tan(beta)
-    !             betaList(currentLine) = datan(TBList(currentLine))
-
-    !             ! Calculate the rest of the 2HDM parameters
-    !             CAList(currentLine) = dcos(alphaList(currentLine))
-    !             SAList(currentLine) = dsin(alphaList(currentLine))
-    !             TAList(currentLine) = dtan(alphaList(currentLine))
-    !             CBList(currentLine) = dcos(betaList(currentLine))
-    !             SBList(currentLine) = dsin(betaList(currentLine))
-    !             S2AList(currentLine) = dsin(2D0*alphaList(currentLine))
-    !             C2AList(currentLine) = dcos(2D0*alphaList(currentLine))
-    !             S2BList(currentLine) = dsin(2D0*betaList(currentLine))
-    !             C2BList(currentLine) = dcos(2D0*betaList(currentLine))
-    !             CABList(currentLine) = dcos(alphaList(currentLine) + betaList(currentLine))
-    !             SABList(currentLine) = dsin(alphaList(currentLine) + betaList(currentLine))
-    !             CBAList(currentLine) = dcos(betaList(currentLine) - alphaList(currentLine))
-    !             SBAList(currentLine) = dsin(betaList(currentLine) - alphaList(currentLine))
-    !             Lambda5List(currentLine) = EL2*m12squaredList(currentLine)/(2D0*SW2*MW2*SBList(currentLine)*CBList(currentLine))
-    !             if (TypeOf2HDMList(currentLine) == 1) then
-    !                 Yuk1List(currentLine) = CAList(currentLine)/SBList(currentLine)
-    !                 Yuk2List(currentLine) = SAList(currentLine)/SBList(currentLine)
-    !                 Yuk3List(currentLine) = - 1D0/TBList(currentLine)
-    !             else
-    !                 Yuk1List(currentLine) = - SAList(currentLine)/CBList(currentLine)
-    !                 Yuk2List(currentLine) = CAList(currentLine)/CBList(currentLine)
-    !                 Yuk3List(currentLine) = TBList(currentLine)
-    !             end if
-
-    !             ! Set the maximum number of points contained in the file to the current line number
-    !             maxPoint = currentLine
-
-    !             ! Increment the line counter
-    !             currentLine = currentLine + 1
-    !         end do
-    !         numberOfPoints = currentLine - 1
-    !     else
-    !         do
-    !             print *, "ERROR: Generic error when reading the 2HDM input parameter file!"
-    !             print *, ">>> Do you want to continue with the evaluation of the program? [y/n]"
-    !             read (*,*) isContinue
-    !             if (isContinue == 'n') then
-    !                 print *, "Termination requested by user. 2HDECAY will be terminated now."
-    !                 stop
-    !             else if (isContinue == 'y') then
-    !                 exit
-    !             else
-    !                 print *, "Invalid character. Enter y or n."
-    !             end if
-    !         end do
-    !     end if
-    ! close(43)
 
 end subroutine getParameters
