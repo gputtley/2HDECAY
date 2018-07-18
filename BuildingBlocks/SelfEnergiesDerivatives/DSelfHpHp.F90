@@ -25,13 +25,13 @@ double complex function DSelfHpHp(x)
 
  amplitudes(9) = 0.D0
 
- amplitudes(10) = (-0.03125D0*EL2*ME2*(-1.D0*B0(x, 0.D0, ME2) + (ME2 - 1.D0*x)*DB0(x, 0.D0, ME2))*DBLE(Yuk3**INT(2.D0)))/(MW2*PI2&
+ amplitudes(10) = (-0.03125D0*EL2*ME2*(-1.D0*B0(x, 0.D0, ME2) + (ME2 - 1.D0*x)*DB0(x, 0.D0, ME2))*DBLE(Yuk6**INT(2.D0)))/(MW2*PI2&
   &*SW2)
 
- amplitudes(11) = (-0.03125D0*EL2*MM2*(-1.D0*B0(x, 0.D0, MM2) + (MM2 - 1.D0*x)*DB0(x, 0.D0, MM2))*DBLE(Yuk3**INT(2.D0)))/(MW2*PI2&
+ amplitudes(11) = (-0.03125D0*EL2*MM2*(-1.D0*B0(x, 0.D0, MM2) + (MM2 - 1.D0*x)*DB0(x, 0.D0, MM2))*DBLE(Yuk6**INT(2.D0)))/(MW2*PI2&
   &*SW2)
 
- amplitudes(12) = (-0.03125D0*EL2*ML2*(-1.D0*B0(x, 0.D0, ML2) + (ML2 - 1.D0*x)*DB0(x, 0.D0, ML2))*DBLE(Yuk3**INT(2.D0)))/(MW2*PI2&
+ amplitudes(12) = (-0.03125D0*EL2*ML2*(-1.D0*B0(x, 0.D0, ML2) + (ML2 - 1.D0*x)*DB0(x, 0.D0, ML2))*DBLE(Yuk6**INT(2.D0)))/(MW2*PI2&
   &*SW2)
 
  amplitudes(13) = (-0.09375D0*CKM11*CKMC11*EL2*(B0(x, MD2, MU2)*(-1.D0*MU2 - 1.D0*MD2*TB2*DBLE(Yuk3**INT(2.D0))) + DB0(x, MD2, MU&

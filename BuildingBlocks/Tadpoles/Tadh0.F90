@@ -6,11 +6,11 @@ double complex function Tadh0()
  double complex :: totalAmplitude
  double complex :: amplitudes(20)
 
- amplitudes(1) = (-0.125D0*EL*ME2*Yuk1*A0(ME2))/(MW*PI2*SW)
+ amplitudes(1) = (-0.125D0*EL*ME2*Yuk4*A0(ME2))/(MW*PI2*SW)
 
- amplitudes(2) = (-0.125D0*EL*MM2*Yuk1*A0(MM2))/(MW*PI2*SW)
+ amplitudes(2) = (-0.125D0*EL*MM2*Yuk4*A0(MM2))/(MW*PI2*SW)
 
- amplitudes(3) = (-0.125D0*EL*ML2*Yuk1*A0(ML2))/(MW*PI2*SW)
+ amplitudes(3) = (-0.125D0*EL*ML2*Yuk4*A0(ML2))/(MW*PI2*SW)
 
  amplitudes(4) = (-0.375D0*CA*EL*MU2*A0(MU2))/(MW*PI2*SB*SW)
 

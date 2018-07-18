@@ -4,7 +4,7 @@ double precision function A0toElElBarTree()
 #include "looptools.h"
  double precision :: totalAmplitude
 
- totalAmplitude = (0.5D0*EL2*MA02*ME2*DBLE(Yuk3**INT(2.D0)))/(MW2*SW2)
+ totalAmplitude = (0.5D0*EL2*MA02*ME2*DBLE(Yuk6**INT(2.D0)))/(MW2*SW2)
 
  A0toElElBarTree = totalAmplitude
 end function A0toElElBarTree

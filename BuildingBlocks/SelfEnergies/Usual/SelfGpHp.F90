@@ -23,11 +23,11 @@ double complex function SelfGpHpUsual(x)
 
  amplitudes(6) = (0.03125D0*CBA*EL2*(Mh02 - 1.D0*MHH2)*SBA*A0(GaugeXiW*MW2))/(MW2*PI2*SW2)
 
- amplitudes(7) = (0.03125D0*EL2*ME2*Yuk3*(A0(ME2) + (ME2 - 1.D0*x)*B0(x, 0.D0, ME2)))/(MW2*PI2*SW2)
+ amplitudes(7) = (0.03125D0*EL2*ME2*Yuk6*(A0(ME2) + (ME2 - 1.D0*x)*B0(x, 0.D0, ME2)))/(MW2*PI2*SW2)
 
- amplitudes(8) = (0.03125D0*EL2*MM2*Yuk3*(A0(MM2) + (MM2 - 1.D0*x)*B0(x, 0.D0, MM2)))/(MW2*PI2*SW2)
+ amplitudes(8) = (0.03125D0*EL2*MM2*Yuk6*(A0(MM2) + (MM2 - 1.D0*x)*B0(x, 0.D0, MM2)))/(MW2*PI2*SW2)
 
- amplitudes(9) = (0.03125D0*EL2*ML2*Yuk3*(A0(ML2) + (ML2 - 1.D0*x)*B0(x, 0.D0, ML2)))/(MW2*PI2*SW2)
+ amplitudes(9) = (0.03125D0*EL2*ML2*Yuk6*(A0(ML2) + (ML2 - 1.D0*x)*B0(x, 0.D0, ML2)))/(MW2*PI2*SW2)
 
  amplitudes(10) = (-0.09375D0*CKM11*CKMC11*EL2*((MU2 - 1.D0*MD2*TB*Yuk3)*A0(MD2) + (MU2 - 1.D0*MD2*TB*Yuk3)*A0(MU2) + B0(x, MD2, &
   &MU2)*(-1.D0*MU2*x + MD2*(TB*x*Yuk3 + MU2*(-1.D0 + TB*Yuk3)) - 1.D0*TB*Yuk3*DBLE(MD**INT(4.D0)) + DBLE(MU**INT(4.D0)))))/ (MW2*&

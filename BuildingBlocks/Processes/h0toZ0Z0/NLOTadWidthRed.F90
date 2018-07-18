@@ -6,13 +6,13 @@ double complex function h0toZ0Z0Tad()
  double complex :: totalAmplitude
  double complex :: amplitudes(20)
 
- amplitudes(1) = (-0.0625D0*ME2*SBA*Yuk1*A0(ME2)*DBLE(CW**INT(-4.D0))*DBLE(EL**INT(4.D0))*(3.D0 - (1.D0*Mh02)/MZ2 + 0.25D0*DBLE(M&
+ amplitudes(1) = (-0.0625D0*ME2*SBA*Yuk4*A0(ME2)*DBLE(CW**INT(-4.D0))*DBLE(EL**INT(4.D0))*(3.D0 - (1.D0*Mh02)/MZ2 + 0.25D0*DBLE(M&
   &h0**INT(4.D0))*DBLE(MZ**INT(-4.D0)))* DBLE(SW**INT(-4.D0)))/(Mh02*PI2)
 
- amplitudes(2) = (-0.0625D0*MM2*SBA*Yuk1*A0(MM2)*DBLE(CW**INT(-4.D0))*DBLE(EL**INT(4.D0))*(3.D0 - (1.D0*Mh02)/MZ2 + 0.25D0*DBLE(M&
+ amplitudes(2) = (-0.0625D0*MM2*SBA*Yuk4*A0(MM2)*DBLE(CW**INT(-4.D0))*DBLE(EL**INT(4.D0))*(3.D0 - (1.D0*Mh02)/MZ2 + 0.25D0*DBLE(M&
   &h0**INT(4.D0))*DBLE(MZ**INT(-4.D0)))* DBLE(SW**INT(-4.D0)))/(Mh02*PI2)
 
- amplitudes(3) = (-0.0625D0*ML2*SBA*Yuk1*A0(ML2)*DBLE(CW**INT(-4.D0))*DBLE(EL**INT(4.D0))*(3.D0 - (1.D0*Mh02)/MZ2 + 0.25D0*DBLE(M&
+ amplitudes(3) = (-0.0625D0*ML2*SBA*Yuk4*A0(ML2)*DBLE(CW**INT(-4.D0))*DBLE(EL**INT(4.D0))*(3.D0 - (1.D0*Mh02)/MZ2 + 0.25D0*DBLE(M&
   &h0**INT(4.D0))*DBLE(MZ**INT(-4.D0)))* DBLE(SW**INT(-4.D0)))/(Mh02*PI2)
 
  amplitudes(4) = (-0.1875D0*CA*MU2*SBA*A0(MU2)*DBLE(CW**INT(-4.D0))*DBLE(EL**INT(4.D0))*(3.D0 - (1.D0*Mh02)/MZ2 + 0.25D0*DBLE(Mh0&

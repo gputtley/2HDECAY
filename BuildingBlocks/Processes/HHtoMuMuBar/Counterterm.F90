@@ -8,61 +8,61 @@ double precision function HHtoMuMuBarCT(x)
 
  select case (x)
 	case (1)
-		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSUsual()/MM - dMW2Usual()/(2D0*MW2) + Yuk3*dBeta1KanUsual() + &
-			& Yuk1/Yuk2*dAlphaKanUsual() + dZHHHHOS()/2D0 + Yuk1/Yuk2 * dZh0HHOSUsual()/2D0 + dZMuMuOSLeft()/2D0 + &
-			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk2**INT(2.D0)))/(MW2*SW2)
+		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSUsual()/MM - dMW2Usual()/(2D0*MW2) + Yuk6*dBeta1KanUsual() + &
+			& Yuk4/Yuk5*dAlphaKanUsual() + dZHHHHOS()/2D0 + Yuk4/Yuk5 * dZh0HHOSUsual()/2D0 + dZMuMuOSLeft()/2D0 + &
+			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk5**INT(2.D0)))/(MW2*SW2)
 	case (2)
-		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSUsual()/MM - dMW2Usual()/(2D0*MW2) + Yuk3*dBeta2KanUsual() + &
-			& Yuk1/Yuk2*dAlphaKanUsual() + dZHHHHOS()/2D0 + Yuk1/Yuk2 * dZh0HHOSUsual()/2D0 + dZMuMuOSLeft()/2D0 + &
-			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk2**INT(2.D0)))/(MW2*SW2)
+		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSUsual()/MM - dMW2Usual()/(2D0*MW2) + Yuk6*dBeta2KanUsual() + &
+			& Yuk4/Yuk5*dAlphaKanUsual() + dZHHHHOS()/2D0 + Yuk4/Yuk5 * dZh0HHOSUsual()/2D0 + dZMuMuOSLeft()/2D0 + &
+			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk5**INT(2.D0)))/(MW2*SW2)
 	case (3)
-		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSAlter()/MM - dMW2Alter()/(2D0*MW2) + Yuk3*dBeta1KanAlter() + &
-			& Yuk1/Yuk2*dAlphaKanAlter() + dZHHHHOS()/2D0 + Yuk1/Yuk2 * dZh0HHOSAlter()/2D0 + dZMuMuOSLeft()/2D0 + &
-			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk2**INT(2.D0)))/(MW2*SW2)
+		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSAlter()/MM - dMW2Alter()/(2D0*MW2) + Yuk6*dBeta1KanAlter() + &
+			& Yuk4/Yuk5*dAlphaKanAlter() + dZHHHHOS()/2D0 + Yuk4/Yuk5 * dZh0HHOSAlter()/2D0 + dZMuMuOSLeft()/2D0 + &
+			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk5**INT(2.D0)))/(MW2*SW2)
 	case (4)
-		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSAlter()/MM - dMW2Alter()/(2D0*MW2) + Yuk3*dBeta2KanAlter() + &
-			& Yuk1/Yuk2*dAlphaKanAlter() + dZHHHHOS()/2D0 + Yuk1/Yuk2 * dZh0HHOSAlter()/2D0 + dZMuMuOSLeft()/2D0 + &
-			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk2**INT(2.D0)))/(MW2*SW2)
+		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSAlter()/MM - dMW2Alter()/(2D0*MW2) + Yuk6*dBeta2KanAlter() + &
+			& Yuk4/Yuk5*dAlphaKanAlter() + dZHHHHOS()/2D0 + Yuk4/Yuk5 * dZh0HHOSAlter()/2D0 + dZMuMuOSLeft()/2D0 + &
+			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk5**INT(2.D0)))/(MW2*SW2)
 	case (5)
-		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSAlter()/MM - dMW2Alter()/(2D0*MW2) + Yuk3*dBeta1PinchPStar() + &
-			& Yuk1/Yuk2*dAlphaPinchPStar() + dZHHHHOS()/2D0 + Yuk1/Yuk2 * dZh0HHOSAlter()/2D0 + dZMuMuOSLeft()/2D0 + &
-			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk2**INT(2.D0)))/(MW2*SW2)
+		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSAlter()/MM - dMW2Alter()/(2D0*MW2) + Yuk6*dBeta1PinchPStar() + &
+			& Yuk4/Yuk5*dAlphaPinchPStar() + dZHHHHOS()/2D0 + Yuk4/Yuk5 * dZh0HHOSAlter()/2D0 + dZMuMuOSLeft()/2D0 + &
+			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk5**INT(2.D0)))/(MW2*SW2)
 	case (6)
-		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSAlter()/MM - dMW2Alter()/(2D0*MW2) + Yuk3*dBeta2PinchPStar() + &
-			& Yuk1/Yuk2*dAlphaPinchPStar() + dZHHHHOS()/2D0 + Yuk1/Yuk2 * dZh0HHOSAlter()/2D0 + dZMuMuOSLeft()/2D0 + &
-			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk2**INT(2.D0)))/(MW2*SW2)
+		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSAlter()/MM - dMW2Alter()/(2D0*MW2) + Yuk6*dBeta2PinchPStar() + &
+			& Yuk4/Yuk5*dAlphaPinchPStar() + dZHHHHOS()/2D0 + Yuk4/Yuk5 * dZh0HHOSAlter()/2D0 + dZMuMuOSLeft()/2D0 + &
+			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk5**INT(2.D0)))/(MW2*SW2)
 	case (7)
-		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSAlter()/MM - dMW2Alter()/(2D0*MW2) + Yuk3*dBeta1PinchOS() + &
-			& Yuk1/Yuk2*dAlphaPinchOS() + dZHHHHOS()/2D0 + Yuk1/Yuk2 * dZh0HHOSAlter()/2D0 + dZMuMuOSLeft()/2D0 + &
-			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk2**INT(2.D0)))/(MW2*SW2)
+		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSAlter()/MM - dMW2Alter()/(2D0*MW2) + Yuk6*dBeta1PinchOS() + &
+			& Yuk4/Yuk5*dAlphaPinchOS() + dZHHHHOS()/2D0 + Yuk4/Yuk5 * dZh0HHOSAlter()/2D0 + dZMuMuOSLeft()/2D0 + &
+			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk5**INT(2.D0)))/(MW2*SW2)
 	case (8)
-		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSAlter()/MM - dMW2Alter()/(2D0*MW2) + Yuk3*dBeta2PinchOS() + &
-			& Yuk1/Yuk2*dAlphaPinchOS() + dZHHHHOS()/2D0 + Yuk1/Yuk2 * dZh0HHOSAlter()/2D0 + dZMuMuOSLeft()/2D0 + &
-			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk2**INT(2.D0)))/(MW2*SW2)
+		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSAlter()/MM - dMW2Alter()/(2D0*MW2) + Yuk6*dBeta2PinchOS() + &
+			& Yuk4/Yuk5*dAlphaPinchOS() + dZHHHHOS()/2D0 + Yuk4/Yuk5 * dZh0HHOSAlter()/2D0 + dZMuMuOSLeft()/2D0 + &
+			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk5**INT(2.D0)))/(MW2*SW2)
 	case (9)
-		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSUsual()/MM - dMW2Usual()/(2D0*MW2) + Yuk3*dBetaProcDep1Usual() + &
-			& Yuk1/Yuk2*dAlphaProcDep1Usual() + dZHHHHOS()/2D0 + Yuk1/Yuk2 * dZh0HHOSUsual()/2D0 + dZMuMuOSLeft()/2D0 + &
-			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk2**INT(2.D0)))/(MW2*SW2)
+		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSUsual()/MM - dMW2Usual()/(2D0*MW2) + Yuk6*dBetaProcDep1Usual() + &
+			& Yuk4/Yuk5*dAlphaProcDep1Usual() + dZHHHHOS()/2D0 + Yuk4/Yuk5 * dZh0HHOSUsual()/2D0 + dZMuMuOSLeft()/2D0 + &
+			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk5**INT(2.D0)))/(MW2*SW2)
 	case (10)
-		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSAlter()/MM - dMW2Alter()/(2D0*MW2) + Yuk3*dBetaProcDep1Alter() + &
-			& Yuk1/Yuk2*dAlphaProcDep1Alter() + dZHHHHOS()/2D0 + Yuk1/Yuk2 * dZh0HHOSAlter()/2D0 + dZMuMuOSLeft()/2D0 + &
-			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk2**INT(2.D0)))/(MW2*SW2)
+		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSAlter()/MM - dMW2Alter()/(2D0*MW2) + Yuk6*dBetaProcDep1Alter() + &
+			& Yuk4/Yuk5*dAlphaProcDep1Alter() + dZHHHHOS()/2D0 + Yuk4/Yuk5 * dZh0HHOSAlter()/2D0 + dZMuMuOSLeft()/2D0 + &
+			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk5**INT(2.D0)))/(MW2*SW2)
 	case (11)
-		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSUsual()/MM - dMW2Usual()/(2D0*MW2) + Yuk3*dBetaProcDep2Usual() + &
-			& Yuk1/Yuk2*dAlphaProcDep2Usual() + dZHHHHOS()/2D0 + Yuk1/Yuk2 * dZh0HHOSUsual()/2D0 + dZMuMuOSLeft()/2D0 + &
-			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk2**INT(2.D0)))/(MW2*SW2)
+		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSUsual()/MM - dMW2Usual()/(2D0*MW2) + Yuk6*dBetaProcDep2Usual() + &
+			& Yuk4/Yuk5*dAlphaProcDep2Usual() + dZHHHHOS()/2D0 + Yuk4/Yuk5 * dZh0HHOSUsual()/2D0 + dZMuMuOSLeft()/2D0 + &
+			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk5**INT(2.D0)))/(MW2*SW2)
 	case (12)
-		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSAlter()/MM - dMW2Alter()/(2D0*MW2) + Yuk3*dBetaProcDep2Alter() + &
-			& Yuk1/Yuk2*dAlphaProcDep2Alter() + dZHHHHOS()/2D0 + Yuk1/Yuk2 * dZh0HHOSAlter()/2D0 + dZMuMuOSLeft()/2D0 + &
-			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk2**INT(2.D0)))/(MW2*SW2)
+		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSAlter()/MM - dMW2Alter()/(2D0*MW2) + Yuk6*dBetaProcDep2Alter() + &
+			& Yuk4/Yuk5*dAlphaProcDep2Alter() + dZHHHHOS()/2D0 + Yuk4/Yuk5 * dZh0HHOSAlter()/2D0 + dZMuMuOSLeft()/2D0 + &
+			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk5**INT(2.D0)))/(MW2*SW2)
 	case (13)
-		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSUsual()/MM - dMW2Usual()/(2D0*MW2) + Yuk3*dBetaProcDep3Usual() + &
-			& Yuk1/Yuk2*dAlphaProcDep3Usual() + dZHHHHOS()/2D0 + Yuk1/Yuk2 * dZh0HHOSUsual()/2D0 + dZMuMuOSLeft()/2D0 + &
-			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk2**INT(2.D0)))/(MW2*SW2)
+		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSUsual()/MM - dMW2Usual()/(2D0*MW2) + Yuk6*dBetaProcDep3Usual() + &
+			& Yuk4/Yuk5*dAlphaProcDep3Usual() + dZHHHHOS()/2D0 + Yuk4/Yuk5 * dZh0HHOSUsual()/2D0 + dZMuMuOSLeft()/2D0 + &
+			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk5**INT(2.D0)))/(MW2*SW2)
 	case (14)
-		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSAlter()/MM - dMW2Alter()/(2D0*MW2) + Yuk3*dBetaProcDep3Alter() + &
-			& Yuk1/Yuk2*dAlphaProcDep3Alter() + dZHHHHOS()/2D0 + Yuk1/Yuk2 * dZh0HHOSAlter()/2D0 + dZMuMuOSLeft()/2D0 + &
-			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk2**INT(2.D0)))/(MW2*SW2)
+		totalAmplitude = ( dgAtMZ()/(EL/SW) + dMMOSAlter()/MM - dMW2Alter()/(2D0*MW2) + Yuk6*dBetaProcDep3Alter() + &
+			& Yuk4/Yuk5*dAlphaProcDep3Alter() + dZHHHHOS()/2D0 + Yuk4/Yuk5 * dZh0HHOSAlter()/2D0 + dZMuMuOSLeft()/2D0 + &
+			& dZMuMuOSRight()/2D0 ) * (0.5D0*EL2*(MHH2 - 4.D0*MM2)*MM2*DBLE(Yuk5**INT(2.D0)))/(MW2*SW2)
  end select
 
  HHtoMuMuBarCT = totalAmplitude

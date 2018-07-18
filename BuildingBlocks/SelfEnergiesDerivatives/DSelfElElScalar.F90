@@ -7,11 +7,11 @@ double complex function DSelfElElScalar(x)
  double complex :: totalAmplitude
  double complex :: amplitudes(9)
 
- amplitudes(1) = (0.015625D0*EL2*ME2*DB0(x, ME2, Mh02)*DBLE(Yuk1**INT(2.D0)))/(MW2*PI2*SW2)
+ amplitudes(1) = (0.015625D0*EL2*ME2*DB0(x, ME2, Mh02)*DBLE(Yuk4**INT(2.D0)))/(MW2*PI2*SW2)
 
- amplitudes(2) = (0.015625D0*EL2*ME2*DB0(x, ME2, MHH2)*DBLE(Yuk2**INT(2.D0)))/(MW2*PI2*SW2)
+ amplitudes(2) = (0.015625D0*EL2*ME2*DB0(x, ME2, MHH2)*DBLE(Yuk5**INT(2.D0)))/(MW2*PI2*SW2)
 
- amplitudes(3) = (-0.015625D0*EL2*ME2*DB0(x, MA02, ME2)*DBLE(Yuk3**INT(2.D0)))/(MW2*PI2*SW2)
+ amplitudes(3) = (-0.015625D0*EL2*ME2*DB0(x, MA02, ME2)*DBLE(Yuk6**INT(2.D0)))/(MW2*PI2*SW2)
 
  amplitudes(4) = (-0.015625D0*EL2*ME2*DB0(x, ME2, GaugeXiZ*MZ2))/(MW2*PI2*SW2)
 

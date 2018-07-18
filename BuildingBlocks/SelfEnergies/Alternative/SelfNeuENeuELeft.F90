@@ -41,7 +41,7 @@ double complex function SelfNeuENeuELeftAlter(x)
 
  amplitudes(17) = 0.D0
 
- amplitudes(18) = (-0.03125D0*EL2*ME2*B1(x, ME2, MHp2)*DBLE(Yuk3**INT(2.D0)))/(MW2*PI2*SW2)
+ amplitudes(18) = (-0.03125D0*EL2*ME2*B1(x, ME2, MHp2)*DBLE(Yuk6**INT(2.D0)))/(MW2*PI2*SW2)
 
  amplitudes(19) = (-0.03125D0*EL2*ME2*B1(x, ME2, GaugeXiW*MW2))/(MW2*PI2*SW2)
 

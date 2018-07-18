@@ -7,11 +7,11 @@ double complex function SelfSSScalarAlter(x)
  double complex :: totalAmplitude
  double complex :: amplitudes(106)
 
- amplitudes(1) = (0.0625D0*EL2*ME2*A0(ME2)*DBLE(Yuk1**INT(2.D0)))/(Mh02*MW2*PI2*SW2)
+ amplitudes(1) = (0.0625D0*EL2*ME2*Yuk1*Yuk4*A0(ME2))/(Mh02*MW2*PI2*SW2)
 
- amplitudes(2) = (0.0625D0*EL2*MM2*A0(MM2)*DBLE(Yuk1**INT(2.D0)))/(Mh02*MW2*PI2*SW2)
+ amplitudes(2) = (0.0625D0*EL2*MM2*Yuk1*Yuk4*A0(MM2))/(Mh02*MW2*PI2*SW2)
 
- amplitudes(3) = (0.0625D0*EL2*ML2*A0(ML2)*DBLE(Yuk1**INT(2.D0)))/(Mh02*MW2*PI2*SW2)
+ amplitudes(3) = (0.0625D0*EL2*ML2*Yuk1*Yuk4*A0(ML2))/(Mh02*MW2*PI2*SW2)
 
  amplitudes(4) = (0.1875D0*CA*EL2*MU2*Yuk1*A0(MU2))/(Mh02*MW2*PI2*SB*SW2)
 
@@ -25,11 +25,11 @@ double complex function SelfSSScalarAlter(x)
 
  amplitudes(9) = (0.1875D0*EL2*MB2*A0(MB2)*DBLE(Yuk1**INT(2.D0)))/(Mh02*MW2*PI2*SW2)
 
- amplitudes(10) = (0.0625D0*EL2*ME2*A0(ME2)*DBLE(Yuk2**INT(2.D0)))/(MHH2*MW2*PI2*SW2)
+ amplitudes(10) = (0.0625D0*EL2*ME2*Yuk2*Yuk5*A0(ME2))/(MHH2*MW2*PI2*SW2)
 
- amplitudes(11) = (0.0625D0*EL2*MM2*A0(MM2)*DBLE(Yuk2**INT(2.D0)))/(MHH2*MW2*PI2*SW2)
+ amplitudes(11) = (0.0625D0*EL2*MM2*Yuk2*Yuk5*A0(MM2))/(MHH2*MW2*PI2*SW2)
 
- amplitudes(12) = (0.0625D0*EL2*ML2*A0(ML2)*DBLE(Yuk2**INT(2.D0)))/(MHH2*MW2*PI2*SW2)
+ amplitudes(12) = (0.0625D0*EL2*ML2*Yuk2*Yuk5*A0(ML2))/(MHH2*MW2*PI2*SW2)
 
  amplitudes(13) = (0.1875D0*EL2*MU2*SA*Yuk2*A0(MU2))/(MHH2*MW2*PI2*SB*SW2)
 

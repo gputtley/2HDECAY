@@ -23,11 +23,11 @@ double complex function SelfG0A0Alter(x)
 
  amplitudes(6) = (0.015625D0*CBA*EL2*(Mh02 - 1.D0*MHH2)*SBA*A0(GaugeXiW*MW2))/(MW2*PI2*SW2)
 
- amplitudes(7) = (0.0625D0*CBA*EL2*ME2*(-1.D0*MA02 + Mh02)*Yuk1*A0(ME2))/(Mh02*MW2*PI2*SW2)
+ amplitudes(7) = (0.0625D0*CBA*EL2*ME2*(-1.D0*MA02 + Mh02)*Yuk4*A0(ME2))/(Mh02*MW2*PI2*SW2)
 
- amplitudes(8) = (0.0625D0*CBA*EL2*(-1.D0*MA02 + Mh02)*MM2*Yuk1*A0(MM2))/(Mh02*MW2*PI2*SW2)
+ amplitudes(8) = (0.0625D0*CBA*EL2*(-1.D0*MA02 + Mh02)*MM2*Yuk4*A0(MM2))/(Mh02*MW2*PI2*SW2)
 
- amplitudes(9) = (0.0625D0*CBA*EL2*(-1.D0*MA02 + Mh02)*ML2*Yuk1*A0(ML2))/(Mh02*MW2*PI2*SW2)
+ amplitudes(9) = (0.0625D0*CBA*EL2*(-1.D0*MA02 + Mh02)*ML2*Yuk4*A0(ML2))/(Mh02*MW2*PI2*SW2)
 
  amplitudes(10) = (0.1875D0*CA*CBA*EL2*(-1.D0*MA02 + Mh02)*MU2*A0(MU2))/(Mh02*MW2*PI2*SB*SW2)
 
@@ -41,11 +41,11 @@ double complex function SelfG0A0Alter(x)
 
  amplitudes(15) = (0.1875D0*CBA*EL2*MB2*(-1.D0*MA02 + Mh02)*Yuk1*A0(MB2))/(Mh02*MW2*PI2*SW2)
 
- amplitudes(16) = (0.0625D0*EL2*ME2*(MA02 - 1.D0*MHH2)*SBA*Yuk2*A0(ME2))/(MHH2*MW2*PI2*SW2)
+ amplitudes(16) = (0.0625D0*EL2*ME2*(MA02 - 1.D0*MHH2)*SBA*Yuk5*A0(ME2))/(MHH2*MW2*PI2*SW2)
 
- amplitudes(17) = (0.0625D0*EL2*(MA02 - 1.D0*MHH2)*MM2*SBA*Yuk2*A0(MM2))/(MHH2*MW2*PI2*SW2)
+ amplitudes(17) = (0.0625D0*EL2*(MA02 - 1.D0*MHH2)*MM2*SBA*Yuk5*A0(MM2))/(MHH2*MW2*PI2*SW2)
 
- amplitudes(18) = (0.0625D0*EL2*(MA02 - 1.D0*MHH2)*ML2*SBA*Yuk2*A0(ML2))/(MHH2*MW2*PI2*SW2)
+ amplitudes(18) = (0.0625D0*EL2*(MA02 - 1.D0*MHH2)*ML2*SBA*Yuk5*A0(ML2))/(MHH2*MW2*PI2*SW2)
 
  amplitudes(19) = (0.1875D0*EL2*(MA02 - 1.D0*MHH2)*MU2*SA*SBA*A0(MU2))/(MHH2*MW2*PI2*SB*SW2)
 
@@ -115,11 +115,11 @@ double complex function SelfG0A0Alter(x)
  amplitudes(46) = (0.03125D0*CBA*EL2*(MA02 - 1.D0*MHH2)*SBA*(2.D0*MW2 - 3.D0*A0(MW2) - 1.D0*GaugeXiW*A0(GaugeXiW*MW2)))/(MHH2*PI2&
   &*SW2)
 
- amplitudes(47) = (0.03125D0*EL2*ME2*Yuk3*(2.D0*A0(ME2) - 1.D0*x*B0(x, ME2, ME2)))/(MW2*PI2*SW2)
+ amplitudes(47) = (0.03125D0*EL2*ME2*Yuk6*(2.D0*A0(ME2) - 1.D0*x*B0(x, ME2, ME2)))/(MW2*PI2*SW2)
 
- amplitudes(48) = (0.03125D0*EL2*MM2*Yuk3*(2.D0*A0(MM2) - 1.D0*x*B0(x, MM2, MM2)))/(MW2*PI2*SW2)
+ amplitudes(48) = (0.03125D0*EL2*MM2*Yuk6*(2.D0*A0(MM2) - 1.D0*x*B0(x, MM2, MM2)))/(MW2*PI2*SW2)
 
- amplitudes(49) = (0.03125D0*EL2*ML2*Yuk3*(2.D0*A0(ML2) - 1.D0*x*B0(x, ML2, ML2)))/(MW2*PI2*SW2)
+ amplitudes(49) = (0.03125D0*EL2*ML2*Yuk6*(2.D0*A0(ML2) - 1.D0*x*B0(x, ML2, ML2)))/(MW2*PI2*SW2)
 
  amplitudes(50) = (-0.09375D0*EL2*MU2*(2.D0*A0(MU2) - 1.D0*x*B0(x, MU2, MU2)))/(MW2*PI2*SW2*TB)
 

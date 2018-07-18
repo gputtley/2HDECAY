@@ -7,7 +7,7 @@ double complex function DSelfNeuTNeuTLeft(x)
  double complex :: totalAmplitude
  double complex :: amplitudes(4)
 
- amplitudes(1) = (-0.03125D0*EL2*ML2*DB1(x, ML2, MHp2)*DBLE(Yuk3**INT(2.D0)))/(MW2*PI2*SW2)
+ amplitudes(1) = (-0.03125D0*EL2*ML2*DB1(x, ML2, MHp2)*DBLE(Yuk6**INT(2.D0)))/(MW2*PI2*SW2)
 
  amplitudes(2) = (-0.03125D0*EL2*ML2*DB1(x, ML2, GaugeXiW*MW2))/(MW2*PI2*SW2)
 

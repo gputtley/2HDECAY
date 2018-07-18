@@ -29,11 +29,11 @@ double complex function SelfHHHHUsual(x)
 
  amplitudes(8) = (0.03125D0*EL2*(-2.D0*MW2 + 3.D0*A0(MW2) + GaugeXiW*A0(GaugeXiW*MW2)))/(PI2*SW2)
 
- amplitudes(9) = (-0.03125D0*EL2*ME2*(2.D0*A0(ME2) + (4.D0*ME2 - 1.D0*x)*B0(x, ME2, ME2))*DBLE(Yuk2**INT(2.D0)))/(MW2*PI2*SW2)
+ amplitudes(9) = (-0.03125D0*EL2*ME2*(2.D0*A0(ME2) + (4.D0*ME2 - 1.D0*x)*B0(x, ME2, ME2))*DBLE(Yuk5**INT(2.D0)))/(MW2*PI2*SW2)
 
- amplitudes(10) = (-0.03125D0*EL2*MM2*(2.D0*A0(MM2) + (4.D0*MM2 - 1.D0*x)*B0(x, MM2, MM2))*DBLE(Yuk2**INT(2.D0)))/(MW2*PI2*SW2)
+ amplitudes(10) = (-0.03125D0*EL2*MM2*(2.D0*A0(MM2) + (4.D0*MM2 - 1.D0*x)*B0(x, MM2, MM2))*DBLE(Yuk5**INT(2.D0)))/(MW2*PI2*SW2)
 
- amplitudes(11) = (-0.03125D0*EL2*ML2*(2.D0*A0(ML2) + (4.D0*ML2 - 1.D0*x)*B0(x, ML2, ML2))*DBLE(Yuk2**INT(2.D0)))/(MW2*PI2*SW2)
+ amplitudes(11) = (-0.03125D0*EL2*ML2*(2.D0*A0(ML2) + (4.D0*ML2 - 1.D0*x)*B0(x, ML2, ML2))*DBLE(Yuk5**INT(2.D0)))/(MW2*PI2*SW2)
 
  amplitudes(12) = (-0.09375D0*EL2*MU2*SA2*(2.D0*A0(MU2) + (4.D0*MU2 - 1.D0*x)*B0(x, MU2, MU2)))/(MW2*PI2*SB2*SW2)
 

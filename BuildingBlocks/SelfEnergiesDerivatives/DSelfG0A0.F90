@@ -19,11 +19,11 @@ double complex function DSelfG0A0(x)
 
  amplitudes(6) = 0.D0
 
- amplitudes(7) = (0.03125D0*EL2*ME2*Yuk3*(-1.D0*B0(x, ME2, ME2) - 1.D0*x*DB0(x, ME2, ME2)))/(MW2*PI2*SW2)
+ amplitudes(7) = (0.03125D0*EL2*ME2*Yuk6*(-1.D0*B0(x, ME2, ME2) - 1.D0*x*DB0(x, ME2, ME2)))/(MW2*PI2*SW2)
 
- amplitudes(8) = (0.03125D0*EL2*MM2*Yuk3*(-1.D0*B0(x, MM2, MM2) - 1.D0*x*DB0(x, MM2, MM2)))/(MW2*PI2*SW2)
+ amplitudes(8) = (0.03125D0*EL2*MM2*Yuk6*(-1.D0*B0(x, MM2, MM2) - 1.D0*x*DB0(x, MM2, MM2)))/(MW2*PI2*SW2)
 
- amplitudes(9) = (0.03125D0*EL2*ML2*Yuk3*(-1.D0*B0(x, ML2, ML2) - 1.D0*x*DB0(x, ML2, ML2)))/(MW2*PI2*SW2)
+ amplitudes(9) = (0.03125D0*EL2*ML2*Yuk6*(-1.D0*B0(x, ML2, ML2) - 1.D0*x*DB0(x, ML2, ML2)))/(MW2*PI2*SW2)
 
  amplitudes(10) = (-0.09375D0*EL2*MU2*(-1.D0*B0(x, MU2, MU2) - 1.D0*x*DB0(x, MU2, MU2)))/(MW2*PI2*SW2*TB)
 

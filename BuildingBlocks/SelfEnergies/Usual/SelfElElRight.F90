@@ -8,18 +8,18 @@ double complex function SelfElElRightUsual(x)
  double complex :: amplitudes(9)
 
  amplitudes(1) = (0.0078125D0*EL2*ME2*(-1.D0*A0(ME2) + A0(Mh02) + ME2*B0(x, ME2, Mh02) - 1.D0*Mh02*B0(x, ME2, Mh02) + x*B0(x, ME2&
-  &, Mh02))*DBLE(Yuk1**INT(2.D0)))/ (MW2*PI2*SW2*x)
+  &, Mh02))*DBLE(Yuk4**INT(2.D0)))/ (MW2*PI2*SW2*x)
 
  amplitudes(2) = (0.0078125D0*EL2*ME2*(-1.D0*A0(ME2) + A0(MHH2) + ME2*B0(x, ME2, MHH2) - 1.D0*MHH2*B0(x, ME2, MHH2) + x*B0(x, ME2&
-  &, MHH2))*DBLE(Yuk2**INT(2.D0)))/ (MW2*PI2*SW2*x)
+  &, MHH2))*DBLE(Yuk5**INT(2.D0)))/ (MW2*PI2*SW2*x)
 
  amplitudes(3) = (0.0078125D0*EL2*ME2*(A0(MA02) - 1.D0*A0(ME2) - 1.D0*MA02*B0(x, MA02, ME2) + ME2*B0(x, MA02, ME2) + x*B0(x, MA02&
-  &, ME2))*DBLE(Yuk3**INT(2.D0)))/ (MW2*PI2*SW2*x)
+  &, ME2))*DBLE(Yuk6**INT(2.D0)))/ (MW2*PI2*SW2*x)
 
  amplitudes(4) = (0.0078125D0*EL2*ME2*(-1.D0*A0(ME2) + A0(GaugeXiZ*MZ2) + ME2*B0(x, ME2, GaugeXiZ*MZ2) - 1.D0*GaugeXiZ*MZ2*B0(x, &
   &ME2, GaugeXiZ*MZ2) + x*B0(x, ME2, GaugeXiZ*MZ2)))/(MW2*PI2*SW2*x)
 
- amplitudes(5) = (0.015625D0*EL2*ME2*(A0(MHp2) + (-1.D0*MHp2 + x)*B0(x, 0.D0, MHp2))*DBLE(Yuk3**INT(2.D0)))/(MW2*PI2*SW2*x)
+ amplitudes(5) = (0.015625D0*EL2*ME2*(A0(MHp2) + (-1.D0*MHp2 + x)*B0(x, 0.D0, MHp2))*DBLE(Yuk6**INT(2.D0)))/(MW2*PI2*SW2*x)
 
  amplitudes(6) = (0.015625D0*EL2*ME2*(A0(GaugeXiW*MW2) + (-1.D0*GaugeXiW*MW2 + x)*B0(x, 0.D0, GaugeXiW*MW2)))/(MW2*PI2*SW2*x)
 

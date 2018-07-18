@@ -1321,8 +1321,8 @@ module counterterms
                     use constants
                     implicit none
                     double complex A0toTauPTauMProcDepVC
-                    dBetaProcDep1Alter = -Yuk3/(1 + Yuk3**2)*( A0toTauPTauMProcDepVC() + dgAtMZ()/(EL/SW) + dMLOSAlterWeak()/ML -&
-                        & dMW2Alter()/(2D0*MW2) + dZA0A0OS()/2D0 - dZG0A0OSAlter()/(2D0*Yuk3) + dZTauTauOSLeftWeak()/2D0 + &
+                    dBetaProcDep1Alter = -Yuk6/(1 + Yuk6**2)*( A0toTauPTauMProcDepVC() + dgAtMZ()/(EL/SW) + dMLOSAlterWeak()/ML -&
+                        & dMW2Alter()/(2D0*MW2) + dZA0A0OS()/2D0 - dZG0A0OSAlter()/(2D0*Yuk6) + dZTauTauOSLeftWeak()/2D0 + &
                         & dZTauTauOSRightWeak()/2D0 )
                 end function dBetaProcDep1Alter
 
@@ -1330,8 +1330,8 @@ module counterterms
                     use constants
                     implicit none
                     double complex HHtoTauPTauMProcDepVC
-                    dAlphaProcDep1Alter = -Yuk2/Yuk1*( HHtoTauPTauMProcDepVC() + dgAtMZ()/(EL/SW) + dMLOSAlterWeak()/ML - &
-                        & dMW2Alter()/(2D0*MW2) + Yuk3*dBetaProcDep1Alter() + dZHHHHOS()/2D0 + Yuk1*dZh0HHOSAlter()/(2D0*Yuk2) + &
+                    dAlphaProcDep1Alter = -Yuk5/Yuk4*( HHtoTauPTauMProcDepVC() + dgAtMZ()/(EL/SW) + dMLOSAlterWeak()/ML - &
+                        & dMW2Alter()/(2D0*MW2) + Yuk6*dBetaProcDep1Alter() + dZHHHHOS()/2D0 + Yuk4*dZh0HHOSAlter()/(2D0*Yuk5) + &
                         & dZTauTauOSLeftWeak()/2D0 + dZTauTauOSRightWeak()/2D0 )
                 end function dAlphaProcDep1Alter
 
@@ -1339,8 +1339,8 @@ module counterterms
                     use constants
                     implicit none
                     double complex A0toTauPTauMProcDepVC
-                    dBetaProcDep2Alter = -Yuk3/(1 + Yuk3**2)*( A0toTauPTauMProcDepVC() + dgAtMZ()/(EL/SW) + dMLOSAlterWeak()/ML -&
-                        & dMW2Alter()/(2D0*MW2) + dZA0A0OS()/2D0 - dZG0A0OSAlter()/(2D0*Yuk3) + dZTauTauOSLeftWeak()/2D0 + &
+                    dBetaProcDep2Alter = -Yuk6/(1 + Yuk6**2)*( A0toTauPTauMProcDepVC() + dgAtMZ()/(EL/SW) + dMLOSAlterWeak()/ML -&
+                        & dMW2Alter()/(2D0*MW2) + dZA0A0OS()/2D0 - dZG0A0OSAlter()/(2D0*Yuk6) + dZTauTauOSLeftWeak()/2D0 + &
                         & dZTauTauOSRightWeak()/2D0 )
                 end function dBetaProcDep2Alter
 
@@ -1348,8 +1348,8 @@ module counterterms
                     use constants
                     implicit none
                     double complex h0toTauPTauMProcDepVC
-                    dAlphaProcDep2Alter = Yuk1/Yuk2*( h0toTauPTauMProcDepVC() + dgAtMZ()/(EL/SW) + dMLOSAlterWeak()/ML - &
-                        & dMW2Alter()/(2D0*MW2) + Yuk3*dBetaProcDep2Alter() + dZh0h0OS()/2D0 + Yuk2*dZHHh0OSAlter()/(2D0*Yuk1) + &
+                    dAlphaProcDep2Alter = Yuk4/Yuk5*( h0toTauPTauMProcDepVC() + dgAtMZ()/(EL/SW) + dMLOSAlterWeak()/ML - &
+                        & dMW2Alter()/(2D0*MW2) + Yuk6*dBetaProcDep2Alter() + dZh0h0OS()/2D0 + Yuk5*dZHHh0OSAlter()/(2D0*Yuk4) + &
                         & dZTauTauOSLeftWeak()/2D0 + dZTauTauOSRightWeak()/2D0 )
                 end function dAlphaProcDep2Alter
 
@@ -1357,10 +1357,10 @@ module counterterms
                     use constants
                     implicit none
                     double complex h0toTauPTauMProcDepVC, HHtoTauPTauMProcDepVC
-                    dBetaProcDep3Alter = -1D0/(Yuk3*(Yuk1**2 + Yuk2**2))*( Yuk1*Yuk2*(dZHHh0OSAlter()/2D0 + dZh0HHOSAlter()/2D0) &
-                        & + Yuk1**2*( h0toTauPTauMProcDepVC() + dZh0h0OS()/2D0 ) &
-                        & + Yuk2**2*( HHtoTauPTauMProcDepVC() + dZHHHHOS()/2D0 ) &
-                        & + (Yuk1**2 + Yuk2**2)*( dgAtMZ()/(EL/SW) + dMLOSAlterWeak()/ML - dMW2Alter()/(2D0*MW2) + &
+                    dBetaProcDep3Alter = -1D0/(Yuk6*(Yuk4**2 + Yuk5**2))*( Yuk4*Yuk5*(dZHHh0OSAlter()/2D0 + dZh0HHOSAlter()/2D0) &
+                        & + Yuk4**2*( h0toTauPTauMProcDepVC() + dZh0h0OS()/2D0 ) &
+                        & + Yuk5**2*( HHtoTauPTauMProcDepVC() + dZHHHHOS()/2D0 ) &
+                        & + (Yuk4**2 + Yuk5**2)*( dgAtMZ()/(EL/SW) + dMLOSAlterWeak()/ML - dMW2Alter()/(2D0*MW2) + &
                         & dZTauTauOSLeftWeak()/2D0 + dZTauTauOSRightWeak()/2D0 ) )
                 end function dBetaProcDep3Alter
 
@@ -1368,8 +1368,8 @@ module counterterms
                     use constants
                     implicit none
                     double complex h0toTauPTauMProcDepVC, HHtoTauPTauMProcDepVC
-                    dAlphaProcDep3Alter = Yuk1*Yuk2/(Yuk1**2 + Yuk2**2) * ( h0toTauPTauMProcDepVC() - HHtoTauPTauMProcDepVC() + &
-                        & dZh0h0OS()/2D0 - dZHHHHOS()/2D0 + Yuk2/Yuk1*dZHHh0OSAlter()/2D0 - Yuk1/Yuk2*dZh0HHOSAlter()/2D0 )
+                    dAlphaProcDep3Alter = Yuk4*Yuk5/(Yuk4**2 + Yuk5**2) * ( h0toTauPTauMProcDepVC() - HHtoTauPTauMProcDepVC() + &
+                        & dZh0h0OS()/2D0 - dZHHHHOS()/2D0 + Yuk5/Yuk4*dZHHh0OSAlter()/2D0 - Yuk4/Yuk5*dZh0HHOSAlter()/2D0 )
                 end function dAlphaProcDep3Alter
 
             ! Usual tadpole based counterterms
@@ -1395,8 +1395,8 @@ module counterterms
                     use constants
                     implicit none
                     double complex A0toTauPTauMProcDepVC
-                    dBetaProcDep1Usual = -Yuk3/(1 + Yuk3**2)*( A0toTauPTauMProcDepVC() + dgAtMZ()/(EL/SW) + dMLOSUsualWeak()/ML -&
-                        & dMW2Usual()/(2D0*MW2) + dZA0A0OS()/2D0 - dZG0A0OSUsual()/(2D0*Yuk3) + dZTauTauOSLeftWeak()/2D0 + &
+                    dBetaProcDep1Usual = -Yuk6/(1 + Yuk6**2)*( A0toTauPTauMProcDepVC() + dgAtMZ()/(EL/SW) + dMLOSUsualWeak()/ML -&
+                        & dMW2Usual()/(2D0*MW2) + dZA0A0OS()/2D0 - dZG0A0OSUsual()/(2D0*Yuk6) + dZTauTauOSLeftWeak()/2D0 + &
                         & dZTauTauOSRightWeak()/2D0 )
                 end function dBetaProcDep1Usual
 
@@ -1404,8 +1404,8 @@ module counterterms
                     use constants
                     implicit none
                     double complex HHtoTauPTauMProcDepVC
-                    dAlphaProcDep1Usual = -Yuk2/Yuk1*( HHtoTauPTauMProcDepVC() + dgAtMZ()/(EL/SW) + dMLOSUsualWeak()/ML - &
-                        & dMW2Usual()/(2D0*MW2) + Yuk3*dBetaProcDep1Usual() + dZHHHHOS()/2D0 + Yuk1*dZh0HHOSUsual()/(2D0*Yuk2) + &
+                    dAlphaProcDep1Usual = -Yuk5/Yuk4*( HHtoTauPTauMProcDepVC() + dgAtMZ()/(EL/SW) + dMLOSUsualWeak()/ML - &
+                        & dMW2Usual()/(2D0*MW2) + Yuk6*dBetaProcDep1Usual() + dZHHHHOS()/2D0 + Yuk4*dZh0HHOSUsual()/(2D0*Yuk5) + &
                         & dZTauTauOSLeftWeak()/2D0 + dZTauTauOSRightWeak()/2D0 )
                 end function dAlphaProcDep1Usual
 
@@ -1413,8 +1413,8 @@ module counterterms
                     use constants
                     implicit none
                     double complex A0toTauPTauMProcDepVC
-                    dBetaProcDep2Usual = -Yuk3/(1 + Yuk3**2)*( A0toTauPTauMProcDepVC() + dgAtMZ()/(EL/SW) + dMLOSUsualWeak()/ML -&
-                        & dMW2Usual()/(2D0*MW2) + dZA0A0OS()/2D0 - dZG0A0OSUsual()/(2D0*Yuk3) + dZTauTauOSLeftWeak()/2D0 + &
+                    dBetaProcDep2Usual = -Yuk6/(1 + Yuk6**2)*( A0toTauPTauMProcDepVC() + dgAtMZ()/(EL/SW) + dMLOSUsualWeak()/ML -&
+                        & dMW2Usual()/(2D0*MW2) + dZA0A0OS()/2D0 - dZG0A0OSUsual()/(2D0*Yuk6) + dZTauTauOSLeftWeak()/2D0 + &
                         & dZTauTauOSRightWeak()/2D0 )
                 end function dBetaProcDep2Usual
 
@@ -1422,8 +1422,8 @@ module counterterms
                     use constants
                     implicit none
                     double complex h0toTauPTauMProcDepVC
-                    dAlphaProcDep2Usual = Yuk1/Yuk2*( h0toTauPTauMProcDepVC() + dgAtMZ()/(EL/SW) + dMLOSUsualWeak()/ML - &
-                        & dMW2Usual()/(2D0*MW2) + Yuk3*dBetaProcDep2Usual() + dZh0h0OS()/2D0 + Yuk2*dZHHh0OSUsual()/(2D0*Yuk1) + &
+                    dAlphaProcDep2Usual = Yuk4/Yuk5*( h0toTauPTauMProcDepVC() + dgAtMZ()/(EL/SW) + dMLOSUsualWeak()/ML - &
+                        & dMW2Usual()/(2D0*MW2) + Yuk6*dBetaProcDep2Usual() + dZh0h0OS()/2D0 + Yuk5*dZHHh0OSUsual()/(2D0*Yuk4) + &
                         & dZTauTauOSLeftWeak()/2D0 + dZTauTauOSRightWeak()/2D0 )
                 end function dAlphaProcDep2Usual
 
@@ -1431,10 +1431,10 @@ module counterterms
                     use constants
                     implicit none
                     double complex h0toTauPTauMProcDepVC, HHtoTauPTauMProcDepVC
-                    dBetaProcDep3Usual = - 1D0/(Yuk3*(Yuk1**2 + Yuk2**2))*( Yuk1*Yuk2*(dZHHh0OSUsual()/2D0 + dZh0HHOSUsual()/2D0)&
-                        & + Yuk1**2*( h0toTauPTauMProcDepVC() + dZh0h0OS()/2D0 ) &
-                        & + Yuk2**2*( HHtoTauPTauMProcDepVC() + dZHHHHOS()/2D0 ) &
-                        & + (Yuk1**2 + Yuk2**2)*( dgAtMZ()/(EL/SW) + dMLOSUsualWeak()/ML - dMW2Usual()/(2D0*MW2) + &
+                    dBetaProcDep3Usual = - 1D0/(Yuk6*(Yuk4**2 + Yuk5**2))*( Yuk4*Yuk5*(dZHHh0OSUsual()/2D0 + dZh0HHOSUsual()/2D0)&
+                        & + Yuk4**2*( h0toTauPTauMProcDepVC() + dZh0h0OS()/2D0 ) &
+                        & + Yuk5**2*( HHtoTauPTauMProcDepVC() + dZHHHHOS()/2D0 ) &
+                        & + (Yuk4**2 + Yuk5**2)*( dgAtMZ()/(EL/SW) + dMLOSUsualWeak()/ML - dMW2Usual()/(2D0*MW2) + &
                         & dZTauTauOSLeftWeak()/2D0 + dZTauTauOSRightWeak()/2D0 ) )
                 end function dBetaProcDep3Usual
 
@@ -1442,8 +1442,8 @@ module counterterms
                     use constants
                     implicit none
                     double complex h0toTauPTauMProcDepVC, HHtoTauPTauMProcDepVC
-                    dAlphaProcDep3Usual = Yuk1*Yuk2/(Yuk1**2 + Yuk2**2) * ( h0toTauPTauMProcDepVC() - HHtoTauPTauMProcDepVC() + &
-                        & dZh0h0OS()/2D0 - dZHHHHOS()/2D0 + Yuk2/Yuk1*dZHHh0OSUsual()/2D0 - Yuk1/Yuk2*dZh0HHOSUsual()/2D0 )
+                    dAlphaProcDep3Usual = Yuk4*Yuk5/(Yuk4**2 + Yuk5**2) * ( h0toTauPTauMProcDepVC() - HHtoTauPTauMProcDepVC() + &
+                        & dZh0h0OS()/2D0 - dZHHHHOS()/2D0 + Yuk5/Yuk4*dZHHh0OSUsual()/2D0 - Yuk4/Yuk5*dZh0HHOSUsual()/2D0 )
                 end function dAlphaProcDep3Usual
 
         ! 2HDM Z2-soft-breaking parameter m_{12}^2
@@ -1455,8 +1455,8 @@ module counterterms
                         & 2D0*3D0*MU2*(1D0/TB - C2B/S2B)*1D0/TB + 2D0*3D0*MC2*(1D0/TB - C2B/S2B)*1D0/TB + &
                         & 2D0*3D0*MT2*(1D0/TB - C2B/S2B)*1D0/TB + 2D0*3D0*MD2*(-Yuk3 - C2B/S2B)*(-Yuk3) + &
                         & 2D0*3D0*MS2*(-Yuk3 - C2B/S2B)*(-Yuk3) + 2D0*3D0*MB2*(-Yuk3 - C2B/S2B)*(-Yuk3) + &
-                        & 2D0*1D0*ME2*(-Yuk3 - C2B/S2B)*(-Yuk3) + 2D0*1D0*MM2*(-Yuk3 - C2B/S2B)*(-Yuk3) + &
-                        & 2D0*1D0*ML2*(-Yuk3 - C2B/S2B)*(-Yuk3) + 8D0*m12squared/S2B - 2D0*MHp2 - MA02 + &
+                        & 2D0*1D0*ME2*(-Yuk6 - C2B/S2B)*(-Yuk6) + 2D0*1D0*MM2*(-Yuk6 - C2B/S2B)*(-Yuk6) + &
+                        & 2D0*1D0*ML2*(-Yuk6 - C2B/S2B)*(-Yuk6) + 8D0*m12squared/S2B - 2D0*MHp2 - MA02 + &
                         & S2A/S2B*(MHH2 - Mh02) - 3D0*(2D0*MW2 + MZ2) &
                     & )*UVDelta
                 end function dm122MSBarUsual
@@ -1468,8 +1468,8 @@ module counterterms
                         & 2D0*3D0*MU2*(1D0/TB - C2B/S2B)*1D0/TB + 2D0*3D0*MC2*(1D0/TB - C2B/S2B)*1D0/TB + &
                         & 2D0*3D0*MT2*(1D0/TB - C2B/S2B)*1D0/TB + 2D0*3D0*MD2*(-Yuk3 - C2B/S2B)*(-Yuk3) + &
                         & 2D0*3D0*MS2*(-Yuk3 - C2B/S2B)*(-Yuk3) + 2D0*3D0*MB2*(-Yuk3 - C2B/S2B)*(-Yuk3) + &
-                        & 2D0*1D0*ME2*(-Yuk3 - C2B/S2B)*(-Yuk3) + 2D0*1D0*MM2*(-Yuk3 - C2B/S2B)*(-Yuk3) + &
-                        & 2D0*1D0*ML2*(-Yuk3 - C2B/S2B)*(-Yuk3) + 8D0*m12squared/S2B - 2D0*MHp2 - MA02 + &
+                        & 2D0*1D0*ME2*(-Yuk6 - C2B/S2B)*(-Yuk6) + 2D0*1D0*MM2*(-Yuk6 - C2B/S2B)*(-Yuk6) + &
+                        & 2D0*1D0*ML2*(-Yuk6 - C2B/S2B)*(-Yuk6) + 8D0*m12squared/S2B - 2D0*MHp2 - MA02 + &
                         & S2A/S2B*(MHH2 - Mh02) - 3D0*(2D0*MW2 + MZ2) &
                     & )*UVDelta
                 end function dm122MSBarAlter

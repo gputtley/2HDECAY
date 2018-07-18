@@ -23,11 +23,11 @@ double complex function SelfG0A0Usual(x)
 
  amplitudes(6) = (0.015625D0*CBA*EL2*(Mh02 - 1.D0*MHH2)*SBA*A0(GaugeXiW*MW2))/(MW2*PI2*SW2)
 
- amplitudes(7) = (0.03125D0*EL2*ME2*Yuk3*(2.D0*A0(ME2) - 1.D0*x*B0(x, ME2, ME2)))/(MW2*PI2*SW2)
+ amplitudes(7) = (0.03125D0*EL2*ME2*Yuk6*(2.D0*A0(ME2) - 1.D0*x*B0(x, ME2, ME2)))/(MW2*PI2*SW2)
 
- amplitudes(8) = (0.03125D0*EL2*MM2*Yuk3*(2.D0*A0(MM2) - 1.D0*x*B0(x, MM2, MM2)))/(MW2*PI2*SW2)
+ amplitudes(8) = (0.03125D0*EL2*MM2*Yuk6*(2.D0*A0(MM2) - 1.D0*x*B0(x, MM2, MM2)))/(MW2*PI2*SW2)
 
- amplitudes(9) = (0.03125D0*EL2*ML2*Yuk3*(2.D0*A0(ML2) - 1.D0*x*B0(x, ML2, ML2)))/(MW2*PI2*SW2)
+ amplitudes(9) = (0.03125D0*EL2*ML2*Yuk6*(2.D0*A0(ML2) - 1.D0*x*B0(x, ML2, ML2)))/(MW2*PI2*SW2)
 
  amplitudes(10) = (-0.09375D0*EL2*MU2*(2.D0*A0(MU2) - 1.D0*x*B0(x, MU2, MU2)))/(MW2*PI2*SW2*TB)
 

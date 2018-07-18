@@ -22,11 +22,11 @@ double complex function SelfZ0Z0Alter(x)
  amplitudes(7) = (0.015625D0*CW2*EL2*(18.D0*A0(MW2) + 6.D0*GaugeXiW*A0(GaugeXiW*MW2) - 1.D0*MW2*(15.D0 + DBLE(GaugeXiW**INT(2.D0)&
   &))))/(PI2*SW2)
 
- amplitudes(8) = (0.125D0*EL2*ME2*SBA*Yuk1*A0(ME2))/(CW2*Mh02*PI2*SW2)
+ amplitudes(8) = (0.125D0*EL2*ME2*SBA*Yuk4*A0(ME2))/(CW2*Mh02*PI2*SW2)
 
- amplitudes(9) = (0.125D0*EL2*MM2*SBA*Yuk1*A0(MM2))/(CW2*Mh02*PI2*SW2)
+ amplitudes(9) = (0.125D0*EL2*MM2*SBA*Yuk4*A0(MM2))/(CW2*Mh02*PI2*SW2)
 
- amplitudes(10) = (0.125D0*EL2*ML2*SBA*Yuk1*A0(ML2))/(CW2*Mh02*PI2*SW2)
+ amplitudes(10) = (0.125D0*EL2*ML2*SBA*Yuk4*A0(ML2))/(CW2*Mh02*PI2*SW2)
 
  amplitudes(11) = (0.375D0*CA*EL2*MU2*SBA*A0(MU2))/(CW2*Mh02*PI2*SB*SW2)
 
@@ -40,11 +40,11 @@ double complex function SelfZ0Z0Alter(x)
 
  amplitudes(16) = (0.375D0*EL2*MB2*SBA*Yuk1*A0(MB2))/(CW2*Mh02*PI2*SW2)
 
- amplitudes(17) = (0.125D0*CBA*EL2*ME2*Yuk2*A0(ME2))/(CW2*MHH2*PI2*SW2)
+ amplitudes(17) = (0.125D0*CBA*EL2*ME2*Yuk5*A0(ME2))/(CW2*MHH2*PI2*SW2)
 
- amplitudes(18) = (0.125D0*CBA*EL2*MM2*Yuk2*A0(MM2))/(CW2*MHH2*PI2*SW2)
+ amplitudes(18) = (0.125D0*CBA*EL2*MM2*Yuk5*A0(MM2))/(CW2*MHH2*PI2*SW2)
 
- amplitudes(19) = (0.125D0*CBA*EL2*ML2*Yuk2*A0(ML2))/(CW2*MHH2*PI2*SW2)
+ amplitudes(19) = (0.125D0*CBA*EL2*ML2*Yuk5*A0(ML2))/(CW2*MHH2*PI2*SW2)
 
  amplitudes(20) = (0.375D0*CBA*EL2*MU2*SA*A0(MU2))/(CW2*MHH2*PI2*SB*SW2)
 

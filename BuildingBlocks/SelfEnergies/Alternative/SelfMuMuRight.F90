@@ -190,18 +190,18 @@ double complex function SelfMuMuRightAlter(x)
  amplitudes(91) = 0.D0
 
  amplitudes(92) = (0.0078125D0*EL2*MM2*(A0(Mh02) - 1.D0*A0(MM2) - 1.D0*Mh02*B0(x, Mh02, MM2) + MM2*B0(x, Mh02, MM2) + x*B0(x, Mh0&
-  &2, MM2))*DBLE(Yuk1**INT(2.D0)))/ (MW2*PI2*SW2*x)
+  &2, MM2))*DBLE(Yuk4**INT(2.D0)))/ (MW2*PI2*SW2*x)
 
  amplitudes(93) = (0.0078125D0*EL2*MM2*(A0(MHH2) - 1.D0*A0(MM2) - 1.D0*MHH2*B0(x, MHH2, MM2) + MM2*B0(x, MHH2, MM2) + x*B0(x, MHH&
-  &2, MM2))*DBLE(Yuk2**INT(2.D0)))/ (MW2*PI2*SW2*x)
+  &2, MM2))*DBLE(Yuk5**INT(2.D0)))/ (MW2*PI2*SW2*x)
 
  amplitudes(94) = (0.0078125D0*EL2*MM2*(A0(MA02) - 1.D0*A0(MM2) - 1.D0*MA02*B0(x, MA02, MM2) + MM2*B0(x, MA02, MM2) + x*B0(x, MA0&
-  &2, MM2))*DBLE(Yuk3**INT(2.D0)))/ (MW2*PI2*SW2*x)
+  &2, MM2))*DBLE(Yuk6**INT(2.D0)))/ (MW2*PI2*SW2*x)
 
  amplitudes(95) = (0.0078125D0*EL2*MM2*(-1.D0*A0(MM2) + A0(GaugeXiZ*MZ2) + MM2*B0(x, MM2, GaugeXiZ*MZ2) - 1.D0*GaugeXiZ*MZ2*B0(x,&
   & MM2, GaugeXiZ*MZ2) + x*B0(x, MM2, GaugeXiZ*MZ2)))/(MW2*PI2*SW2*x)
 
- amplitudes(96) = (0.015625D0*EL2*MM2*(A0(MHp2) + (-1.D0*MHp2 + x)*B0(x, 0.D0, MHp2))*DBLE(Yuk3**INT(2.D0)))/(MW2*PI2*SW2*x)
+ amplitudes(96) = (0.015625D0*EL2*MM2*(A0(MHp2) + (-1.D0*MHp2 + x)*B0(x, 0.D0, MHp2))*DBLE(Yuk6**INT(2.D0)))/(MW2*PI2*SW2*x)
 
  amplitudes(97) = (0.015625D0*EL2*MM2*(A0(GaugeXiW*MW2) + (-1.D0*GaugeXiW*MW2 + x)*B0(x, 0.D0, GaugeXiW*MW2)))/(MW2*PI2*SW2*x)
 

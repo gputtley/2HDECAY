@@ -33,13 +33,13 @@ double complex function SelfHpHpAlter(x)
 
  amplitudes(9) = (0.03125D0*EL2*(-2.D0*MW2 + 3.D0*A0(MW2) + GaugeXiW*A0(GaugeXiW*MW2)))/(PI2*SW2)
 
- amplitudes(10) = (0.0625D0*ME2*(-1.D0*EL2*(Mh02 - 2.D0*MHp2)*S2B*SBA + 2.D0*CAB*(EL2*Mh02 - 2.D0*Lambda5*MW2*SW2))*Yuk1*A0(ME2))&
+ amplitudes(10) = (0.0625D0*ME2*(-1.D0*EL2*(Mh02 - 2.D0*MHp2)*S2B*SBA + 2.D0*CAB*(EL2*Mh02 - 2.D0*Lambda5*MW2*SW2))*Yuk4*A0(ME2))&
   &/(Mh02*MW2*PI2*S2B*SW2)
 
- amplitudes(11) = (0.0625D0*MM2*(-1.D0*EL2*(Mh02 - 2.D0*MHp2)*S2B*SBA + 2.D0*CAB*(EL2*Mh02 - 2.D0*Lambda5*MW2*SW2))*Yuk1*A0(MM2))&
+ amplitudes(11) = (0.0625D0*MM2*(-1.D0*EL2*(Mh02 - 2.D0*MHp2)*S2B*SBA + 2.D0*CAB*(EL2*Mh02 - 2.D0*Lambda5*MW2*SW2))*Yuk4*A0(MM2))&
   &/(Mh02*MW2*PI2*S2B*SW2)
 
- amplitudes(12) = (0.0625D0*ML2*(-1.D0*EL2*(Mh02 - 2.D0*MHp2)*S2B*SBA + 2.D0*CAB*(EL2*Mh02 - 2.D0*Lambda5*MW2*SW2))*Yuk1*A0(ML2))&
+ amplitudes(12) = (0.0625D0*ML2*(-1.D0*EL2*(Mh02 - 2.D0*MHp2)*S2B*SBA + 2.D0*CAB*(EL2*Mh02 - 2.D0*Lambda5*MW2*SW2))*Yuk4*A0(ML2))&
   &/(Mh02*MW2*PI2*S2B*SW2)
 
  amplitudes(13) = (0.1875D0*CA*MU2*(-1.D0*EL2*(Mh02 - 2.D0*MHp2)*S2B*SBA + 2.D0*CAB*(EL2*Mh02 - 2.D0*Lambda5*MW2*SW2))*A0(MU2))/(&
@@ -60,13 +60,13 @@ double complex function SelfHpHpAlter(x)
  amplitudes(18) = (0.1875D0*MB2*(-1.D0*EL2*(Mh02 - 2.D0*MHp2)*S2B*SBA + 2.D0*CAB*(EL2*Mh02 - 2.D0*Lambda5*MW2*SW2))*Yuk1*A0(MB2))&
   &/(Mh02*MW2*PI2*S2B*SW2)
 
- amplitudes(19) = (-0.0625D0*ME2*(CBA*EL2*(MHH2 - 2.D0*MHp2)*S2B - 2.D0*EL2*MHH2*SAB + 4.D0*Lambda5*MW2*SAB*SW2)*Yuk2*A0(ME2))/(M&
+ amplitudes(19) = (-0.0625D0*ME2*(CBA*EL2*(MHH2 - 2.D0*MHp2)*S2B - 2.D0*EL2*MHH2*SAB + 4.D0*Lambda5*MW2*SAB*SW2)*Yuk5*A0(ME2))/(M&
   &HH2*MW2*PI2*S2B*SW2)
 
- amplitudes(20) = (-0.0625D0*MM2*(CBA*EL2*(MHH2 - 2.D0*MHp2)*S2B - 2.D0*EL2*MHH2*SAB + 4.D0*Lambda5*MW2*SAB*SW2)*Yuk2*A0(MM2))/(M&
+ amplitudes(20) = (-0.0625D0*MM2*(CBA*EL2*(MHH2 - 2.D0*MHp2)*S2B - 2.D0*EL2*MHH2*SAB + 4.D0*Lambda5*MW2*SAB*SW2)*Yuk5*A0(MM2))/(M&
   &HH2*MW2*PI2*S2B*SW2)
 
- amplitudes(21) = (-0.0625D0*ML2*(CBA*EL2*(MHH2 - 2.D0*MHp2)*S2B - 2.D0*EL2*MHH2*SAB + 4.D0*Lambda5*MW2*SAB*SW2)*Yuk2*A0(ML2))/(M&
+ amplitudes(21) = (-0.0625D0*ML2*(CBA*EL2*(MHH2 - 2.D0*MHp2)*S2B - 2.D0*EL2*MHH2*SAB + 4.D0*Lambda5*MW2*SAB*SW2)*Yuk5*A0(ML2))/(M&
   &HH2*MW2*PI2*S2B*SW2)
 
  amplitudes(22) = (-0.1875D0*MU2*SA*(CBA*EL2*(MHH2 - 2.D0*MHp2)*S2B - 2.D0*EL2*MHH2*SAB + 4.D0*Lambda5*MW2*SAB*SW2)*A0(MU2))/(MHH&
@@ -215,11 +215,11 @@ double complex function SelfHpHpAlter(x)
 
  amplitudes(80) = 0.D0
 
- amplitudes(81) = (-0.03125D0*EL2*ME2*(A0(ME2) + (ME2 - 1.D0*x)*B0(x, 0.D0, ME2))*DBLE(Yuk3**INT(2.D0)))/(MW2*PI2*SW2)
+ amplitudes(81) = (-0.03125D0*EL2*ME2*(A0(ME2) + (ME2 - 1.D0*x)*B0(x, 0.D0, ME2))*DBLE(Yuk6**INT(2.D0)))/(MW2*PI2*SW2)
 
- amplitudes(82) = (-0.03125D0*EL2*MM2*(A0(MM2) + (MM2 - 1.D0*x)*B0(x, 0.D0, MM2))*DBLE(Yuk3**INT(2.D0)))/(MW2*PI2*SW2)
+ amplitudes(82) = (-0.03125D0*EL2*MM2*(A0(MM2) + (MM2 - 1.D0*x)*B0(x, 0.D0, MM2))*DBLE(Yuk6**INT(2.D0)))/(MW2*PI2*SW2)
 
- amplitudes(83) = (-0.03125D0*EL2*ML2*(A0(ML2) + (ML2 - 1.D0*x)*B0(x, 0.D0, ML2))*DBLE(Yuk3**INT(2.D0)))/(MW2*PI2*SW2)
+ amplitudes(83) = (-0.03125D0*EL2*ML2*(A0(ML2) + (ML2 - 1.D0*x)*B0(x, 0.D0, ML2))*DBLE(Yuk6**INT(2.D0)))/(MW2*PI2*SW2)
 
  amplitudes(84) = (-0.09375D0*CKM11*CKMC11*EL2*(A0(MD2)*(MU2 + MD2*TB2*DBLE(Yuk3**INT(2.D0))) + A0(MU2)*(MU2 + MD2*TB2*DBLE(Yuk3*&
   &*INT(2.D0))) + B0(x, MD2, MU2)*(-1.D0*MU2*x + DBLE(MU**INT(4.D0)) + TB2*DBLE(MD**INT(4.D0))*DBLE(Yuk3**INT(2.D0)) + MD2*(-1.D0&
