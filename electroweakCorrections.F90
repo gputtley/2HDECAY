@@ -30,8 +30,6 @@ program electroweakCorrections
 	double complex h0toWmWpVC, h0toWmWpTad
 	double precision h0toZ0Z0Tree, h0toZ0Z0CT, h0toZ0Z0Real
 	double complex h0toZ0Z0VC, h0toZ0Z0Tad
-	double precision h0toHHHHTree, h0toHHHHCT, h0toHHHHReal
-	double complex h0toHHHHVC, h0toHHHHTad
 	double precision h0toA0A0Tree, h0toA0A0CT, h0toA0A0Real
 	double complex h0toA0A0VC, h0toA0A0Tad
 	double precision h0toA0Z0Tree, h0toA0Z0CT, h0toA0Z0Real
@@ -251,19 +249,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toBBBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process h -> bb has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -272,19 +299,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toBBBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process h -> bb does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -293,19 +349,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toBBBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -325,40 +410,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toBBBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*h0toBBBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*h0toBBBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*h0toBBBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*h0toBBBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "h0toBBBarLO         ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*h0toBBBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*h0toBBBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -380,19 +524,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toTauTauBarLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // trim(tempVal2) // "   ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process h -> tau tau has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -401,19 +574,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toTauTauBarLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // trim(tempVal2) // "   ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process h -> tau tau does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -422,19 +624,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toTauTauBarLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // trim(tempVal2) // "   ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -454,40 +685,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toTauTauBarLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*h0toTauTauBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*h0toTauTauBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // trim(tempVal2) // "   ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*h0toTauTauBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*h0toTauTauBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "h0toTauTauBarLO     ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*h0toTauTauBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*h0toTauTauBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -509,19 +799,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toMuMuBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // trim(tempVal2) // "     ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process h -> mu mu has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -530,19 +849,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toMuMuBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // trim(tempVal2) // "     ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process h -> mu mu does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -551,19 +899,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toMuMuBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // trim(tempVal2) // "     ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -583,40 +960,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toMuMuBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*h0toMuMuBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*h0toMuMuBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // trim(tempVal2) // "     ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*h0toMuMuBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*h0toMuMuBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "h0toMuMuBarLO       ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*h0toMuMuBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*h0toMuMuBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -638,19 +1074,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toSSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process h -> ss has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -659,19 +1124,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toSSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process h -> ss does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -680,19 +1174,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toSSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -712,40 +1235,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toSSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*h0toSSBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*h0toSSBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*h0toSSBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*h0toSSBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "h0toSSBarLO         ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*h0toSSBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*h0toSSBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -767,19 +1349,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toCCBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process h -> cc has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -788,19 +1399,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toCCBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process h -> cc does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -809,19 +1449,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toCCBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -841,40 +1510,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toCCBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*h0toCCBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*h0toCCBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*h0toCCBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*h0toCCBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "h0toCCBarLO         ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*h0toCCBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*h0toCCBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -896,19 +1624,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toTTBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process h -> tt has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -917,19 +1674,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toTTBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process h -> tt does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -938,19 +1724,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toTTBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -970,40 +1785,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toTTBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*h0toTTBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*h0toTTBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*h0toTTBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*h0toTTBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "h0toTTBarLO         ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*h0toTTBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*h0toTTBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -1025,19 +1899,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toWmWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process h -> WW has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -1046,19 +1949,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toWmWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process h -> WW does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -1067,19 +1999,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toWmWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -1099,40 +2060,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toWmWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*h0toWmWpCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*h0toWmWpCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*h0toWmWpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*h0toWmWpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "h0toWmWpLO          ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*h0toWmWpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*h0toWmWpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toWmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -1154,19 +2174,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toZ0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process h -> ZZ has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -1175,19 +2224,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toZ0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process h -> ZZ does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -1196,19 +2274,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toZ0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/2D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -1228,169 +2335,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toZ0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*h0toZ0Z0CT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*h0toZ0Z0CT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*h0toZ0Z0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*h0toZ0Z0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "h0toZ0Z0LO          ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*h0toZ0Z0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*h0toZ0Z0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
-					write (*,*) "------------------------"
-					write (*,*) ""
-
-				! PROCESS h -> HH
-					! Prepare the output file content
-					outputFileContent = trim(outputFileContent) // "**************"
-					outputFileContent = trim(outputFileContent) // " h -> HH"
-					outputFileContent = trim(outputFileContent) // " (electroweak corrections) *************************\n"
-					! Kinematic prefactor together with the symmetry factor of the process
-					write (*,*) "----- h -> HH -----"
-					m1 = Mh0
-					m2 = MHH
-					m3 = MHH
-					kinematicThreshold = m1**2 - (m2 + m3)**2
-					if (omitELCorr .EQ. 1) then
-						write (*,*) "The electroweak corrections to the process h -> HH are not calculated since OMIT ELW2 is set to 1."
-						treeLevelWidth = 0D0
-						! Write the tree-level width to the output file
-						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toHHHHLO          ="
-						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+					if (RenormScheme .EQ. 0) then
 						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toHHHHNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toHHHHNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
 						end do
-					else if (m1 .LE. 0D0) then
-						write (*,*) "The process h -> HH has a massless particle in the initial state. A decay of massless&
-								& particles is not supported. The LO and NLO widths are set to zero manually."
-						treeLevelWidth = 0D0
-						! Write the tree-level width to the output file
-						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toHHHHLO          ="
-						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+					else if (RenormScheme .GT. maxNumberSchemes) then
 						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toHHHHNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toHHHHNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
-					else if (kinematicThreshold .LT. 0) then
-						write (*,*) "The process h -> HH does not fulfill the kinematic threshold.&
-								& The LO and NLO widths are set to zero manually."
-						treeLevelWidth = 0D0
-						! Write the tree-level width to the output file
-						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toHHHHLO          ="
-						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toHHHHNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toHHHHNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
 						end do
 					else
-						! Kinematic prefactor
-						prefactor = 1D0/2D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
-								&  - 2D0*m2**2*m3**2 )/(16D0*PI*m1**3)
-
-						! Calculate the NLO ingredients
-						call clearcache
-						treeLevelTemp = h0toHHHHTree()
-						vertexCorrectionsTemp = h0toHHHHVC()
-						vertexTadpolesTemp = h0toHHHHTad()
-						realCorrectionsTemp = h0toHHHHReal()
-
-						! Get the full tree-level decay width
-						treeLevelWidth = prefactor*treeLevelTemp
-
-						! Write the tree-level width to the output file
-						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
-						outputFileContent = trim(outputFileContent) // "h0toHHHHLO          ="
-						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
-
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*h0toHHHHCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*h0toHHHHCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toHHHHNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toHHHHNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
 					end if
-
-					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -1412,19 +2449,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toA0A0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process h -> AA has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -1433,19 +2499,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toA0A0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process h -> AA does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -1454,19 +2549,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toA0A0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/2D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -1486,40 +2610,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toA0A0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*h0toA0A0CT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*h0toA0A0CT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*h0toA0A0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*h0toA0A0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "h0toA0A0LO          ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*h0toA0A0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*h0toA0A0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toA0A0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -1541,19 +2724,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toA0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process h -> ZA has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -1562,19 +2774,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toA0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process h -> ZA does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -1583,19 +2824,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toA0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -1615,40 +2885,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toA0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*h0toA0Z0CT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*h0toA0Z0CT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*h0toA0Z0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*h0toA0Z0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "h0toA0Z0LO          ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*h0toA0Z0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*h0toA0Z0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toA0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -1670,19 +2999,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toHpWmLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process h -> H+ W- has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -1691,19 +3049,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toHpWmLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process h -> H+ W- does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -1712,19 +3099,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toHpWmLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -1744,40 +3160,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toHpWmLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*h0toHpWmCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*h0toHpWmCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // "1" // trim(tempVal3) // "       ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*h0toHpWmCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*h0toHpWmCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "h0toHpWmLO          ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*h0toHpWmCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*h0toHpWmCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toHpWmNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -1799,19 +3274,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toHmHpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process h -> H+ H- has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -1820,19 +3324,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toHmHpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process h -> H+ H- does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -1841,19 +3374,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toHmHpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -1873,40 +3435,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "h0toHmHpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*h0toHmHpCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*h0toHmHpCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*h0toHmHpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*h0toHmHpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "h0toHmHpLO          ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*h0toHmHpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*h0toHmHpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "h0toHmHpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -1928,19 +3549,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoBBBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H -> bb has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -1949,19 +3599,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoBBBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process H -> bb does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -1970,19 +3649,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoBBBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -2002,40 +3710,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoBBBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*HHtoBBBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*HHtoBBBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HHtoBBBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HHtoBBBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "HHtoBBBarLO         ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HHtoBBBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HHtoBBBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -2057,19 +3824,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoTauTauBarLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // trim(tempVal2) // "   ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H -> tautau has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -2078,19 +3874,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoTauTauBarLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // trim(tempVal2) // "   ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process H -> tautau does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -2099,19 +3924,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoTauTauBarLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // trim(tempVal2) // "   ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -2131,40 +3985,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoTauTauBarLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*HHtoTauTauBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*HHtoTauTauBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // trim(tempVal2) // "   ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HHtoTauTauBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HHtoTauTauBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "HHtoTauTauBarLO     ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HHtoTauTauBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HHtoTauTauBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -2186,19 +4099,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoMuMuBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // trim(tempVal2) // "     ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H -> mu mu has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -2207,19 +4149,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoMuMuBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // trim(tempVal2) // "     ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process H -> mu mu does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -2228,19 +4199,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoMuMuBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // trim(tempVal2) // "     ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -2260,40 +4260,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoMuMuBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*HHtoMuMuBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*HHtoMuMuBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // trim(tempVal2) // "     ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HHtoMuMuBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HHtoMuMuBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "HHtoMuMuBarLO       ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HHtoMuMuBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HHtoMuMuBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -2315,19 +4374,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoSSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H -> ss has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -2336,19 +4424,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoSSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process H -> ss does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -2357,19 +4474,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoSSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -2389,40 +4535,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoSSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*HHtoSSBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*HHtoSSBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HHtoSSBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HHtoSSBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "HHtoSSBarLO         ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HHtoSSBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HHtoSSBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -2444,19 +4649,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoCCBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H -> cc has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -2465,19 +4699,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoCCBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process H -> cc does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -2486,19 +4749,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoCCBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -2518,40 +4810,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoCCBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*HHtoCCBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*HHtoCCBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HHtoCCBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HHtoCCBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "HHtoCCBarLO         ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HHtoCCBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HHtoCCBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -2573,19 +4924,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoTTBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H -> tt has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -2594,19 +4974,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoTTBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process H -> tt does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -2615,19 +5024,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoTTBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -2647,40 +5085,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoTTBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*HHtoTTBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*HHtoTTBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HHtoTTBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HHtoTTBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "HHtoTTBarLO         ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HHtoTTBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HHtoTTBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -2702,19 +5199,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoWmWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H -> WW has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -2723,19 +5249,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoWmWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process H -> WW does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -2744,19 +5299,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoWmWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -2776,40 +5360,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoWmWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*HHtoWmWpCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*HHtoWmWpCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HHtoWmWpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HHtoWmWpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "HHtoWmWpLO          ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HHtoWmWpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HHtoWmWpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoWmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -2831,19 +5474,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoZ0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H -> ZZ has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -2852,19 +5524,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoZ0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process H -> ZZ does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -2873,19 +5574,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoZ0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/2D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -2905,40 +5635,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoZ0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*HHtoZ0Z0CT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*HHtoZ0Z0CT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HHtoZ0Z0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HHtoZ0Z0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "HHtoZ0Z0LO          ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HHtoZ0Z0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HHtoZ0Z0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoZ0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -2960,19 +5749,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoh0h0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H -> hh has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -2981,19 +5799,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoh0h0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process H -> hh does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -3002,19 +5849,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoh0h0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/2D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -3034,40 +5910,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoh0h0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*HHtoh0h0CT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*HHtoh0h0CT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HHtoh0h0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HHtoh0h0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "HHtoh0h0LO          ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HHtoh0h0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HHtoh0h0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoh0h0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -3089,19 +6024,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoA0A0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H -> AA has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -3110,19 +6074,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoA0A0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process H -> AA does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -3131,19 +6124,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoA0A0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/2D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -3163,40 +6185,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoA0A0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*HHtoA0A0CT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*HHtoA0A0CT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HHtoA0A0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HHtoA0A0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "HHtoA0A0LO          ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HHtoA0A0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HHtoA0A0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoA0A0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -3218,19 +6299,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoA0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H -> ZA has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -3239,19 +6349,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoA0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process H -> ZA does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -3260,19 +6399,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoA0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -3292,40 +6460,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoA0Z0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*HHtoA0Z0CT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*HHtoA0Z0CT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HHtoA0Z0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HHtoA0Z0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "HHtoA0Z0LO          ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HHtoA0Z0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HHtoA0Z0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoA0Z0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -3347,19 +6574,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoHpWmLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H -> H+ W- has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -3368,19 +6624,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoHpWmLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process H -> H+ W- does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -3389,19 +6674,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoHpWmLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -3421,40 +6735,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoHpWmLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*HHtoHpWmCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*HHtoHpWmCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // "1" // trim(tempVal3) // "       ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HHtoHpWmCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HHtoHpWmCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "HHtoHpWmLO          ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HHtoHpWmCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HHtoHpWmCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoHpWmNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -3476,19 +6849,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoHmHpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H -> H+ H- has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -3497,19 +6899,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoHmHpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process H -> H+ H- does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -3518,19 +6949,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoHmHpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -3550,40 +7010,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HHtoHmHpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*HHtoHmHpCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*HHtoHmHpCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HHtoHmHpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HHtoHmHpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "HHtoHmHpLO          ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HHtoHmHpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HHtoHmHpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HHtoHmHpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -3605,19 +7124,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toBBBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process A -> bb has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -3626,19 +7174,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toBBBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process A -> bb does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -3647,19 +7224,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toBBBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -3679,40 +7285,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toBBBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*A0toBBBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*A0toBBBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*A0toBBBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*A0toBBBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "A0toBBBarLO         ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*A0toBBBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*A0toBBBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toBBBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -3734,19 +7399,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toTauTauBarLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // trim(tempVal2) // "   ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process A -> tau,tau has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -3755,19 +7449,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toTauTauBarLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // trim(tempVal2) // "   ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process A -> tau,tau does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -3776,19 +7499,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toTauTauBarLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // trim(tempVal2) // "   ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -3808,40 +7560,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toTauTauBarLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*A0toTauTauBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*A0toTauTauBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // trim(tempVal2) // "   ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*A0toTauTauBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*A0toTauTauBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "A0toTauTauBarLO     ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*A0toTauTauBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*A0toTauTauBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toTauTauBarNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -3863,19 +7674,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toMuMuBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // trim(tempVal2) // "     ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process A -> mu,mu has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -3884,19 +7724,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toMuMuBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // trim(tempVal2) // "     ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process A -> mu,mu does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -3905,19 +7774,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toMuMuBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // trim(tempVal2) // "     ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -3937,40 +7835,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toMuMuBarLO       ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*A0toMuMuBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*A0toMuMuBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // trim(tempVal2) // "     ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*A0toMuMuBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*A0toMuMuBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "A0toMuMuBarLO       ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*A0toMuMuBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*A0toMuMuBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // trim(tempVal2) // "     ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toMuMuBarNLO" // "1" // trim(tempVal3) // "    ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -3992,19 +7949,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toSSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process A -> ss has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -4013,19 +7999,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toSSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process A -> ss does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -4034,19 +8049,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toSSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -4066,40 +8110,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toSSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*A0toSSBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*A0toSSBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*A0toSSBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*A0toSSBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "A0toSSBarLO         ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*A0toSSBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*A0toSSBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toSSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -4121,19 +8224,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toCCBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process A -> cc has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -4142,19 +8274,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toCCBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process A -> cc does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -4163,19 +8324,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toCCBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -4195,40 +8385,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toCCBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*A0toCCBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*A0toCCBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*A0toCCBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*A0toCCBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "A0toCCBarLO         ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*A0toCCBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*A0toCCBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toCCBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -4250,19 +8499,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toTTBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process A -> tt has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -4271,19 +8549,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toTTBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process A -> tt does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -4292,19 +8599,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toTTBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -4324,40 +8660,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toTTBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*A0toTTBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*A0toTTBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*A0toTTBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*A0toTTBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "A0toTTBarLO         ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*A0toTTBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*A0toTTBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toTTBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -4379,19 +8774,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toZ0h0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process A -> Zh has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -4400,19 +8824,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toZ0h0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process A -> Zh does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -4421,19 +8874,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toZ0h0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -4453,40 +8935,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toZ0h0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*A0toZ0h0CT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*A0toZ0h0CT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*A0toZ0h0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*A0toZ0h0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "A0toZ0h0LO          ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*A0toZ0h0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*A0toZ0h0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toZ0h0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -4508,19 +9049,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toHHZ0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process A -> ZH has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -4529,19 +9099,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toHHZ0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process A -> ZH does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -4550,19 +9149,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toHHZ0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -4582,40 +9210,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toHHZ0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*A0toHHZ0CT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*A0toHHZ0CT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*A0toHHZ0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*A0toHHZ0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "A0toHHZ0LO          ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*A0toHHZ0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*A0toHHZ0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toHHZ0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -4637,19 +9324,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toHmWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process A -> H- W+ has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -4658,19 +9374,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toHmWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process A -> H- W+ does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -4679,19 +9424,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toHmWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -4711,40 +9485,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "A0toHmWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*A0toHmWpCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*A0toHmWpCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*A0toHmWpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*A0toHmWpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "A0toHmWpLO          ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*A0toHmWpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*A0toHmWpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "A0toHmWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -4766,19 +9599,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoBBarCLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H+ -> bbar c has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -4787,19 +9649,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoBBarCLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process H+ -> bbar c does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -4808,19 +9699,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoBBarCLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -4840,40 +9760,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoBBarCLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*HptoBBarCCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*HptoBBarCCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // "1" // trim(tempVal3) // "      ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HptoBBarCCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HptoBBarCCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "HptoBBarCLO         ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HptoBBarCCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HptoBBarCCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarCNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -4895,19 +9874,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarLO    ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // trim(tempVal2) // "  ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // "1" // trim(tempVal3) // " ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // trim(tempVal2) // "  ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // "1" // trim(tempVal3) // " ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // trim(tempVal2) // "  ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // "1" // trim(tempVal3) // " ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // trim(tempVal2) // "  ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // "1" // trim(tempVal3) // " ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H+ -> taubar nu has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -4916,19 +9924,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarLO    ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // trim(tempVal2) // "  ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // "1" // trim(tempVal3) // " ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // trim(tempVal2) // "  ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // "1" // trim(tempVal3) // " ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // trim(tempVal2) // "  ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // "1" // trim(tempVal3) // " ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // trim(tempVal2) // "  ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // "1" // trim(tempVal3) // " ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process H+ -> taubar nu does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -4937,19 +9974,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarLO    ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // trim(tempVal2) // "  ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // "1" // trim(tempVal3) // " ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // trim(tempVal2) // "  ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // "1" // trim(tempVal3) // " ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // trim(tempVal2) // "  ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // "1" // trim(tempVal3) // " ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // trim(tempVal2) // "  ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // "1" // trim(tempVal3) // " ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -4969,40 +10035,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarLO    ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*HptoNeuTTauBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*HptoNeuTTauBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // trim(tempVal2) // "  ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // "1" // trim(tempVal3) // " ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HptoNeuTTauBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HptoNeuTTauBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // trim(tempVal2) // "  ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // "1" // trim(tempVal3) // " ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarLO    ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // trim(tempVal2) // "  ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // "1" // trim(tempVal3) // " ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HptoNeuTTauBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HptoNeuTTauBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // trim(tempVal2) // "  ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoNeuTTauBarNLO" // "1" // trim(tempVal3) // " ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -5024,19 +10149,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // trim(tempVal2) // "   ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // "1" // trim(tempVal3) // "  ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H+ -> mubar nu has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -5045,19 +10199,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // trim(tempVal2) // "   ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // "1" // trim(tempVal3) // "  ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process H+ -> mubar nu does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -5066,19 +10249,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // trim(tempVal2) // "   ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // "1" // trim(tempVal3) // "  ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -5098,40 +10310,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMLO     ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*HptoMuBarNeuMCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*HptoMuBarNeuMCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // trim(tempVal2) // "   ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // "1" // trim(tempVal3) // "  ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HptoMuBarNeuMCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HptoMuBarNeuMCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMLO     ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HptoMuBarNeuMCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HptoMuBarNeuMCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // trim(tempVal2) // "   ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoMuBarNeuMNLO" // "1" // trim(tempVal3) // "  ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -5153,19 +10424,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoSBarULO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H+ -> sbar u has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -5174,19 +10474,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoSBarULO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process H+ -> sbar u does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -5195,19 +10524,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoSBarULO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -5227,40 +10585,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoSBarULO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*HptoSBarUCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*HptoSBarUCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // "1" // trim(tempVal3) // "      ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HptoSBarUCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HptoSBarUCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "HptoSBarULO         ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HptoSBarUCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HptoSBarUCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoSBarUNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -5282,19 +10699,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoCSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H+ -> sbar c has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -5303,19 +10749,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoCSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process H+ -> sbar c does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -5324,19 +10799,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoCSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -5356,40 +10860,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoCSBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*HptoCSBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*HptoCSBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HptoCSBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HptoCSBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "HptoCSBarLO         ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HptoCSBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HptoCSBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoCSBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -5411,19 +10974,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoBBarTLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H+ -> bbar t has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -5432,19 +11024,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoBBarTLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process H+ -> bbar t does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -5453,19 +11074,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoBBarTLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -5485,40 +11135,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoBBarTLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*HptoBBarTCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*HptoBBarTCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // "1" // trim(tempVal3) // "      ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HptoBBarTCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HptoBBarTCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "HptoBBarTLO         ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HptoBBarTCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HptoBBarTCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -5540,19 +11249,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoCDBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H+ -> dbar c has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -5561,19 +11299,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoCDBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process H+ -> dbar c does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -5582,19 +11349,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoCDBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -5614,40 +11410,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoCDBarLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*HptoCDBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*HptoCDBarCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // "1" // trim(tempVal3) // "      ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HptoCDBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HptoCDBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "HptoCDBarLO         ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HptoCDBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HptoCDBarCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoCDBarNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -5669,19 +11524,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoBBarULO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H+ -> bbar u has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -5690,19 +11574,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoBBarULO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process H+ -> bbar u does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -5711,19 +11624,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoBBarULO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -5743,40 +11685,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoBBarULO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*HptoBBarUCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*HptoBBarUCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // "1" // trim(tempVal3) // "      ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HptoBBarUCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HptoBBarUCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "HptoBBarULO         ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HptoBBarUCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HptoBBarUCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoBBarUNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -5798,19 +11799,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoSBarTLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H+ -> sbar t has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -5819,19 +11849,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoSBarTLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process H+ -> sbar t does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -5840,19 +11899,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoSBarTLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -5872,40 +11960,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoSBarTLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*HptoSBarTCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*HptoSBarTCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // "1" // trim(tempVal3) // "      ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HptoSBarTCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HptoSBarTCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "HptoSBarTLO         ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HptoSBarTCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HptoSBarTCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoSBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -5927,19 +12074,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoDBarTLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H+ -> dbar t has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -5948,19 +12124,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoDBarTLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process H+ -> dbar t does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -5969,19 +12174,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoDBarTLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // "1" // trim(tempVal3) // "      ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -6001,40 +12235,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoDBarTLO         ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*HptoDBarTCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*HptoDBarTCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // trim(tempVal2) // "       ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // "1" // trim(tempVal3) // "      ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HptoDBarTCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HptoDBarTCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "HptoDBarTLO         ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HptoDBarTCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HptoDBarTCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // trim(tempVal2) // "       ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoDBarTNLO" // "1" // trim(tempVal3) // "      ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -6056,19 +12349,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoWph0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H+ -> W h has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -6077,19 +12399,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoWph0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process H+ -> W h does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -6098,19 +12449,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoWph0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -6130,40 +12510,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoWph0LO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*HptoWph0CT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*HptoWph0CT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // "1" // trim(tempVal3) // "       ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HptoWph0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HptoWph0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "HptoWph0LO          ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HptoWph0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HptoWph0CT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoWph0NLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -6185,19 +12624,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoHHWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H+ -> W H has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -6206,19 +12674,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoHHWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process H+ -> W H does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -6227,19 +12724,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoHHWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -6259,40 +12785,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoHHWpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*HptoHHWpCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*HptoHHWpCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HptoHHWpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HptoHHWpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "HptoHHWpLO          ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HptoHHWpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HptoHHWpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoHHWpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
@@ -6314,19 +12899,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoA0WpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (m1 .LE. 0D0) then
 						write (*,*) "The process H+ -> W A has a massless particle in the initial state. A decay of massless&
 								& particles is not supported. The LO and NLO widths are set to zero manually."
@@ -6335,19 +12949,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoA0WpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else if (kinematicThreshold .LT. 0) then
 						write (*,*) "The process H+ -> W A does not fulfill the kinematic threshold.&
 								& The LO and NLO widths are set to zero manually."
@@ -6356,19 +12999,48 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoA0WpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						do m = 1, maxNumberSchemes, 1
-							NLOWidth(m) = 0D0
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
-							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+						if (RenormScheme .EQ. 0) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							m = RenormScheme
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					else
 						! Kinematic prefactor
 						prefactor = 1D0/1D0 * DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 &
@@ -6388,40 +13060,99 @@ program electroweakCorrections
 						write( tempVal, '(ES23.15E3)' ) treeLevelWidth
 						outputFileContent = trim(outputFileContent) // "HptoA0WpLO          ="
 						outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						! Get the full NLO decay width for all schemes
-						do m = 1, maxNumberSchemes, 1
-							call clearcache
+						! Check if all schemes shall be calculated or only a specific one
+						if (RenormScheme .EQ. 0) then
+							! Get the full NLO decay width for all schemes
+							do m = 1, maxNumberSchemes, 1
+								call clearcache
 
-							! Schemes 1, 2, 9, 11 and 13 are without tadpoles
-							if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
-										& 2D0*HptoA0WpCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							else
-								fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
-										& 2D0*HptoA0WpCT(m)
-								call clearcache
-								NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
-							end if
-							! Write the NLO width to the output file
-							write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
-							write( tempVal2, '(I1)' ) m
-							write( tempVal3, '(I1)' ) (m-10)
-							if (m .lt. 10) then
-								outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // trim(tempVal2) // "        ="
-							else
-								outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // "1" // trim(tempVal3) // "       ="
-							end if
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HptoA0WpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HptoA0WpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else if (RenormScheme .GT. maxNumberSchemes) then
+							write (*,*) "Invalid renormalization scheme. The chosen scheme number must be below the maximum&
+									& number of schemes implemented. The widths are set to zero manually."
+							treeLevelWidth = 0D0
+							! Write the tree-level width to the output file
+							write( tempVal, '(ES23.15E3)' ) treeLevelWidth
+							outputFileContent = trim(outputFileContent) // "HptoA0WpLO          ="
 							outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
-						end do
+							do m = 1, maxNumberSchemes, 1
+								NLOWidth(m) = 0D0
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+							end do
+						else
+							! Get the full NLO decay width for the chosen scheme
+							m = RenormScheme
+								call clearcache
+
+								! Schemes 1, 2, 9, 11 and 13 are without tadpoles
+								if ((m == 1) .OR. (m == 2) .OR. (m == 9) .OR. (m == 11) .OR. (m == 13)) then
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &
+											& 2D0*HptoA0WpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								else
+									fullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp + vertexTadpolesTemp) + &
+											& 2D0*HptoA0WpCT(m)
+									call clearcache
+									NLOWidth(m) = prefactor*( fullamplitude(m) + realCorrectionsTemp )
+								end if
+								! Write the NLO width to the output file
+								write( tempVal, '(ES23.15E3)' ) NLOWidth(m)
+								write( tempVal2, '(I1)' ) m
+								write( tempVal3, '(I1)' ) (m-10)
+								if (m .lt. 10) then
+									outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // trim(tempVal2) // "        ="
+								else
+									outputFileContent = trim(outputFileContent) // "HptoA0WpNLO" // "1" // trim(tempVal3) // "       ="
+								end if
+								outputFileContent = trim(outputFileContent) // " " // (trim(tempVal) // "\n")
+						end if
 					end if
 
 					write (*,*) "TreeLevelWidth = ", treeLevelWidth
-					do m = 1, maxNumberSchemes, 1
-						write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
-					end do
-
+					if (RenormScheme .EQ. 0) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else if (RenormScheme .GT. maxNumberSchemes) then
+						do m = 1, maxNumberSchemes, 1
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+						end do
+					else
+						m = RenormScheme
+							write (*,*) "NLOWidth(", m, ") = ", NLOWidth(m)
+					end if
 					write (*,*) "------------------------"
 					write (*,*) ""
 
