@@ -346,7 +346,7 @@ def createElectroweakCorrections():
 	electroweakCorrectionsFile.write("\t\t\ttargetName = targetName // ' '\n\n")
 	
 	electroweakCorrectionsFile.write("\t\t\t! Get all parameters\n")
-	electroweakCorrectionsFile.write("\t\t\tcall getParameters(fileName)\n")
+	electroweakCorrectionsFile.write("\t\t\tcall getParameters()\n")
 	electroweakCorrectionsFile.write("\t\t\tcall setmudim(InputScale**2)\n\n")
 	
 	electroweakCorrectionsFile.write("\t\t\t! Prepare the output file header\n")

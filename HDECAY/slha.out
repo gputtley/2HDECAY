@@ -117,7 +117,7 @@ DECAY QCD&EW    35     4.86604066E+01   # H decays with QCD and EW corrections
      4.49869760E-05    2         -15        15   # BR(H -> tau+    tau-   )
      1.55227241E-07    2         -13        13   # BR(H -> mu+     mu-    )
      8.14160932E-08    2           3        -3   # BR(H -> s       sb     )
-     4.96934521E-06    2           4        -4   # BR(H -> c       cb     )
+     4.96934520E-06    2           4        -4   # BR(H -> c       cb     )
      9.97147639E-01    2           6        -6   # BR(H -> t       tb     )
      1.89912644E-03    2          21        21   # BR(H -> g       g      )
      5.71111803E-06    2          22        22   # BR(H -> gam     gam    )
@@ -226,21 +226,21 @@ DECAY QCD    37     5.06882790E+01   # H+ decays with QCD corrections only
      5.57727053E-08    2          24        36   # BR(H+ -> W+      A      )
 #
 #               PDG    Width QCD and EW
-DECAY QCD&EW    37     5.03210688E+01   # H+ decays with QCD and EW correctios
+DECAY QCD&EW    37     5.03210694E+01   # H+ decays with QCD and EW correctios
                        7                # Renormalization Scheme Number
 #          BR         NDA         ID1       ID2
-     1.39653586E-06    2           4        -5   # BR(H+ -> c       bb     )
-     4.28363916E-05    2         -15        16   # BR(H+ -> tau+    nu_tau )
-     1.48062875E-07    2         -13        14   # BR(H+ -> mu+     nu_mu  )
-     2.27347871E-08    2           2        -5   # BR(H+ -> u       bb     )
-     4.63052003E-09    2           2        -3   # BR(H+ -> u       sb     )
-     5.25102708E-07    2           4        -1   # BR(H+ -> c       db     )
-     9.80422785E-06    2           4        -3   # BR(H+ -> c       sb     )
-     9.98234974E-01    2           6        -5   # BR(H+ -> t       bb     )
-     1.63478747E-03    2           6        -3   # BR(H+ -> t       sb     )
-     7.54295799E-05    2           6        -1   # BR(H+ -> t       db     )
-     1.52205671E-08    2          24        25   # BR(H+ -> W+      h      )
-     5.61796980E-08    2          24        36   # BR(H+ -> W+      A      )
+     1.39653584E-06    2           4        -5   # BR(H+ -> c       bb     )
+     4.28363911E-05    2         -15        16   # BR(H+ -> tau+    nu_tau )
+     1.48062873E-07    2         -13        14   # BR(H+ -> mu+     nu_mu  )
+     2.27215754E-08    2           2        -5   # BR(H+ -> u       bb     )
+     4.63051997E-09    2           2        -3   # BR(H+ -> u       sb     )
+     5.37232321E-07    2           4        -1   # BR(H+ -> c       db     )
+     9.80422773E-06    2           4        -3   # BR(H+ -> c       sb     )
+     9.98234962E-01    2           6        -5   # BR(H+ -> t       bb     )
+     1.63478745E-03    2           6        -3   # BR(H+ -> t       sb     )
+     7.54295790E-05    2           6        -1   # BR(H+ -> t       db     )
+     1.52205669E-08    2          24        25   # BR(H+ -> W+      h      )
+     5.61796973E-08    2          24        36   # BR(H+ -> W+      A      )
 #
 #                 PDG
 LO DECAY WIDTH    37   # H+ non-zero LO decay widths of on-shell and no-loop induced decays
@@ -264,9 +264,9 @@ NLO DECAY WIDTH    37   # H+ non-zero NLO EW decay widths of on-shell an non-loo
      1.38934448E-04    2           4        -5   # GAM(H+ -> c       bb     )
      2.15557301E-03    2         -15        16   # GAM(H+ -> tau+    nu_tau )
      7.45068213E-06    2         -13        14   # GAM(H+ -> mu+     nu_mu  )
-     1.59570590E-06    2           2        -5   # GAM(H+ -> u       bb     )
+     1.59504109E-06    2           2        -5   # GAM(H+ -> u       bb     )
      9.61446010E-07    2           2        -3   # GAM(H+ -> u       sb     )
-     2.18580032E-04    2           4        -1   # GAM(H+ -> c       db     )
+     2.19190407E-04    2           4        -1   # GAM(H+ -> c       db     )
      4.09729778E-03    2           4        -3   # GAM(H+ -> c       sb     )
      5.95127267E+01    2           6        -5   # GAM(H+ -> t       bb     )
      9.74060245E-02    2           6        -3   # GAM(H+ -> t       sb     )

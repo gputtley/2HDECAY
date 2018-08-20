@@ -159,7 +159,7 @@ program electroweakCorrections
 			targetName = targetName // ' '
 
 			! Get all parameters
-			call getParameters(fileName)
+			call getParameters()
 			call setmudim(InputScale**2)
 
 			! Prepare the output file header

@@ -1,4 +1,4 @@
-subroutine getParameters(filePath)
+subroutine getParameters()
     use constants
     implicit none
     character(50) dump, dump2, dump3
@@ -9,8 +9,8 @@ subroutine getParameters(filePath)
     integer :: currentLine = 1
     logical fileExists
     character isContinue
-    character(50), intent(in) :: filePath
-    character(300), parameter :: pathToInputFiles = 'Results\\'
+    ! character(50), intent(in) :: filePath
+    character(300), parameter :: pathToInputFiles = 'HDECAY\\'
     integer m
     double precision M11SqPot, M22SqPot, M12SqPot, tmpMass
 

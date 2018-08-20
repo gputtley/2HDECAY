@@ -72,114 +72,128 @@ if __name__ == "__main__":		# This is necessary for correct parallelisation unde
 	+---------------------------------------+
 	''')
 
-	# Copy the input file to the HDECAY subfolder
-	print("Copying input files into output folder...\n")
-	filenameIn = "Parameters" + os.sep + "hdecay.in"
-	filenameOut = "HDECAY" + os.sep + "hdecay.in"
-	copyfile(filenameIn, filenameOut)
+	# Get a list of all input files
+	inputPath = "Input"
+	inputFileList = os.listdir(inputPath)
+	if '..' in inputFileList:
+		inputFileList.remove('..')
+	if '.' in inputFileList:
+		inputFileList.remove('.')
 
-	# Let HDECAY run in minimal mode to produce the fermion mass file
-	print("Starting HDECAY in minimal mode...\n")
-	os.chdir('HDECAY')
-	prompt = ['run', '1']
-	subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
-	os.chdir('..')
-	print("HDECAY in minimal mode terminated.\n")
+	# Iterate over all input files
+	for inputFileTemp in inputFileList:
+		print("Calculating corrections for input file " + inputFileTemp + " ...\n")
 
-	# Read the ferminon masses from the fermion mass file
-	filenameMasses = "HDECAY" + os.sep + "fermionmasses.dat"
-	massFileLines = list(line.rstrip('\n') for line in open(filenameMasses))
-	MCOSCalc = float((massFileLines[0].split('='))[1].strip())
-	MBOSCalc = float((massFileLines[1].split('='))[1].strip())
-	
-	# Copy the file name to the result folder and truncate it at the end
-	print("Copying input files into output folder...\n")
-	filenameIn = "Parameters" + os.sep + "hdecay.in"
-	filenameOut = "HDECAY" + os.sep + "hdecay.in"
-	# copyfile(filenameIn, filenameOut)
-	fileHandler = open(filenameIn, "r")
-	convertedFileHandler = []
-	lineCount = 1
-	for line in fileHandler:
-		# Write the current line in an array
-		convertedFileHandler.append(line)
-		# Pick out the values of MW, MZ and alphaAtMZ
-		if lineCount == lineWhereMZ:
-			massMZ = float((line.split())[2])
-		if lineCount == lineWhereMW:
-			massMW = float((line.split())[2])
-		if lineCount == lineWhereAlphaAtMZ:
-			alphaAtMZ = float((line.split())[2])
-		lineCount += 1
-	fileHandler.close()
+		# Copy the input file to the HDECAY subfolder
+		print("Copying input files into HDECAY folder...\n")
+		filenameIn = "Input" + os.sep + inputFileTemp
+		filenameOut = "HDECAY" + os.sep + "hdecay.in"
+		copyfile(filenameIn, filenameOut)
 
-	# Write a copy of the file to the output folder, but replace GFCALC in the file with the calculated value
-	GFcalc = pi/sqrt(2)*alphaAtMZ/(massMW**2*(1-massMW**2/massMZ**2))
-	GFline = "GFCALC   = " + str(GFcalc) + "\n"
-	MCOSline = "MCOSCALC = " + str(MCOSCalc) + "\n"
-	MBOSline = "MBOSCALC = " + str(MBOSCalc) + "\n"
-	lineCount = 1
-	convertedFile = ''
-	for line in convertedFileHandler:
-		if lineCount == lineWhereGFCalc:
-			convertedFile += GFline
-		elif lineCount == lineWhereOSMC:
-			convertedFile += MCOSline
-			convertedFile += MBOSline
-			convertedFile += line
-		# elif lineCount == lineWhereOSMB:
-		# 	convertedFile += MBOSline
-		# 	convertedFile += line
-		else:
-			convertedFile += line
-		lineCount += 1
-	fileHandler = open(filenameOut, "w")
-	fileHandler.write(convertedFile)
-	fileHandler.close()
-	print("Copying of input files done.\n")
-	
-	# Calculate the electroweak corrections
-	print("Calculating electroweak corrections...\n")
-	prompt = ['electroweakCorrections', '0', '0', '0', '1', 'HDECAY' + os.sep + 'hdecay.in', 'test.txt']
-	subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
-	print("Calculation of electroweak corrections done.\n")
+		# Let HDECAY run in minimal mode to produce the fermion mass file
+		print("Starting HDECAY in minimal mode...\n")
+		os.chdir('HDECAY')
+		prompt = ['run', '1']
+		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
+		os.chdir('..')
+		print("HDECAY in minimal mode terminated.\n")
 
-	# Replace the newline character in each file with a proper newline
-	print("Postprocessing temporary input file...\n")
-	fileHandler = open(filenameOut, "r")
-	convertedFile = ''
-	lineCount = 1
-	for line in fileHandler:
-		# Convert the literal newlines to actual ones and remove the leading whitespace from the Fortran output
-		if (lineCount == lineToInsert):
-			lineToReplace = line.replace('\\n', '\n')[1:]
-		else:
-			lineToReplace = line.replace('\\n', '\n')
-		convertedFile += lineToReplace
-		# print(lineToReplace)
-		lineCount += 1
-	fileHandler.close()
+		# Read the ferminon masses from the fermion mass file
+		filenameMasses = "HDECAY" + os.sep + "fermionmasses.dat"
+		massFileLines = list(line.rstrip('\n') for line in open(filenameMasses))
+		MCOSCalc = float((massFileLines[0].split('='))[1].strip())
+		MBOSCalc = float((massFileLines[1].split('='))[1].strip())
+		
+		# Copy the file name to the result folder and truncate it at the end
+		print("Copying input files into HDECAY folder...\n")
+		filenameIn = "Input" + os.sep + inputFileTemp
+		filenameOut = "HDECAY" + os.sep + "hdecay.in"
+		# copyfile(filenameIn, filenameOut)
+		fileHandler = open(filenameIn, "r")
+		convertedFileHandler = []
+		lineCount = 1
+		for line in fileHandler:
+			# Write the current line in an array
+			convertedFileHandler.append(line)
+			# Pick out the values of MW, MZ and alphaAtMZ
+			if lineCount == lineWhereMZ:
+				massMZ = float((line.split())[2])
+			if lineCount == lineWhereMW:
+				massMW = float((line.split())[2])
+			if lineCount == lineWhereAlphaAtMZ:
+				alphaAtMZ = float((line.split())[2])
+			lineCount += 1
+		fileHandler.close()
 
-	# Store the results file in the correct directory
-	fileHandler = open(filenameOut, "w")
-	fileHandler.write(convertedFile)
-	fileHandler.close()
-	print("Postprocessing of temporary input file done.\n")
+		# Write a copy of the file to the output folder, but replace GFCALC in the file with the calculated value
+		GFcalc = pi/sqrt(2)*alphaAtMZ/(massMW**2*(1-massMW**2/massMZ**2))
+		GFline = "GFCALC   = " + str(GFcalc) + "\n"
+		MCOSline = "MCOSCALC = " + str(MCOSCalc) + "\n"
+		MBOSline = "MBOSCALC = " + str(MBOSCalc) + "\n"
+		lineCount = 1
+		convertedFile = ''
+		for line in convertedFileHandler:
+			if lineCount == lineWhereGFCalc:
+				convertedFile += GFline
+			elif lineCount == lineWhereOSMC:
+				convertedFile += MCOSline
+				convertedFile += MBOSline
+				convertedFile += line
+			# elif lineCount == lineWhereOSMB:
+			# 	convertedFile += MBOSline
+			# 	convertedFile += line
+			else:
+				convertedFile += line
+			lineCount += 1
+		fileHandler = open(filenameOut, "w")
+		fileHandler.write(convertedFile)
+		fileHandler.close()
+		print("Copying of input files done.\n")
+		
+		# Calculate the electroweak corrections
+		print("Calculating electroweak corrections...\n")
+		prompt = ['electroweakCorrections', '0', '0', '0', '1', 'HDECAY' + os.sep + 'hdecay.in', 'test.txt']
+		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
+		print("Calculation of electroweak corrections done.\n")
 
-	# Start HDECAY in the normal (non-minimal) configuration
-	print("Starting HDECAY in standard mode...\n")
-	os.chdir('HDECAY')
-	prompt = ['run']
-	subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
-	os.chdir('..')
-	print("HDECAY in standard mode terminated.\n")
+		# Replace the newline character in each file with a proper newline
+		print("Postprocessing temporary input file...\n")
+		fileHandler = open(filenameOut, "r")
+		convertedFile = ''
+		lineCount = 1
+		for line in fileHandler:
+			# Convert the literal newlines to actual ones and remove the leading whitespace from the Fortran output
+			if (lineCount == lineToInsert):
+				lineToReplace = line.replace('\\n', '\n')[1:]
+			else:
+				lineToReplace = line.replace('\\n', '\n')
+			convertedFile += lineToReplace
+			# print(lineToReplace)
+			lineCount += 1
+		fileHandler.close()
 
-	# Copy the output file to the results folder
-	print("Copying input files into output folder...\n")
-	filenameIn = "HDECAY" + os.sep + "slha.out"
-	filenameOut = "Results" + os.sep + "2hdecay.out"
-	copyfile(filenameIn, filenameOut)
-	print("Copying of input files done.\n")
+		# Store the results file in the correct directory
+		fileHandler = open(filenameOut, "w")
+		fileHandler.write(convertedFile)
+		fileHandler.close()
+		print("Postprocessing of temporary input file done.\n")
+
+		# Start HDECAY in the normal (non-minimal) configuration
+		print("Starting HDECAY in standard mode...\n")
+		os.chdir('HDECAY')
+		prompt = ['run']
+		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
+		os.chdir('..')
+		print("HDECAY in standard mode terminated.\n")
+
+		# Copy the output file to the results folder
+		print("Copying input files into output folder...\n")
+		filenameIn = "HDECAY" + os.sep + "slha.out"
+		filenameOut = "Results" + os.sep + inputFileTemp.replace('.in', '.out')
+		copyfile(filenameIn, filenameOut)
+		print("Copying of input files done.\n")
+
+		print("Corrections for input file " + inputFileTemp + " done.\n")
 
 	# End of program is reached
 	print("\nCalculation finished. Thanks for using 2HDECAY!\n")
