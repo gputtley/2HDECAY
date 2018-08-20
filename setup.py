@@ -283,7 +283,7 @@ def createElectroweakCorrections():
 	electroweakCorrectionsFile.write("\tcharacter(len=32) :: arg\n")
 	electroweakCorrectionsFile.write("\tcharacter(len=50) :: fileName, fileNameFilled, targetName\n")
 	electroweakCorrectionsFile.write("\tcharacter(len=600000) :: outputFileContent\n")
-	electroweakCorrectionsFile.write("\tcharacter(300), parameter :: pathToOutputFiles = 'Results\\\\'\n")
+	electroweakCorrectionsFile.write("\tcharacter(300), parameter :: pathToOutputFiles = 'HDECAY\\\\'\n")
 	electroweakCorrectionsFile.write("\tinteger arguments(5)\n")
 	electroweakCorrectionsFile.write("\tinteger, parameter :: maxNumberSchemes = 14\n")
 	electroweakCorrectionsFile.write("\tlogical :: debugModeOn = .true.\n")
@@ -779,22 +779,40 @@ if missingFiles:
 # Make the program 
 makeWanted = CommonFunctions.queryBoolean("Do you want to make the program now (the make process may take a few minutes)?")
 if makeWanted:
-	print('Making 2HDECAY...\n')
+	print('Making main program 2HDECAY...\n')
 	try:
 		subprocess.check_output('make')
-		print('\nMaking process terminated.\n')
+		print('\nMaking process of main program 2HDECAY terminated.\n')
+	except subprocess.CalledProcessError as e:
+		print(e.output)
+
+	print('Making subprogram HDECAY...\n')
+	try:
+		os.chdir('HDECAY')
+		subprocess.check_output('make')
+		print('\nMaking process of subprogram HDECAY terminated.\n')
+		os.chdir('..')
 	except subprocess.CalledProcessError as e:
 		print(e.output)
 else:
 	print('Make process skipped.\n')
 
 # Cleaning the installation
-makeWanted = CommonFunctions.queryBoolean("Do you want to make clean?")
-if makeWanted:
-	print('Cleaning 2HDECAY...\n')
+cleanWanted = CommonFunctions.queryBoolean("Do you want to make clean?")
+if cleanWanted:
+	print('Cleaning main program 2HDECAY...\n')
 	try:
 		subprocess.check_output('make clean')
 		print('\nCleaning process terminated.\n')
+	except subprocess.CalledProcessError as e:
+		print(e.output)
+
+	print('Cleaning subprogram HDECAY...\n')
+	try:
+		os.chdir('HDECAY')
+		subprocess.check_output('make clean')
+		print('\nCleaning process terminated.\n')
+		os.chdir('..')
 	except subprocess.CalledProcessError as e:
 		print(e.output)
 else:

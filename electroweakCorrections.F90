@@ -8,7 +8,7 @@ program electroweakCorrections
 	character(len=32) :: arg
 	character(len=50) :: fileName, fileNameFilled, targetName
 	character(len=600000) :: outputFileContent
-	character(300), parameter :: pathToOutputFiles = 'Results\\'
+	character(300), parameter :: pathToOutputFiles = 'HDECAY\\'
 	integer arguments(5)
 	integer, parameter :: maxNumberSchemes = 14
 	logical :: debugModeOn = .true.
