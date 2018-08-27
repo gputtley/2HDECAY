@@ -2,20 +2,34 @@
 #Filename: 2HDECAY.py
 
 
- #######################################################################################
-#																						#
-#									2HDECAY												#
-#																						#
-#	Purpose:	Program for the automated calculation of full one-loop electroweak 		#
-#				and QCD corrections for one-to-two decays of Higgs particles in the		#
-#				two-Higgs doublet model (2HDM).											#
-#	Author: 	Marcel Krause (marcel.krause@kit.edu)									#
-#				Prof. Dr. M. Margarete Mühlleitner (milada.muehlleitner@kit.edu)		#
-#	Version:	1.0.0																	#
-#	Date:		26.06.2018																#
-#	License:	TBA																		#
-#																						#
- #######################################################################################
+ ###############################################################################################################
+#																												#
+#														2HDECAY													#
+#																												#
+#	Purpose:	Program for the automated calculation of full one-loop electroweak 								#
+#				and QCD corrections for one-to-two decays of Higgs particles in the								#
+#				two-Higgs doublet model (2HDM).																	#
+#	Authors: 	Marcel Krause (marcel.krause@kit.edu)															#
+#				Prof. Dr. M. Margarete Mühlleitner (milada.muehlleitner@kit.edu)								#
+#	Version:	1.0.0																							#
+#	Date:		05.09.2018																						#
+#	Copyright:	Copyright 2018, Marcel Krause & Milada Margarete Mühlleitner									#
+#	License:	GNU Lesser General Public License (GNU LGPL)													#
+#				You may use this program as you wish, for free, as long as you follow							#
+#				the restrictions given by the GNU LGPL. When you use this program, 								#
+#				please acknowledge our work by citing the following papers:										#
+#					The manual for 2HDECAY:																		#
+#					 - M. Krause, M. Muhlleitner, M. Spira, arXiv:YYMM.XXX										#
+#					The manual for HDECAY:																		#
+#					 - A. Djouadi, J. Kalinowski, M. Spira, Comp. Phys. Commun. 108 (1998) 56, hep-ph/9704448	#
+#					 - A. Djouadi, J. Kalinowski, M. Muhlleitner, M. Spira, arXiv:1801.09506 [hep-ph]			#
+#					The papers on the EW correction to the 2HDM decays:											#
+#					 - M. Krause, R. Lorenz, M. Muhlleitner, R. Santos, H. Ziesche, JHEP 1609 (2016) 143		#
+#					 - M. Krause, M. Muhlleitner, R. Santos, H. Ziesche, Phys.Rev. D95 (2017) no.7, 075019		#
+#					The publication of LoopTools:																#
+#					 - T. Hahn, M. Perez-Victoria, Comp. Phys. Commun. 118 (1999) 153-165, hep-ph/9807565		#
+#																												#
+ ###############################################################################################################
 
 
 #------------------------------#
@@ -28,12 +42,6 @@ from math import pi, sqrt
 import subprocess
 # import multiprocessing
 import CommonFunctions			# Provides common, often used functions for different scripts of 2HDECAY
-
-
-
-#-------------------------#
-#		 Functions		  #
-#-------------------------#
 
 #-------------------------#
 #		 Settings		  #
@@ -54,23 +62,38 @@ lineWhereOSMB = 23		# This is the line at which the OS MB value has to be insert
 if __name__ == "__main__":		# This is necessary for correct parallelisation under Windows (Windows does not know fork)
 	# Print the welcome screen
 	print('''
-	+---------------------------------------+
-	|                                       |
-	|             2HDECAY 1.0.0             |
-	|                                       |
-	|                             /         |
-	|                            /          |
-	|                           /           |
-	|                      --- /            |
-	|      ______________/     \            |
-	|                    \     /            |
-	|                      --- \            |
-	|                           \           |
-	|                            \          |
-	|                             \         |
-	|                                       |
-	+---------------------------------------+
-	''')
++---------------------------------------+
+|                                       |
+|             2HDECAY 1.0.0             |
+|                                       |
+|                             /         |
+|                            /          |
+|                           /           |
+|                      --- /            |
+|      ______________/     \            |
+|                    \     /            |
+|                      --- \            |
+|                           \           |
+|                            \          |
+|                             \         |
+|                                       |
++---------------------------------------+
+
+When you use this program please cite:
+	The manual for 2HDECAY:
+	 - M. Krause, M. Muhlleitner, M. Spira, arXiv:YYMM.XXX
+	The manual for HDECAY:
+	 - A. Djouadi, J. Kalinowski, M. Spira, Comp. Phys. Commun. 108 (1998) 56, hep-ph/9704448
+	 - A. Djouadi, J. Kalinowski, M. Muhlleitner, M. Spira, arXiv:1801.09506 [hep-ph]
+	The papers on the EW correction to the 2HDM decays:
+	 - M. Krause, R. Lorenz, M. Muhlleitner, R. Santos, H. Ziesche, JHEP 1609 (2016) 143
+	 - M. Krause, M. Muhlleitner, R. Santos, H. Ziesche, Phys.Rev. D95 (2017) no.7, 075019
+	The publication of LoopTools:
+	 - T. Hahn, M. Perez-Victoria, Comp. Phys. Commun. 118 (1999) 153-165, hep-ph/9807565
+
+2HDECAY is released under GNU Lesser General Public License. LoopTools is released under GNU Lesser General Public License.
+Copyright 2018, Marcel Krause & Milada Margarete Muehlleitner.
+''')
 
 	# Get a list of all input files
 	inputPath = "Input"
@@ -91,7 +114,7 @@ if __name__ == "__main__":		# This is necessary for correct parallelisation unde
 		copyfile(filenameIn, filenameOut)
 
 		# Let HDECAY run in minimal mode to produce the fermion mass file
-		print("Starting HDECAY in minimal mode...\n")
+		print("Starting HDECAY in minimal mode...")
 		os.chdir('HDECAY')
 		prompt = ['run', '1']
 		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
@@ -105,7 +128,7 @@ if __name__ == "__main__":		# This is necessary for correct parallelisation unde
 		MBOSCalc = float((massFileLines[1].split('='))[1].strip())
 		
 		# Copy the file name to the result folder and truncate it at the end
-		print("Copying input files into HDECAY folder...\n")
+		print("Copying input files into HDECAY folder...")
 		filenameIn = "Input" + os.sep + inputFileTemp
 		filenameOut = "HDECAY" + os.sep + "hdecay.in"
 		# copyfile(filenameIn, filenameOut)
@@ -125,7 +148,7 @@ if __name__ == "__main__":		# This is necessary for correct parallelisation unde
 			lineCount += 1
 		fileHandler.close()
 
-		# Write a copy of the file to the output folder, but replace GFCALC in the file with the calculated value
+		# Write a copy of the file to the output folder, but add GFCALC, MCOSCALC and MBOSCALC with the calculated values
 		GFcalc = pi/sqrt(2)*alphaAtMZ/(massMW**2*(1-massMW**2/massMZ**2))
 		GFline = "GFCALC   = " + str(GFcalc) + "\n"
 		MCOSline = "MCOSCALC = " + str(MCOSCalc) + "\n"
@@ -139,16 +162,13 @@ if __name__ == "__main__":		# This is necessary for correct parallelisation unde
 				convertedFile += MCOSline
 				convertedFile += MBOSline
 				convertedFile += line
-			# elif lineCount == lineWhereOSMB:
-			# 	convertedFile += MBOSline
-			# 	convertedFile += line
 			else:
 				convertedFile += line
 			lineCount += 1
 		fileHandler = open(filenameOut, "w")
 		fileHandler.write(convertedFile)
 		fileHandler.close()
-		print("Copying of input files done.\n")
+		print("... done.\n")
 		
 		# Calculate the electroweak corrections
 		print("Calculating electroweak corrections...\n")
@@ -157,7 +177,7 @@ if __name__ == "__main__":		# This is necessary for correct parallelisation unde
 		print("Calculation of electroweak corrections done.\n")
 
 		# Replace the newline character in each file with a proper newline
-		print("Postprocessing temporary input file...\n")
+		print("Postprocessing temporary input file...")
 		fileHandler = open(filenameOut, "r")
 		convertedFile = ''
 		lineCount = 1
@@ -176,10 +196,10 @@ if __name__ == "__main__":		# This is necessary for correct parallelisation unde
 		fileHandler = open(filenameOut, "w")
 		fileHandler.write(convertedFile)
 		fileHandler.close()
-		print("Postprocessing of temporary input file done.\n")
+		print("... done.\n")
 
 		# Start HDECAY in the normal (non-minimal) configuration
-		print("Starting HDECAY in standard mode...\n")
+		print("Starting HDECAY in standard mode...")
 		os.chdir('HDECAY')
 		prompt = ['run']
 		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
@@ -187,11 +207,11 @@ if __name__ == "__main__":		# This is necessary for correct parallelisation unde
 		print("HDECAY in standard mode terminated.\n")
 
 		# Copy the output file to the results folder
-		print("Copying input files into output folder...\n")
+		print("Copying input files into output folder...")
 		filenameIn = "HDECAY" + os.sep + "slha.out"
 		filenameOut = "Results" + os.sep + inputFileTemp.replace('.in', '.out')
 		copyfile(filenameIn, filenameOut)
-		print("Copying of input files done.\n")
+		print("... done.\n")
 
 		print("Corrections for input file " + inputFileTemp + " done.\n")
 

@@ -1,7 +1,7 @@
 __pycache__/
 *.stackdump
 *.gch
-LoopTools-2.12/
+LoopTools-*/
 *.o
 *.mod
 *.exe

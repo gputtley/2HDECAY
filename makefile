@@ -4,7 +4,7 @@
 
 # Specify the path to the LoopTools library:
 PWD=$(strip $(shell pwd))
-LT=$(PWD)/LoopTools-2.12/i686-CYGWIN_NT-6.1-WOW
+LT=$(PWD)/LoopTools-2.12/i686-CYGWIN_NT-10.0-WOW
 LTCOMP = $(LT)/bin/fcc
 IFlags = -I$(LT)/include
 LFlags = -L$(LT)/lib -looptools
@@ -17,7 +17,6 @@ SELFENERGIESUSU = BuildingBlocks/SelfEnergies/Usual
 SELFENERGIESALT = BuildingBlocks/SelfEnergies/Alternative
 SELFENERGIESDERIV = BuildingBlocks/SelfEnergiesDerivatives
 PROCESSDEPENDENTSCHEME = BuildingBlocks/ProcessDependentScheme
-PARAMETERS = Parameters
 TADPOLES = BuildingBlocks/Tadpoles
 PROCESSA0TOBBBAR = BuildingBlocks/Processes/A0toBBBar
 PROCESSA0TOCCBAR = BuildingBlocks/Processes/A0toCCBar
@@ -216,9 +215,6 @@ $(PROCESSHPTOSBARU)/%.o: $(PROCESSHPTOSBARU)/%.F90 constants.o counterterms.o
 $(PROCESSHPTOWPH0)/%.o: $(PROCESSHPTOWPH0)/%.F90 constants.o counterterms.o
 	$(LTCOMP) -c -o $@ $< $(IFlags)
 
-$(PARAMETERS)/%.o: $(PARAMETERS)/%.F90 constants.o
-	$(LTCOMP) -c -o $@ $< $(IFlags)
-
 electroweakCorrections: constants.o $(SELFENERGIESUSU)/SelfAA.o $(SELFENERGIESUSU)/SelfAALight.o $(SELFENERGIESUSU)/SelfWpWp.o $(SELFENERGIESUSU)/SelfZ0Z0.o \
 	$(SELFENERGIESUSU)/SelfAZ0.o $(SELFENERGIESUSU)/SelfAZ0ZeroMom.o $(SELFENERGIESALT)/SelfAA.o $(SELFENERGIESALT)/SelfWpWp.o $(SELFENERGIESALT)/SelfZ0Z0.o \
 	$(SELFENERGIESALT)/SelfAZ0.o $(SELFENERGIESALT)/SelfAZ0ZeroMom.o $(SELFENERGIESUSU)/SelfA0A0.o $(SELFENERGIESUSU)/SelfG0A0.o \
@@ -349,7 +345,7 @@ electroweakCorrections: constants.o $(SELFENERGIESUSU)/SelfAA.o $(SELFENERGIESUS
 	$(PROCESSHPTOSBART)/TreeLevelWidthRed.o $(PROCESSHPTOSBART)/NLOWidthRed.o $(PROCESSHPTOSBART)/NLOTadWidthRed.o $(PROCESSHPTOSBART)/Counterterm.o $(PROCESSHPTOSBART)/RealCorrections.o \
 	$(PROCESSHPTOSBARU)/TreeLevelWidthRed.o $(PROCESSHPTOSBARU)/NLOWidthRed.o $(PROCESSHPTOSBARU)/NLOTadWidthRed.o $(PROCESSHPTOSBARU)/Counterterm.o $(PROCESSHPTOSBARU)/RealCorrections.o \
 	$(PROCESSHPTOWPH0)/TreeLevelWidthRed.o $(PROCESSHPTOWPH0)/NLOWidthRed.o $(PROCESSHPTOWPH0)/NLOTadWidthRed.o $(PROCESSHPTOWPH0)/Counterterm.o $(PROCESSHPTOWPH0)/RealCorrections.o \
-	counterterms.o $(PARAMETERS)/getParameters.o electroweakCorrections.o
+	counterterms.o getParameters.o electroweakCorrections.o
 	$(LTCOMP) $(IFlags) constants.o $(SELFENERGIESUSU)/SelfAA.o $(SELFENERGIESUSU)/SelfAALight.o $(SELFENERGIESUSU)/SelfWpWp.o $(SELFENERGIESUSU)/SelfZ0Z0.o \
 	$(SELFENERGIESUSU)/SelfAZ0.o $(SELFENERGIESUSU)/SelfAZ0ZeroMom.o $(SELFENERGIESALT)/SelfAA.o $(SELFENERGIESALT)/SelfWpWp.o $(SELFENERGIESALT)/SelfZ0Z0.o \
 	$(SELFENERGIESALT)/SelfAZ0.o $(SELFENERGIESALT)/SelfAZ0ZeroMom.o $(SELFENERGIESUSU)/SelfA0A0.o \
@@ -481,7 +477,7 @@ electroweakCorrections: constants.o $(SELFENERGIESUSU)/SelfAA.o $(SELFENERGIESUS
 	$(PROCESSHPTOSBART)/TreeLevelWidthRed.o $(PROCESSHPTOSBART)/NLOWidthRed.o $(PROCESSHPTOSBART)/NLOTadWidthRed.o $(PROCESSHPTOSBART)/Counterterm.o $(PROCESSHPTOSBART)/RealCorrections.o \
 	$(PROCESSHPTOSBARU)/TreeLevelWidthRed.o $(PROCESSHPTOSBARU)/NLOWidthRed.o $(PROCESSHPTOSBARU)/NLOTadWidthRed.o $(PROCESSHPTOSBARU)/Counterterm.o $(PROCESSHPTOSBARU)/RealCorrections.o \
 	$(PROCESSHPTOWPH0)/TreeLevelWidthRed.o $(PROCESSHPTOWPH0)/NLOWidthRed.o $(PROCESSHPTOWPH0)/NLOTadWidthRed.o $(PROCESSHPTOWPH0)/Counterterm.o $(PROCESSHPTOWPH0)/RealCorrections.o \
-	counterterms.o $(PARAMETERS)/getParameters.o electroweakCorrections.o $(LFlags) -o electroweakCorrections.exe
+	counterterms.o getParameters.o electroweakCorrections.o $(LFlags) -o electroweakCorrections.exe
 
 clean:
 	rm -f *.o
@@ -490,7 +486,6 @@ clean:
 	rm -f $(SELFENERGIESDERIV)/*.o
 	rm -f $(PROCESSDEPENDENTSCHEME)/*.o
 	rm -f $(TADPOLES)/*.o
-	rm -f $(PARAMETERS)/*.o
 	rm -f $(PROCESSA0TOBBBAR)/*.o
 	rm -f $(PROCESSA0TOCCBAR)/*.o
 	rm -f $(PROCESSA0TODDBAR)/*.o

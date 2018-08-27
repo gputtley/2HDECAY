@@ -11,7 +11,7 @@ program electroweakCorrections
 	character(300), parameter :: pathToOutputFiles = 'HDECAY\\'
 	integer arguments(5)
 	integer, parameter :: maxNumberSchemes = 14
-	logical :: debugModeOn = .true.
+	logical :: debugModeOn = .false.
 	double precision prefactor, treeLevelWidth, NLOWidth(maxNumberSchemes), fullamplitude(maxNumberSchemes)
 	double precision NLOVCwidth, NLOVCwoIRwidth, NLOIRonlywidth
 	double precision h0toBBBarTree, h0toBBBarCT, h0toBBBarReal

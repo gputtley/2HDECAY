@@ -6,10 +6,12 @@
 #																					#
 #									setup.py 										#
 #																					#
-#	Purpose:	* Sets up 2HDECAY 													#
+#	Purpose:																		#
 #				* Calls the LoopTools installer										#
-#				* Creates the makefile												#
-#				* Makes the program													#
+#				* Makes the HDECAY sub-program										#
+#				* Sets up 2HDECAY 													#
+#				* Creates the makefile and electroweakCorrections.F90				#
+#				* Makes 2HDECAY														#
 #																					#
  ###################################################################################
 
@@ -18,16 +20,19 @@
 #		 Import Modules		   #
 #------------------------------#
 import os
+from shutil import rmtree
 import subprocess
 import sys
-import CommonFunctions			# Provides common, often used functions for different scripts of 2HDECAY
+from fnmatch import fnmatch
+import CommonFunctions				# Provides common, often used functions for different scripts of 2HDECAY
+import Config						# Provides paths 
 
 #-------------------------#
 #		 Functions		  #
 #-------------------------#
 
 
-def createMakefile(pathToMakefile, relativePathToLoopTools, relativePathToLoopToolsLibs, useRelativePath, chosenCompiler):
+def createMakefile(pathToMakefile, relativePathToLoopTools, relativePathToLoopToolsLibs, relativePathToLoopToolsExecs, useRelativePath, chosenCompiler):
 	# Get a list of all processes
 	pathToProcesses = 'BuildingBlocks' + os.sep + 'Processes'
 	processDirList = os.listdir(pathToProcesses)
@@ -48,7 +53,7 @@ def createMakefile(pathToMakefile, relativePathToLoopTools, relativePathToLoopTo
 		makefile.write("LT=$(PWD)/" + relativePathToLoopTools + "\n")
 	else:
 		makefile.write("LT=" + relativePathToLoopTools + "\n")
-	makefile.write("LTCOMP = $(LT)/bin/fcc\n")
+	makefile.write("LTCOMP = $(LT)/" + relativePathToLoopToolsExecs + "/fcc\n")
 	makefile.write("IFlags = -I$(LT)/include\n")
 	makefile.write("LFlags = -L$(LT)/" + relativePathToLoopToolsLibs + " -looptools\n\n")
 	makefile.write("# Choose your compiler:\n")
@@ -58,7 +63,6 @@ def createMakefile(pathToMakefile, relativePathToLoopTools, relativePathToLoopTo
 	makefile.write("SELFENERGIESALT = BuildingBlocks/SelfEnergies/Alternative\n")
 	makefile.write("SELFENERGIESDERIV = BuildingBlocks/SelfEnergiesDerivatives\n")
 	makefile.write("PROCESSDEPENDENTSCHEME = BuildingBlocks/ProcessDependentScheme\n")
-	makefile.write("PARAMETERS = Parameters\n")
 	makefile.write("TADPOLES = BuildingBlocks/Tadpoles\n")
 	for singleProcess in processDirList:
 		makefile.write("PROCESS" + singleProcess.upper() + " = BuildingBlocks/Processes/" + singleProcess + "\n")
@@ -77,9 +81,7 @@ def createMakefile(pathToMakefile, relativePathToLoopTools, relativePathToLoopTo
 	for singleProcess in processDirList:
 		makefile.write("$(PROCESS" + singleProcess.upper() + ")/%.o: $(PROCESS" + singleProcess.upper() + ")/%.F90 constants.o counterterms.o\n")
 		makefile.write("\t$(LTCOMP) -c -o $@ $< $(IFlags)\n")
-	makefile.write("\n$(PARAMETERS)/%.o: $(PARAMETERS)/%.F90 constants.o\n")
-	makefile.write("\t$(LTCOMP) -c -o $@ $< $(IFlags)\n\n")
-	makefile.write("electroweakCorrections: constants.o $(SELFENERGIESUSU)/SelfAA.o $(SELFENERGIESUSU)/SelfAALight.o $(SELFENERGIESUSU)/SelfWpWp.o $(SELFENERGIESUSU)/SelfZ0Z0.o \\\n")
+	makefile.write("\nelectroweakCorrections: constants.o $(SELFENERGIESUSU)/SelfAA.o $(SELFENERGIESUSU)/SelfAALight.o $(SELFENERGIESUSU)/SelfWpWp.o $(SELFENERGIESUSU)/SelfZ0Z0.o \\\n")
 	makefile.write("\t$(SELFENERGIESUSU)/SelfAZ0.o $(SELFENERGIESUSU)/SelfAZ0ZeroMom.o $(SELFENERGIESALT)/SelfAA.o $(SELFENERGIESALT)/SelfWpWp.o $(SELFENERGIESALT)/SelfZ0Z0.o \\\n")
 	makefile.write("\t$(SELFENERGIESALT)/SelfAZ0.o $(SELFENERGIESALT)/SelfAZ0ZeroMom.o $(SELFENERGIESUSU)/SelfA0A0.o $(SELFENERGIESUSU)/SelfG0A0.o \\\n")
 	makefile.write("\t$(SELFENERGIESUSU)/SelfG0G0.o $(SELFENERGIESUSU)/SelfGpGp.o $(SELFENERGIESUSU)/SelfGpHp.o $(SELFENERGIESUSU)/Selfh0h0.o $(SELFENERGIESUSU)/SelfHHh0.o \\\n")
@@ -152,7 +154,7 @@ def createMakefile(pathToMakefile, relativePathToLoopTools, relativePathToLoopTo
 	makefile.write("\t$(PROCESSDEPENDENTSCHEME)/A0toTauPTauMProcDepVC.o $(PROCESSDEPENDENTSCHEME)/HHtoTauPTauMProcDepVC.o $(PROCESSDEPENDENTSCHEME)/h0toTauPTauMProcDepVC.o \\\n")
 	for singleProcess in processDirList:
 		makefile.write("\t$(PROCESS" + singleProcess.upper() + ")/TreeLevelWidthRed.o $(PROCESS" + singleProcess.upper() + ")/NLOWidthRed.o $(PROCESS" + singleProcess.upper() + ")/NLOTadWidthRed.o $(PROCESS" + singleProcess.upper() + ")/Counterterm.o $(PROCESS" + singleProcess.upper() + ")/RealCorrections.o \\\n")
-	makefile.write("\tcounterterms.o $(PARAMETERS)/getParameters.o electroweakCorrections.o\n")
+	makefile.write("\tcounterterms.o getParameters.o electroweakCorrections.o\n")
 	makefile.write("\t$(LTCOMP) $(IFlags) constants.o $(SELFENERGIESUSU)/SelfAA.o $(SELFENERGIESUSU)/SelfAALight.o $(SELFENERGIESUSU)/SelfWpWp.o $(SELFENERGIESUSU)/SelfZ0Z0.o \\\n")
 	makefile.write("\t$(SELFENERGIESUSU)/SelfAZ0.o $(SELFENERGIESUSU)/SelfAZ0ZeroMom.o $(SELFENERGIESALT)/SelfAA.o $(SELFENERGIESALT)/SelfWpWp.o $(SELFENERGIESALT)/SelfZ0Z0.o \\\n")
 	makefile.write("\t$(SELFENERGIESALT)/SelfAZ0.o $(SELFENERGIESALT)/SelfAZ0ZeroMom.o $(SELFENERGIESUSU)/SelfA0A0.o \\\n")
@@ -227,7 +229,7 @@ def createMakefile(pathToMakefile, relativePathToLoopTools, relativePathToLoopTo
 	makefile.write("\t$(PROCESSDEPENDENTSCHEME)/A0toTauPTauMProcDepVC.o $(PROCESSDEPENDENTSCHEME)/HHtoTauPTauMProcDepVC.o $(PROCESSDEPENDENTSCHEME)/h0toTauPTauMProcDepVC.o \\\n")
 	for singleProcess in processDirList:	
 		makefile.write("\t$(PROCESS" + singleProcess.upper() + ")/TreeLevelWidthRed.o $(PROCESS" + singleProcess.upper() + ")/NLOWidthRed.o $(PROCESS" + singleProcess.upper() + ")/NLOTadWidthRed.o $(PROCESS" + singleProcess.upper() + ")/Counterterm.o $(PROCESS" + singleProcess.upper() + ")/RealCorrections.o \\\n")
-	makefile.write("\tcounterterms.o $(PARAMETERS)/getParameters.o electroweakCorrections.o $(LFlags) -o electroweakCorrections" + applicationEnding + "\n\n")
+	makefile.write("\tcounterterms.o getParameters.o electroweakCorrections.o $(LFlags) -o electroweakCorrections" + applicationEnding + "\n\n")
 	makefile.write("clean:\n")
 	makefile.write("\trm -f *.o\n")
 	makefile.write("\trm -f $(SELFENERGIESALT)/*.o\n")
@@ -235,7 +237,6 @@ def createMakefile(pathToMakefile, relativePathToLoopTools, relativePathToLoopTo
 	makefile.write("\trm -f $(SELFENERGIESDERIV)/*.o\n")
 	makefile.write("\trm -f $(PROCESSDEPENDENTSCHEME)/*.o\n")
 	makefile.write("\trm -f $(TADPOLES)/*.o\n")
-	makefile.write("\trm -f $(PARAMETERS)/*.o\n")
 	for singleProcess in processDirList:
 		makefile.write("\trm -f $(PROCESS" + singleProcess.upper() + ")/*.o\n")
 
@@ -286,7 +287,7 @@ def createElectroweakCorrections():
 	electroweakCorrectionsFile.write("\tcharacter(300), parameter :: pathToOutputFiles = 'HDECAY\\\\'\n")
 	electroweakCorrectionsFile.write("\tinteger arguments(5)\n")
 	electroweakCorrectionsFile.write("\tinteger, parameter :: maxNumberSchemes = 14\n")
-	electroweakCorrectionsFile.write("\tlogical :: debugModeOn = .true.\n")
+	electroweakCorrectionsFile.write("\tlogical :: debugModeOn = .false.\n")
 	electroweakCorrectionsFile.write("\tdouble precision prefactor, treeLevelWidth, NLOWidth(maxNumberSchemes), fullamplitude(maxNumberSchemes)\n")
 	electroweakCorrectionsFile.write("\tdouble precision NLOVCwidth, NLOVCwoIRwidth, NLOIRonlywidth\n")
 	for x in range(0, len(processDescriptionList)):
@@ -730,21 +731,154 @@ def createElectroweakCorrections():
 #----------------------------#
 print("Starting the installation script.\n")
 
-# TEMP - Config 
-useRelativeLoopToolsPath = True
-pathLoopTools = 'LoopTools-2.12/i686-CYGWIN_NT-6.1-WOW'
-pathLoopToolsLibs = 'lib'
-yourChosenCompiler = 'gfortran'
+# Find the LoopTools install file
+for file in os.listdir('.'):
+    if fnmatch(file, 'LoopTools-*.tar.gz'):
+        filenameLoopTools = file
+loopToolsDirectory = filenameLoopTools.replace('.tar.gz', '')
+
+# Ask the user whether LoopTools shall be installed
+fileLoopToolsExists = os.path.isfile(filenameLoopTools)
+if fileLoopToolsExists:
+	loopToolsCreationWanted = CommonFunctions.queryBoolean("Do you want to install LoopTools automatically? WARNING: this will delete the current LoopTools instance installed under 2HDECAY/LoopTools-xy.")
+# Start the LoopTools installation routine
+if loopToolsCreationWanted:
+	# Check for the used OS
+	currentOS = sys.platform
+
+	# Windows (cygwin) installation routine
+	if currentOS == 'win32':
+		print("\nStarting the Windows (cygwin) installation routine. WARNING: this is experimental!")
+		print("\nI will use the following path to Cygwin: " + Config.pathToCygwin)
+		cygwinIsCorrectPath = CommonFunctions.queryBoolean("Is this the correct path to Cygwin?")
+		if cygwinIsCorrectPath:
+			if os.path.isdir(loopToolsDirectory):
+				print("\nRemoving existing LoopTools installation...")
+				rmtree(loopToolsDirectory)
+			print("\nStarting the LoopTools installation routine...")
+			# Unzip the archive
+			prompt = [Config.pathToCygwin, '-c', "gunzip -c " + filenameLoopTools + " | tar xvf -"]
+			subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
+			# Change to the LoopTools folder and configure
+			os.chdir(loopToolsDirectory)
+			prompt = [Config.pathToCygwin, '-c', "./configure"]
+			subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
+			# Replace 'find' in the LoopTools makefile to '/bin/find' (this is necessary since otherwise, Windows' FIND is used instead of Cygwin's find!)
+			os.rename('makefile', 'makefileTemp')
+			with open("makefileTemp", "rt") as fin:
+				with open("makefile", "wt") as fout:
+					for line in fin:
+						fout.write(line.replace('find', '/bin/find'))
+			os.remove("makefileTemp")
+			# Make the program
+			prompt = [Config.pathToCygwin, '-c', "make lib"]
+			subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
+			prompt = [Config.pathToCygwin, '-c', "make install"]
+			subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
+			prompt = [Config.pathToCygwin, '-c', "make clean"]
+			subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
+			os.chdir('..')
+		else:
+			print("\nPlease enter the correct path to Cygwin in Config.py first and then re-run the setup.py script.")
+			sys.exit()
+
+	# Linux/macOS installation routine
+	else:
+		print("Starting the Linux/macOS installation routine.")
+		# Remove the existing copy of LoopTools
+		if os.path.isdir(loopToolsDirectory):
+			print("\nRemoving existing LoopTools installation...")
+			rmtree(loopToolsDirectory)
+		# Unzip the archive
+		prompt = "gunzip -c " + filenameLoopTools + " | tar xvf -"
+		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
+		# Change to the LoopTools folder and configure and make the program 
+		os.chdir(loopToolsDirectory)
+		prompt = "./configure"
+		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
+		prompt = "make lib"
+		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
+		prompt = "make install"
+		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
+		prompt = "make clean"
+		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
+		os.chdir('..')
+
+	# Search for the correct folders within the LoopTools main folder that contains the libraries and executables
+	for subdir in os.listdir(loopToolsDirectory):
+		if os.path.isdir(loopToolsDirectory + os.sep + subdir):
+			tempList = os.listdir(loopToolsDirectory + os.sep + subdir)
+			if 'bin' in tempList and 'include' in tempList and 'lib' in tempList:
+				loopToolsLibRootFolder = (loopToolsDirectory + os.sep + subdir).replace('\\', '/')
+				loopToolsLibSubFolder = 'lib'
+				loopToolsExecSubFolder = 'bin'
+				break
+			elif 'bin' in tempList and 'include' in tempList and 'lib64' in tempList:
+				loopToolsLibRootFolder = (loopToolsDirectory + os.sep + subdir).replace('\\', '/')
+				loopToolsLibSubFolder = 'lib64'
+				loopToolsExecSubFolder = 'bin'
+				break
+			elif 'bin64' in tempList and 'include' in tempList and 'lib' in tempList:
+				loopToolsLibRootFolder = (loopToolsDirectory + os.sep + subdir).replace('\\', '/')
+				loopToolsLibSubFolder = 'lib'
+				loopToolsExecSubFolder = 'bin64'
+				break
+			elif 'bin64' in tempList and 'include' in tempList and 'lib64' in tempList:
+				loopToolsLibRootFolder = (loopToolsDirectory + os.sep + subdir).replace('\\', '/')
+				loopToolsLibSubFolder = 'lib64'
+				loopToolsExecSubFolder = 'bin64'
+				break
+	useRelativeLoopToolsPath = True
+	
+	# Save the correct folders to Config.py
+	os.rename('Config.py', 'ConfigTemp.py')
+	with open("ConfigTemp.py", "rt") as fin:
+		with open("Config.py", "wt") as fout:
+			for line in fin:
+				if 'pathLoopToolsLibs' in line:
+					tempLine = "pathLoopToolsLibs = '" + loopToolsLibSubFolder + "'\t\t\t\t\t\t\t\t\t# Specify the LoopTools subfolder (relative to pathLoopTools) where the LoopTools libraries are contained (NOTE: this depends on the OS and chip architecture; on Windows, this is normally 'lib', on Linux and macOS, it is normally 'lib64')\n"
+					fout.write(tempLine)
+				elif 'pathLoopToolsExecs' in line:
+					tempLine = "pathLoopToolsExecs = '" + loopToolsExecSubFolder + "'\t\t\t\t\t\t\t\t\t# Specify the LoopTools subfolder (relative to pathLoopTools) where the LoopTools libraries are contained (NOTE: this depends on the OS and chip architecture; on Windows, this is normally 'lib', on Linux and macOS, it is normally 'lib64')\n"
+					fout.write(tempLine)
+				elif 'pathLoopTools' in line:
+					tempLine = "pathLoopTools = '" + loopToolsLibRootFolder + "'\t# Specify the path to the LoopTools root folder (IMPORTANT: the path must never *end* with '/' and if useRelativePath is True, it must not *start* with '/' either! If useRelativePath is False, it depends on the OS if the full absolute path starts with '/' or not: on Windows, it typically does not, on Linux, it typically does)\n"
+					fout.write(tempLine)
+				elif 'useRelativeLoopToolsPath' in line:
+					tempLine = "useRelativeLoopToolsPath = True\t\t\t\t\t\t\t\t# Set True if you want to set the path to LoopTools relative to the 2HDMCalc installation path (useful if you installed LoopTools e.g. in a subdirectory of the 2HDMCalc folder) or False if you want to use an absolute path to LoopTools\n"
+					fout.write(tempLine)
+				else:
+					fout.write(line)
+	os.remove('ConfigTemp.py')
+
+	print('\nInstallation of LoopTools is finished.')
+
+	# Ask whether the zip file should be deleted
+	deleteLoopToolsZip = CommonFunctions.queryBoolean("Do you want to remove the zip archive of LoopTools now (not needed anymore after successful installation)?")
+	if deleteLoopToolsZip:
+		os.remove(filenameLoopTools)
+else:
+	# If LoopTools is not installed automatically, then the paths are read from Config.py
+	print('\nLoopTools is not installed automatically. Please make sure now that the root path to LoopTools and the relative paths to the library and binary folder are set correctly in Config.py. If you use absolute paths, please make sure to set "useRelativeLoopToolsPath = False" in Config.py.')
+	continueWithManualInstallation = CommonFunctions.queryBoolean("\nAre all paths set correctly in Config.py?")
+	if continueWithManualInstallation:
+		useRelativeLoopToolsPath = Config.useRelativeLoopToolsPath
+		loopToolsLibRootFolder = Config.pathLoopTools
+		loopToolsLibSubFolder = Config.pathLoopToolsLibs
+		loopToolsExecSubFolder = Config.pathLoopToolsExecs
+	else:
+		print('\nPlease correct the paths in Config.py manually and re-run the setup.py script.')
+		sys.exit()
 
 # Ask the user if the makefile should be created (if it already exists, ask if it should be re-created)
 makefileExists = os.path.isfile("makefile")
 if makefileExists:
-	makefileCreationWanted = CommonFunctions.queryBoolean("makefile already exists. Do you want to recreate it (WARNING: this overwrites the existing makefile)?")
+	makefileCreationWanted = CommonFunctions.queryBoolean("\nmakefile already exists. Do you want to recreate it (WARNING: this overwrites the existing makefile)?")
 else:
-	makefileCreationWanted = CommonFunctions.queryBoolean("makefile not found. Do you want to create it now?")
+	makefileCreationWanted = CommonFunctions.queryBoolean("\nmakefile not found. Do you want to create it now?")
 if makefileCreationWanted:
 	print('  Creating makefile...')
-	createMakefile("makefile", pathLoopTools, pathLoopToolsLibs, useRelativeLoopToolsPath, yourChosenCompiler)
+	createMakefile("makefile", loopToolsLibRootFolder, loopToolsLibSubFolder, loopToolsExecSubFolder, useRelativeLoopToolsPath, 'gfortran')
 	print('    done.\n')
 else:
 	print('  makefile is not created.\n')
@@ -798,7 +932,7 @@ else:
 	print('Make process skipped.\n')
 
 # Cleaning the installation
-cleanWanted = CommonFunctions.queryBoolean("Do you want to make clean?")
+cleanWanted = CommonFunctions.queryBoolean("Do you want to make clean (optional)?")
 if cleanWanted:
 	print('Cleaning main program 2HDECAY...\n')
 	try:
@@ -817,11 +951,5 @@ if cleanWanted:
 		print(e.output)
 else:
 	print('Make clean process skipped.\n')
-
-
-# Calculate the vertex corrections used for the process-dependent scheme of alpha and beta
-# prompt = pathMathematica + ' -noprompt -run "<<Install' + os.sep + 'ProcDepAlpha2FA.m"'
-# subprocess.call(prompt)
-
 
 print("Setup completed.\n")
