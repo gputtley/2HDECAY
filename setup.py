@@ -250,8 +250,10 @@ def createElectroweakCorrections():
 	currentOS = sys.platform
 	if currentOS == 'win32':
 		OStype = 0
+		pathToOutputSeparator = '\\\\'
 	else:
 		OStype = 1
+		pathToOutputSeparator = '/'
 
 	# Get the process list and the list of masses 
 	processDir = "BuildingBlocks" + os.sep + "Processes"
@@ -291,7 +293,7 @@ def createElectroweakCorrections():
 	electroweakCorrectionsFile.write("\tcharacter(len=32) :: arg\n")
 	electroweakCorrectionsFile.write("\tcharacter(len=50) :: fileName, fileNameFilled, targetName\n")
 	electroweakCorrectionsFile.write("\tcharacter(len=600000) :: outputFileContent\n")
-	electroweakCorrectionsFile.write("\tcharacter(300), parameter :: pathToOutputFiles = 'HDECAY\\\\'\n")
+	electroweakCorrectionsFile.write("\tcharacter(300), parameter :: pathToOutputFiles = 'HDECAY" + pathToOutputSeparator + "'\n")
 	electroweakCorrectionsFile.write("\tinteger arguments(5)\n")
 	electroweakCorrectionsFile.write("\tinteger, parameter :: maxNumberSchemes = 14\n")
 	electroweakCorrectionsFile.write("\tlogical :: debugModeOn = .false.\n")

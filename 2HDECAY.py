@@ -111,6 +111,11 @@ Copyright 2018, Marcel Krause & Milada Margarete Muehlleitner.
 		print("Copying input files into HDECAY folder...\n")
 		filenameIn = "Input" + os.sep + inputFileTemp
 		filenameOut = "HDECAY" + os.sep + "hdecay.in"
+		# Remove any existing input and fermion masses file in HDECAY
+		if os.path.isfile(filenameOut):
+			os.remove(filenameOut)
+		if os.path.isfile("HDECAY" + os.sep + "fermionmasses.dat"):
+			os.remove("HDECAY" + os.sep + "fermionmasses.dat")
 		copyfile(filenameIn, filenameOut)
 
 		# Let HDECAY run in minimal mode to produce the fermion mass file
@@ -127,11 +132,12 @@ Copyright 2018, Marcel Krause & Milada Margarete Muehlleitner.
 		MCOSCalc = float((massFileLines[0].split('='))[1].strip())
 		MBOSCalc = float((massFileLines[1].split('='))[1].strip())
 		
-		# Copy the file name to the result folder and truncate it at the end
+		# Copy the file name to the HDECAY folder and truncate it at the end
 		print("Copying input files into HDECAY folder...")
 		filenameIn = "Input" + os.sep + inputFileTemp
 		filenameOut = "HDECAY" + os.sep + "hdecay.in"
-		# copyfile(filenameIn, filenameOut)
+		if os.path.isfile(filenameOut):
+			os.remove(filenameOut)
 		fileHandler = open(filenameIn, "r")
 		convertedFileHandler = []
 		lineCount = 1
@@ -193,6 +199,8 @@ Copyright 2018, Marcel Krause & Milada Margarete Muehlleitner.
 		fileHandler.close()
 
 		# Store the results file in the correct directory
+		if os.path.isfile(filenameOut):
+			os.remove(filenameOut)
 		fileHandler = open(filenameOut, "w")
 		fileHandler.write(convertedFile)
 		fileHandler.close()
@@ -212,6 +220,12 @@ Copyright 2018, Marcel Krause & Milada Margarete Muehlleitner.
 		filenameOut = "Results" + os.sep + inputFileTemp.replace('.in', '.out')
 		copyfile(filenameIn, filenameOut)
 		print("... done.\n")
+
+		# Cleaning 
+		if os.path.isfile("HDECAY" + os.sep + "fermionmasses.dat"):
+			os.remove("HDECAY" + os.sep + "fermionmasses.dat")
+		if os.path.isfile(filenameOut):
+			os.remove(filenameOut)
 
 		print("Corrections for input file " + inputFileTemp + " done.\n")
 
