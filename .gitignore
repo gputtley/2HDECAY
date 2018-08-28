@@ -6,3 +6,5 @@ LoopTools-*/
 *.mod
 *.exe
 *.a
+makefile
+electroweakCorrections.F90
