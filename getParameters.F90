@@ -1,4 +1,4 @@
-subroutine getParameters()
+subroutine getParameters(OStype)
     use constants
     implicit none
     character(50) dump, dump2, dump3
@@ -9,13 +9,22 @@ subroutine getParameters()
     integer :: currentLine = 1
     logical fileExists
     character isContinue
-    ! character(50), intent(in) :: filePath
-    character(300), parameter :: pathToInputFiles = 'HDECAY\\'
+    integer, intent(in) :: OStype
+    character(2) :: OSpathSeparator
+    character(300), parameter :: pathToInputFiles = 'HDECAY'
     integer m
     double precision M11SqPot, M22SqPot, M12SqPot, tmpMass
 
-    ! Check if the SM input file exists
-    inquire(file=trim(pathToInputFiles)//'hdecay.in', exist=fileExists)
+    ! Get the correct OS path separator
+    if (OStype .eq. 0) then
+        OSpathSeparator = '\\'
+    else 
+        OSpathSeparator = '/ '
+    end if
+
+    ! Check if the input file exists
+    write(*,*) trim(trim(pathToInputFiles)//trim(OSpathSeparator))//'hdecay.in'
+    inquire(file=trim(trim(pathToInputFiles)//trim(OSpathSeparator))//'hdecay.in', exist=fileExists)
     if (.not. fileExists) then
         do
             print *, "ERROR: Could not find input file!"
@@ -33,7 +42,7 @@ subroutine getParameters()
     end if
 
     ! Read the input file
-    open(unit=42, file=trim(pathToInputFiles)//'hdecay.in', iostat=statOpen)
+    open(unit=42, file=trim(trim(pathToInputFiles)//trim(OSpathSeparator))//'hdecay.in', iostat=statOpen)
         if (statOpen == 0) then
 
             ! Skip the first five lines

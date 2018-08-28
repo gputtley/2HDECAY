@@ -118,8 +118,8 @@ program electroweakCorrections
 	! Argument 2: perform IR divergence check (1: true, 0: false; default: 0)
 	! Argument 3: perform gauge dependence check (2: true (prompt for continuation of program if gauge-dependence is detected), 1: true (no prompts for continuation), 0: false; default: 0)
 	! Argument 4: perform numerical evaluation (1: true, 0: false; default: 1)
-	! Argument 5: relative path to the 2HDM input parameter file, starting from the Parameters directory of 2HDMCalc
-	! Argument 6: relative path to the target file containing the results of the calculation, starting from the Temp/Results directory of 2HDMCalc
+	! Argument 5: relative path to the 2HDM input parameter file, starting from the Parameters directory of 2HDECAY
+	! Argument 6: relative path to the target file containing the results of the calculation, starting from the Temp/Results directory of 2HDECAY
 	do o = 1, iargc()
 		call getarg(o, arg)
 		if (arg == '1') then
@@ -137,8 +137,6 @@ program electroweakCorrections
 		end if
 	end do
 
-				! TEMPORARY 
-				targetName = "hdecay.in"
 	! Perform the numerical evaluation
 		print *, "Starting the numerical evaluation ..."
 
@@ -159,7 +157,7 @@ program electroweakCorrections
 			targetName = targetName // ' '
 
 			! Get all parameters
-			call getParameters()
+			call getParameters(0)
 			call setmudim(InputScale**2)
 
 			! Prepare the output file header

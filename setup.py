@@ -246,6 +246,13 @@ def createElectroweakCorrections():
 	# Process exclusion list (decays to electrons, up and down quarks are not calculated, since these particles are massless in HDECAY)
 	# decayExclusion = ["A0toDDBar", "A0toElElBar", "A0toUUBar", "h0toDDBar", "h0toElElBar", "h0toUUBar"]
 
+	# Get the correct OS separator for OS-independent support of the input read-in
+	currentOS = sys.platform
+	if currentOS == 'win32':
+		OStype = 0
+	else:
+		OStype = 1
+
 	# Get the process list and the list of masses 
 	processDir = "BuildingBlocks" + os.sep + "Processes"
 	processList = os.listdir(processDir)
@@ -304,8 +311,8 @@ def createElectroweakCorrections():
 	electroweakCorrectionsFile.write("\t! Argument 2: perform IR divergence check (1: true, 0: false; default: 0)\n")
 	electroweakCorrectionsFile.write("\t! Argument 3: perform gauge dependence check (2: true (prompt for continuation of program if gauge-dependence is detected), 1: true (no prompts for continuation), 0: false; default: 0)\n")
 	electroweakCorrectionsFile.write("\t! Argument 4: perform numerical evaluation (1: true, 0: false; default: 1)\n")
-	electroweakCorrectionsFile.write("\t! Argument 5: relative path to the 2HDM input parameter file, starting from the Parameters directory of 2HDMCalc\n")
-	electroweakCorrectionsFile.write("\t! Argument 6: relative path to the target file containing the results of the calculation, starting from the Temp/Results directory of 2HDMCalc\n")
+	electroweakCorrectionsFile.write("\t! Argument 5: relative path to the 2HDM input parameter file, starting from the Parameters directory of 2HDECAY\n")
+	electroweakCorrectionsFile.write("\t! Argument 6: relative path to the target file containing the results of the calculation, starting from the Temp/Results directory of 2HDECAY\n")
 	electroweakCorrectionsFile.write("\tdo o = 1, iargc()\n")
 	electroweakCorrectionsFile.write("\t\tcall getarg(o, arg)\n")
 	electroweakCorrectionsFile.write("\t\tif (arg == '1') then\n")
@@ -322,10 +329,6 @@ def createElectroweakCorrections():
 	electroweakCorrectionsFile.write("\t\t\tend if\n")
 	electroweakCorrectionsFile.write("\t\tend if\n")
 	electroweakCorrectionsFile.write("\tend do\n\n")
-
-	
-	electroweakCorrectionsFile.write("\t\t\t\t! TEMPORARY \n")
-	electroweakCorrectionsFile.write('\t\t\t\ttargetName = "hdecay.in"\n')
 
 	electroweakCorrectionsFile.write("\t! Perform the numerical evaluation\n")
 	electroweakCorrectionsFile.write('\t\tprint *, "Starting the numerical evaluation ..."\n\n')
@@ -347,7 +350,7 @@ def createElectroweakCorrections():
 	electroweakCorrectionsFile.write("\t\t\ttargetName = targetName // ' '\n\n")
 	
 	electroweakCorrectionsFile.write("\t\t\t! Get all parameters\n")
-	electroweakCorrectionsFile.write("\t\t\tcall getParameters()\n")
+	electroweakCorrectionsFile.write('\t\t\tcall getParameters(' + str(OStype) + ')\n')
 	electroweakCorrectionsFile.write("\t\t\tcall setmudim(InputScale**2)\n\n")
 	
 	electroweakCorrectionsFile.write("\t\t\t! Prepare the output file header\n")
@@ -732,15 +735,19 @@ def createElectroweakCorrections():
 print("Starting the installation script.\n")
 
 # Find the LoopTools install file
+filenameLoopTools = ''
 for file in os.listdir('.'):
-    if fnmatch(file, 'LoopTools-*.tar.gz'):
-        filenameLoopTools = file
-loopToolsDirectory = filenameLoopTools.replace('.tar.gz', '')
+	if fnmatch(file, 'LoopTools-*.tar.gz'):
+		filenameLoopTools = file
+		loopToolsDirectory = filenameLoopTools.replace('.tar.gz', '')
 
 # Ask the user whether LoopTools shall be installed
 fileLoopToolsExists = os.path.isfile(filenameLoopTools)
 if fileLoopToolsExists:
 	loopToolsCreationWanted = CommonFunctions.queryBoolean("Do you want to install LoopTools automatically? WARNING: this will delete the current LoopTools instance installed under 2HDECAY/LoopTools-xy.")
+else:
+	print("LoopTools-*.tar.gz file not found. If you want to install LoopTools with the automatic installer, please add the LoopTools-*.tar.gz file to the main folder of 2HDECAY.")
+	loopToolsCreationWanted = False
 # Start the LoopTools installation routine
 if loopToolsCreationWanted:
 	# Check for the used OS
@@ -758,11 +765,11 @@ if loopToolsCreationWanted:
 			print("\nStarting the LoopTools installation routine...")
 			# Unzip the archive
 			prompt = [Config.pathToCygwin, '-c', "gunzip -c " + filenameLoopTools + " | tar xvf -"]
-			subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
+			subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
 			# Change to the LoopTools folder and configure
 			os.chdir(loopToolsDirectory)
 			prompt = [Config.pathToCygwin, '-c', "./configure"]
-			subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
+			subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
 			# Replace 'find' in the LoopTools makefile to '/bin/find' (this is necessary since otherwise, Windows' FIND is used instead of Cygwin's find!)
 			os.rename('makefile', 'makefileTemp')
 			with open("makefileTemp", "rt") as fin:
@@ -772,11 +779,11 @@ if loopToolsCreationWanted:
 			os.remove("makefileTemp")
 			# Make the program
 			prompt = [Config.pathToCygwin, '-c', "make lib"]
-			subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
+			subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
 			prompt = [Config.pathToCygwin, '-c', "make install"]
-			subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
+			subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
 			prompt = [Config.pathToCygwin, '-c', "make clean"]
-			subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
+			subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
 			os.chdir('..')
 		else:
 			print("\nPlease enter the correct path to Cygwin in Config.py first and then re-run the setup.py script.")
@@ -790,18 +797,18 @@ if loopToolsCreationWanted:
 			print("\nRemoving existing LoopTools installation...")
 			rmtree(loopToolsDirectory)
 		# Unzip the archive
-		prompt = "gunzip -c " + filenameLoopTools + " | tar xvf -"
-		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
+		prompt = ['bash', '-c', "gunzip -c " + filenameLoopTools + " | tar xvf -"]
+		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
 		# Change to the LoopTools folder and configure and make the program 
 		os.chdir(loopToolsDirectory)
-		prompt = "./configure"
-		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
-		prompt = "make lib"
-		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
-		prompt = "make install"
-		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
-		prompt = "make clean"
-		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
+		prompt = ['bash', '-c', "./configure"]
+		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
+		prompt = ['bash', '-c', "make lib"]
+		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
+		prompt = ['bash', '-c', "make install"]
+		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
+		prompt = ['bash', '-c', "make clean"]
+		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
 		os.chdir('..')
 
 	# Search for the correct folders within the LoopTools main folder that contains the libraries and executables
@@ -845,7 +852,7 @@ if loopToolsCreationWanted:
 					tempLine = "pathLoopTools = '" + loopToolsLibRootFolder + "'\t# Specify the path to the LoopTools root folder (IMPORTANT: the path must never *end* with '/' and if useRelativePath is True, it must not *start* with '/' either! If useRelativePath is False, it depends on the OS if the full absolute path starts with '/' or not: on Windows, it typically does not, on Linux, it typically does)\n"
 					fout.write(tempLine)
 				elif 'useRelativeLoopToolsPath' in line:
-					tempLine = "useRelativeLoopToolsPath = True\t\t\t\t\t\t\t\t# Set True if you want to set the path to LoopTools relative to the 2HDMCalc installation path (useful if you installed LoopTools e.g. in a subdirectory of the 2HDMCalc folder) or False if you want to use an absolute path to LoopTools\n"
+					tempLine = "useRelativeLoopToolsPath = True\t\t\t\t\t\t\t\t# Set True if you want to set the path to LoopTools relative to the 2HDECAY installation path (useful if you installed LoopTools e.g. in a subdirectory of the 2HDECAY folder) or False if you want to use an absolute path to LoopTools\n"
 					fout.write(tempLine)
 				else:
 					fout.write(line)

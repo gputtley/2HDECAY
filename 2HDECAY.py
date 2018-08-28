@@ -10,10 +10,10 @@
 #				and QCD corrections for one-to-two decays of Higgs particles in the								#
 #				two-Higgs doublet model (2HDM).																	#
 #	Authors: 	Marcel Krause (marcel.krause@kit.edu)															#
-#				Prof. Dr. M. Margarete Mühlleitner (milada.muehlleitner@kit.edu)								#
+#				Prof. Dr. M. Margarete Muehlleitner (milada.muehlleitner@kit.edu)								#
 #	Version:	1.0.0																							#
 #	Date:		05.09.2018																						#
-#	Copyright:	Copyright 2018, Marcel Krause & Milada Margarete Mühlleitner									#
+#	Copyright:	Copyright 2018, Marcel Krause & Milada Margarete Muehlleitner									#
 #	License:	GNU Lesser General Public License (GNU LGPL)													#
 #				You may use this program as you wish, for free, as long as you follow							#
 #				the restrictions given by the GNU LGPL. When you use this program, 								#
@@ -93,7 +93,7 @@ When you use this program please cite:
 
 2HDECAY is released under GNU Lesser General Public License. LoopTools is released under GNU Lesser General Public License.
 Copyright 2018, Marcel Krause & Milada Margarete Muehlleitner.
-''')
+	''')
 
 	# Get a list of all input files
 	inputPath = "Input"
@@ -116,8 +116,8 @@ Copyright 2018, Marcel Krause & Milada Margarete Muehlleitner.
 		# Let HDECAY run in minimal mode to produce the fermion mass file
 		print("Starting HDECAY in minimal mode...")
 		os.chdir('HDECAY')
-		prompt = ['run', '1']
-		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
+		prompt = ['./run', '1']
+		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
 		os.chdir('..')
 		print("HDECAY in minimal mode terminated.\n")
 
@@ -172,8 +172,8 @@ Copyright 2018, Marcel Krause & Milada Margarete Muehlleitner.
 		
 		# Calculate the electroweak corrections
 		print("Calculating electroweak corrections...\n")
-		prompt = ['electroweakCorrections', '0', '0', '0', '1', 'HDECAY' + os.sep + 'hdecay.in', 'test.txt']
-		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
+		prompt = ['./electroweakCorrections', '0', '0', '0', '1', 'HDECAY' + os.sep + 'hdecay.in', 'hdecay.in']
+		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
 		print("Calculation of electroweak corrections done.\n")
 
 		# Replace the newline character in each file with a proper newline
@@ -201,8 +201,8 @@ Copyright 2018, Marcel Krause & Milada Margarete Muehlleitner.
 		# Start HDECAY in the normal (non-minimal) configuration
 		print("Starting HDECAY in standard mode...")
 		os.chdir('HDECAY')
-		prompt = ['run']
-		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False, timeout=None)
+		prompt = ['./run']
+		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
 		os.chdir('..')
 		print("HDECAY in standard mode terminated.\n")
 
