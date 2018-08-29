@@ -736,7 +736,7 @@ def createElectroweakCorrections():
 #----------------------------#
 print("Starting the installation script.\n")
 
-# Find the LoopTools install file
+# Find the LoopTools install file and directory, if it exists already in the repo (per default, it does not)
 filenameLoopTools = ''
 for file in os.listdir('.'):
 	if fnmatch(file, 'LoopTools-*.tar.gz'):
@@ -746,10 +746,31 @@ for file in os.listdir('.'):
 # Ask the user whether LoopTools shall be installed
 fileLoopToolsExists = os.path.isfile(filenameLoopTools)
 if fileLoopToolsExists:
-	loopToolsCreationWanted = CommonFunctions.queryBoolean("Do you want to install LoopTools automatically? WARNING: this will delete the current LoopTools instance installed under 2HDECAY/LoopTools-xy.")
+	loopToolsCreationWanted = CommonFunctions.queryBoolean("Found the LoopTools install file " + filenameLoopTools + ". Do you want me to install LoopTools automatically?\nWARNING: this will delete the current LoopTools instance installed under 2HDECAY/" + loopToolsDirectory + ", if it exists.")
 else:
-	print("LoopTools-*.tar.gz file not found. If you want to install LoopTools with the automatic installer, please add the LoopTools-*.tar.gz file to the main folder of 2HDECAY.")
-	loopToolsCreationWanted = False
+	# Ask for a download of the archive
+	downloadLoopToolsWanted = CommonFunctions.queryBoolean("LoopTools-*.tar.gz file not found. Do you want me to download version " + Config.loopToolsVersion + " of LoopTools (if you want to change the version, modify Config.py and re-run setup.py)?")
+	if downloadLoopToolsWanted:
+		# Check for the used OS
+		currentOS = sys.platform
+
+		# Windows (cygwin) download routine
+		if currentOS == 'win32':
+			prompt = [Config.pathToCygwin, '-c', "wget http://www.feynarts.de/looptools/" + Config.loopToolsVersion + ".tar.gz"]
+			subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
+		# Linux/macOS download routine
+		else:
+			prompt = ['bash', '-c', "wget http://www.feynarts.de/looptools/" + Config.loopToolsVersion + ".tar.gz"]
+			subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
+		
+		# Refresh the name of the installation file and directory
+		filenameLoopTools = Config.loopToolsVersion + ".tar.gz"
+		loopToolsDirectory = Config.loopToolsVersion
+
+		loopToolsCreationWanted = True
+	else:
+		print('LoopTools will not be downloaded. WARNING: LoopTools cannot be build without the archive in the 2HDECAY folder.')
+		loopToolsCreationWanted = False
 # Start the LoopTools installation routine
 if loopToolsCreationWanted:
 	# Check for the used OS
@@ -757,9 +778,9 @@ if loopToolsCreationWanted:
 
 	# Windows (cygwin) installation routine
 	if currentOS == 'win32':
-		print("\nStarting the Windows (cygwin) installation routine. WARNING: this is experimental!")
+		print("\nStarting the Windows (cygwin) installation routine.")
 		print("\nI will use the following path to Cygwin: " + Config.pathToCygwin)
-		cygwinIsCorrectPath = CommonFunctions.queryBoolean("Is this the correct path to Cygwin?")
+		cygwinIsCorrectPath = CommonFunctions.queryBoolean("Is this the correct path to Cygwin on your machine?")
 		if cygwinIsCorrectPath:
 			if os.path.isdir(loopToolsDirectory):
 				print("\nRemoving existing LoopTools installation...")

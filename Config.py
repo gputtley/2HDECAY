@@ -20,3 +20,4 @@ pathLoopTools = 'LoopTools-2.12/i686-CYGWIN_NT-10.0-WOW'	# Specify the path to t
 pathLoopToolsLibs = 'lib'									# Specify the LoopTools subfolder (relative to pathLoopTools) where the LoopTools libraries are contained (NOTE: this depends on the OS and chip architecture; on Windows, this is normally 'lib', on Linux and macOS, it is normally 'lib64')
 pathLoopToolsExecs = 'bin'									# Specify the LoopTools subfolder (relative to pathLoopTools) where the LoopTools libraries are contained (NOTE: this depends on the OS and chip architecture; on Windows, this is normally 'lib', on Linux and macOS, it is normally 'lib64')
 pathToCygwin = 'C:\\cygwin\\bin\\bash.exe'                  # Specify the path to the Cygwin bash executable (for Windows only)
+loopToolsVersion = 'LoopTools-2.15'                         # Specify the LoopTools version that shall be downloaded (recommended, as checked for compatibility: LoopTools-2.14)
