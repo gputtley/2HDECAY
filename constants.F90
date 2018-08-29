@@ -2,6 +2,22 @@ module constants
     implicit none
     save
 
+	! Copyright (C) 2018, Marcel Krause and Milada Margarete Muehlleitner
+	
+	! License: GNU General Public License (GNU GPL-3.0-or-later)
+
+	! 2HDECAY is released under GNU General Public License (GNU GPL-3.0-or-later).
+	! This program is free software: you can redistribute it and/or modify it under the terms of the
+	! GNU General Public License as published by the Free Software Foundation, either version 3 of
+	! the License, or any later version.
+
+	! This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+	! without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+	! See the GNU General Public License for more details.
+
+	! You have received a copy LICENSE.md of the GNU General Public License along with this program
+	! in the 2HDECAY root directoy.
+
 	! Integer for choosing whether the electroweak corrections should be calculated or not
 	integer :: omitELCorr
 

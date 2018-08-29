@@ -2,18 +2,32 @@
 #Filename: setup.py
 
 
- ###################################################################################
-#																					#
-#									setup.py 										#
-#																					#
-#	Purpose:																		#
-#				* Calls the LoopTools installer										#
-#				* Makes the HDECAY sub-program										#
-#				* Sets up 2HDECAY 													#
-#				* Creates the makefile and electroweakCorrections.F90				#
-#				* Makes 2HDECAY														#
-#																					#
- ###################################################################################
+ ###############################################################################################################
+#																												#
+#												setup.py														#
+#																												#
+#	Purpose:																									#
+#				Calls the LoopTools installer																	#
+#				Makes the HDECAY sub-program																	#
+#				Sets up 2HDECAY																					#
+#				Creates the makefile and electroweakCorrections.F90												#
+#				Makes 2HDECAY																					#
+#	Copyright:	Copyright (C) 2018, Marcel Krause and Milada Margarete Muehlleitner								#
+#	License:	GNU General Public License (GNU GPL-3.0-or-later)												#
+#																												#
+#				2HDECAY is released under GNU General Public License (GNU GPL-3.0-or-later).					#
+#				This program is free software: you can redistribute it and/or modify it under the terms of the	#
+#				GNU General Public License as published by the Free Software Foundation, either version 3 of	#
+#				the License, or any later version.																#
+#																												#
+#				This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;		#
+#				without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.		#
+#				See the GNU General Public License for more details.											#
+#																												#
+#				You have received a copy LICENSE.md of the GNU General Public License along with this program	#
+#				in the 2HDECAY root directoy.																	#
+#																												#
+ ###############################################################################################################
 
 
 #------------------------------#
@@ -307,6 +321,22 @@ def createElectroweakCorrections():
 	electroweakCorrectionsFile.write("\tdouble complex vertexCorrectionsTemp, vertexTadpolesTemp\n")
 	electroweakCorrectionsFile.write("\tdouble precision m1, m2, m3, kinematicThreshold\n")
 	electroweakCorrectionsFile.write("\tinteger m, n, o, p, q, r, fileNameLength, point, statWrite\n\n")
+
+	electroweakCorrectionsFile.write("\t! Copyright (C) 2018, Marcel Krause and Milada Margarete Muehlleitner\n\n")
+
+	electroweakCorrectionsFile.write("\t! License: GNU General Public License (GNU GPL-3.0-or-later)\n\n")
+
+	electroweakCorrectionsFile.write("\t! 2HDECAY is released under GNU General Public License (GNU GPL-3.0-or-later).\n")
+	electroweakCorrectionsFile.write("\t! This program is free software: you can redistribute it and/or modify it under the terms of the\n")
+	electroweakCorrectionsFile.write("\t! GNU General Public License as published by the Free Software Foundation, either version 3 of\n")
+	electroweakCorrectionsFile.write("\t! the License, or any later version.\n\n")
+
+	electroweakCorrectionsFile.write("\t! This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;\n")
+	electroweakCorrectionsFile.write("\t! without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n")
+	electroweakCorrectionsFile.write("\t! See the GNU General Public License for more details.\n\n")
+	
+	electroweakCorrectionsFile.write("\t! You have received a copy LICENSE.md of the GNU General Public License along with this program\n")
+	electroweakCorrectionsFile.write("\t! in the 2HDECAY root directoy.\n\n")
 
 	electroweakCorrectionsFile.write("\t! Get the command line arguments standing for the different running options\n")
 	electroweakCorrectionsFile.write("\t! Argument 1: perform UV divergence check (1: true, 0: false; default: 0)\n")

@@ -6,21 +6,31 @@
 #																												#
 #														2HDECAY													#
 #																												#
-#	Purpose:	Program for the automated calculation of full one-loop electroweak 								#
-#				and QCD corrections for one-to-two decays of Higgs particles in the								#
-#				two-Higgs doublet model (2HDM).																	#
+#	Purpose:	Program for the automated calculation of full one-loop electroweak 	and QCD corrections for 	#
+#				two-body decays of Higgs particles in the two-Higgs doublet model (2HDM).						#
 #	Authors: 	Marcel Krause (marcel.krause@kit.edu)															#
-#				Prof. Dr. M. Margarete Muehlleitner (milada.muehlleitner@kit.edu)								#
+#				Prof. Dr. M. Margarete Muehlleitner (margarete.muehlleitner@kit.edu)							#
 #	Version:	1.0.0																							#
 #	Date:		05.09.2018																						#
-#	Copyright:	Copyright 2018, Marcel Krause & Milada Margarete Muehlleitner									#
-#	License:	GNU Lesser General Public License (GNU LGPL)													#
-#				You may use this program as you wish, for free, as long as you follow							#
-#				the restrictions given by the GNU LGPL. When you use this program, 								#
-#				please acknowledge our work by citing the following papers:										#
+#	Copyright:	Copyright (C) 2018, Marcel Krause and Milada Margarete Muehlleitner								#
+#	License:	GNU General Public License (GNU GPL-3.0-or-later)												#
+#																												#
+#				2HDECAY is released under GNU General Public License (GNU GPL-3.0-or-later). 					#
+#				This program is free software: you can redistribute it and/or modify it under the terms of the 	#
+#				GNU General Public License as published by the Free Software Foundation, either version 3 of 	#
+#				the License, or any later version.																#
+#																												#
+#				This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 		#
+#				without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.		#
+#				See the GNU General Public License for more details.											#
+#																												#
+#				You have received a copy LICENSE.md of the GNU General Public License along with this program 	#
+#				in the 2HDECAY root directoy.																	#
+#																												#
+#	Citation:	When you use this program, please acknowledge our work by citing the following papers:			#
 #					The manual for 2HDECAY:																		#
 #					 - M. Krause, M. Muhlleitner, M. Spira, arXiv:YYMM.XXX										#
-#					The manual for HDECAY:																		#
+#					The manuals for HDECAY:																		#
 #					 - A. Djouadi, J. Kalinowski, M. Spira, Comp. Phys. Commun. 108 (1998) 56, hep-ph/9704448	#
 #					 - A. Djouadi, J. Kalinowski, M. Muhlleitner, M. Spira, arXiv:1801.09506 [hep-ph]			#
 #					The papers on the EW correction to the 2HDM decays:											#
@@ -82,7 +92,7 @@ if __name__ == "__main__":		# This is necessary for correct parallelisation unde
 When you use this program please cite:
 	The manual for 2HDECAY:
 	 - M. Krause, M. Muhlleitner, M. Spira, arXiv:YYMM.XXX
-	The manual for HDECAY:
+	The manuals for HDECAY:
 	 - A. Djouadi, J. Kalinowski, M. Spira, Comp. Phys. Commun. 108 (1998) 56, hep-ph/9704448
 	 - A. Djouadi, J. Kalinowski, M. Muhlleitner, M. Spira, arXiv:1801.09506 [hep-ph]
 	The papers on the EW correction to the 2HDM decays:
@@ -91,8 +101,18 @@ When you use this program please cite:
 	The publication of LoopTools:
 	 - T. Hahn, M. Perez-Victoria, Comp. Phys. Commun. 118 (1999) 153-165, hep-ph/9807565
 
-2HDECAY is released under GNU Lesser General Public License. LoopTools is released under GNU Lesser General Public License.
-Copyright 2018, Marcel Krause & Milada Margarete Muehlleitner.
+2HDECAY is released under GNU General Public License (GNU GPL-3.0-or-later). This program is free software: 
+you can redistribute it and/or modify it under the terms of the GNU General Public License as published by 
+the Free Software Foundation, either version 3 of the License, or any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the 
+implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+for more details.
+
+You have received a copy LICENSE.md of the GNU General Public License along with this program in the 2HDECAY
+root directoy.
+
+Copyright 2018, Marcel Krause and Milada Margarete Muehlleitner.
 	''')
 
 	# Get a list of all input files
