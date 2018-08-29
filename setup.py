@@ -767,7 +767,7 @@ else:
 		filenameLoopTools = Config.loopToolsVersion + ".tar.gz"
 		loopToolsDirectory = Config.loopToolsVersion
 
-		loopToolsCreationWanted = True
+		loopToolsCreationWanted = CommonFunctions.queryBoolean("Found the LoopTools install file " + filenameLoopTools + ". Do you want me to install LoopTools automatically?\nWARNING: this will delete the current LoopTools instance installed under 2HDECAY/" + loopToolsDirectory + ", if it exists.")
 	else:
 		print('LoopTools will not be downloaded. WARNING: LoopTools cannot be build without the archive in the 2HDECAY folder.')
 		loopToolsCreationWanted = False
