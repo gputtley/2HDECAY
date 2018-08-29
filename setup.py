@@ -3,46 +3,46 @@
 
 
  ###############################################################################################################
-#																												#
-#												setup.py														#
-#																												#
-#	Purpose:																									#
-#				Calls the LoopTools installer																	#
-#				Makes the HDECAY sub-program																	#
-#				Sets up 2HDECAY																					#
-#				Creates the makefile and electroweakCorrections.F90												#
-#				Makes 2HDECAY																					#
-#	Copyright:	Copyright (C) 2018, Marcel Krause and Milada Margarete Muehlleitner								#
-#	License:	GNU General Public License (GNU GPL-3.0-or-later)												#
-#																												#
-#				2HDECAY is released under GNU General Public License (GNU GPL-3.0-or-later).					#
-#				This program is free software: you can redistribute it and/or modify it under the terms of the	#
-#				GNU General Public License as published by the Free Software Foundation, either version 3 of	#
-#				the License, or any later version.																#
-#																												#
-#				This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;		#
-#				without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.		#
-#				See the GNU General Public License for more details.											#
-#																												#
-#				You have received a copy LICENSE.md of the GNU General Public License along with this program	#
-#				in the 2HDECAY root directoy.																	#
-#																												#
+#                                                                                                               #
+#                                                 setup.py                                                      #
+#                                                                                                               #
+#   Purpose:                                                                                                    #
+#               Calls the LoopTools installer                                                                   #
+#               Makes the HDECAY sub-program                                                                    #
+#               Sets up 2HDECAY                                                                                 #
+#               Creates the makefile and electroweakCorrections.F90                                             #
+#               Makes 2HDECAY                                                                                   #
+#   Copyright:  Copyright (C) 2018, Marcel Krause and Milada Margarete Muehlleitner                             #
+#   License:    GNU General Public License (GNU GPL-3.0-or-later)                                               #
+#                                                                                                               #
+#               2HDECAY is released under GNU General Public License (GNU GPL-3.0-or-later).                    #
+#               This program is free software: you can redistribute it and/or modify it under the terms of the  #
+#               GNU General Public License as published by the Free Software Foundation, either version 3 of    #
+#               the License, or any later version.                                                              #
+#                                                                                                               #
+#               This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;       #
+#               without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.       #
+#               See the GNU General Public License for more details.                                            #
+#                                                                                                               #
+#               You have received a copy LICENSE.md of the GNU General Public License along with this program   #
+#               in the 2HDECAY root directoy.                                                                   #
+#                                                                                                               #
  ###############################################################################################################
 
 
 #------------------------------#
-#		 Import Modules		   #
+#        Import Modules        #
 #------------------------------#
 import os
 from shutil import rmtree
 import subprocess
 import sys
 from fnmatch import fnmatch
-import CommonFunctions				# Provides common, often used functions for different scripts of 2HDECAY
-import Config						# Provides paths 
+import CommonFunctions              # Provides common, often used functions for different scripts of 2HDECAY
+import Config                       # Provides paths 
 
 #-------------------------#
-#		 Functions		  #
+#        Functions        #
 #-------------------------#
 
 
@@ -257,9 +257,6 @@ def createMakefile(pathToMakefile, relativePathToLoopTools, relativePathToLoopTo
 	makefile.close()
 
 def createElectroweakCorrections():
-	# Process exclusion list (decays to electrons, up and down quarks are not calculated, since these particles are massless in HDECAY)
-	# decayExclusion = ["A0toDDBar", "A0toElElBar", "A0toUUBar", "h0toDDBar", "h0toElElBar", "h0toUUBar"]
-
 	# Get the correct OS separator for OS-independent support of the input read-in
 	currentOS = sys.platform
 	if currentOS == 'win32':
@@ -762,7 +759,7 @@ def createElectroweakCorrections():
 
 
 #----------------------------#
-#		 Main Program		 #
+#        Main Program        #
 #----------------------------#
 print("Starting the installation script.\n")
 
