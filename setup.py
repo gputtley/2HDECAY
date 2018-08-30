@@ -86,20 +86,20 @@ def createMakefile(pathToMakefile, relativePathToLoopTools, relativePathToLoopTo
 	for singleProcess in processDirList:
 		makefile.write("PROCESS" + singleProcess.upper() + " = BuildingBlocks/Processes/" + singleProcess + "\n")
 	makefile.write("\n%.o: %.F90\n")
-	makefile.write("\t$(LTCOMP) -c -o $@ $< $(IFlags)\n\n")
+	makefile.write("\t$(FCOMP) -c -o $@ $< $(IFlags)\n\n")
 	makefile.write("$(SELFENERGIESALT)/%.o: $(SELFENERGIESALT)/%.F90 constants.o\n")
-	makefile.write("\t$(LTCOMP) -c -o $@ $< $(IFlags)\n\n")
+	makefile.write("\t$(FCOMP) -c -o $@ $< $(IFlags)\n\n")
 	makefile.write("$(SELFENERGIESUSU)/%.o: $(SELFENERGIESUSU)/%.F90 constants.o\n")
-	makefile.write("\t$(LTCOMP) -c -o $@ $< $(IFlags)\n\n")
+	makefile.write("\t$(FCOMP) -c -o $@ $< $(IFlags)\n\n")
 	makefile.write("$(SELFENERGIESDERIV)/%.o: $(SELFENERGIESDERIV)/%.F90 constants.o\n")
-	makefile.write("\t$(LTCOMP) -c -o $@ $< $(IFlags)\n\n")
+	makefile.write("\t$(FCOMP) -c -o $@ $< $(IFlags)\n\n")
 	makefile.write("$(PROCESSDEPENDENTSCHEME)/%.o: $(PROCESSDEPENDENTSCHEME)/%.F90 constants.o\n")
-	makefile.write("\t$(LTCOMP) -c -o $@ $< $(IFlags)\n\n")
+	makefile.write("\t$(FCOMP) -c -o $@ $< $(IFlags)\n\n")
 	makefile.write("$(TADPOLES)/%.o: $(TADPOLES)/%.F90 constants.o\n")
-	makefile.write("\t$(LTCOMP) -c -o $@ $< $(IFlags)\n\n")
+	makefile.write("\t$(FCOMP) -c -o $@ $< $(IFlags)\n\n")
 	for singleProcess in processDirList:
 		makefile.write("$(PROCESS" + singleProcess.upper() + ")/%.o: $(PROCESS" + singleProcess.upper() + ")/%.F90 constants.o counterterms.o\n")
-		makefile.write("\t$(LTCOMP) -c -o $@ $< $(IFlags)\n")
+		makefile.write("\t$(FCOMP) -c -o $@ $< $(IFlags)\n")
 	makefile.write("\nelectroweakCorrections: constants.o $(SELFENERGIESUSU)/SelfAA.o $(SELFENERGIESUSU)/SelfAALight.o $(SELFENERGIESUSU)/SelfWpWp.o $(SELFENERGIESUSU)/SelfZ0Z0.o \\\n")
 	makefile.write("\t$(SELFENERGIESUSU)/SelfAZ0.o $(SELFENERGIESUSU)/SelfAZ0ZeroMom.o $(SELFENERGIESALT)/SelfAA.o $(SELFENERGIESALT)/SelfWpWp.o $(SELFENERGIESALT)/SelfZ0Z0.o \\\n")
 	makefile.write("\t$(SELFENERGIESALT)/SelfAZ0.o $(SELFENERGIESALT)/SelfAZ0ZeroMom.o $(SELFENERGIESUSU)/SelfA0A0.o $(SELFENERGIESUSU)/SelfG0A0.o \\\n")
@@ -174,7 +174,7 @@ def createMakefile(pathToMakefile, relativePathToLoopTools, relativePathToLoopTo
 	for singleProcess in processDirList:
 		makefile.write("\t$(PROCESS" + singleProcess.upper() + ")/TreeLevelWidthRed.o $(PROCESS" + singleProcess.upper() + ")/NLOWidthRed.o $(PROCESS" + singleProcess.upper() + ")/NLOTadWidthRed.o $(PROCESS" + singleProcess.upper() + ")/Counterterm.o $(PROCESS" + singleProcess.upper() + ")/RealCorrections.o \\\n")
 	makefile.write("\tcounterterms.o getParameters.o electroweakCorrections.o\n")
-	makefile.write("\t$(LTCOMP) $(IFlags) constants.o $(SELFENERGIESUSU)/SelfAA.o $(SELFENERGIESUSU)/SelfAALight.o $(SELFENERGIESUSU)/SelfWpWp.o $(SELFENERGIESUSU)/SelfZ0Z0.o \\\n")
+	makefile.write("\t$(FCOMP) $(IFlags) constants.o $(SELFENERGIESUSU)/SelfAA.o $(SELFENERGIESUSU)/SelfAALight.o $(SELFENERGIESUSU)/SelfWpWp.o $(SELFENERGIESUSU)/SelfZ0Z0.o \\\n")
 	makefile.write("\t$(SELFENERGIESUSU)/SelfAZ0.o $(SELFENERGIESUSU)/SelfAZ0ZeroMom.o $(SELFENERGIESALT)/SelfAA.o $(SELFENERGIESALT)/SelfWpWp.o $(SELFENERGIESALT)/SelfZ0Z0.o \\\n")
 	makefile.write("\t$(SELFENERGIESALT)/SelfAZ0.o $(SELFENERGIESALT)/SelfAZ0ZeroMom.o $(SELFENERGIESUSU)/SelfA0A0.o \\\n")
 	makefile.write("\t$(SELFENERGIESUSU)/SelfG0A0.o $(SELFENERGIESUSU)/SelfG0G0.o $(SELFENERGIESUSU)/SelfGpGp.o $(SELFENERGIESUSU)/SelfGpHp.o $(SELFENERGIESUSU)/Selfh0h0.o \\\n")
@@ -815,7 +815,7 @@ else:
 
 			fileLoopToolsExists = os.path.isfile(filenameLoopTools)
 			if fileLoopToolsExists:
-				loopToolsCreationWanted = CommonFunctions.queryBoolean("Found the LoopTools install file " + filenameLoopTools + ". Do you want me to install LoopTools automatically?\nWARNING: this will delete the current LoopTools instance installed under 2HDECAY/" + loopToolsDirectory + ", if it exists.")
+				loopToolsCreationWanted = CommonFunctions.queryBoolean("\nFound the LoopTools install file " + filenameLoopTools + ". Do you want me to install LoopTools automatically?\nWARNING: this will delete the current LoopTools instance installed under 2HDECAY/" + loopToolsDirectory + ", if it exists.")
 			else:
 				print("ERROR: could not find the LoopTools installation file " + filenameLoopTools + " after attempting the download. Do you have an active internet connection and is the LoopTools server online?")
 				print("The installation routine is aborted. Please re-run setup.py.")
