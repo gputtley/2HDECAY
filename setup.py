@@ -85,8 +85,12 @@ def createMakefile(pathToMakefile, relativePathToLoopTools, relativePathToLoopTo
 	makefile.write("TADPOLES = BuildingBlocks/Tadpoles\n")
 	for singleProcess in processDirList:
 		makefile.write("PROCESS" + singleProcess.upper() + " = BuildingBlocks/Processes/" + singleProcess + "\n")
-	makefile.write("\n%.o: %.F90\n")
-	makefile.write("\t$(FCOMP) -c -o $@ $< $(IFlags)\n\n")
+	makefile.write("\nconstants.o: constants.F90\n")
+	makefile.write("\t$(FCOMP) constants.F90 -c -o constants.o $(IFlags)\n")
+	makefile.write("\ncounterterms.o: counterterms.F90\n")
+	makefile.write("\t$(FCOMP) counterterms.F90 -c -o counterterms.o $(IFlags)\n")
+	makefile.write("\ngetParameters.o: getParameters.F90\n")
+	makefile.write("\t$(FCOMP) getParameters.F90 -c -o getParameters.o $(IFlags)\n\n")
 	makefile.write("$(SELFENERGIESALT)/%.o: $(SELFENERGIESALT)/%.F90 constants.o\n")
 	makefile.write("\t$(FCOMP) -c -o $@ $< $(IFlags)\n\n")
 	makefile.write("$(SELFENERGIESUSU)/%.o: $(SELFENERGIESUSU)/%.F90 constants.o\n")
@@ -1001,20 +1005,14 @@ if missingFiles:
 makeWanted = CommonFunctions.queryBoolean("Do you want to make the program now (the make process may take a few minutes)?")
 if makeWanted:
 	print('Making main program 2HDECAY...\n')
-	try:
-		subprocess.check_output('make')
-		print('\nMaking process of main program 2HDECAY terminated.\n')
-	except subprocess.CalledProcessError as e:
-		print(e.output)
+	prompt = ['bash', '-c', "make electroweakCorrections"]
+	subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
 
 	print('Making subprogram HDECAY...\n')
-	try:
-		os.chdir('HDECAY')
-		subprocess.check_output('make')
-		print('\nMaking process of subprogram HDECAY terminated.\n')
-		os.chdir('..')
-	except subprocess.CalledProcessError as e:
-		print(e.output)
+	os.chdir('HDECAY')
+	prompt = ['bash', '-c', "make"]
+	subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
+	os.chdir('..')
 else:
 	print('Make process skipped.\n')
 
@@ -1022,20 +1020,15 @@ else:
 cleanWanted = CommonFunctions.queryBoolean("Do you want to make clean (optional)?")
 if cleanWanted:
 	print('Cleaning main program 2HDECAY...\n')
-	try:
-		subprocess.check_output('make clean')
-		print('\nCleaning process terminated.\n')
-	except subprocess.CalledProcessError as e:
-		print(e.output)
+	prompt = ['bash', '-c', "make clean"]
+	subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
 
 	print('Cleaning subprogram HDECAY...\n')
-	try:
-		os.chdir('HDECAY')
-		subprocess.check_output('make clean')
-		print('\nCleaning process terminated.\n')
-		os.chdir('..')
-	except subprocess.CalledProcessError as e:
-		print(e.output)
+	os.chdir('HDECAY')
+	prompt = ['bash', '-c', "make clean"]
+	subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
+	os.chdir('..')
+
 else:
 	print('Make clean process skipped.\n')
 
