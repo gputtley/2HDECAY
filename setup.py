@@ -40,6 +40,11 @@ import sys
 from fnmatch import fnmatch
 import CommonFunctions              # Provides common, often used functions for different scripts of 2HDECAY
 import Config                       # Provides paths 
+# Compatibility for Python 2 and 3
+if(sys.version_info > (3,0)):
+	from urllib.request import urlopen
+else:
+	from urllib import urlopen
 
 #-------------------------#
 #        Functions        #
@@ -781,20 +786,45 @@ else:
 		# Check for the used OS
 		currentOS = sys.platform
 
-		# Windows (cygwin) download routine
-		if currentOS == 'win32':
-			prompt = [Config.pathToCygwin, '-c', "wget http://www.feynarts.de/looptools/" + Config.loopToolsVersion + ".tar.gz"]
-			subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
-		# Linux/macOS download routine
-		else:
-			prompt = ['bash', '-c', "wget http://www.feynarts.de/looptools/" + Config.loopToolsVersion + ".tar.gz"]
-			subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
-		
-		# Refresh the name of the installation file and directory
-		filenameLoopTools = Config.loopToolsVersion + ".tar.gz"
-		loopToolsDirectory = Config.loopToolsVersion
+		# Check if the given LoopTools version actually exists on the server
+		urlToCheck = "http://www.feynarts.de/looptools/" + Config.loopToolsVersion + ".tar.gz"
+		neededCode = 0
+		try:
+			ret = urlopen(urlToCheck)
+			neededCode = ret.getcode()
+		except:
+			neededCode = 404
 
-		loopToolsCreationWanted = CommonFunctions.queryBoolean("Found the LoopTools install file " + filenameLoopTools + ". Do you want me to install LoopTools automatically?\nWARNING: this will delete the current LoopTools instance installed under 2HDECAY/" + loopToolsDirectory + ", if it exists.")
+		if neededCode == 200:
+			print("Start download?")
+			# Windows (cygwin) download routine
+			if currentOS == 'win32':
+				prompt = [Config.pathToCygwin, '-c', "curl http://www.feynarts.de/looptools/" + Config.loopToolsVersion + ".tar.gz -o " + Config.loopToolsVersion + ".tar.gz"]
+				subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
+			# Linux/macOS download routine
+			else:
+				prompt = ['bash', '-c', "curl http://www.feynarts.de/looptools/" + Config.loopToolsVersion + ".tar.gz -o " + Config.loopToolsVersion + ".tar.gz"]
+				subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
+			
+			# Refresh the name of the installation file and directory
+			filenameLoopTools = ''
+			for file in os.listdir('.'):
+				if fnmatch(file, 'LoopTools-*.tar.gz'):
+					filenameLoopTools = file
+					loopToolsDirectory = filenameLoopTools.replace('.tar.gz', '')
+
+			fileLoopToolsExists = os.path.isfile(filenameLoopTools)
+			if fileLoopToolsExists:
+				loopToolsCreationWanted = CommonFunctions.queryBoolean("Found the LoopTools install file " + filenameLoopTools + ". Do you want me to install LoopTools automatically?\nWARNING: this will delete the current LoopTools instance installed under 2HDECAY/" + loopToolsDirectory + ", if it exists.")
+			else:
+				print("ERROR: could not find the LoopTools installation file " + filenameLoopTools + " after attempting the download. Do you have an active internet connection and is the LoopTools server online?")
+				print("The installation routine is aborted. Please re-run setup.py.")
+				sys.exit()
+		else:
+			print("\nERROR: I could not find the version of LoopTools that you specified in Config.py on the LoopTools server. Please check Config.py.")
+			print("The installation routine is aborted. Please re-run setup.py.")
+			sys.exit()
+		
 	else:
 		print('LoopTools will not be downloaded. WARNING: LoopTools cannot be build without the archive in the 2HDECAY folder.')
 		loopToolsCreationWanted = False
