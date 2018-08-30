@@ -90,7 +90,9 @@ def createMakefile(pathToMakefile, relativePathToLoopTools, relativePathToLoopTo
 	makefile.write("\ncounterterms.o: counterterms.F90\n")
 	makefile.write("\t$(FCOMP) counterterms.F90 -c -o counterterms.o $(IFlags)\n")
 	makefile.write("\ngetParameters.o: getParameters.F90\n")
-	makefile.write("\t$(FCOMP) getParameters.F90 -c -o getParameters.o $(IFlags)\n\n")
+	makefile.write("\t$(FCOMP) getParameters.F90 -c -o getParameters.o $(IFlags)\n")
+	makefile.write("\nelectroweakCorrections.o: electroweakCorrections.F90\n")
+	makefile.write("\t$(FCOMP) electroweakCorrections.F90 -c -o electroweakCorrections.o $(IFlags)\n\n")
 	makefile.write("$(SELFENERGIESALT)/%.o: $(SELFENERGIESALT)/%.F90 constants.o\n")
 	makefile.write("\t$(FCOMP) -c -o $@ $< $(IFlags)\n\n")
 	makefile.write("$(SELFENERGIESUSU)/%.o: $(SELFENERGIESUSU)/%.F90 constants.o\n")
@@ -970,7 +972,7 @@ else:
 if makefileCreationWanted:
 	print('  Creating makefile...')
 	createMakefile("makefile", loopToolsLibRootFolder, loopToolsLibSubFolder, loopToolsExecSubFolder, useRelativeLoopToolsPath, 'gfortran')
-	print('    done.\n')
+	print('  ...done.\n')
 else:
 	print('  makefile is not created.\n')
 makefileExistsNow = os.path.isfile("makefile")
@@ -984,7 +986,7 @@ else:
 if ewFileCreationWanted:
 	print('  Creating electroweakCorrections.F90...')
 	createElectroweakCorrections()
-	print('    done.\n')
+	print('  ...done.\n')
 else:
 	print('  electroweakCorrections.F90 is not created.\n')
 ewFileExistsNow = os.path.isfile("electroweakCorrections.F90")
