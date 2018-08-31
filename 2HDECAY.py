@@ -6,8 +6,8 @@
 #                                                                                                               #
 #                                                    2HDECAY                                                    #
 #                                                                                                               #
-#   Purpose:    Program for the automated calculation of full one-loop electroweak and QCD corrections for      #
-#               two-body decays of Higgs particles in the two-Higgs doublet model (2HDM).                       #
+#   Purpose:    A program for the calculation One-Loop Electroweak Corrections to Higgs Decays in the           #
+#               Two-Higgs-Doublet Model (2HDM) Including State-of-the-Art QCD Corrections                       #
 #   Authors:    Marcel Krause (marcel.krause@kit.edu)                                                           #
 #               Prof. Dr. M. Margarete Muehlleitner (margarete.muehlleitner@kit.edu)                            #
 #   Version:    1.0.0                                                                                           #

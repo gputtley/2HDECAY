@@ -1,10 +1,10 @@
 # 2HDECAY
 
-Program for the automated calculation of full one-loop electroweak and QCD corrections for two-body decays of Higgs particles in the two-Higgs doublet model (2HDM).
+A program for the calculation One-Loop Electroweak Corrections to Higgs Decays in the Two-Higgs-Doublet Model (2HDM) Including State-of-the-Art QCD Corrections
 
 ## Program information
 
-**Program** 2HDECAY v1.0.0
+**Program** 2HDECAY 1.0.0
 
 **Authors** [Marcel Krause](mailto:marcel.krause@kit.edu) and [M. Margarete Mühlleitner](mailto:margarete.muehlleitner@kit.edu)
 
@@ -24,7 +24,7 @@ Program for the automated calculation of full one-loop electroweak and QCD corre
 - The publication of LoopTools:
   - T. Hahn, M. Perez-Victoria, Comp. Phys. Commun. 118 (1999) 153-165, hep-ph/9807565
 
-**Abstract** We present the program package 2HDECAY for calculating branching ratios and partial decay widths of Higgs boson decays in a general charge-parity-(CP)-conserving Two-Higgs-Doublet model (2HDM). The tool includes the full electroweak one-loop corrections to all two-body on-shell (OS) Higgs decays in the 2HDM and combines them with the quantum chromodynamics (QCD) corrections that are already implemented in HDECAY. For the renormalization of the electroweak sector, an OS scheme is implemented for most of the counterterms apart from the soft-![](https://latex.codecogs.com/gif.latex?%5Cmathbb%7BZ%7D_2 "\mathbb{Z}_2")-breaking scale ![](https://latex.codecogs.com/gif.latex?m_%7B12%7D%5E2 "m_{12}^2"), where an ![](https://latex.codecogs.com/gif.latex?%5Coverline%7B%5Ctext%7BMS%7D%7D "\overline{\text{MS}}") condition is applied, and the mixing angles ![](https://latex.codecogs.com/gif.latex?%5Calpha "\alpha") and ![](https://latex.codecogs.com/gif.latex?%5Cbeta "\beta") of the 2HDM, for which several distinct renormalization schemes are implemented. The tool 2HDECAY can be used for phenomenological analyses of the branching ratios of Higgs decays in the 2HDM. Furthermore, the separate output of the electroweak contributions to the one-loop partial decay widths for several different renormalization schemes allows for an efficient analysis of the numerical differences between these renormalization schemes. The latest version of the program package 2HDECAY can be downloaded from https://github.com/marcel-krause/2HDECAY.
+**Abstract** We present the program package 2HDECAY for the calculation of the branching ratios and partial decay widths of Higgs boson decays in a general CP-conserving Two-Higgs-Doublet model (2HDM). The tool includes the full electroweak one-loop corrections to all two-body on-shell Higgs decays in the 2HDM that are not loop-induced. It combines them with the state-of-the-art QCD corrections that are already implemented in HDECAY. For the renormalization of the electroweak sector, an on-shell scheme is implemented for most of the counterterms. Exceptions are the soft-![](https://latex.codecogs.com/gif.latex?%5Cmathbb%7BZ%7D_2 "\mathbb{Z}_2")-breaking mass scale squared ![](https://latex.codecogs.com/gif.latex?m_%7B12%7D%5E2 "m_{12}^2"), where an ![](https://latex.codecogs.com/gif.latex?%5Coverline%7B%5Ctext%7BMS%7D%7D "\overline{\text{MS}}") condition is applied, as well as the 2HDM mixing angles ![](https://latex.codecogs.com/gif.latex?%5Calpha "\alpha") and ![](https://latex.codecogs.com/gif.latex?%5Cbeta "\beta"), for which several distinct renormalization schemes are implemented. The tool 2HDECAY can be used for phenomenological analyses of the branching ratios of Higgs decays in the 2HDM. Furthermore, the separate output of the electroweak contributions to the tree-level partial decay widths for several different renormalization schemes allows for an efficient analysis of the numerical differences between these renormalization schemes. The latest version of the program package 2HDECAY can be downloaded from the url: https://github.com/marcel-krause/2HDECAY.
 
 **Changelog** For a documentation about the changes made in 2HDECAY, check the [Changelog.md](Changelog.md) file.
 
