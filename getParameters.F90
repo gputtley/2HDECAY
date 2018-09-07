@@ -149,7 +149,8 @@ subroutine getParameters(OStype)
             read(42, *) dump, dump2, m12squared
 
             ! Read the input scale
-            read(42, *) dump, dump2, InputScale
+            ! read(42, *) dump, dump2, InputScale
+            read(42, *) dump, dump2, InputScaleReadIn
 
             ! Skip a line
             read(42, *)

@@ -28,7 +28,7 @@ BLOCK 2HDMINPUTS  # 2HDM inputs
          8     3.67427000E+02   # M_A
          9     1.85816000E+02   # M_CH
         10                  7   # renormalization scheme EW corrs
-        11     1.00000000E+00   # input scale
+        11     1.0D0            # input scale
 #
 BLOCK VCKMIN  # CKM mixing
          1     9.99100000E-01   # V_tb

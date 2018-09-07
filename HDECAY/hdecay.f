@@ -305,9 +305,10 @@ c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
        AMSM = AMAR
        AMA = AMAR
 
-      CALL HDEC(TGBET)
+       CALL HDEC(TGBET)
 
        CALL WRITE_HDEC(TGBET)
+
  9999  CONTINUE
 
       CALL CLOSE_HDEC
@@ -317,6 +318,7 @@ c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
       SUBROUTINE READ_HDEC(TGBET,AMABEG,AMAEND,NMA)
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+      CHARACTER(50) valinscale
       PARAMETER(K=6,NI=87,NSA=85,NSB=86,NLA=88,NLB=89,NHA=90,NHB=91,
      .          NHC=92,NAA=93,NAB=94,NCA=95,NCB=96,NCC=50,NRA=97,NRB=98,
      .          NSUSYL=81,NSUSYA=82,NSUSYH=83,NSUSYC=84,NPAR=80,
@@ -573,7 +575,8 @@ C end MMM changed 10/7/18
       READ(NI,100)TGBET2HDM
       READ(NI,100)AM12SQ
 C MMM changed 10/7/18
-      READ(NI,100)VALINSCALE
+      READ(NI,333)VALINSCALE
+      print*,'valinscale',valinscale
 C end MMM changed 10/7/18           
       READ(NI,*)
       READ(NI,100)ALPH2HDM
@@ -1236,11 +1239,19 @@ c end MMM changed 10/7/18
 
 c MMM changed 21/8/13
 c MMM changed 10/7/2018
-      if(i2hdm.ge.2) then
+      if(i2hdm.ge.2.and.ielw2hdm.ne.0) then
          print*,'You have to set i2hdm = 0 (no 2HDM) or 1 (2HDM). The de
      .fault value i2hdm=0 is set otherwise.'
          i2hdm=0
       endif
+
+      if(i2hdm.ge.2.and.ielw2hdm.eq.0) then
+         print*,''
+         print*,'You chose to calculate the EW corrections to the 2HDM d
+     .ecay widths but set the flag for the 2HDM wrongly. Setting i2hdm=1
+     . now.'
+         i2hdm = 1
+      endif      
       
       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
          print*,''
@@ -1267,7 +1278,7 @@ c end MMM changed 10/7/2018
          endif
          if(islhao.eq.1.and.ielw2hdm.eq.1) then
             print*,'In the 2HDM option without EW corrections no SLHA in
-     .put file is read in. Setting islhao = 0.'
+     .put file is given out. Setting islhao = 0.'
          print*,''
          endif
          islhai = 0
@@ -1890,7 +1901,8 @@ C--CHECK FERMIOPHOBIC
 
 c MMM changed 10/7/2018
 77    FORMAT(A5,G15.8)
-c end MMM changed 10/7/2018      
+c end MMM changed 10/7/2018
+333   FORMAT(10X,A50)
 100   FORMAT(10X,G30.20)
 101   FORMAT(10X,I30)
 111   FORMAT(21X,G30.20)
@@ -2534,6 +2546,7 @@ c end MMM changed 23/8/2013
       DIMENSION GLTT(2,2),GLBB(2,2),GHTT(2,2),GHBB(2,2),GCTB(2,2),
      .          GLEE(2,2),GHEE(2,2),GCEN(2,2)
       DIMENSION AGDL(4),AGDA(4),AGDH(4),AGDC(2)
+      CHARACTER(50) valinscale
       dimension hlbrsn1(4,4),hhbrsn1(4,4),habrsn1(4,4)
       double precision minval(1:20),smval(1:30),massval(1:50),
      .                 nmixval(4,4),umixval(2,2),vmixval(2,2),
@@ -2900,7 +2913,7 @@ c ------------------------- c
          write(nout,52) 9,LAMBDA5,'A5LAM2HDM'
       endif
       write(nout,525) 10,IRENSCHEME,'renormalization scheme EW corrs'
-      write(nout,52) 11,VALINSCALE,'input scale'
+      write(nout,5333) 11,VALINSCALE,'input scale'
       endif
 c end MMM changed 10/7/18            
       
@@ -5416,6 +5429,7 @@ c end MMM changed 10/7/18
  51   format('BLOCK',1x,A,2x,'#',1x,A)
  551  format(1x,A,2x,'#',1x,A)
  52   format(1x,I9,3x,1P,E16.8,0P,3x,'#',1x,A)
+ 5333 format(1x,I9,4x,2P,A15,0P,3x,'#',1x,A)      
  552  format(2x,E16.8,0P,3x,A)
  53   format(1x,I2,1x,I2,3x,1P,E16.8,0P,3x,'#',1x,A)
  54   format('BLOCK',1x,A,1P,E16.8,2x,'#',1x,A)
@@ -5713,6 +5727,7 @@ C =====================================================================
       COMPLEX*16 CFACQ_HDEC,CFACSQ_HDEC,CKOFQ_HDEC,CKOFQ,CFACQ,CFACQ0
       integer ivegas(4)
 c MMM changed 10/7/18
+      CHARACTER(50) valinscale
       double precision HLBBNLO(1:14),HLLLNLO(1:14),HLMMNLO(1:14),
      .     HLSSNLO(1:14),HLCCNLO(1:14),HLTTNLO(1:14),HLWWNLO(1:14),
      .     HLZZNLO(1:14),HLAANLO(1:14),HLZANLO(1:14),HLHPWMNLO(1:14),
@@ -6224,9 +6239,10 @@ c     write(6,*)'CKM: ',VUS,VCB,VUB/VCB
 c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
       IF(IHIGGS.EQ.0)THEN
-C        =========================================================
+
+C =========================================================
 C                              SM HIGGS DECAYS
-C        =========================================================
+C =========================================================
       AMXX=AMH
       AMH=AMSM
 C     =============  RUNNING MASSES 
@@ -7860,6 +7876,7 @@ c Maggie question // mass dependent NLO QCD corrections?
 c end check
 
        HGG=HVV(AML,0.D0)*(ASG/PI)**2*XFAC/8
+
 c      write(6,*)'gg: ',CAT,CAB,CAC,CXB1+CXB2,CXT1+CXT2,
 c    .                  CXUL+CXUR+CXDL+CXDR
 
@@ -7988,7 +8005,7 @@ c MMM changed 10/7/18
          endif
 c end MMM changed 10/7/18                 
       ELSE
-      HLL=HFF(AML,(AMTAU/AML)**2)*XGLT**2
+         HLL=HFF(AML,(AMTAU/AML)**2)*XGLT**2
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             HLLLLORESC = HLL*GFCALC/GF
@@ -8006,7 +8023,7 @@ c MMM changed 10/7/18
          endif
 c end MMM changed 10/7/18
       ENDIF
-         
+
 c     write(6,*)'h: tau/mu: ',HLL/HMM*AMMUON**2/AMTAU**2,XGLT**2/XGLM**2
 c      print*,'h -> tautau',hll
 C  H --> SS
@@ -10195,7 +10212,11 @@ c end MMM changed 10/7/18
       ENDIF
 
 c     print*,'H+ -> su',hsu,3.d0*vus**2*
-c    .         cqcdm2hdm(amch,gab,gat,(ams/amch)**2,eps,ratx)
+c     .         cqcdm2hdm(amch,gab,gat,(ams/amch)**2,eps,ratx)
+      print*,'H+ -> su',hsu
+
+      print*,'We set eps to 10-15, in the original hdecay it is 10-12.'
+      print*,'TO BE DISCUSSED.'
 
 C  H+ --> CS
       RATX = RMS/AMS
@@ -11791,21 +11812,19 @@ c on-shell decays and non-loop induced decays
       print*,''
       print*,'wtot2',wtot2(i),i
       print*,''
-      print*,'hlbrg2',hlggresc,hlbrg2(i)
-      print*,'hlbrm2(i)',hlmmew(i),hlbrm2(i)
-      print*,'hlbrl2(i)',hlllew(i),hlbrl2(i)
-      print*,'hlbrs2(i)',hlssqcdew(i),hlbrs2(i)
-      print*,'hlbrc2(i)',hlccqcdew(i),hlbrc2(i)
-      print*,'hlbrb2(i)',hlbbqcdew(i),hlbrb2(i)
-      print*,'hlbrt2(i)',hlttqcdew(i),hlbrt2(i)
-      print*,'hlbrga2',hlgaresc,hlbrga2(i)
-      print*,'hlbrzga2',hlzgaresc,hlbrzga2(i)
-      print*,'hlbrw2(i)',hlwwew(i),hlbrw2(i)
-      print*,'hlbrz2(i)',hlzzew(i),hlbrz2(i)
-      print*,'hlbra2(i)',hlaaew(i),hlbra2(i)
-      print*,'hlbrchch2(i)',hlhphmew(i),hlbrchch2(i)
-      print*,'brbraz2(i)',hlazew(i),hlbraz2(i)
-      print*,'hlbrhw2(i)',hlhpwmew(i),hlbrhw2(i)
+      print*,'hbrmn2(i)',hmnew(i),hbrmn2(i)
+      print*,'hbrln2(i)',hlnew(i),hbrln2(i)
+      print*,'hbrsu2(i)',hsuqcdew(i),hbrsu2(i)
+      print*,'hbrsc2(i)',hscqcdew(i),hbrsc2(i)
+      print*,'hbrcd2(i)',hcdqcdew(i),hbrcd2(i)
+      print*,'hbrbc2(i)',hbcqcdew(i),hbrbc2(i)
+      print*,'hbrbu2(i)',hbuqcdew(i),hbrbu2(i)
+      print*,'hbrdt2(i)',hdtqcdew(i),hbrdt2(i)
+      print*,'hbrst2(i)',hstqcdew(i),hbrst2(i)
+      print*,'hbrbt2(i)',hbtqcdew(i),hbrbt2(i)
+      print*,'hbrwhl2(i)',hpwhlew(i),hbrwhl2(i)
+      print*,'hbrwhh2(i)',hpwhhew(i),hbrwhh2(i)
+      print*,'hbrwa2(i)',hpwaew(i),hbrwa2(i)
       print*,''
       endif
 
@@ -11837,21 +11856,19 @@ c on-shell decays and non-loop induced decays
       print*,''
       print*,'wtot2',wtot2(1),irenscheme
       print*,''
-      print*,'hlbrg2',hlggresc,hlbrg2(1)
-      print*,'hlbrm2(1)',hlmmew(1),hlbrm2(1)
-      print*,'hlbrl2(1)',hlllew(1),hlbrl2(1)
-      print*,'hlbrs2(1)',hlssqcdew(1),hlbrs2(1)
-      print*,'hlbrc2(1)',hlccqcdew(1),hlbrc2(1)
-      print*,'hlbrb2(1)',hlbbqcdew(1),hlbrb2(1)
-      print*,'hlbrt2(1)',hlttqcdew(1),hlbrt2(1)
-      print*,'hlbrga2',hlgaresc,hlbrga2(1)
-      print*,'hlbrzga2',hlzgaresc,hlbrzga2(1)
-      print*,'hlbrw2(1)',hlwwew(1),hlbrw2(1)
-      print*,'hlbrz2(1)',hlzzew(1),hlbrz2(1)
-      print*,'hlbra2(1)',hlaaew(1),hlbra2(1)
-      print*,'hlbrchch2(1)',hlhphmew(1),hlbrchch2(1)
-      print*,'brbraz2(1)',hlazew(1),hlbraz2(1)
-      print*,'hlbrhw2(1)',hlhpwmew(1),hlbrhw2(1)
+      print*,'hbrmn2(1)',hmnew(1),hbrmn2(1)
+      print*,'hbrln2(1)',hlnew(1),hbrln2(1)
+      print*,'hbrsu2(1)',hsuqcdew(1),hbrsu2(1)
+      print*,'hbrsc2(1)',hscqcdew(1),hbrsc2(1)
+      print*,'hbrcd2(1)',hcdqcdew(1),hbrcd2(1)
+      print*,'hbrbc2(1)',hbcqcdew(1),hbrbc2(1)
+      print*,'hbrbu2(1)',hbuqcdew(1),hbrbu2(1)
+      print*,'hbrdt2(1)',hdtqcdew(1),hbrdt2(1)
+      print*,'hbrst2(1)',hstqcdew(1),hbrst2(1)
+      print*,'hbrbt2(1)',hbtqcdew(1),hbrbt2(1)
+      print*,'hbrwhl2(1)',hpwhlew(1),hbrwhl2(1)
+      print*,'hbrwhh2(1)',hpwhhew(1),hbrwhh2(1)
+      print*,'hbrwa2(1)',hpwaew(1),hbrwa2(1)
       print*,''
       
       endif
@@ -12762,7 +12779,7 @@ c MMM changed 10/7/2018
 c end MMM changed 10/7/2018
       
 c      print*,'H -> Zgam',hzga
-C  H ---> W W
+C H ---> W W
       IF(IONWZ.EQ.0)THEN
        CALL HTOVV_HDEC(0,AMH,AMW,GAMW,HTWW)
        HWW = 3D0/2D0*GF*AMW**4/DSQRT(2D0)/PI/AMH**3*HTWW*GHVV**2
@@ -12780,7 +12797,6 @@ c MMM changed 10/7/18
              endif             
           elseif(amh.gt.2.D0*amw) then
              HHWWLORESC=HVV(AMH,AMW**2/AMH**2)*GHVV**2*GFCALC/GF
-             check = (HHWWLORESC-HHWWLO)/HHWWLORESC
             if(dabs(check).ge.1.D-5) then
                print*,'There is a problem in the LO width H->WW.'
             endif
@@ -12940,7 +12956,10 @@ c end MMM changed 10/7/18
       ENDIF
       ENDIF
 
-c      print*,'H -> WW',hww
+c     print*,'H -> WW',hww
+      print*,'We have ionwz=0. Note that the original hdecay always' 
+      print*,'takes the off-shell decay. We do not do this here.'
+      print*,'TO BE DISCUSSED.'
 C  H ---> Z Z
       IF(IONWZ.EQ.0)THEN
        CALL HTOVV_HDEC(0,AMH,AMZ,GAMZ,HTZZ)
@@ -14709,7 +14728,7 @@ c corrections, but rescaled by GFCALC/GF
       print*,'hhbrz',hhzzloresc,hhbrz1
       print*,'hhbrhl',hhhloresc,hhbrhl1
       print*,'hhbra',hhaaloresc,hhbra1
-      print*,'hhbrchch',hhchchhoresc,hhbrchch1
+      print*,'hhbrchch',hhchchloresc,hhbrchch1
       print*,'hhbraz',hhazloresc,hhbraz1
       print*,'hhbrhw1',hhhpwmloresc,hhbrhw1
       print*,'rescal',gfcalc/gf

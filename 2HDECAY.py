@@ -181,7 +181,10 @@ Copyright 2018, Marcel Krause and Milada Margarete Muehlleitner.
 		MBOSline = "MBOSCALC = " + str(MBOSCalc) + "\n"
 		lineCount = 1
 		convertedFile = ''
+		renScaleIsDynamic = '0'
 		for line in convertedFileHandler:
+			if "INSCALE" in line and "MIN" in line:
+				renScaleIsDynamic = '1'
 			if lineCount == lineWhereGFCalc:
 				convertedFile += GFline
 			elif lineCount == lineWhereOSMC:
@@ -198,7 +201,7 @@ Copyright 2018, Marcel Krause and Milada Margarete Muehlleitner.
 		
 		# Calculate the electroweak corrections
 		print("Calculating electroweak corrections...\n")
-		prompt = ['./electroweakCorrections', '0', '0', '0', '1', 'HDECAY' + os.sep + 'hdecay.in', 'hdecay.in']
+		prompt = ['./electroweakCorrections', '0', '0', '0', '1', 'HDECAY' + os.sep + 'hdecay.in', 'hdecay.in', renScaleIsDynamic]
 		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
 		print("Calculation of electroweak corrections done.\n")
 
