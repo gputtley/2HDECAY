@@ -35,4 +35,4 @@ pathLoopToolsLibs = 'lib64'                                 # Specify the LoopTo
 pathLoopToolsExecs = 'bin'                                  # Specify the LoopTools subfolder (relative to pathLoopTools) where the LoopTools libraries are contained (NOTE: this depends on the OS and chip architecture; on Windows, this is normally 'lib', on Linux and macOS, it is normally 'lib64')
 pathToCygwin = 'C:\\cygwin\\bin\\bash.exe'                  # Specify the path to the Cygwin bash executable (for Windows only)
 loopToolsVersion = 'LoopTools-2.14'                         # Specify the LoopTools version that shall be downloaded (recommended, as checked for compatibility: LoopTools-2.14)
-renScaleDefinitions = ['MIN', 'MIN/DSQRT(2D0)']             # Give definitions for possible renormalization scales in terms of the decaying Higgs mass MIN (NOTE: use FORTRAN functions and formats!)
+renScaleDefinitions = ['MIN', 'MIN*DSQRT(2D0)**(-1)']       # Give definitions for possible renormalization scales in terms of the decaying Higgs mass MIN (NOTE: use FORTRAN functions and formats!)

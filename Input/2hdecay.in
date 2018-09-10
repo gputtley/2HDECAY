@@ -59,7 +59,7 @@ RENSCHEM = 7
 ********************
 TGBET2HDM= 0.848201D0
 M_12^2   = 244794.0D0
-INSCALE  = 1.0D0
+INSCALE  = MIN
 ******************** PARAM=1:
 ALPHA_H  = -0.8673461881D0
 MHL      = 125.09D0

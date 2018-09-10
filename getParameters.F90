@@ -39,7 +39,6 @@ subroutine getParameters(OStype)
     end if
 
     ! Check if the input file exists
-    write(*,*) trim(trim(pathToInputFiles)//trim(OSpathSeparator))//'hdecay.in'
     inquire(file=trim(trim(pathToInputFiles)//trim(OSpathSeparator))//'hdecay.in', exist=fileExists)
     if (.not. fileExists) then
         do
