@@ -128,7 +128,7 @@ Copyright 2018, Marcel Krause and Milada Margarete Muehlleitner.
 		print("Calculating corrections for input file " + inputFileTemp + " ...\n")
 
 		# Copy the input file to the HDECAY subfolder
-		print("Copying input files into HDECAY folder...\n")
+		print("Copying input files into HDECAY folder...")
 		filenameIn = "Input" + os.sep + inputFileTemp
 		filenameOut = "HDECAY" + os.sep + "hdecay.in"
 		# Remove any existing input and fermion masses file in HDECAY
@@ -137,6 +137,7 @@ Copyright 2018, Marcel Krause and Milada Margarete Muehlleitner.
 		if os.path.isfile("HDECAY" + os.sep + "fermionmasses.dat"):
 			os.remove("HDECAY" + os.sep + "fermionmasses.dat")
 		copyfile(filenameIn, filenameOut)
+		print("... done.\n")
 
 		# Let HDECAY run in minimal mode to produce the fermion mass file
 		print("Starting HDECAY in minimal mode...")
@@ -146,7 +147,7 @@ Copyright 2018, Marcel Krause and Milada Margarete Muehlleitner.
 		os.chdir('..')
 		print("HDECAY in minimal mode terminated.\n")
 
-		# Read the ferminon masses from the fermion mass file
+		# Read the fermion masses from the fermion mass file
 		filenameMasses = "HDECAY" + os.sep + "fermionmasses.dat"
 		massFileLines = list(line.rstrip('\n') for line in open(filenameMasses))
 		MCOSCalc = float((massFileLines[0].split('='))[1].strip())
@@ -237,10 +238,13 @@ Copyright 2018, Marcel Krause and Milada Margarete Muehlleitner.
 		os.chdir('..')
 		print("HDECAY in standard mode terminated.\n")
 
-		# Copy the output file to the results folder
+		# Copy the output files to the results folder
 		print("Copying input files into output folder...")
 		filenameIn = "HDECAY" + os.sep + "slha.out"
-		filenameOut = "Results" + os.sep + inputFileTemp.replace('.in', '.out')
+		filenameOut = "Results" + os.sep + inputFileTemp.replace('.in', '_BR.out')
+		copyfile(filenameIn, filenameOut)
+		filenameIn = "HDECAY" + os.sep + "ewpartialwidth.out"
+		filenameOut = "Results" + os.sep + inputFileTemp.replace('.in', '_EW.out')
 		copyfile(filenameIn, filenameOut)
 		print("... done.\n")
 
@@ -251,5 +255,34 @@ Copyright 2018, Marcel Krause and Milada Margarete Muehlleitner.
 		print("Corrections for input file " + inputFileTemp + " done.\n")
 
 	# End of program is reached
-	print("\nCalculation finished. Thanks for using 2HDECAY!\n")
+	print("All calculations finished. Thanks for using 2HDECAY!")
+
+	# Print the end screen 
+	print('''
+When you use this program please cite:
+	The manual for 2HDECAY:
+	 - M. Krause, M. Muhlleitner, M. Spira, arXiv:YYMM.XXX
+	The manuals for HDECAY:
+	 - A. Djouadi, J. Kalinowski, M. Spira, Comp. Phys. Commun. 108 (1998) 56, hep-ph/9704448
+	 - A. Djouadi, J. Kalinowski, M. Muhlleitner, M. Spira, arXiv:1801.09506 [hep-ph]
+	The papers on the EW correction to the 2HDM decays:
+	 - M. Krause, R. Lorenz, M. Muhlleitner, R. Santos, H. Ziesche, JHEP 1609 (2016) 143
+	 - M. Krause, M. Muhlleitner, R. Santos, H. Ziesche, Phys.Rev. D95 (2017) no.7, 075019
+	The publication of LoopTools:
+	 - T. Hahn, M. Perez-Victoria, Comp. Phys. Commun. 118 (1999) 153-165, hep-ph/9807565
+
+2HDECAY is released under GNU General Public License (GNU GPL-3.0-or-later). This program is free software: 
+you can redistribute it and/or modify it under the terms of the GNU General Public License as published by 
+the Free Software Foundation, either version 3 of the License, or any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the 
+implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+for more details.
+
+You have received a copy LICENSE.md of the GNU General Public License along with this program in the 2HDECAY
+root directoy.
+
+Copyright 2018, Marcel Krause and Milada Margarete Muehlleitner.
+	''')
+
 	sys.exit()

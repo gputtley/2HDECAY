@@ -1,0 +1,179 @@
+#
+BLOCK DCINFO  # Decay Program information
+     1   2HDECAY     # decay calculator
+     2   1.0.0       # version number
+#
+BLOCK SMINPUTS  # Standard Model inputs
+         2     1.19708620E-05   # G_F [GeV^-2]
+         3     1.18000000E-01   # alpha_S(M_Z)^MSbar
+         4     9.11534800E+01   # M_Z pole mass
+         5     4.17999999E+00   # mb(mb)^MSbar
+         6     1.73200000E+02   # mt pole mass
+         7     1.77682000E+00   # mtau pole mass
+         8     4.84131340E+00   # mb pole mass
+         9     1.43131340E+00   # mc pole mass
+        10     1.05658372E-01   # muon mass
+        11     8.03579700E+01   # M_W mass
+        12     2.08500000E+00   # W boson total width
+        13     2.49520000E+00   # Z boson total width
+#
+BLOCK 2HDMINPUTS  # 2HDM inputs
+         1                  1   # 2HDM parametrization
+         2                  1   # 2HDM type
+         3     8.48201000E-01   # tan(beta)
+         4     2.44794000E+05   # M_12^2
+         5    -8.67346188E-01   # alpha
+         6     1.25090000E+02   # M_h
+         7     2.58401000E+02   # M_H
+         8     3.67427000E+02   # M_A
+         9     1.85816000E+02   # M_CH
+        10                  7   # renormalization scheme EW corrs
+        11     MIN              # input scale
+#
+BLOCK VCKMIN  # CKM mixing
+         1     9.99100000E-01   # V_tb
+         1     4.04000000E-02   # V_ts
+         1     8.67000000E-03   # V_td
+         1     4.12000000E-02   # V_cb
+         1     9.73440000E-01   # V_cs
+         1     2.25200000E-01   # V_cd
+         1     3.51000000E-03   # V_ub
+         1     2.25340000E-01   # V_us
+         1     9.74270000E-01   # V_ud
+#
+#            PDG    Width QCD Only
+DECAY QCD    25     4.20543528E-03   # h decays with QCD corrections only
+#          BR         NDA         ID1       ID2
+     5.87475888E-01    2           5        -5   # BR(h -> b       bb     )
+     6.31792635E-02    2         -15        15   # BR(h -> tau+    tau-   )
+     2.23676118E-04    2         -13        13   # BR(h -> mu+     mu-    )
+     2.21864020E-04    2           3        -3   # BR(h -> s       sb     )
+     2.87618830E-02    2           4        -4   # BR(h -> c       cb     )
+     7.68281463E-02    2          21        21   # BR(h -> g       g      )
+     6.72112491E-03    2          22        22   # BR(h -> gam     gam    )
+     2.48835372E-03    2          22        23   # BR(h -> Z       gam    )
+     2.08074817E-01    2          24       -24   # BR(h -> W+      W-     )
+     2.60249832E-02    2          23        23   # BR(h -> Z       Z      )
+#
+#               PDG    Width QCD and EW
+DECAY QCD&EW    25     2.39830960E-03   # h decays with QCD and EW corrections
+                       7                # Renormalization Scheme Number
+#          BR         NDA         ID1       ID2
+     4.00340760E-01    2           5        -5   # BR(h -> b       bb     )
+     2.57322149E-02    2         -15        15   # BR(h -> tau+    tau-   )
+     8.29031983E-05    2         -13        13   # BR(h -> mu+     mu-    )
+     9.80132323E-05    2           3        -3   # BR(h -> s       sb     )
+     1.23852143E-02    2           4        -4   # BR(h -> c       cb     )
+     1.34718135E-01    2          21        21   # BR(h -> g       g      )
+     1.17854908E-02    2          22        22   # BR(h -> gam     gam    )
+     4.36332761E-03    2          22        23   # BR(h -> Z       gam    )
+     3.64859139E-01    2          24       -24   # BR(h -> W+      W-     )
+     4.56348014E-02    2          23        23   # BR(h -> Z       Z      )
+#
+#            PDG    Width QCD Only
+DECAY QCD    35     1.89952407E-02   # H decays with QCD corrections only
+#          BR         NDA         ID1       ID2
+     3.25141609E-01    2           5        -5   # BR(H -> b       bb     )
+     4.01989769E-02    2         -15        15   # BR(H -> tau+    tau-   )
+     1.42186623E-04    2         -13        13   # BR(H -> mu+     mu-    )
+     1.22659006E-04    2           3        -3   # BR(H -> s       sb     )
+     1.59108689E-02    2           4        -4   # BR(H -> c       cb     )
+     2.13388286E-12    2           6        -6   # BR(H -> t       tb     )
+     2.30310562E-01    2          21        21   # BR(H -> g       g      )
+     2.22381289E-04    2          22        22   # BR(H -> gam     gam    )
+     1.04325797E-05    2          22        23   # BR(H -> Z       gam    )
+     3.47561369E-10    2          24       -24   # BR(H -> W+      W-     )
+     1.49185053E-10    2          23        23   # BR(H -> Z       Z      )
+     6.11368753E-08    2          25        25   # BR(H -> h       h      )
+     1.93970131E-01    2          24       -37   # BR(H -> W+      H-     )
+     1.93970131E-01    2         -24        37   # BR(H -> W-      H+     )
+#
+#               PDG    Width QCD and EW
+DECAY QCD&EW    35     1.43717125E-02   # H decays with QCD and EW corrections
+                       7                # Renormalization Scheme Number
+#          BR         NDA         ID1       ID2
+     1.19411860E-01    2           5        -5   # BR(H -> b       bb     )
+     1.37506089E-02    2         -15        15   # BR(H -> tau+    tau-   )
+     4.47211828E-05    2         -13        13   # BR(H -> mu+     mu-    )
+     4.60257873E-05    2           3        -3   # BR(H -> s       sb     )
+     5.79131674E-03    2           4        -4   # BR(H -> c       cb     )
+     2.82037499E-12    2           6        -6   # BR(H -> t       tb     )
+     3.04403847E-01    2          21        21   # BR(H -> g       g      )
+     2.93923645E-04    2          22        22   # BR(H -> gam     gam    )
+     1.37888483E-05    2          22        23   # BR(H -> Z       gam    )
+     6.15172146E-05    2          24       -24   # BR(H -> W+      W-     )
+     2.86611940E-05    2          23        23   # BR(H -> Z       Z      )
+     4.34090828E-02    2          25        25   # BR(H -> h       h      )
+     2.56372323E-01    2          24       -37   # BR(H -> W+      H-       )
+     2.56372323E-01    2         -24        37   # BR(H -> W-      H+       )
+#
+#            PDG    Width QCD Only
+DECAY QCD    36     2.08222781E+01   # A decays with QCD corrections only
+#          BR         NDA         ID1       ID2
+     3.86297337E-04    2           5        -5   # BR(A -> b       bb     )
+     5.21569733E-05    2         -15        15   # BR(A -> tau+    tau-   )
+     1.84439349E-07    2         -13        13   # BR(A -> mu+     mu-    )
+     1.38627372E-07    2           3        -3   # BR(A -> s       sb     )
+     1.95323705E-05    2           4        -4   # BR(A -> c       cb     )
+     7.46942088E-01    2           6        -6   # BR(A -> t       tb     )
+     4.98333219E-03    2          21        21   # BR(A -> g       g      )
+     1.74986529E-05    2          22        22   # BR(A -> gam     gam    )
+     3.50718809E-06    2          22        23   # BR(A -> Z       gam    )
+     8.37202982E-13    2          23        25   # BR(A -> Z       h      )
+     8.37202982E-13    2          23        35   # BR(A -> Z       H      )
+     1.15516241E-01    2          24       -37   # BR(A -> W+      H-     )
+     1.15516241E-01    2         -24        37   # BR(A -> W-      H+     )
+#
+#               PDG    Width QCD and EW
+DECAY QCD&EW    36     1.35441998E+01   # A decays with QCD and EW correction s
+                       7                # Renormalization Scheme Number
+#          BR         NDA         ID1       ID2
+     4.43778046E-04    2           5        -5   # BR(A -> b       bb     )
+     5.56315747E-05    2         -15        15   # BR(A -> tau+    tau-   )
+     1.90809803E-07    2         -13        13   # BR(A -> mu+     mu-    )
+     1.53564786E-07    2           3        -3   # BR(A -> s       sb     )
+     2.13684237E-05    2           4        -4   # BR(A -> c       cb     )
+     6.71891579E-01    2           6        -6   # BR(A -> t       tb     )
+     7.66116349E-03    2          21        21   # BR(A -> g       g      )
+     2.69016866E-05    2          22        22   # BR(A -> gam     gam    )
+     5.39180219E-06    2          22        23   # BR(A -> Z       gam    )
+    -1.52800514E-07    2          23        25   # BR(A -> Z       h      )
+     2.16137965E-02    2          23        35   # BR(A -> Z       H      )
+     1.49140099E-01    2          24       -37   # BR(A -> W+      H-     )
+     1.49140099E-01    2         -24        37   # BR(A -> W-      H+     )
+#
+#            PDG    Width QCD Only
+DECAY QCD    37     3.87174916E-01   # H+ decays with QCD corrections only
+#          BR         NDA         ID1       ID2
+     2.09979988E-05    2           4        -5   # BR(H+ -> c       bb     )
+     1.41835956E-03    2         -15        16   # BR(H+ -> tau+    nu_tau )
+     5.01633396E-06    2         -13        14   # BR(H+ -> mu+     nu_mu  )
+     1.45193334E-07    2           2        -5   # BR(H+ -> u       bb     )
+     2.21175374E-07    2           2        -3   # BR(H+ -> u       sb     )
+     2.90412489E-05    2           4        -1   # BR(H+ -> c       db     )
+     5.46753792E-04    2           4        -3   # BR(H+ -> c       sb     )
+     9.96170222E-01    2           6        -5   # BR(H+ -> t       bb     )
+     1.72954649E-03    2           6        -3   # BR(H+ -> t       sb     )
+     7.96960985E-05    2           6        -1   # BR(H+ -> t       db     )
+     5.10504204E-15    2          24        25   # BR(H+ -> W+      h      )
+#
+#               PDG    Width QCD and EW
+DECAY QCD&EW    37    -5.45668665E-02   # H+ decays with QCD and EW correctios
+                       7                # Renormalization Scheme Number
+#          BR         NDA         ID1       ID2
+    -6.91747863E-06    2           4        -5   # BR(H+ -> c       bb     )
+    -3.80554945E-04    2         -15        16   # BR(H+ -> tau+    nu_tau )
+    -6.03381410E-07    2         -13        14   # BR(H+ -> mu+     nu_mu  )
+    -5.59072968E-09    2           2        -5   # BR(H+ -> u       bb     )
+    -9.46927209E-08    2           2        -3   # BR(H+ -> u       sb     )
+    -1.09064878E-05    2           4        -1   # BR(H+ -> c       db     )
+    -2.08864660E-04    2           4        -3   # BR(H+ -> c       sb     )
+     9.98804569E-01    2           6        -5   # BR(H+ -> t       bb     )
+     1.72797620E-03    2           6        -3   # BR(H+ -> t       sb     )
+     7.54020573E-05    2           6        -1   # BR(H+ -> t       db     )
+    -3.62224249E-14    2          24        25   # BR(H+ -> W+      h      )
+#
+#         PDG            Width
+DECAY         6     1.33593508E+00   # top decays
+#          BR         NDA         ID1       ID2
+     1.00000000E+00    2           5        24   # BR(t -> b       W+    )

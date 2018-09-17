@@ -576,7 +576,6 @@ C end MMM changed 10/7/18
       READ(NI,100)AM12SQ
 C MMM changed 10/7/18
       READ(NI,333)VALINSCALE
-      print*,'valinscale',valinscale
 C end MMM changed 10/7/18           
       READ(NI,*)
       READ(NI,100)ALPH2HDM
@@ -1815,7 +1814,6 @@ c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
       call alsini_hdec(acc)
 
 c MMM changed 11/7/2018
-      print*,'amc,amb',amc,amb
       if(iminimal.eq.1) then
          write(nferm,77)'MC = ',amc
          write(nferm,77)'MB = ',amb
@@ -2534,7 +2532,7 @@ C **************************************************************
 c MMM changed 23/8/2013
       PARAMETER (NAC=31,NLC=32)
 c end MMM changed 23/8/2013
-      parameter (nout=44)
+      parameter (nout=44,nou1=57)
       DIMENSION GMN(4),XMN(4),GMC(2),GMST(2),GMSB(2),GMSL(2),
      .          GMSU(2),GMSD(2),GMSE(2),GMSN(2),GMSN1(2)
       DIMENSION HLBRSC(2,2),HLBRSN(4,4),HHBRSC(2,2),HHBRSN(4,4),
@@ -2728,6 +2726,10 @@ c end MMM changed 10/7/18
       if(islhao.eq.1) then
          open(nout,file='slha.out')
 
+         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+            open(nou1,file='ewpartialwidth.out')
+         endif
+
          id =1
          idb=-1
          iu =2
@@ -2792,6 +2794,8 @@ c end MMM changed 10/7/18
          istau1=1000015
          istau2=2000015
 
+c ================ SLHA output file for the QCD corrected and ================ c
+c ========== the QCD+EW corrected branching ratios and total widths ========== c
 c ----------------------------------- c
 c Information about the decay program c
 c ----------------------------------- c
@@ -3717,162 +3721,6 @@ c MMM changed 10/7/18
       endif         
 
       endif
-
-      write(nout,105)
-      write(nout,888)
-      write(nout,112) 25,'h non-zero LO decay widths of on-shell and non
-     .-loop induced decays'
-
-      write(nout,113)
-      if(hlbblo.ne.0.D0) then
-      write(nout,102) hlbblo,2,ib,ibb       ,'GAM(h -> b       bb    )'
-      endif
-      if(hllllo.ne.0.D0) then
-      write(nout,102) hllllo,2,-itau,itau   ,'GAM(h -> tau+    tau-  )'
-      endif
-      if(hlmmlo.ne.0.D0) then
-      write(nout,102) hlmmlo,2,-imu,imu     ,'GAM(h -> mu+     mu-   )'
-      endif
-      if(hlsslo.ne.0.D0) then
-      write(nout,102) hlsslo,2,is,isb       ,'GAM(h -> s       sb    )'
-      endif
-      if(hlcclo.ne.0.D0) then
-      write(nout,102) hlcclo,2,ic,icb       ,'GAM(h -> c       cb    )'
-      endif
-      if(hlttlo.ne.0.D0) then
-      write(nout,102) hlttlo,2,it,itb       ,'GAM(h -> t       tb    )' 
-      endif
-      if(hlwwlo.ne.0.D0) then
-      write(nout,102) hlwwlo,2,iwc,-iwc     ,'GAM(h -> W+      W-    )' 
-      endif
-      if(hlzzlo.ne.0.D0) then
-      write(nout,102) hlzzlo,2,iz,iz        ,'GAM(h -> Z       Z     )' 
-      endif
-      if(hlaalo.ne.0.D0) then
-      write(nout,102) hlaalo,2,iha,iha      ,'GAM(h -> A       A     )' 
-      endif
-      if(hlzalo.ne.0.D0) then
-      write(nout,102) hlzalo,2,iz,iha       ,'GAM(h -> Z       A     )' 
-      endif
-      if(hlhpwmlo.ne.0.D0) then
-      write(nout,102) hlhpwmlo/2.D0,2,iwc,-ihc,'GAM(h -> W+      H-    )
-     .'     
-      endif
-      if(hlhpwmlo.ne.0.D0) then
-      write(nout,102) hlhpwmlo/2.D0,2,-iwc,ihc,'GAM(h -> W-      H+    )
-     .' 
-      endif
-      if(hlhphmlo.ne.0.D0) then
-      write(nout,102) hlhphmlo,2,ihc,-ihc    ,'GAM(h -> H+      H-    )'
-      endif
-
-      if(irenscheme.eq.0) then
-      do i=1,14,1
-      write(nout,105)
-      write(nout,888)
-      write(nout,114) 25,'h non-zero NLO EW decay widths of on-shell and
-     . non-loop induced decays'
-      write(nout,5256) i,'Renormalization Scheme Number'      
-
-      write(nout,113)
-      if(hlbbnlo(i).ne.0.D0) then
-      write(nout,102) hlbbnlo(i),2,ib,ibb    ,'GAM(h -> b       bb    )'
-      endif
-      if(hlllnlo(i).ne.0.D0) then
-      write(nout,102) hlllnlo(i),2,-itau,itau,'GAM(h -> tau+    tau-  )'
-      endif
-      if(hlmmnlo(i).ne.0.D0) then
-      write(nout,102) hlmmnlo(i),2,-imu,imu  ,'GAM(h -> mu+     mu-   )'
-      endif
-      if(hlssnlo(i).ne.0.D0) then
-      write(nout,102) hlssnlo(i),2,is,isb    ,'GAM(h -> s       sb    )'
-      endif
-      if(hlccnlo(i).ne.0.D0) then
-      write(nout,102) hlccnlo(i),2,ic,icb    ,'GAM(h -> c       cb    )'
-      endif
-      if(hlttnlo(i).ne.0.D0) then
-      write(nout,102) hlttnlo(i),2,it,itb    ,'GAM(h -> t       tb    )' 
-      endif
-      if(hlwwnlo(i).ne.0.D0) then
-      write(nout,102) hlwwnlo(i),2,iwc,-iwc  ,'GAM(h -> W+      W-    )' 
-      endif
-      if(hlzznlo(i).ne.0.D0) then
-      write(nout,102) hlzznlo(i),2,iz,iz     ,'GAM(h -> Z       Z     )' 
-      endif
-      if(hlaanlo(i).ne.0.D0) then
-      write(nout,102) hlaanlo(i),2,iha,iha   ,'GAM(h -> A       A     )' 
-      endif
-      if(hlzanlo(i).ne.0.D0) then
-      write(nout,102) hlzanlo(i),2,iz,iha    ,'GAM(h -> Z       A     )' 
-      endif
-      if(hlhpwmnlo(i).ne.0.D0) then
-      write(nout,102) hlhpwmnlo(i)/2.D0,2,iwc,-ihc,'GAM(h -> W+      H-
-     .   )'
-      endif
-      if(hlhpwmnlo(i).ne.0.D0) then
-      write(nout,102) hlhpwmnlo(i)/2.D0,2,-iwc,ihc,'GAM(h -> W-      H+ 
-     .   )' 
-      endif
-      if(hlhphmnlo(i).ne.0.D0) then
-      write(nout,102) hlhphmnlo(i),2,ihc,-ihc  ,'GAM(h -> H+      H-   
-     .)'
-      endif
-         
-      end do
-
-      elseif(irenscheme.ne.0) then
-
-      write(nout,105)
-      write(nout,888)
-      write(nout,114) 25,'h non-zero NLO EW decay widths of on-shell and
-     . non-loop induced decays'
-      write(nout,5256) irenscheme,'Renormalization Scheme Number'      
-
-      write(nout,113)
-      if(hlbbnlo(1).ne.0.D0) then
-      write(nout,102) hlbbnlo(1),2,ib,ibb    ,'GAM(h -> b       bb    )'
-      endif
-      if(hlllnlo(1).ne.0.D0) then
-      write(nout,102) hlllnlo(1),2,-itau,itau,'GAM(h -> tau+    tau-  )'
-      endif
-      if(hlmmnlo(1).ne.0.D0) then
-      write(nout,102) hlmmnlo(1),2,-imu,imu  ,'GAM(h -> mu+     mu-   )'
-      endif
-      if(hlssnlo(1).ne.0.D0) then
-      write(nout,102) hlssnlo(1),2,is,isb    ,'GAM(h -> s       sb    )'
-      endif
-      if(hlccnlo(1).ne.0.D0) then
-      write(nout,102) hlccnlo(1),2,ic,icb    ,'GAM(h -> c       cb    )'
-      endif
-      if(hlttnlo(1).ne.0.D0) then
-      write(nout,102) hlttnlo(1),2,it,itb    ,'GAM(h -> t       tb    )' 
-      endif
-      if(hlwwnlo(1).ne.0.D0) then
-      write(nout,102) hlwwnlo(1),2,iwc,-iwc  ,'GAM(h -> W+      W-    )' 
-      endif
-      if(hlzznlo(1).ne.0.D0) then
-      write(nout,102) hlzznlo(1),2,iz,iz     ,'GAM(h -> Z       Z     )' 
-      endif
-      if(hlaanlo(1).ne.0.D0) then
-      write(nout,102) hlaanlo(1),2,iha,iha   ,'GAM(h -> A       A     )' 
-      endif
-      if(hlzanlo(1).ne.0.D0) then
-      write(nout,102) hlzanlo(1),2,iz,iha    ,'GAM(h -> Z       A     )' 
-      endif
-      if(hlhpwmnlo(1).ne.0.D0) then
-      write(nout,102) hlhpwmnlo(1)/2.D0,2,iwc,-ihc,'GAM(h -> W+      H-
-     .   )'
-      endif
-      if(hlhpwmnlo(1).ne.0.D0) then
-      write(nout,102) hlhpwmnlo(1)/2.D0,2,-iwc,ihc,'GAM(h -> W-      H+ 
-     .   )' 
-      endif
-      if(hlhphmnlo(1).ne.0.D0) then
-      write(nout,102) hlhphmnlo(1),2,ihc,-ihc  ,'GAM(h -> H+      H-   
-     .)'
-      endif         
-      
-      endif
       
 c------------------- c      
       endif
@@ -4315,171 +4163,6 @@ c MMM changed 10/7/18
 
       endif
 
-      write(nout,105)
-      write(nout,888)
-      write(nout,112) 35,'H non-zero LO decay widths of on-shell and non
-     .-loop induced decays'
-
-      write(nout,113)
-      if(hhbblo.ne.0.D0) then
-      write(nout,102) hhbblo,2,ib,ibb       ,'GAM(H -> b       bb    )'
-      endif
-      if(hhlllo.ne.0.D0) then
-      write(nout,102) hhlllo,2,-itau,itau   ,'GAM(H -> tau+    tau-  )'
-      endif
-      if(hhmmlo.ne.0.D0) then
-      write(nout,102) hhmmlo,2,-imu,imu     ,'GAM(H -> mu+     mu-   )'
-      endif
-      if(hhsslo.ne.0.D0) then
-      write(nout,102) hhsslo,2,is,isb       ,'GAM(H -> s       sb    )'
-      endif
-      if(hhcclo.ne.0.D0) then
-      write(nout,102) hhcclo,2,ic,icb       ,'GAM(H -> c       cb    )'
-      endif
-      if(hhttlo.ne.0.D0) then
-      write(nout,102) hhttlo,2,it,itb       ,'GAM(H -> t       tb    )' 
-      endif
-      if(hhwwlo.ne.0.D0) then
-      write(nout,102) hhwwlo,2,iwc,-iwc     ,'GAM(H -> W+      W-    )' 
-      endif
-      if(hhzzlo.ne.0.D0) then
-      write(nout,102) hhzzlo,2,iz,iz        ,'GAM(H -> Z       Z     )' 
-      endif
-      if(hhhlhllo.ne.0.D0) then
-      write(nout,102) hhhlhllo,2,ihl,ihl    ,'GAM(H -> h       h     )' 
-      endif      
-      if(hhaalo.ne.0.D0) then
-      write(nout,102) hhaalo,2,iha,iha      ,'GAM(H -> A       A     )' 
-      endif
-      if(hhzalo.ne.0.D0) then
-      write(nout,102) hhzalo,2,iz,iha       ,'GAM(H -> Z       A     )' 
-      endif
-      if(hhhpwmlo.ne.0.D0) then
-      write(nout,102) hhhpwmlo/2.D0,2,iwc,-ihc,'GAM(H -> W+      H-    )
-     .'     
-      endif
-      if(hhhpwmlo.ne.0.D0) then
-      write(nout,102) hhhpwmlo/2.D0,2,-iwc,ihc,'GAM(H -> W-      H+    )
-     .' 
-      endif
-      if(hhhphmlo.ne.0.D0) then
-      write(nout,102) hhhphmlo,2,ihc,-ihc    ,'GAM(H -> H+      H-    )'
-      endif
-
-      if(irenscheme.eq.0) then
-      do i=1,14,1
-      write(nout,105)
-      write(nout,888)
-      write(nout,114) 35,'H non-zero NLO EW decay widths of on-shell and
-     . non-loop induced decays'
-      write(nout,5256) i,'Renormalization Scheme Number'      
-
-      write(nout,113)
-      if(hhbbnlo(i).ne.0.D0) then
-      write(nout,102) hhbbnlo(i),2,ib,ibb    ,'GAM(H -> b       bb    )'
-      endif
-      if(hhllnlo(i).ne.0.D0) then
-      write(nout,102) hhllnlo(i),2,-itau,itau,'GAM(H -> tau+    tau-  )'
-      endif
-      if(hhmmnlo(i).ne.0.D0) then
-      write(nout,102) hhmmnlo(i),2,-imu,imu  ,'GAM(H -> mu+     mu-   )'
-      endif
-      if(hhssnlo(i).ne.0.D0) then
-      write(nout,102) hhssnlo(i),2,is,isb    ,'GAM(H -> s       sb    )'
-      endif
-      if(hhccnlo(i).ne.0.D0) then
-      write(nout,102) hhccnlo(i),2,ic,icb    ,'GAM(H -> c       cb    )'
-      endif
-      if(hhttnlo(i).ne.0.D0) then
-      write(nout,102) hhttnlo(i),2,it,itb    ,'GAM(H -> t       tb    )' 
-      endif
-      if(hhwwnlo(i).ne.0.D0) then
-      write(nout,102) hhwwnlo(i),2,iwc,-iwc  ,'GAM(H -> W+      W-    )' 
-      endif
-      if(hhzznlo(i).ne.0.D0) then
-      write(nout,102) hhzznlo(i),2,iz,iz     ,'GAM(H -> Z       Z     )' 
-      endif
-      if(hhhlhlnlo(i).ne.0.D0) then
-      write(nout,102) hhhlhlnlo(i),2,ihl,ihl ,'GAM(H -> h       h     )' 
-      endif      
-      if(hhaanlo(i).ne.0.D0) then
-      write(nout,102) hhaanlo(i),2,iha,iha   ,'GAM(H -> A       A     )' 
-      endif
-      if(hhzanlo(i).ne.0.D0) then
-      write(nout,102) hhzanlo(i),2,iz,iha    ,'GAM(H -> Z       A     )' 
-      endif
-      if(hhhpwmnlo(i).ne.0.D0) then
-      write(nout,102) hhhpwmnlo(i)/2.D0,2,iwc,-ihc,'GAM(H -> W+      H-
-     .   )'
-      endif
-      if(hhhpwmnlo(i).ne.0.D0) then
-      write(nout,102) hhhpwmnlo(i)/2.D0,2,-iwc,ihc,'GAM(H -> W-      H+ 
-     .   )' 
-      endif
-      if(hhhphmnlo(i).ne.0.D0) then
-      write(nout,102) hhhphmnlo(i),2,ihc,-ihc  ,'GAM(H -> H+      H-   
-     .)'
-      endif
-         
-      end do
-
-      elseif(irenscheme.ne.0) then
-
-      write(nout,105)
-      write(nout,888)
-      write(nout,114) 35,'H non-zero NLO EW decay widths of on-shell and
-     . non-loop induced decays'
-      write(nout,5256) irenscheme,'Renormalization Scheme Number'      
-
-      write(nout,113)
-      if(hhbbnlo(1).ne.0.D0) then
-      write(nout,102) hhbbnlo(1),2,ib,ibb    ,'GAM(H -> b       bb    )'
-      endif
-      if(hhllnlo(1).ne.0.D0) then
-      write(nout,102) hhllnlo(1),2,-itau,itau,'GAM(H -> tau+    tau-  )'
-      endif
-      if(hhmmnlo(1).ne.0.D0) then
-      write(nout,102) hhmmnlo(1),2,-imu,imu  ,'GAM(H -> mu+     mu-   )'
-      endif
-      if(hhssnlo(1).ne.0.D0) then
-      write(nout,102) hhssnlo(1),2,is,isb    ,'GAM(H -> s       sb    )'
-      endif
-      if(hhccnlo(1).ne.0.D0) then
-      write(nout,102) hhccnlo(1),2,ic,icb    ,'GAM(H -> c       cb    )'
-      endif
-      if(hhttnlo(1).ne.0.D0) then
-      write(nout,102) hhttnlo(1),2,it,itb    ,'GAM(H -> t       tb    )' 
-      endif
-      if(hhwwnlo(1).ne.0.D0) then
-      write(nout,102) hhwwnlo(1),2,iwc,-iwc  ,'GAM(H -> W+      W-    )' 
-      endif
-      if(hhzznlo(1).ne.0.D0) then
-      write(nout,102) hhzznlo(1),2,iz,iz     ,'GAM(H -> Z       Z     )' 
-      endif
-      if(hhhlhlnlo(1).ne.0.D0) then
-      write(nout,102) hhhlhlnlo(1),2,ihl,ihl ,'GAM(H -> h       h     )' 
-      endif      
-      if(hhaanlo(1).ne.0.D0) then
-      write(nout,102) hhaanlo(1),2,iha,iha   ,'GAM(H -> A       A     )' 
-      endif
-      if(hhzanlo(1).ne.0.D0) then
-      write(nout,102) hhzanlo(1),2,iz,iha    ,'GAM(H -> Z       A     )' 
-      endif
-      if(hhhpwmnlo(1).ne.0.D0) then
-      write(nout,102) hhhpwmnlo(1)/2.D0,2,iwc,-ihc,'GAM(H -> W+      H-
-     .   )'
-      endif
-      if(hhhpwmnlo(1).ne.0.D0) then
-      write(nout,102) hhhpwmnlo(1)/2.D0,2,-iwc,ihc,'GAM(H -> W-      H+ 
-     .   )' 
-      endif
-      if(hhhphmnlo(1).ne.0.D0) then
-      write(nout,102) hhhphmnlo(1),2,ihc,-ihc  ,'GAM(H -> H+      H-   
-     .)'
-      endif         
-      
-      endif
-      
 c------------------- c      
       endif
 c end MMM changed 10/7/18      
@@ -4788,133 +4471,6 @@ c MMM changed 10/7/18
 
       endif         
 
-      endif
-
-      write(nout,105)
-      write(nout,888)
-      write(nout,112) 36,'A non-zero LO decay widths of on-shell and non
-     .-loop induced decays'
-      
-      write(nout,113)
-      if(abblo.ne.0.D0) then
-      write(nout,102) abblo,2,ib,ibb        ,'GAM(A -> b       bb    )'
-      endif
-      if(alllo.ne.0.D0) then
-      write(nout,102) alllo,2,-itau,itau    ,'GAM(A -> tau+    tau-  )'
-      endif
-      if(ammlo.ne.0.D0) then
-      write(nout,102) ammlo,2,-imu,imu      ,'GAM(A -> mu+     mu-   )'
-      endif
-      if(asslo.ne.0.D0) then
-      write(nout,102) asslo,2,is,isb        ,'GAM(A -> s       sb    )'
-      endif
-      if(acclo.ne.0.D0) then
-      write(nout,102) acclo,2,ic,icb        ,'GAM(A -> c       cb    )'
-      endif
-      if(attlo.ne.0.D0) then
-      write(nout,102) attlo,2,it,itb        ,'GAM(A -> t       tb    )' 
-      endif
-      if(ahlzlo.ne.0.D0) then
-      write(nout,102) ahlzlo,2,iz,ihl       ,'GAM(A -> Z       h     )' 
-      endif
-      if(ahhzlo.ne.0.D0) then
-      write(nout,102) ahhzlo,2,iz,ihh       ,'GAM(A -> Z       H     )' 
-      endif
-      if(ahpwmlo.ne.0.D0) then
-      write(nout,102) ahpwmlo/2.D0,2,iwc,-ihc,'GAM(A -> W+      H-    )
-     .'     
-      endif
-      if(ahpwmlo.ne.0.D0) then
-      write(nout,102) ahpwmlo/2.D0,2,-iwc,ihc,'GAM(A -> W-      H+    )
-     .' 
-      endif
-
-      if(irenscheme.eq.0) then
-      do i=1,14,1
-      write(nout,105)
-      write(nout,888)
-      write(nout,114) 36,'A non-zero NLO EW decay widths of on-shell and
-     . non-loop induced decays'
-      write(nout,5256) i,'Renormalization Scheme Number'      
-
-      write(nout,113)
-      if(abbnlo(i).ne.0.D0) then
-      write(nout,102) abbnlo(i),2,ib,ibb     ,'GAM(A -> b       bb    )'
-      endif
-      if(allnlo(i).ne.0.D0) then
-      write(nout,102) allnlo(i),2,-itau,itau ,'GAM(A -> tau+    tau-  )'
-      endif
-      if(ammnlo(i).ne.0.D0) then
-      write(nout,102) ammnlo(i),2,-imu,imu   ,'GAM(A -> mu+     mu-   )'
-      endif
-      if(assnlo(i).ne.0.D0) then
-      write(nout,102) assnlo(i),2,is,isb     ,'GAM(A -> s       sb    )'
-      endif
-      if(accnlo(i).ne.0.D0) then
-      write(nout,102) accnlo(i),2,ic,icb     ,'GAM(A -> c       cb    )'
-      endif
-      if(attnlo(i).ne.0.D0) then
-      write(nout,102) attnlo(i),2,it,itb     ,'GAM(A -> t       tb    )' 
-      endif
-      if(ahlznlo(i).ne.0.D0) then
-      write(nout,102) ahlznlo(i),2,iz,ihl    ,'GAM(A -> Z       h     )' 
-      endif
-      if(ahhznlo(i).ne.0.D0) then
-      write(nout,102) ahhznlo(i),2,iz,ihh    ,'GAM(A -> Z       H     )' 
-      endif
-      if(ahpwmnlo(i).ne.0.D0) then
-      write(nout,102) ahpwmnlo(i)/2.D0,2,iwc,-ihc,'GAM(A -> W+      H-
-     .  )'
-      endif
-      if(ahpwmnlo(i).ne.0.D0) then
-      write(nout,102) ahpwmnlo(i)/2.D0,2,-iwc,ihc,'GAM(A -> W-      H+ 
-     .  )' 
-      endif
-         
-      end do
-
-      elseif(irenscheme.ne.0) then
-
-      write(nout,105)
-      write(nout,888)
-      write(nout,114) 36,'A non-zero NLO EW decay widths of on-shell and
-     . non-loop induced decays'
-      write(nout,5256) irenscheme,'Renormalization Scheme Number'      
-
-      write(nout,113)
-      if(abbnlo(1).ne.0.D0) then
-      write(nout,102) abbnlo(1),2,ib,ibb     ,'GAM(A -> b       bb    )'
-      endif
-      if(allnlo(1).ne.0.D0) then
-      write(nout,102) allnlo(1),2,-itau,itau ,'GAM(A -> tau+    tau-  )'
-      endif
-      if(ammnlo(1).ne.0.D0) then
-      write(nout,102) ammnlo(1),2,-imu,imu   ,'GAM(A -> mu+     mu-   )'
-      endif
-      if(assnlo(1).ne.0.D0) then
-      write(nout,102) assnlo(1),2,is,isb     ,'GAM(A -> s       sb    )'
-      endif
-      if(accnlo(1).ne.0.D0) then
-      write(nout,102) accnlo(1),2,ic,icb     ,'GAM(A -> c       cb    )'
-      endif
-      if(attnlo(1).ne.0.D0) then
-      write(nout,102) attnlo(1),2,it,itb     ,'GAM(A -> t       tb    )' 
-      endif
-      if(ahlznlo(1).ne.0.D0) then
-      write(nout,102) ahlznlo(1),2,iz,ihl    ,'GAM(A -> Z       h     )' 
-      endif
-      if(ahhznlo(1).ne.0.D0) then
-      write(nout,102) ahhznlo(1),2,iz,ihh    ,'GAM(A -> Z       H     )' 
-      endif
-      if(ahpwmnlo(1).ne.0.D0) then
-      write(nout,102) ahpwmnlo(1)/2.D0,2,iwc,-ihc,'GAM(A -> W+      H-
-     .  )'
-      endif
-      if(ahpwmnlo(1).ne.0.D0) then
-      write(nout,102) ahpwmnlo(1)/2.D0,2,-iwc,ihc,'GAM(A -> W-      H+ 
-     .  )' 
-      endif
-      
       endif
       
 c------------------- c      
@@ -5225,159 +4781,6 @@ c MMM changed 10/7/18
       endif         
 
       endif
-
-      write(nout,105)
-      write(nout,888)
-      write(nout,112) 37,'H+ non-zero LO decay widths of on-shell and non
-     .-loop induced decays'
-
-      write(nout,113)
-      if(HPBCLO.ne.0.D0) then
-      write(nout,102) hpbclo,2,ic,ibb      ,'GAM(H+ -> c       bb     )'
-      endif
-      if(HPTAUNULO.ne.0.D0) then
-      write(nout,102) hptaunulo,2,-itau,intau,'GAM(H+ -> tau+    nu_tau 
-     .)'
-      endif
-      if(HPMUNULO.ne.0.D0) then
-      write(nout,102) hpmunulo,2,-imu,inmu ,'GAM(H+ -> mu+     nu_mu  )'
-      endif
-      if(HPBULO.ne.0.D0) then
-      write(nout,102) HPBULO,2,iu,ibb      ,'GAM(H+ -> u       bb     )'
-      endif
-      if(HPSULO.ne.0.D0) then
-      write(nout,102) HPSULO,2,iu,isb      ,'GAM(H+ -> u       sb     )'
-      endif
-      if(HPDCLO.ne.0.D0) then
-      write(nout,102) HPDCLO,2,ic,idb      ,'GAM(H+ -> c       db     )'
-      endif
-      if(HPSCLO.ne.0.D0) then
-      write(nout,102) HPSCLO,2,ic,isb      ,'GAM(H+ -> c       sb     )'
-      endif
-      if(HPTBLO.ne.0.D0) then
-      write(nout,102) HPTBLO,2,it,ibb      ,'GAM(H+ -> t       bb     )'
-      endif
-      if(HPTSLO.ne.0.D0) then
-      write(nout,102) HPTSLO,2,it,isb      ,'GAM(H+ -> t       sb     )'
-      endif
-      if(HPTDLO.ne.0.D0) then
-      write(nout,102) HPTDLO,2,it,idb      ,'GAM(H+ -> t       db     )'
-      endif
-      if(HPWHLLO.ne.0.D0) then
-      write(nout,102) HPWHLLO,2,iwc,ihl    ,'GAM(H+ -> W+      h      )'
-      endif
-      if(HPWHHLO.ne.0.D0) then
-      write(nout,102) HPWHHLO,2,iwc,ihh    ,'GAM(H+ -> W+      H      )'
-      endif
-      if(HPWALO.ne.0.D0) then
-      write(nout,102) HPWALO,2,iwc,iha     ,'GAM(H+ -> W+      A      )'
-      endif
-      
-      if(irenscheme.eq.0) then
-      do i=1,14,1
-      write(nout,105)
-      write(nout,888)
-      write(nout,114) 37,'H+ non-zero NLO EW decay widths of on-shell and
-     . non-loop induced decays'
-      write(nout,5256) i,'Renormalization Scheme Number'      
-
-      write(nout,113)
-      if(HPBCNLO(i).ne.0.D0) then
-      write(nout,102) hpbcnlo(i),2,ic,ibb  ,'GAM(H+ -> c       bb     )'
-      endif
-      if(HPTAUNUNLO(i).ne.0.D0) then
-      write(nout,102) hptaununlo(i),2,-itau,intau,'GAM(H+ -> tau+    nu_
-     .tau )'
-      endif
-      if(HPMUNUNLO(i).ne.0.D0) then
-      write(nout,102) hpmununlo(i),2,-imu,inmu ,'GAM(H+ -> mu+     nu_mu
-     .  )'
-      endif
-      if(HPBUNLO(i).ne.0.D0) then
-      write(nout,102) HPBUNLO(i),2,iu,ibb  ,'GAM(H+ -> u       bb     )'
-      endif
-      if(HPSUNLO(i).ne.0.D0) then
-      write(nout,102) HPSUNLO(i),2,iu,isb  ,'GAM(H+ -> u       sb     )'
-      endif
-      if(HPDCNLO(i).ne.0.D0) then
-      write(nout,102) HPDCNLO(i),2,ic,idb  ,'GAM(H+ -> c       db     )'
-      endif
-      if(HPSCNLO(i).ne.0.D0) then
-      write(nout,102) HPSCNLO(i),2,ic,isb  ,'GAM(H+ -> c       sb     )'
-      endif
-      if(HPTBNLO(i).ne.0.D0) then
-      write(nout,102) HPTBNLO(i),2,it,ibb  ,'GAM(H+ -> t       bb     )'
-      endif
-      if(HPTSNLO(i).ne.0.D0) then
-      write(nout,102) HPTSNLO(i),2,it,isb  ,'GAM(H+ -> t       sb     )'
-      endif
-      if(HPTDNLO(i).ne.0.D0) then
-      write(nout,102) HPTDNLO(i),2,it,idb  ,'GAM(H+ -> t       db     )'
-      endif
-      if(HPWHLNLO(i).ne.0.D0) then
-      write(nout,102) HPWHLNLO(i),2,iwc,ihl,'GAM(H+ -> W+      h      )'
-      endif
-      if(HPWHHNLO(i).ne.0.D0) then
-      write(nout,102) HPWHHNLO(i),2,iwc,ihh,'GAM(H+ -> W+      H      )'
-      endif
-      if(HPWANLO(i).ne.0.D0) then
-      write(nout,102) HPWANLO(i),2,iwc,iha ,'GAM(H+ -> W+      A      )'
-      endif
-      
-      end do
-
-      elseif(irenscheme.ne.0) then
-
-      write(nout,105)
-      write(nout,888)
-      write(nout,114) 37,'H+ non-zero NLO EW decay widths of on-shell and
-     . non-loop induced decays'
-      write(nout,5256) irenscheme,'Renormalization Scheme Number'      
-
-      write(nout,113)
-      if(HPBCNLO(1).ne.0.D0) then
-      write(nout,102) hpbcnlo(1),2,ic,ibb  ,'GAM(H+ -> c       bb     )'
-      endif
-      if(HPTAUNUNLO(1).ne.0.D0) then
-      write(nout,102) hptaununlo(1),2,-itau,intau,'GAM(H+ -> tau+    nu_
-     .tau )'
-      endif
-      if(HPMUNUNLO(1).ne.0.D0) then
-      write(nout,102) hpmununlo(1),2,-imu,inmu ,'GAM(H+ -> mu+     nu_mu
-     .  )'
-      endif
-      if(HPBUNLO(1).ne.0.D0) then
-      write(nout,102) HPBUNLO(1),2,iu,ibb  ,'GAM(H+ -> u       bb     )'
-      endif
-      if(HPSUNLO(1).ne.0.D0) then
-      write(nout,102) HPSUNLO(1),2,iu,isb  ,'GAM(H+ -> u       sb     )'
-      endif
-      if(HPDCNLO(1).ne.0.D0) then
-      write(nout,102) HPDCNLO(1),2,ic,idb  ,'GAM(H+ -> c       db     )'
-      endif
-      if(HPSCNLO(1).ne.0.D0) then
-      write(nout,102) HPSCNLO(1),2,ic,isb  ,'GAM(H+ -> c       sb     )'
-      endif
-      if(HPTBNLO(1).ne.0.D0) then
-      write(nout,102) HPTBNLO(1),2,it,ibb  ,'GAM(H+ -> t       bb     )'
-      endif
-      if(HPTSNLO(1).ne.0.D0) then
-      write(nout,102) HPTSNLO(1),2,it,isb  ,'GAM(H+ -> t       sb     )'
-      endif
-      if(HPTDNLO(1).ne.0.D0) then
-      write(nout,102) HPTDNLO(1),2,it,idb  ,'GAM(H+ -> t       db     )'
-      endif
-      if(HPWHLNLO(1).ne.0.D0) then
-      write(nout,102) HPWHLNLO(1),2,iwc,ihl,'GAM(H+ -> W+      h      )'
-      endif
-      if(HPWHHNLO(1).ne.0.D0) then
-      write(nout,102) HPWHHNLO(1),2,iwc,ihh,'GAM(H+ -> W+      H      )'
-      endif
-      if(HPWANLO(1).ne.0.D0) then
-      write(nout,102) HPWANLO(1),2,iwc,iha ,'GAM(H+ -> W+      A      )'
-      endif
-      
-      endif
       
 c------------------- c      
       endif
@@ -5409,6 +4812,716 @@ c ============================================================================ c
 
       endif
       endif
+
+c MMM changed 10/7/18          
+c ============== SLHA output file for the purely EW corrected ================ c
+c ====================== LO and NLO partial decay withds ===================== c
+c ----------------------------------- c
+c Information about the decay program c
+c ----------------------------------- c
+
+      if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+      write(nou1,105)
+      write(nou1,51) 'DCINFO','Decay Program information'
+      write(nou1,61) 1,'2HDECAY     # decay calculator'
+      write(nou1,61) 2,'1.0.0       # version number'
+      
+c ----------------------- c
+c The SM input parameters c
+c ----------------------- c
+
+      write(nou1,105)
+      write(nou1,51) 'SMINPUTS','Standard Model inputs'
+      write(nou1,52) 2,gfcalc,'G_F [GeV^-2]'
+      write(nou1,52) 3,alsmz,'alpha_S(M_Z)^MSbar'
+      write(nou1,52) 4,amz,'M_Z pole mass'
+      write(nou1,52) 5,rmb,'mb(mb)^MSbar'
+      write(nou1,52) 6,amt,'mt pole mass'
+      write(nou1,52) 7,amtau,'mtau pole mass'
+      write(nou1,52) 8,amb,'mb pole mass'
+      write(nou1,52) 9,amc,'mc pole mass'
+      write(nou1,52) 10,ammuon,'muon mass'
+      write(nou1,52) 11,amw,'M_W mass'
+      write(nou1,52) 12,gamw,'W boson total width'
+      write(nou1,52) 13,gamz,'Z boson total width'
+
+c ------------------------- c
+c The 2HDM input parameters c
+c ------------------------- c
+
+      write(nou1,105)
+      write(nou1,51) '2HDMINPUTS','2HDM inputs'
+      write(nou1,525) 1,iparam2hdm,'2HDM parametrization'
+      write(nou1,525) 2,itype2hdm,'2HDM type'            
+      write(nou1,52) 3,tgbet2hdm,'tan(beta)'
+      write(nou1,52) 4,AM12SQ,'M_12^2'
+      if(iparam2hdm.eq.1) then
+         write(nou1,52) 5,ALPH2HDM,'alpha'
+         write(nou1,52) 6,AMHL2HDM,'M_h'                     
+         write(nou1,52) 7,AMHH2HDM,'M_H'
+         write(nou1,52) 8,AMHA2HDM,'M_A'
+         write(nou1,52) 9,AMHC2HDM,'M_CH'
+      elseif(iparam2hdm.eq.2) then
+         write(nou1,52) 5,LAMBDA1,'A1LAM2HDM'
+         write(nou1,52) 6,LAMBDA2,'A2LAM2HDM'
+         write(nou1,52) 7,LAMBDA3,'A3LAM2HDM'
+         write(nou1,52) 8,LAMBDA4,'A4LAM2HDM'
+         write(nou1,52) 9,LAMBDA5,'A5LAM2HDM'
+      endif
+      write(nou1,525) 10,IRENSCHEME,'renormalization scheme EW corrs'
+      write(nou1,5333) 11,VALINSCALE,'input scale'
+                  
+c --------------------- c
+c The CKM mixing matrix c
+c --------------------- c
+
+      write(nou1,105)
+      write(nou1,51) 'VCKMIN','CKM mixing'
+      write(nou1,52) 1,vtb,'V_tb'
+      write(nou1,52) 1,vts,'V_ts'
+      write(nou1,52) 1,vtd,'V_td'
+      write(nou1,52) 1,vcb,'V_cb'
+      write(nou1,52) 1,vcs,'V_cs'
+      write(nou1,52) 1,vcd,'V_cd'
+      write(nou1,52) 1,vub,'V_ub'
+      write(nou1,52) 1,vus,'V_us'
+      write(nou1,52) 1,vud,'V_ud'
+
+      if(ihiggs.eq.1.or.ihiggs.eq.5) then
+
+c ============================================================================ c
+
+      write(nou1,105)
+      write(nou1,888)
+      write(nou1,112) 25,'h non-zero LO decay widths of on-shell and non
+     .-loop induced decays'
+
+      write(nou1,113)
+      if(hlbblo.ne.0.D0) then
+      write(nou1,102) hlbblo,2,ib,ibb       ,'GAM(h -> b       bb    )'
+      endif
+      if(hllllo.ne.0.D0) then
+      write(nou1,102) hllllo,2,-itau,itau   ,'GAM(h -> tau+    tau-  )'
+      endif
+      if(hlmmlo.ne.0.D0) then
+      write(nou1,102) hlmmlo,2,-imu,imu     ,'GAM(h -> mu+     mu-   )'
+      endif
+      if(hlsslo.ne.0.D0) then
+      write(nou1,102) hlsslo,2,is,isb       ,'GAM(h -> s       sb    )'
+      endif
+      if(hlcclo.ne.0.D0) then
+      write(nou1,102) hlcclo,2,ic,icb       ,'GAM(h -> c       cb    )'
+      endif
+      if(hlttlo.ne.0.D0) then
+      write(nou1,102) hlttlo,2,it,itb       ,'GAM(h -> t       tb    )' 
+      endif
+      if(hlwwlo.ne.0.D0) then
+      write(nou1,102) hlwwlo,2,iwc,-iwc     ,'GAM(h -> W+      W-    )' 
+      endif
+      if(hlzzlo.ne.0.D0) then
+      write(nou1,102) hlzzlo,2,iz,iz        ,'GAM(h -> Z       Z     )' 
+      endif
+      if(hlaalo.ne.0.D0) then
+      write(nou1,102) hlaalo,2,iha,iha      ,'GAM(h -> A       A     )' 
+      endif
+      if(hlzalo.ne.0.D0) then
+      write(nou1,102) hlzalo,2,iz,iha       ,'GAM(h -> Z       A     )' 
+      endif
+      if(hlhpwmlo.ne.0.D0) then
+      write(nou1,102) hlhpwmlo/2.D0,2,iwc,-ihc,'GAM(h -> W+      H-    )
+     .'     
+      endif
+      if(hlhpwmlo.ne.0.D0) then
+      write(nou1,102) hlhpwmlo/2.D0,2,-iwc,ihc,'GAM(h -> W-      H+    )
+     .' 
+      endif
+      if(hlhphmlo.ne.0.D0) then
+      write(nou1,102) hlhphmlo,2,ihc,-ihc    ,'GAM(h -> H+      H-    )'
+      endif
+
+      if(irenscheme.eq.0) then
+      do i=1,14,1
+      write(nou1,105)
+      write(nou1,888)
+      write(nou1,114) 25,'h non-zero NLO EW decay widths of on-shell and
+     . non-loop induced decays'
+      write(nou1,5256) i,'Renormalization Scheme Number'      
+
+      write(nou1,113)
+      if(hlbbnlo(i).ne.0.D0) then
+      write(nou1,102) hlbbnlo(i),2,ib,ibb    ,'GAM(h -> b       bb    )'
+      endif
+      if(hlllnlo(i).ne.0.D0) then
+      write(nou1,102) hlllnlo(i),2,-itau,itau,'GAM(h -> tau+    tau-  )'
+      endif
+      if(hlmmnlo(i).ne.0.D0) then
+      write(nou1,102) hlmmnlo(i),2,-imu,imu  ,'GAM(h -> mu+     mu-   )'
+      endif
+      if(hlssnlo(i).ne.0.D0) then
+      write(nou1,102) hlssnlo(i),2,is,isb    ,'GAM(h -> s       sb    )'
+      endif
+      if(hlccnlo(i).ne.0.D0) then
+      write(nou1,102) hlccnlo(i),2,ic,icb    ,'GAM(h -> c       cb    )'
+      endif
+      if(hlttnlo(i).ne.0.D0) then
+      write(nou1,102) hlttnlo(i),2,it,itb    ,'GAM(h -> t       tb    )' 
+      endif
+      if(hlwwnlo(i).ne.0.D0) then
+      write(nou1,102) hlwwnlo(i),2,iwc,-iwc  ,'GAM(h -> W+      W-    )' 
+      endif
+      if(hlzznlo(i).ne.0.D0) then
+      write(nou1,102) hlzznlo(i),2,iz,iz     ,'GAM(h -> Z       Z     )' 
+      endif
+      if(hlaanlo(i).ne.0.D0) then
+      write(nou1,102) hlaanlo(i),2,iha,iha   ,'GAM(h -> A       A     )' 
+      endif
+      if(hlzanlo(i).ne.0.D0) then
+      write(nou1,102) hlzanlo(i),2,iz,iha    ,'GAM(h -> Z       A     )' 
+      endif
+      if(hlhpwmnlo(i).ne.0.D0) then
+      write(nou1,102) hlhpwmnlo(i)/2.D0,2,iwc,-ihc,'GAM(h -> W+      H-
+     .   )'
+      endif
+      if(hlhpwmnlo(i).ne.0.D0) then
+      write(nou1,102) hlhpwmnlo(i)/2.D0,2,-iwc,ihc,'GAM(h -> W-      H+ 
+     .   )' 
+      endif
+      if(hlhphmnlo(i).ne.0.D0) then
+      write(nou1,102) hlhphmnlo(i),2,ihc,-ihc  ,'GAM(h -> H+      H-   
+     .)'
+      endif
+         
+      end do
+
+      elseif(irenscheme.ne.0) then
+
+      write(nou1,105)
+      write(nou1,888)
+      write(nou1,114) 25,'h non-zero NLO EW decay widths of on-shell and
+     . non-loop induced decays'
+      write(nou1,5256) irenscheme,'Renormalization Scheme Number'      
+
+      write(nou1,113)
+      if(hlbbnlo(1).ne.0.D0) then
+      write(nou1,102) hlbbnlo(1),2,ib,ibb    ,'GAM(h -> b       bb    )'
+      endif
+      if(hlllnlo(1).ne.0.D0) then
+      write(nou1,102) hlllnlo(1),2,-itau,itau,'GAM(h -> tau+    tau-  )'
+      endif
+      if(hlmmnlo(1).ne.0.D0) then
+      write(nou1,102) hlmmnlo(1),2,-imu,imu  ,'GAM(h -> mu+     mu-   )'
+      endif
+      if(hlssnlo(1).ne.0.D0) then
+      write(nou1,102) hlssnlo(1),2,is,isb    ,'GAM(h -> s       sb    )'
+      endif
+      if(hlccnlo(1).ne.0.D0) then
+      write(nou1,102) hlccnlo(1),2,ic,icb    ,'GAM(h -> c       cb    )'
+      endif
+      if(hlttnlo(1).ne.0.D0) then
+      write(nou1,102) hlttnlo(1),2,it,itb    ,'GAM(h -> t       tb    )' 
+      endif
+      if(hlwwnlo(1).ne.0.D0) then
+      write(nou1,102) hlwwnlo(1),2,iwc,-iwc  ,'GAM(h -> W+      W-    )' 
+      endif
+      if(hlzznlo(1).ne.0.D0) then
+      write(nou1,102) hlzznlo(1),2,iz,iz     ,'GAM(h -> Z       Z     )' 
+      endif
+      if(hlaanlo(1).ne.0.D0) then
+      write(nou1,102) hlaanlo(1),2,iha,iha   ,'GAM(h -> A       A     )' 
+      endif
+      if(hlzanlo(1).ne.0.D0) then
+      write(nou1,102) hlzanlo(1),2,iz,iha    ,'GAM(h -> Z       A     )' 
+      endif
+      if(hlhpwmnlo(1).ne.0.D0) then
+      write(nou1,102) hlhpwmnlo(1)/2.D0,2,iwc,-ihc,'GAM(h -> W+      H-
+     .   )'
+      endif
+      if(hlhpwmnlo(1).ne.0.D0) then
+      write(nou1,102) hlhpwmnlo(1)/2.D0,2,-iwc,ihc,'GAM(h -> W-      H+ 
+     .   )' 
+      endif
+      if(hlhphmnlo(1).ne.0.D0) then
+      write(nou1,102) hlhphmnlo(1),2,ihc,-ihc  ,'GAM(h -> H+      H-   
+     .)'
+      endif         
+      
+c------------------- c      
+      endif
+
+c ============================================================================ c
+      
+      endif
+
+      if(ihiggs.eq.2.or.ihiggs.eq.5) then
+
+      write(nou1,105)
+      write(nou1,888)
+      write(nou1,112) 35,'H non-zero LO decay widths of on-shell and non
+     .-loop induced decays'
+
+      write(nou1,113)
+      if(hhbblo.ne.0.D0) then
+      write(nou1,102) hhbblo,2,ib,ibb       ,'GAM(H -> b       bb    )'
+      endif
+      if(hhlllo.ne.0.D0) then
+      write(nou1,102) hhlllo,2,-itau,itau   ,'GAM(H -> tau+    tau-  )'
+      endif
+      if(hhmmlo.ne.0.D0) then
+      write(nou1,102) hhmmlo,2,-imu,imu     ,'GAM(H -> mu+     mu-   )'
+      endif
+      if(hhsslo.ne.0.D0) then
+      write(nou1,102) hhsslo,2,is,isb       ,'GAM(H -> s       sb    )'
+      endif
+      if(hhcclo.ne.0.D0) then
+      write(nou1,102) hhcclo,2,ic,icb       ,'GAM(H -> c       cb    )'
+      endif
+      if(hhttlo.ne.0.D0) then
+      write(nou1,102) hhttlo,2,it,itb       ,'GAM(H -> t       tb    )' 
+      endif
+      if(hhwwlo.ne.0.D0) then
+      write(nou1,102) hhwwlo,2,iwc,-iwc     ,'GAM(H -> W+      W-    )' 
+      endif
+      if(hhzzlo.ne.0.D0) then
+      write(nou1,102) hhzzlo,2,iz,iz        ,'GAM(H -> Z       Z     )' 
+      endif
+      if(hhhlhllo.ne.0.D0) then
+      write(nou1,102) hhhlhllo,2,ihl,ihl    ,'GAM(H -> h       h     )' 
+      endif      
+      if(hhaalo.ne.0.D0) then
+      write(nou1,102) hhaalo,2,iha,iha      ,'GAM(H -> A       A     )' 
+      endif
+      if(hhzalo.ne.0.D0) then
+      write(nou1,102) hhzalo,2,iz,iha       ,'GAM(H -> Z       A     )' 
+      endif
+      if(hhhpwmlo.ne.0.D0) then
+      write(nou1,102) hhhpwmlo/2.D0,2,iwc,-ihc,'GAM(H -> W+      H-    )
+     .'     
+      endif
+      if(hhhpwmlo.ne.0.D0) then
+      write(nou1,102) hhhpwmlo/2.D0,2,-iwc,ihc,'GAM(H -> W-      H+    )
+     .' 
+      endif
+      if(hhhphmlo.ne.0.D0) then
+      write(nou1,102) hhhphmlo,2,ihc,-ihc    ,'GAM(H -> H+      H-    )'
+      endif
+
+      if(irenscheme.eq.0) then
+      do i=1,14,1
+      write(nou1,105)
+      write(nou1,888)
+      write(nou1,114) 35,'H non-zero NLO EW decay widths of on-shell and
+     . non-loop induced decays'
+      write(nou1,5256) i,'Renormalization Scheme Number'      
+
+      write(nou1,113)
+      if(hhbbnlo(i).ne.0.D0) then
+      write(nou1,102) hhbbnlo(i),2,ib,ibb    ,'GAM(H -> b       bb    )'
+      endif
+      if(hhllnlo(i).ne.0.D0) then
+      write(nou1,102) hhllnlo(i),2,-itau,itau,'GAM(H -> tau+    tau-  )'
+      endif
+      if(hhmmnlo(i).ne.0.D0) then
+      write(nou1,102) hhmmnlo(i),2,-imu,imu  ,'GAM(H -> mu+     mu-   )'
+      endif
+      if(hhssnlo(i).ne.0.D0) then
+      write(nou1,102) hhssnlo(i),2,is,isb    ,'GAM(H -> s       sb    )'
+      endif
+      if(hhccnlo(i).ne.0.D0) then
+      write(nou1,102) hhccnlo(i),2,ic,icb    ,'GAM(H -> c       cb    )'
+      endif
+      if(hhttnlo(i).ne.0.D0) then
+      write(nou1,102) hhttnlo(i),2,it,itb    ,'GAM(H -> t       tb    )' 
+      endif
+      if(hhwwnlo(i).ne.0.D0) then
+      write(nou1,102) hhwwnlo(i),2,iwc,-iwc  ,'GAM(H -> W+      W-    )' 
+      endif
+      if(hhzznlo(i).ne.0.D0) then
+      write(nou1,102) hhzznlo(i),2,iz,iz     ,'GAM(H -> Z       Z     )' 
+      endif
+      if(hhhlhlnlo(i).ne.0.D0) then
+      write(nou1,102) hhhlhlnlo(i),2,ihl,ihl ,'GAM(H -> h       h     )' 
+      endif      
+      if(hhaanlo(i).ne.0.D0) then
+      write(nou1,102) hhaanlo(i),2,iha,iha   ,'GAM(H -> A       A     )' 
+      endif
+      if(hhzanlo(i).ne.0.D0) then
+      write(nou1,102) hhzanlo(i),2,iz,iha    ,'GAM(H -> Z       A     )' 
+      endif
+      if(hhhpwmnlo(i).ne.0.D0) then
+      write(nou1,102) hhhpwmnlo(i)/2.D0,2,iwc,-ihc,'GAM(H -> W+      H-
+     .   )'
+      endif
+      if(hhhpwmnlo(i).ne.0.D0) then
+      write(nou1,102) hhhpwmnlo(i)/2.D0,2,-iwc,ihc,'GAM(H -> W-      H+ 
+     .   )' 
+      endif
+      if(hhhphmnlo(i).ne.0.D0) then
+      write(nou1,102) hhhphmnlo(i),2,ihc,-ihc  ,'GAM(H -> H+      H-   
+     .)'
+      endif
+         
+      end do
+
+      elseif(irenscheme.ne.0) then
+
+      write(nou1,105)
+      write(nou1,888)
+      write(nou1,114) 35,'H non-zero NLO EW decay widths of on-shell and
+     . non-loop induced decays'
+      write(nou1,5256) irenscheme,'Renormalization Scheme Number'      
+
+      write(nou1,113)
+      if(hhbbnlo(1).ne.0.D0) then
+      write(nou1,102) hhbbnlo(1),2,ib,ibb    ,'GAM(H -> b       bb    )'
+      endif
+      if(hhllnlo(1).ne.0.D0) then
+      write(nou1,102) hhllnlo(1),2,-itau,itau,'GAM(H -> tau+    tau-  )'
+      endif
+      if(hhmmnlo(1).ne.0.D0) then
+      write(nou1,102) hhmmnlo(1),2,-imu,imu  ,'GAM(H -> mu+     mu-   )'
+      endif
+      if(hhssnlo(1).ne.0.D0) then
+      write(nou1,102) hhssnlo(1),2,is,isb    ,'GAM(H -> s       sb    )'
+      endif
+      if(hhccnlo(1).ne.0.D0) then
+      write(nou1,102) hhccnlo(1),2,ic,icb    ,'GAM(H -> c       cb    )'
+      endif
+      if(hhttnlo(1).ne.0.D0) then
+      write(nou1,102) hhttnlo(1),2,it,itb    ,'GAM(H -> t       tb    )' 
+      endif
+      if(hhwwnlo(1).ne.0.D0) then
+      write(nou1,102) hhwwnlo(1),2,iwc,-iwc  ,'GAM(H -> W+      W-    )' 
+      endif
+      if(hhzznlo(1).ne.0.D0) then
+      write(nou1,102) hhzznlo(1),2,iz,iz     ,'GAM(H -> Z       Z     )' 
+      endif
+      if(hhhlhlnlo(1).ne.0.D0) then
+      write(nou1,102) hhhlhlnlo(1),2,ihl,ihl ,'GAM(H -> h       h     )' 
+      endif      
+      if(hhaanlo(1).ne.0.D0) then
+      write(nou1,102) hhaanlo(1),2,iha,iha   ,'GAM(H -> A       A     )' 
+      endif
+      if(hhzanlo(1).ne.0.D0) then
+      write(nou1,102) hhzanlo(1),2,iz,iha    ,'GAM(H -> Z       A     )' 
+      endif
+      if(hhhpwmnlo(1).ne.0.D0) then
+      write(nou1,102) hhhpwmnlo(1)/2.D0,2,iwc,-ihc,'GAM(H -> W+      H-
+     .   )'
+      endif
+      if(hhhpwmnlo(1).ne.0.D0) then
+      write(nou1,102) hhhpwmnlo(1)/2.D0,2,-iwc,ihc,'GAM(H -> W-      H+ 
+     .   )' 
+      endif
+      if(hhhphmnlo(1).ne.0.D0) then
+      write(nou1,102) hhhphmnlo(1),2,ihc,-ihc  ,'GAM(H -> H+      H-   
+     .)'
+      endif         
+      
+c------------------- c      
+      endif
+
+c ============================================================================ c      
+      endif
+
+      if(ihiggs.eq.3.or.ihiggs.eq.5) then
+
+      write(nou1,105)
+      write(nou1,888)
+      write(nou1,112) 36,'A non-zero LO decay widths of on-shell and non
+     .-loop induced decays'
+      
+      write(nou1,113)
+      if(abblo.ne.0.D0) then
+      write(nou1,102) abblo,2,ib,ibb        ,'GAM(A -> b       bb    )'
+      endif
+      if(alllo.ne.0.D0) then
+      write(nou1,102) alllo,2,-itau,itau    ,'GAM(A -> tau+    tau-  )'
+      endif
+      if(ammlo.ne.0.D0) then
+      write(nou1,102) ammlo,2,-imu,imu      ,'GAM(A -> mu+     mu-   )'
+      endif
+      if(asslo.ne.0.D0) then
+      write(nou1,102) asslo,2,is,isb        ,'GAM(A -> s       sb    )'
+      endif
+      if(acclo.ne.0.D0) then
+      write(nou1,102) acclo,2,ic,icb        ,'GAM(A -> c       cb    )'
+      endif
+      if(attlo.ne.0.D0) then
+      write(nou1,102) attlo,2,it,itb        ,'GAM(A -> t       tb    )' 
+      endif
+      if(ahlzlo.ne.0.D0) then
+      write(nou1,102) ahlzlo,2,iz,ihl       ,'GAM(A -> Z       h     )' 
+      endif
+      if(ahhzlo.ne.0.D0) then
+      write(nou1,102) ahhzlo,2,iz,ihh       ,'GAM(A -> Z       H     )' 
+      endif
+      if(ahpwmlo.ne.0.D0) then
+      write(nou1,102) ahpwmlo/2.D0,2,iwc,-ihc,'GAM(A -> W+      H-    )
+     .'     
+      endif
+      if(ahpwmlo.ne.0.D0) then
+      write(nou1,102) ahpwmlo/2.D0,2,-iwc,ihc,'GAM(A -> W-      H+    )
+     .' 
+      endif
+
+      if(irenscheme.eq.0) then
+      do i=1,14,1
+      write(nou1,105)
+      write(nou1,888)
+      write(nou1,114) 36,'A non-zero NLO EW decay widths of on-shell and
+     . non-loop induced decays'
+      write(nou1,5256) i,'Renormalization Scheme Number'      
+
+      write(nou1,113)
+      if(abbnlo(i).ne.0.D0) then
+      write(nou1,102) abbnlo(i),2,ib,ibb     ,'GAM(A -> b       bb    )'
+      endif
+      if(allnlo(i).ne.0.D0) then
+      write(nou1,102) allnlo(i),2,-itau,itau ,'GAM(A -> tau+    tau-  )'
+      endif
+      if(ammnlo(i).ne.0.D0) then
+      write(nou1,102) ammnlo(i),2,-imu,imu   ,'GAM(A -> mu+     mu-   )'
+      endif
+      if(assnlo(i).ne.0.D0) then
+      write(nou1,102) assnlo(i),2,is,isb     ,'GAM(A -> s       sb    )'
+      endif
+      if(accnlo(i).ne.0.D0) then
+      write(nou1,102) accnlo(i),2,ic,icb     ,'GAM(A -> c       cb    )'
+      endif
+      if(attnlo(i).ne.0.D0) then
+      write(nou1,102) attnlo(i),2,it,itb     ,'GAM(A -> t       tb    )' 
+      endif
+      if(ahlznlo(i).ne.0.D0) then
+      write(nou1,102) ahlznlo(i),2,iz,ihl    ,'GAM(A -> Z       h     )' 
+      endif
+      if(ahhznlo(i).ne.0.D0) then
+      write(nou1,102) ahhznlo(i),2,iz,ihh    ,'GAM(A -> Z       H     )' 
+      endif
+      if(ahpwmnlo(i).ne.0.D0) then
+      write(nou1,102) ahpwmnlo(i)/2.D0,2,iwc,-ihc,'GAM(A -> W+      H-
+     .  )'
+      endif
+      if(ahpwmnlo(i).ne.0.D0) then
+      write(nou1,102) ahpwmnlo(i)/2.D0,2,-iwc,ihc,'GAM(A -> W-      H+ 
+     .  )' 
+      endif
+         
+      end do
+
+      elseif(irenscheme.ne.0) then
+
+      write(nou1,105)
+      write(nou1,888)
+      write(nou1,114) 36,'A non-zero NLO EW decay widths of on-shell and
+     . non-loop induced decays'
+      write(nou1,5256) irenscheme,'Renormalization Scheme Number'      
+
+      write(nou1,113)
+      if(abbnlo(1).ne.0.D0) then
+      write(nou1,102) abbnlo(1),2,ib,ibb     ,'GAM(A -> b       bb    )'
+      endif
+      if(allnlo(1).ne.0.D0) then
+      write(nou1,102) allnlo(1),2,-itau,itau ,'GAM(A -> tau+    tau-  )'
+      endif
+      if(ammnlo(1).ne.0.D0) then
+      write(nou1,102) ammnlo(1),2,-imu,imu   ,'GAM(A -> mu+     mu-   )'
+      endif
+      if(assnlo(1).ne.0.D0) then
+      write(nou1,102) assnlo(1),2,is,isb     ,'GAM(A -> s       sb    )'
+      endif
+      if(accnlo(1).ne.0.D0) then
+      write(nou1,102) accnlo(1),2,ic,icb     ,'GAM(A -> c       cb    )'
+      endif
+      if(attnlo(1).ne.0.D0) then
+      write(nou1,102) attnlo(1),2,it,itb     ,'GAM(A -> t       tb    )' 
+      endif
+      if(ahlznlo(1).ne.0.D0) then
+      write(nou1,102) ahlznlo(1),2,iz,ihl    ,'GAM(A -> Z       h     )' 
+      endif
+      if(ahhznlo(1).ne.0.D0) then
+      write(nou1,102) ahhznlo(1),2,iz,ihh    ,'GAM(A -> Z       H     )' 
+      endif
+      if(ahpwmnlo(1).ne.0.D0) then
+      write(nou1,102) ahpwmnlo(1)/2.D0,2,iwc,-ihc,'GAM(A -> W+      H-
+     .  )'
+      endif
+      if(ahpwmnlo(1).ne.0.D0) then
+      write(nou1,102) ahpwmnlo(1)/2.D0,2,-iwc,ihc,'GAM(A -> W-      H+ 
+     .  )' 
+      endif
+      
+c------------------- c      
+      endif
+
+c ============================================================================ c      
+      endif
+
+      if(ihiggs.eq.4.or.ihiggs.eq.5) then
+
+      write(nou1,105)
+      write(nou1,888)
+      write(nou1,112) 37,'H+ non-zero LO decay widths of on-shell and non
+     .-loop induced decays'
+
+      write(nou1,113)
+      if(HPBCLO.ne.0.D0) then
+      write(nou1,102) hpbclo,2,ic,ibb      ,'GAM(H+ -> c       bb     )'
+      endif
+      if(HPTAUNULO.ne.0.D0) then
+      write(nou1,102) hptaunulo,2,-itau,intau,'GAM(H+ -> tau+    nu_tau 
+     .)'
+      endif
+      if(HPMUNULO.ne.0.D0) then
+      write(nou1,102) hpmunulo,2,-imu,inmu ,'GAM(H+ -> mu+     nu_mu  )'
+      endif
+      if(HPBULO.ne.0.D0) then
+      write(nou1,102) HPBULO,2,iu,ibb      ,'GAM(H+ -> u       bb     )'
+      endif
+      if(HPSULO.ne.0.D0) then
+      write(nou1,102) HPSULO,2,iu,isb      ,'GAM(H+ -> u       sb     )'
+      endif
+      if(HPDCLO.ne.0.D0) then
+      write(nou1,102) HPDCLO,2,ic,idb      ,'GAM(H+ -> c       db     )'
+      endif
+      if(HPSCLO.ne.0.D0) then
+      write(nou1,102) HPSCLO,2,ic,isb      ,'GAM(H+ -> c       sb     )'
+      endif
+      if(HPTBLO.ne.0.D0) then
+      write(nou1,102) HPTBLO,2,it,ibb      ,'GAM(H+ -> t       bb     )'
+      endif
+      if(HPTSLO.ne.0.D0) then
+      write(nou1,102) HPTSLO,2,it,isb      ,'GAM(H+ -> t       sb     )'
+      endif
+      if(HPTDLO.ne.0.D0) then
+      write(nou1,102) HPTDLO,2,it,idb      ,'GAM(H+ -> t       db     )'
+      endif
+      if(HPWHLLO.ne.0.D0) then
+      write(nou1,102) HPWHLLO,2,iwc,ihl    ,'GAM(H+ -> W+      h      )'
+      endif
+      if(HPWHHLO.ne.0.D0) then
+      write(nou1,102) HPWHHLO,2,iwc,ihh    ,'GAM(H+ -> W+      H      )'
+      endif
+      if(HPWALO.ne.0.D0) then
+      write(nou1,102) HPWALO,2,iwc,iha     ,'GAM(H+ -> W+      A      )'
+      endif
+      
+      if(irenscheme.eq.0) then
+      do i=1,14,1
+      write(nou1,105)
+      write(nou1,888)
+      write(nou1,114) 37,'H+ non-zero NLO EW decay widths of on-shell and
+     . non-loop induced decays'
+      write(nou1,5256) i,'Renormalization Scheme Number'      
+
+      write(nou1,113)
+      if(HPBCNLO(i).ne.0.D0) then
+      write(nou1,102) hpbcnlo(i),2,ic,ibb  ,'GAM(H+ -> c       bb     )'
+      endif
+      if(HPTAUNUNLO(i).ne.0.D0) then
+      write(nou1,102) hptaununlo(i),2,-itau,intau,'GAM(H+ -> tau+    nu_
+     .tau )'
+      endif
+      if(HPMUNUNLO(i).ne.0.D0) then
+      write(nou1,102) hpmununlo(i),2,-imu,inmu ,'GAM(H+ -> mu+     nu_mu
+     .  )'
+      endif
+      if(HPBUNLO(i).ne.0.D0) then
+      write(nou1,102) HPBUNLO(i),2,iu,ibb  ,'GAM(H+ -> u       bb     )'
+      endif
+      if(HPSUNLO(i).ne.0.D0) then
+      write(nou1,102) HPSUNLO(i),2,iu,isb  ,'GAM(H+ -> u       sb     )'
+      endif
+      if(HPDCNLO(i).ne.0.D0) then
+      write(nou1,102) HPDCNLO(i),2,ic,idb  ,'GAM(H+ -> c       db     )'
+      endif
+      if(HPSCNLO(i).ne.0.D0) then
+      write(nou1,102) HPSCNLO(i),2,ic,isb  ,'GAM(H+ -> c       sb     )'
+      endif
+      if(HPTBNLO(i).ne.0.D0) then
+      write(nou1,102) HPTBNLO(i),2,it,ibb  ,'GAM(H+ -> t       bb     )'
+      endif
+      if(HPTSNLO(i).ne.0.D0) then
+      write(nou1,102) HPTSNLO(i),2,it,isb  ,'GAM(H+ -> t       sb     )'
+      endif
+      if(HPTDNLO(i).ne.0.D0) then
+      write(nou1,102) HPTDNLO(i),2,it,idb  ,'GAM(H+ -> t       db     )'
+      endif
+      if(HPWHLNLO(i).ne.0.D0) then
+      write(nou1,102) HPWHLNLO(i),2,iwc,ihl,'GAM(H+ -> W+      h      )'
+      endif
+      if(HPWHHNLO(i).ne.0.D0) then
+      write(nou1,102) HPWHHNLO(i),2,iwc,ihh,'GAM(H+ -> W+      H      )'
+      endif
+      if(HPWANLO(i).ne.0.D0) then
+      write(nou1,102) HPWANLO(i),2,iwc,iha ,'GAM(H+ -> W+      A      )'
+      endif
+      
+      end do
+
+      elseif(irenscheme.ne.0) then
+
+      write(nou1,105)
+      write(nou1,888)
+      write(nou1,114) 37,'H+ non-zero NLO EW decay widths of on-shell and
+     . non-loop induced decays'
+      write(nou1,5256) irenscheme,'Renormalization Scheme Number'      
+
+      write(nou1,113)
+      if(HPBCNLO(1).ne.0.D0) then
+      write(nou1,102) hpbcnlo(1),2,ic,ibb  ,'GAM(H+ -> c       bb     )'
+      endif
+      if(HPTAUNUNLO(1).ne.0.D0) then
+      write(nou1,102) hptaununlo(1),2,-itau,intau,'GAM(H+ -> tau+    nu_
+     .tau )'
+      endif
+      if(HPMUNUNLO(1).ne.0.D0) then
+      write(nou1,102) hpmununlo(1),2,-imu,inmu ,'GAM(H+ -> mu+     nu_mu
+     .  )'
+      endif
+      if(HPBUNLO(1).ne.0.D0) then
+      write(nou1,102) HPBUNLO(1),2,iu,ibb  ,'GAM(H+ -> u       bb     )'
+      endif
+      if(HPSUNLO(1).ne.0.D0) then
+      write(nou1,102) HPSUNLO(1),2,iu,isb  ,'GAM(H+ -> u       sb     )'
+      endif
+      if(HPDCNLO(1).ne.0.D0) then
+      write(nou1,102) HPDCNLO(1),2,ic,idb  ,'GAM(H+ -> c       db     )'
+      endif
+      if(HPSCNLO(1).ne.0.D0) then
+      write(nou1,102) HPSCNLO(1),2,ic,isb  ,'GAM(H+ -> c       sb     )'
+      endif
+      if(HPTBNLO(1).ne.0.D0) then
+      write(nou1,102) HPTBNLO(1),2,it,ibb  ,'GAM(H+ -> t       bb     )'
+      endif
+      if(HPTSNLO(1).ne.0.D0) then
+      write(nou1,102) HPTSNLO(1),2,it,isb  ,'GAM(H+ -> t       sb     )'
+      endif
+      if(HPTDNLO(1).ne.0.D0) then
+      write(nou1,102) HPTDNLO(1),2,it,idb  ,'GAM(H+ -> t       db     )'
+      endif
+      if(HPWHLNLO(1).ne.0.D0) then
+      write(nou1,102) HPWHLNLO(1),2,iwc,ihl,'GAM(H+ -> W+      h      )'
+      endif
+      if(HPWHHNLO(1).ne.0.D0) then
+      write(nou1,102) HPWHHNLO(1),2,iwc,ihh,'GAM(H+ -> W+      H      )'
+      endif
+      if(HPWANLO(1).ne.0.D0) then
+      write(nou1,102) HPWANLO(1),2,iwc,iha ,'GAM(H+ -> W+      A      )'
+      endif
+      
+c------------------- c      
+      endif
+c end MMM changed 10/7/18      
+
+c ============================================================================ c
+      
+      endif
+
+      endif
+
+c end MMM changed 10/7/18      
+
+c ============================== end output files ============================ c
 
 c MMM changed 10/7/18
  525  format(1x,I9,3x,1P,I16,0P,3x,'#',1x,A)
@@ -5460,7 +5573,8 @@ c end MMM changed 10/7/18
      .2x,'#',1x,A)
  105  format('#') 
 
-       close(nout)
+      close(nout)
+      close(nou1)
 
       else
 
@@ -7970,10 +8084,12 @@ c MMM changed 10/7/18
             endif
             if(irenscheme.eq.0) then
                do i=1,14,1
-                  HLMMEW(i) = HLMMNLO(i)
+                  HLMMEW(i) = HLMMLORESC*(1.D0+
+     .                 (HLMMNLO(i)-HLMMLO)/HLMMLO)
                end do
             elseif(irenscheme.ne.0) then
-               HLMMEW(1) = HLMMNLO(1)
+               HLMMEW(1) = HLMMLORESC*(1.D0+
+     .              (HLMMNLO(1)-HLMMLO)/HLMMLO)
             endif
          endif
 c end MMM changed 10/7/18         
@@ -8015,10 +8131,12 @@ c MMM changed 10/7/18
             endif
             if(irenscheme.eq.0) then
                do i=1,14,1
-                  HLLLEW(i) = HLLLNLO(i)
+                  HLLLEW(i) = HLLLLORESC*(1.D0+
+     .                 (HLLLNLO(i)-HLLLLO)/HLLLLO)
                end do
             elseif(irenscheme.ne.0) then
-               HLLLEW(1) = HLLLNLO(1)
+               HLLLEW(1) = HLLLLORESC*(1.D0+
+     .                 (HLLLNLO(1)-HLLLLO)/HLLLLO)
             endif
          endif
 c end MMM changed 10/7/18
@@ -8071,11 +8189,13 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HLSSEW(i) = HLSSNLO(i)
-                  HLSSQCDEW(i) = HLSSQCD + (HLSSNLO(i)-HLSSLO)
+                  HLSSQCDEW(i) = HLSSQCD*(1.D0
+     .                 + (HLSSNLO(i)-HLSSLO)/HLSSLO)
                end do
             elseif(irenscheme.ne.0) then
                   HLSSEW(1) = HLSSNLO(1)
-                  HLSSQCDEW(1) = HLSSQCD + (HLSSNLO(1)-HLSSLO)
+                  HLSSQCDEW(1) = HLSSQCD*(1.D0+
+     .                 (HLSSNLO(1)-HLSSLO)/HLSSLO)
             endif
          endif
 c end MMM changed 10/7/18       
@@ -8122,13 +8242,15 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HLCCEW(i) = HLCCNLO(i)
-                  HLCCQCDEW(i) = HLCCQCD + (HLCCNLO(i)-HLCCLO)
+                  HLCCQCDEW(i) = HLCCQCD*(1.D0+
+     .                 (HLCCNLO(i)-HLCCLO)/HLCCLO)
 c                  print*,'values',hlccqcd,hlccnlo(i),hlcclo,
 c     .                 HLCCNLO(i)-HLCCLO
                end do
             elseif(irenscheme.ne.0) then
                   HLCCEW(1) = HLCCNLO(1)
-                  HLCCQCDEW(1) = HLCCQCD + (HLCCNLO(1)-HLCCLO)
+                  HLCCQCDEW(1) = HLCCQCD*(1.D0+
+     .                 (HLCCNLO(1)-HLCCLO)/HLCCLO)
             endif
          endif
 c end MMM changed 10/7/18          
@@ -8200,11 +8322,13 @@ c     .         hlbbqcd/(glb**2)/(GFCALC/GF)
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HLBBEW(i) = HLBBNLO(i)
-                  HLBBQCDEW(i) = HLBBQCD + (HLBBNLO(i)-HLBBLO)
+                  HLBBQCDEW(i) = HLBBQCD*(1.D0+
+     .                 (HLBBNLO(i)-HLBBLO)/HLBBLO)
                end do
             elseif(irenscheme.ne.0) then
                   HLBBEW(1) = HLBBNLO(1)
-                  HLBBQCDEW(1) = HLBBQCD + (HLBBNLO(1)-HLBBLO)
+                  HLBBQCDEW(1) = HLBBQCD*(1.D0+
+     .                 (HLBBNLO(1)-HLBBLO)/HLBBLO)
             endif
          endif
 c end MMM changed 10/7/18
@@ -8460,11 +8584,13 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HLTTEW(i) = HLTTNLO(i)
-                  HLTTQCDEW(i) = HLTTQCD + (HLTTNLO(i)-HLTTLO)
+                  HLTTQCDEW(i) = HLTTQCD*(1.D0+
+     .                 (HLTTNLO(i)-HLTTLO)/HLTTLO)
                end do
             elseif(irenscheme.ne.0) then
                   HLTTEW(1) = HLTTNLO(1)
-                  HLTTQCDEW(1) = HLTTQCD + (HLTTNLO(1)-HLTTLO)
+                  HLTTQCDEW(1) = HLTTQCD*(1.D0+
+     .                 (HLTTNLO(1)-HLTTLO)/HLTTLO)
             endif
          endif
 c end MMM changed 10/7/18
@@ -8506,11 +8632,13 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HLTTEW(i) = HLTTNLO(i)
-                  HLTTQCDEW(i) = HLTTQCD + (HLTTNLO(i)-HLTTLO)
+                  HLTTQCDEW(i) = HLTTQCD*(1.D0+
+     .                 (HLTTNLO(i)-HLTTLO)/HLTTLO)
                end do
             elseif(irenscheme.ne.0) then
                   HLTTEW(1) = HLTTNLO(1)
-                  HLTTQCDEW(1) = HLTTQCD + (HLTTNLO(1)-HLTTLO)
+                  HLTTQCDEW(1) = HLTTQCD*(1.D0+
+     .                 (HLTTNLO(1)-HLTTLO)/HLTTLO)
             endif
          endif
 c end MMM changed 10/7/18               
@@ -8775,10 +8903,12 @@ c MMM changed 10/7/18
             endif
             if(irenscheme.eq.0) then
                do i=1,14,1
-                  HLWWEW(i) = HLWWNLO(i)
+                  HLWWEW(i) = HLWWLORESC*(1.D0+
+     .                 (HLWWNLO(i)-HLWWLO)/HLWWLO)
                end do
             elseif(irenscheme.ne.0) then
-                  HLWWEW(1) = HLWWNLO(1)                  
+               HLWWEW(1) = HLWWLORESC*(1.D0+
+     .              (HLWWNLO(1)-HLWWLO)/HLWWLO)
             endif
          endif
       endif
@@ -8840,10 +8970,12 @@ c MMM changed 10/7/18
             endif
             if(irenscheme.eq.0) then
                do i=1,14,1
-                  HLWWEW(i) = HLWWNLO(i)
+                  HLWWEW(i) = HLWWLORESC*(1.D0+
+     .                 (HLWWNLO(i)-HLWWLO)/HLWWLO)
                end do
             elseif(irenscheme.ne.0) then
-               HLWWEW(1) = HLWWNLO(1)                  
+               HLWWEW(1) = HLWWLORESC*(1.D0+
+     .              (HLWWNLO(1)-HLWWLO)/HLWWLO)
             endif
          endif
 c end MMM changed 10/7/18          
@@ -8918,10 +9050,12 @@ c MMM changed 10/7/18
             endif
             if(irenscheme.eq.0) then
                do i=1,14,1
-                  HLWWEW(i) = HLWWNLO(i)
+                  HLWWEW(i) = HLWWLORESC*(1.D0+
+     .                 (HLWWNLO(i)-HLWWLO)/HLWWLO)
                end do
             elseif(irenscheme.ne.0) then
-               HLWWEW(1) = HLWWNLO(1)
+               HLWWEW(1) = HLWWLORESC*(1.D0+
+     .              (HLWWNLO(1)-HLWWLO)/HLWWLO)
             endif
          endif
 c end MMM changed 10/7/18
@@ -8954,10 +9088,12 @@ c MMM changed 10/7/18
             endif
             if(irenscheme.eq.0) then
                do i=1,14,1
-                  HLZZEW(i) = HLZZNLO(i)
+                  HLZZEW(i) = HLZZLORESC*(1.D0+
+     .                 (HLZZNLO(i)-HLZZLO)/HLZZLO)
                end do
             elseif(irenscheme.ne.0) then
-                  HLZZEW(1) = HLZZNLO(1)                  
+               HLZZEW(1) = HLZZLORESC*(1.D0+
+     .              (HLZZNLO(1)-HLZZLO)/HLZZLO)
             endif
          endif
       endif
@@ -9019,10 +9155,12 @@ c MMM changed 10/7/18
             endif
             if(irenscheme.eq.0) then
                do i=1,14,1
-                  HLZZEW(i) = HLZZNLO(i)
+                  HLZZEW(i) = HLZZLORESC*(1.D0+
+     .                 (HLZZNLO(i)-HLZZLO)/HLZZLO)
                end do
             elseif(irenscheme.ne.0) then
-                  HLZZEW(1) = HLZZNLO(1)
+               HLZZEW(1) = HLZZLORESC*(1.D0+
+     .              (HLZZNLO(1)-HLZZLO)/HLZZLO)
             endif
          endif          
 c end MMM changed 10/7/18
@@ -9097,10 +9235,12 @@ c MMM changed 10/7/18
             endif
             if(irenscheme.eq.0) then
                do i=1,14,1
-                  HLZZEW(i) = HLZZNLO(i)
+                  HLZZEW(i) = HLZZLORESC*(1.D0+
+     .                 (HLZZNLO(i)-HLZZLO)/HLZZLO)
                end do
             elseif(irenscheme.ne.0) then
-                  HLZZEW(1) = HLZZNLO(1)
+               HLZZEW(1) = HLZZLORESC*(1.D0+
+     .              (HLZZNLO(1)-HLZZLO)/HLZZLO)
             endif
          endif
 c end MMM changed 10/7/18
@@ -9207,10 +9347,12 @@ c MMM changed 10/7/18
          endif
          if(irenscheme.eq.0) then
             do i=1,14,1
-               HLAAEW(i) = HLAANLO(i)
+               HLAAEW(i) = HLAALORESC*(1.D0+
+     .              (HLAANLO(i)-HLAALO)/HLAALO)
             end do
          elseif(irenscheme.ne.0) then
-               HLAAEW(1) = HLAANLO(1)
+            HLAAEW(1) = HLAALORESC*(1.D0+
+     .           (HLAANLO(1)-HLAALO)/HLAALO)
          endif
       endif
 c end MMM changed 10/7/18                     
@@ -9243,10 +9385,12 @@ c MMM changed 10/7/18
                   endif
                   if(irenscheme.eq.0) then
                      do i=1,14,1
-                        HLAAEW(i) = HLAANLO(i)
+                        HLAAEW(i) = HLAALORESC*(1.D0+
+     .                       (HLAANLO(i)-HLAALO)/HLAALO)
                      end do
                   elseif(irenscheme.ne.0) then
-                        HLAAEW(1) = HLAANLO(1)                  
+                     HLAAEW(1) = HLAALORESC*(1.D0+
+     .                    (HLAANLO(1)-HLAALO)/HLAALO)                
                   endif
                endif
 c end MMM changed 10/7/18                         
@@ -9287,10 +9431,12 @@ c MMM changed 10/7/18
                endif
                if(irenscheme.eq.0) then
                   do i=1,14,1
-                     HLHPHMEW(i) = HLHPHMNLO(i)
+                     HLHPHMEW(i) = HLCHCHLORESC*(1.D0+
+     .                    (HLHPHMNLO(i)-HLHPHMLO)/HLHPHMLO)
                   end do
                elseif(irenscheme.ne.0) then
-                     HLHPHMEW(1) = HLHPHMNLO(1)                  
+                  HLHPHMEW(1) = HLCHCHLORESC*(1.D0+
+     .                 (HLHPHMNLO(1)-HLHPHMLO)/HLHPHMLO)                 
                endif
             endif
 c end MMM changed 10/7/18            
@@ -9408,10 +9554,12 @@ c MMM changed 10/7/18
                endif
                if(irenscheme.eq.0) then
                   do i=1,14,1
-                     HLAZEW(i) = HLZANLO(i)
+                     HLAZEW(i) = HLAZLORESC*(1.D0+
+     .                    (HLZANLO(i)-HLZALO)/HLZALO)
                   end do
                elseif(irenscheme.ne.0) then
-                     HLAZEW(1) = HLZANLO(1)                  
+                  HLAZEW(1) = HLAZLORESC*(1.D0+
+     .                 (HLZANLO(1)-HLZALO)/HLZALO)                  
                endif
             endif
 c end MMM changed 10/7/18     
@@ -9446,10 +9594,12 @@ c MMM changed 10/7/18
                endif
                if(irenscheme.eq.0) then
                   do i=1,14,1
-                     HLAZEW(i) = HLZANLO(i)
+                     HLAZEW(i) = HLAZLORESC*(1.D0+
+     .                    (HLZANLO(i)-HLZALO)/HLZALO)
                   end do
                elseif(irenscheme.ne.0) then
-                     HLAZEW(1) = HLZANLO(1)                  
+                  HLAZEW(1) = HLAZLORESC*(1.D0+
+     .                 (HLZANLO(1)-HLZALO)/HLZALO)                  
                endif
             endif
 c end MMM changed 10/7/18   
@@ -9589,17 +9739,19 @@ c MMM changed 10/7/18
                endif
                if(irenscheme.eq.0) then
                   do i=1,14,1
-                     HLHPWMEW(i) = HLHPWMNLO(i)
+                     HLHPWMEW(i) = HLHPWMLORESC*(1.D0+
+     .                    (HLHPWMNLO(i)-HLHPWMLO)/HLHPWMLO)
                   end do
                elseif(irenscheme.ne.0) then
-                     HLHPWMEW(1) = HLHPWMNLO(1)
+                  HLHPWMEW(1) = HLHPWMLORESC*(1.D0+
+     .                 (HLHPWMNLO(1)-HLHPWMLO)/HLHPWMLO)
                endif
             endif
 c end MMM changed 10/7/18   
                
             endif
          else
-            if (aml.lt.amw+amch) then
+            if(aml.lt.amw+amch) then
                hhw=0.d0
 c MMM changed 10/7/18         
             if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
@@ -9627,10 +9779,12 @@ c MMM changed 10/7/18
                endif
                if(irenscheme.eq.0) then
                   do i=1,14,1
-                     HLHPWMEW(i) = HLHPWMNLO(i)
+                     HLHPWMEW(i) = HLHPWMLORESC*(1.D0+
+     .                    (HLHPWMNLO(i)-HLHPWMLO)/HLHPWMLO)
                   end do
                elseif(irenscheme.ne.0) then
-                     HLHPWMEW(1) = HLHPWMNLO(1)
+                  HLHPWMEW(1) = HLHPWMLORESC*(1.D0+
+     .                 (HLHPWMNLO(1)-HLHPWMLO)/HLHPWMLO)
                endif
             endif
 c end MMM changed 10/7/18                 
@@ -9858,10 +10012,10 @@ c corrections, but rescaled by GFCALC/GF
 
       hlwdth1 = wtot1
 
-      print*,''
-      print*,'h decays'
-      print*,''      
-      print*,'wtot1',wtot1
+c      print*,''
+c      print*,'h decays'
+c      print*,''      
+c      print*,'wtot1',wtot1
       
       HLBRG1=HLGGRESC/WTOT1
       HLBRM1=HLMMLORESC/WTOT1
@@ -9879,22 +10033,22 @@ c corrections, but rescaled by GFCALC/GF
       HLBRAZ1=HLAZLORESC/WTOT1
       HLBRHW1=HLHPWMLORESC/WTOT1
 
-      print*,'hlbrg',hlggresc,hlbrg1
-      print*,'hlbrm',hlmmloresc,hlbrm1
-      print*,'hlbrl',hlllloresc,hlbrl1
-      print*,'hlbrs',hlssqcd,hlbrs1
-      print*,'hlbrc',hlccqcd,hlbrc1
-      print*,'hlbrb',hlbbqcd,hlbrb1
-      print*,'hlbrt',hlttqcd,hlbrt1
-      print*,'hlbrga1',hlgaresc,hlbrga1
-      print*,'hlbrzga',hlzgaresc,hlbrzga1
-      print*,'hlbrw',hlwwloresc,hlbrw1
-      print*,'hlbrz',hlzzloresc,hlbrz1
-      print*,'hlbra',hlaaloresc,hlbra1
-      print*,'hlbrchch',hlchchloresc,hlbrchch1
-      print*,'hlbraz',hlazloresc,hlbraz1
-      print*,'hlbrhw1',hlhpwmloresc,hlbrhw1
-      print*,'rescal',gfcalc/gf
+c      print*,'hlbrg',hlggresc,hlbrg1
+c      print*,'hlbrm',hlmmloresc,hlbrm1
+c      print*,'hlbrl',hlllloresc,hlbrl1
+c      print*,'hlbrs',hlssqcd,hlbrs1
+c      print*,'hlbrc',hlccqcd,hlbrc1
+c      print*,'hlbrb',hlbbqcd,hlbrb1
+c      print*,'hlbrt',hlttqcd,hlbrt1
+c      print*,'hlbrga1',hlgaresc,hlbrga1
+c      print*,'hlbrzga',hlzgaresc,hlbrzga1
+c      print*,'hlbrw',hlwwloresc,hlbrw1
+c      print*,'hlbrz',hlzzloresc,hlbrz1
+c      print*,'hlbra',hlaaloresc,hlbra1
+c      print*,'hlbrchch',hlchchloresc,hlbrchch1
+c      print*,'hlbraz',hlazloresc,hlbraz1
+c      print*,'hlbrhw1',hlhpwmloresc,hlbrhw1
+c      print*,'rescal',gfcalc/gf
 
 c If OMIT ELW2 = 0, then the following decay widths include the usual
 c QCD corrections and the EW corrections. The latter are only included for
@@ -9925,27 +10079,27 @@ c on-shell decays and non-loop induced decays
       HLBRAZ2(i)=HLAZEW(i)/WTOT2(i)
       HLBRHW2(i)=HLHPWMEW(i)/WTOT2(i)
 
-      if(i.eq.2) then
-      print*,''
-      print*,'wtot2',wtot2(i),i
-      print*,''
-      print*,'hlbrg2',hlggresc,hlbrg2(i)
-      print*,'hlbrm2(i)',hlmmew(i),hlbrm2(i)
-      print*,'hlbrl2(i)',hlllew(i),hlbrl2(i)
-      print*,'hlbrs2(i)',hlssqcdew(i),hlbrs2(i)
-      print*,'hlbrc2(i)',hlccqcdew(i),hlbrc2(i)
-      print*,'hlbrb2(i)',hlbbqcdew(i),hlbrb2(i)
-      print*,'hlbrt2(i)',hlttqcdew(i),hlbrt2(i)
-      print*,'hlbrga2',hlgaresc,hlbrga2(i)
-      print*,'hlbrzga2',hlzgaresc,hlbrzga2(i)
-      print*,'hlbrw2(i)',hlwwew(i),hlbrw2(i)
-      print*,'hlbrz2(i)',hlzzew(i),hlbrz2(i)
-      print*,'hlbra2(i)',hlaaew(i),hlbra2(i)
-      print*,'hlbrchch2(i)',hlhphmew(i),hlbrchch2(i)
-      print*,'brbraz2(i)',hlazew(i),hlbraz2(i)
-      print*,'hlbrhw2(i)',hlhpwmew(i),hlbrhw2(i)
-      print*,''
-      endif
+c      if(i.eq.2) then
+c      print*,''
+c      print*,'wtot2',wtot2(i),i
+c      print*,''
+c      print*,'hlbrg2',hlggresc,hlbrg2(i)
+c      print*,'hlbrm2(i)',hlmmew(i),hlbrm2(i)
+c      print*,'hlbrl2(i)',hlllew(i),hlbrl2(i)
+c      print*,'hlbrs2(i)',hlssqcdew(i),hlbrs2(i)
+c      print*,'hlbrc2(i)',hlccqcdew(i),hlbrc2(i)
+c      print*,'hlbrb2(i)',hlbbqcdew(i),hlbrb2(i)
+c      print*,'hlbrt2(i)',hlttqcdew(i),hlbrt2(i)
+c      print*,'hlbrga2',hlgaresc,hlbrga2(i)
+c      print*,'hlbrzga2',hlzgaresc,hlbrzga2(i)
+c      print*,'hlbrw2(i)',hlwwew(i),hlbrw2(i)
+c      print*,'hlbrz2(i)',hlzzew(i),hlbrz2(i)
+c      print*,'hlbra2(i)',hlaaew(i),hlbra2(i)
+c      print*,'hlbrchch2(i)',hlhphmew(i),hlbrchch2(i)
+c      print*,'brbraz2(i)',hlazew(i),hlbraz2(i)
+c      print*,'hlbrhw2(i)',hlhpwmew(i),hlbrhw2(i)
+c      print*,''
+c      endif
 
       end do
 
@@ -9974,25 +10128,25 @@ c on-shell decays and non-loop induced decays
       HLBRAZ2(1)=HLAZEW(1)/WTOT2(1)
       HLBRHW2(1)=HLHPWMEW(1)/WTOT2(1)
 
-      print*,''
-      print*,'wtot2',wtot2(1),irenscheme
-      print*,''
-      print*,'hlbrg2',hlggresc,hlbrg2(1)
-      print*,'hlbrm2(1)',hlmmew(1),hlbrm2(1)
-      print*,'hlbrl2(1)',hlllew(1),hlbrl2(1)
-      print*,'hlbrs2(1)',hlssqcdew(1),hlbrs2(1)
-      print*,'hlbrc2(1)',hlccqcdew(1),hlbrc2(1)
-      print*,'hlbrb2(1)',hlbbqcdew(1),hlbrb2(1)
-      print*,'hlbrt2(1)',hlttqcdew(1),hlbrt2(1)
-      print*,'hlbrga2',hlgaresc,hlbrga2(1)
-      print*,'hlbrzga2',hlzgaresc,hlbrzga2(1)
-      print*,'hlbrw2(1)',hlwwew(1),hlbrw2(1)
-      print*,'hlbrz2(1)',hlzzew(1),hlbrz2(1)
-      print*,'hlbra2(1)',hlaaew(1),hlbra2(1)
-      print*,'hlbrchch2(1)',hlhphmew(1),hlbrchch2(1)
-      print*,'brbraz2(1)',hlazew(1),hlbraz2(1)
-      print*,'hlbrhw2(1)',hlhpwmew(1),hlbrhw2(1)
-      print*,''
+c      print*,''
+c      print*,'wtot2',wtot2(1),irenscheme
+c      print*,''
+c      print*,'hlbrg2',hlggresc,hlbrg2(1)
+c      print*,'hlbrm2(1)',hlmmew(1),hlbrm2(1)
+c      print*,'hlbrl2(1)',hlllew(1),hlbrl2(1)
+c      print*,'hlbrs2(1)',hlssqcdew(1),hlbrs2(1)
+c      print*,'hlbrc2(1)',hlccqcdew(1),hlbrc2(1)
+c      print*,'hlbrb2(1)',hlbbqcdew(1),hlbrb2(1)
+c      print*,'hlbrt2(1)',hlttqcdew(1),hlbrt2(1)
+c      print*,'hlbrga2',hlgaresc,hlbrga2(1)
+c      print*,'hlbrzga2',hlzgaresc,hlbrzga2(1)
+c      print*,'hlbrw2(1)',hlwwew(1),hlbrw2(1)
+c      print*,'hlbrz2(1)',hlzzew(1),hlbrz2(1)
+c      print*,'hlbra2(1)',hlaaew(1),hlbra2(1)
+c      print*,'hlbrchch2(1)',hlhphmew(1),hlbrchch2(1)
+c      print*,'brbraz2(1)',hlazew(1),hlbraz2(1)
+c      print*,'hlbrhw2(1)',hlhpwmew(1),hlbrhw2(1)
+c      print*,''
       endif
       
       endif
@@ -10093,10 +10247,12 @@ c MMM changed 10/7/18
             endif
             if(irenscheme.eq.0) then
                do i=1,14,1
-                  HMNEW(i) = HPMUNUNLO(i)
+                  HMNEW(i) = HMNLORESC*(1.D0+
+     .                 (HPMUNUNLO(i)-HPMUNULO)/HPMUNULO)
                end do
             elseif(irenscheme.ne.0) then
-               HMNEW(1) = HPMUNUNLO(1)
+               HMNEW(1) = HMNLORESC*(1.D0+
+     .              (HPMUNUNLO(1)-HPMUNULO)/HPMUNULO)
             endif
          endif
 c end MMM changed 10/7/18          
@@ -10139,10 +10295,12 @@ c MMM changed 10/7/18
             endif
             if(irenscheme.eq.0) then
                do i=1,14,1
-                  HLNEW(i) = HPTAUNUNLO(i)
+                  HLNEW(i) = HLNLORESC*(1.D0+
+     .                 (HPTAUNUNLO(i)-HPTAUNULO)/HPTAUNULO)
                end do
             elseif(irenscheme.ne.0) then
-               HLNEW(1) = HPTAUNUNLO(1)
+               HLNEW(1) = HLNLORESC*(1.D0+
+     .              (HPTAUNUNLO(1)-HPTAUNULO)/HPTAUNULO)
             endif
          endif
 c end MMM changed 10/7/18               
@@ -10170,9 +10328,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HSUEW(i) = HSULORESC
+                  HSUQCDEW(i) = HSULORESC
                end do
             elseif(irenscheme.ne.0) then
                HSUEW(1) = HSULORESC
+               HSUQCDEW(1) = HSULORESC
             endif
          endif
 c end MMM changed 10/7/18          
@@ -10201,11 +10361,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HSUEW(i) = HPSUNLO(i)
-                  HSUQCDEW(i) = HSUQCD + (HPSUNLO(i)-HPSULO)
+                  HSUQCDEW(i)=HSUQCD*(1.D0+(HPSUNLO(i)-HPSULO)/HPSULO)
                end do
             elseif(irenscheme.ne.0) then
                   HSUEW(1) = HPSUNLO(1)
-                  HSUQCDEW(1) = HSUQCD + (HPSUNLO(1)-HPSULO)
+                  HSUQCDEW(1)=HSUQCD*(1.D0+(HPSUNLO(1)-HPSULO)/HPSULO)
             endif
          endif
 c end MMM changed 10/7/18       
@@ -10213,10 +10373,10 @@ c end MMM changed 10/7/18
 
 c     print*,'H+ -> su',hsu,3.d0*vus**2*
 c     .         cqcdm2hdm(amch,gab,gat,(ams/amch)**2,eps,ratx)
-      print*,'H+ -> su',hsu
+c      print*,'H+ -> su',hsu
 
-      print*,'We set eps to 10-15, in the original hdecay it is 10-12.'
-      print*,'TO BE DISCUSSED.'
+c      print*,'We set eps to 10-15, in the original hdecay it is 10-12.'
+c      print*,'TO BE DISCUSSED.'
 
 C  H+ --> CS
       RATX = RMS/AMS
@@ -10236,9 +10396,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HSCEW(i) = HSCLORESC
+                  HSCQCDEW(i) = HSCLORESC
                end do
             elseif(irenscheme.ne.0) then
                HSCEW(1) = HSCLORESC
+               HSCQCDEW(1) = HSCLORESC
             endif
          endif
 c end MMM changed 10/7/18             
@@ -10270,11 +10432,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HSCEW(i) = HPSCNLO(i)
-                  HSCQCDEW(i) = HSCQCD + (HPSCNLO(i)-HPSCLO)
+                  HSCQCDEW(i)=HSCQCD*(1.D0+(HPSCNLO(i)-HPSCLO)/HPSCLO)
                end do
             elseif(irenscheme.ne.0) then
                   HSCEW(1) = HPSCNLO(1)
-                  HSCQCDEW(1) = HSCQCD + (HPSCNLO(1)-HPSCLO)
+                  HSCQCDEW(1)=HSCQCD*(1.D0+(HPSCNLO(1)-HPSCLO)/HPSCLO)
             endif
          endif
 c end MMM changed 10/7/18         
@@ -10310,9 +10472,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HCDEW(i) = HCDLORESC
+                  HCDQCDEW(i) = HCDLORESC
                end do
             elseif(irenscheme.ne.0) then
                HCDEW(1) = HCDLORESC
+               HCDQCDEW(1) = HCDLORESC
             endif
          endif
 c end MMM changed 10/7/18         
@@ -10340,11 +10504,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HCDEW(i) = HPDCNLO(i)
-                  HCDQCDEW(i) = HCDQCD + (HPDCNLO(i)-HPDCLO)
+                  HCDQCDEW(i)=HCDQCD*(1.D0+(HPDCNLO(i)-HPDCLO)/HPDCLO)
                end do
             elseif(irenscheme.ne.0) then
                   HCDEW(1) = HPDCNLO(1)
-                  HCDQCDEW(1) = HCDQCD + (HPDCNLO(1)-HPDCLO)
+                  HCDQCDEW(1)=HCDQCD*(1.D0+(HPDCNLO(1)-HPDCLO)/HPDCLO)
             endif
          endif
 c end MMM changed 10/7/18        
@@ -10388,9 +10552,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HBCEW(i) = HBCLORESC
+                  HBCQCDEW(i) = HBCLORESC
                end do
             elseif(irenscheme.ne.0) then
                HBCEW(1) = HBCLORESC
+               HBCQCDEW(1) = HBCLORESC
             endif
          endif
 c end MMM changed 10/7/18         
@@ -10421,11 +10587,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HBCEW(i) = HPBCNLO(i)
-                  HBCQCDEW(i) = HBCQCD + (HPBCNLO(i)-HPBCLO)
+                  HBCQCDEW(i)=HBCQCD*(1.D0+(HPBCNLO(i)-HPBCLO)/HPBCLO)
                end do
             elseif(irenscheme.ne.0) then
                   HBCEW(1) = HPBCNLO(1)
-                  HBCQCDEW(1) = HBCQCD + (HPBCNLO(1)-HPBCLO)
+                  HBCQCDEW(1)=HBCQCD*(1.D0+(HPBCNLO(1)-HPBCLO)/HPBCLO)
             endif
          endif
 c end MMM changed 10/7/18         
@@ -10447,9 +10613,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HBUEW(i) = HBULORESC
+                  HBUQCDEW(i) = HBULORESC
                end do
             elseif(irenscheme.ne.0) then
                HBUEW(1) = HBULORESC
+               HBUQCDEW(1) = HBULORESC
             endif
          endif
 c end MMM changed 10/7/18           
@@ -10480,11 +10648,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HBUEW(i) = HPBUNLO(i)
-                  HBUQCDEW(i) = HBUQCD + (HPBUNLO(i)-HPBULO)
+                  HBUQCDEW(i)=HBUQCD*(1.D0+(HPBUNLO(i)-HPBULO)/HPBULO)
                end do
             elseif(irenscheme.ne.0) then
                   HBUEW(1) = HPBUNLO(1)
-                  HBUQCDEW(1) = HBUQCD + (HPBUNLO(1)-HPBULO)
+                  HBUQCDEW(1)=HBUQCD*(1.D0+(HPBUNLO(1)-HPBULO)/HPBULO)
             endif
          endif
 c end MMM changed 10/7/18          
@@ -10511,9 +10679,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HDTEW(i) = HDTLORESC
+                  HDTQCDEW(i) = HDTLORESC
                end do
             elseif(irenscheme.ne.0) then
                HDTEW(1) = HDTLORESC
+               HDTQCDEW(1) = HDTLORESC
             endif
          endif
 c end MMM changed 10/7/18            
@@ -10528,9 +10698,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HDTEW(i) = HDTLORESC
+                  HDTQCDEW(i) = HDTLORESC
                end do
             elseif(irenscheme.ne.0) then
                HDTEW(1) = HDTLORESC
+               HDTQCDEW(1) = HDTLORESC
             endif
          endif
 c end MMM changed 10/7/18           
@@ -10591,9 +10763,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HDTEW(i) = HDTLORESC
+                  HDTQCDEW(i) = HDTLORESC
                end do
             elseif(irenscheme.ne.0) then
                HDTEW(1) = HDTLORESC
+               HDTQCDEW(1) = HDTLORESC
             endif
          endif
 c end MMM changed 10/7/18        
@@ -10629,11 +10803,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HDTEW(i) = HPTDNLO(i)
-                  HDTQCDEW(i) = HDTQCD + (HPTDNLO(i)-HPTDLO)
+                  HDTQCDEW(i)=HDTQCD*(1.D0+(HPTDNLO(i)-HPTDLO)/HPTDLO)
                end do
             elseif(irenscheme.ne.0) then
                   HDTEW(1) = HPTDNLO(1)
-                  HDTQCDEW(1) = HDTQCD + (HPTDNLO(1)-HPTDLO)
+                  HDTQCDEW(1)=HDTQCD*(1.D0+(HPTDNLO(1)-HPTDLO)/HPTDLO)
             endif
          endif
 c end MMM changed 10/7/18  
@@ -10649,9 +10823,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HDTEW(i) = HDTLORESC
+                  HDTQCDEW(i) = HDTLORESC
                end do
             elseif(irenscheme.ne.0) then
                HDTEW(1) = HDTLORESC
+               HDTQCDEW(1) = HDTLORESC
             endif
          endif
 c end MMM changed 10/7/18                
@@ -10687,11 +10863,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HDTEW(i) = HPTDNLO(i)
-                  HDTQCDEW(i) = HDTQCD + (HPTDNLO(i)-HPTDLO)
+                  HDTQCDEW(i)=HDTQCD*(1.D0+(HPTDNLO(i)-HPTDLO)/HPTDLO)
                end do
             elseif(irenscheme.ne.0) then
                   HDTEW(1) = HPTDNLO(1)
-                  HDTQCDEW(1) = HDTQCD + (HPTDNLO(1)-HPTDLO)
+                  HDTQCDEW(1)=HDTQCD*(1.D0+(HPTDNLO(1)-HPTDLO)/HPTDLO)
             endif
          endif
 c end MMM changed 10/7/18  
@@ -10729,9 +10905,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HSTEW(i) = HSTLORESC
+                  HSTQCDEW(i) = HSTLORESC
                end do
             elseif(irenscheme.ne.0) then
                HSTEW(1) = HSTLORESC
+               HSTQCDEW(1) = HSTLORESC
             endif
          endif
 c end MMM changed 10/7/18           
@@ -10748,9 +10926,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HSTEW(i) = HSTLORESC
+                  HSTQCDEW(i) = HSTLORESC
                end do
             elseif(irenscheme.ne.0) then
                HSTEW(1) = HSTLORESC
+               HSTQCDEW(1) = HSTLORESC
             endif
          endif
 c end MMM changed 10/7/18        
@@ -10811,9 +10991,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HSTEW(i) = HSTLORESC
+                  HSTQCDEW(i) = HSTLORESC
                end do
             elseif(irenscheme.ne.0) then
                HSTEW(1) = HSTLORESC
+               HSTQCDEW(1) = HSTLORESC
             endif
          endif
 c end MMM changed 10/7/18          
@@ -10850,11 +11032,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HSTEW(i) = HPTSNLO(i)
-                  HSTQCDEW(i) = HSTQCD + (HPTSNLO(i)-HPTSLO)
+                  HSTQCDEW(i)=HSTQCD*(1.D0+(HPTSNLO(i)-HPTSLO)/HPTSLO)
                end do
             elseif(irenscheme.ne.0) then
                   HSTEW(1) = HPTSNLO(1)
-                  HSTQCDEW(1) = HSTQCD + (HPTSNLO(1)-HPTSLO)
+                  HSTQCDEW(1)=HSTQCD*(1.D0+(HPTSNLO(1)-HPTSLO)/HPTSLO)
             endif
          endif
 c end MMM changed 10/7/18  
@@ -10870,9 +11052,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HSTEW(i) = HSTLORESC
+                  HSTQCDEW(i) = HSTLORESC
                end do
             elseif(irenscheme.ne.0) then
                HSTEW(1) = HSTLORESC
+               HSTQCDEW(1) = HSTLORESC
             endif
          endif
 c end MMM changed 10/7/18             
@@ -10907,11 +11091,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HSTEW(i) = HPTSNLO(i)
-                  HSTQCDEW(i) = HSTQCD + (HPTSNLO(i)-HPTSLO)
+                  HSTQCDEW(i)=HSTQCD*(1.D0+(HPTSNLO(i)-HPTSLO)/HPTSLO)
                end do
             elseif(irenscheme.ne.0) then
                   HSTEW(1) = HPTSNLO(1)
-                  HSTQCDEW(1) = HSTQCD + (HPTSNLO(1)-HPTSLO)
+                  HSTQCDEW(1)=HSTQCD*(1.D0+(HPTSNLO(1)-HPTSLO)/HPTSLO)
             endif
          endif
 c end MMM changed 10/7/18          
@@ -10944,9 +11128,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HBTEW(i) = HBTLORESC
+                  HBTQCDEW(i) = HBTLORESC
                end do
             elseif(irenscheme.ne.0) then
                HBTEW(1) = HBTLORESC
+               HBTQCDEW(1) = HBTLORESC
             endif
          endif
 c end MMM changed 10/7/18           
@@ -10963,9 +11149,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HBTEW(i) = HBTLORESC
+                  HBTQCDEW(i) = HBTLORESC
                end do
             elseif(irenscheme.ne.0) then
                HBTEW(1) = HBTLORESC
+               HBTQCDEW(1) = HBTLORESC
             endif
          endif
 c end MMM changed 10/7/18          
@@ -11026,9 +11214,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HBTEW(i) = HBTLORESC
+                  HBTQCDEW(i) = HBTLORESC
                end do
             elseif(irenscheme.ne.0) then
                HBTEW(1) = HBTLORESC
+               HBTQCDEW(1) = HBTLORESC
             endif
          endif
 c end MMM changed 10/7/18         
@@ -11065,11 +11255,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HBTEW(i) = HPTBNLO(i)
-                  HBTQCDEW(i) = HBTQCD + (HPTBNLO(i)-HPTBLO)
+                  HBTQCDEW(i)=HBTQCD*(1.D0+(HPTBNLO(i)-HPTBLO)/HPTBLO)
                end do
             elseif(irenscheme.ne.0) then
                   HBTEW(1) = HPTBNLO(1)
-                  HBTQCDEW(1) = HBTQCD + (HPTBNLO(1)-HPTBLO)
+                  HBTQCDEW(1)=HBTQCD*(1.D0+(HPTBNLO(1)-HPTBLO)/HPTBLO)
             endif
          endif
 c end MMM changed 10/7/18        
@@ -11085,9 +11275,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HBTEW(i) = HBTLORESC
+                  HBTQCDEW(i) = HBTLORESC
                end do
             elseif(irenscheme.ne.0) then
                HBTEW(1) = HBTLORESC
+               HBTQCDEW(1) = HBTLORESC
             endif
          endif
 c end MMM changed 10/7/18          
@@ -11123,11 +11315,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HBTEW(i) = HPTBNLO(i)
-                  HBTQCDEW(i) = HBTQCD + (HPTBNLO(i)-HPTBLO)
+                  HBTQCDEW(i)=HBTQCD*(1.D0+(HPTBNLO(i)-HPTBLO)/HPTBLO)
                end do
             elseif(irenscheme.ne.0) then
                   HBTEW(1) = HPTBNLO(1)
-                  HBTQCDEW(1) = HBTQCD + (HPTBNLO(1)-HPTBLO)
+                  HBTQCDEW(1)=HBTQCD*(1.D0+(HPTBNLO(1)-HPTBLO)/HPTBLO)
             endif
          endif
 c end MMM changed 10/7/18        
@@ -11229,10 +11421,12 @@ c MMM changed 10/7/18
             endif
             if(irenscheme.eq.0) then
                do i=1,14,1
-                  HPWHLEW(i) = HPWHLNLO(i)
+                  HPWHLEW(i) = HWHLLORESC*(1.D0
+     .                 +(HPWHLNLO(i)-HPWHLLO)/HPWHLLO)
                end do
             elseif(irenscheme.ne.0) then
-                  HPWHLEW(1) = HPWHLNLO(1)
+               HPWHLEW(1) = HWHLLORESC*(1.D0
+     .              +(HPWHLNLO(1)-HPWHLLO)/HPWHLLO)
             endif
          endif
 c end MMM changed 10/7/18           
@@ -11265,10 +11459,12 @@ c MMM changed 10/7/18
             endif
             if(irenscheme.eq.0) then
                do i=1,14,1
-                  HPWHLEW(i) = HPWHLNLO(i)
+                  HPWHLEW(i) = HWHLLORESC*(1.D0+
+     .                 (HPWHLNLO(i)-HPWHLLO)/HPWHLLO)
                end do
             elseif(irenscheme.ne.0) then
-                  HPWHLEW(1) = HPWHLNLO(1)
+               HPWHLEW(1) = HWHLLORESC*(1.D0+
+     .              (HPWHLNLO(1)-HPWHLLO)/HPWHLLO)
             endif
          endif
 c end MMM changed 10/7/18           
@@ -11371,10 +11567,12 @@ c MMM changed 10/7/18
             endif
             if(irenscheme.eq.0) then
                do i=1,14,1
-                  HPWHHEW(i) = HPWHHNLO(i)
+                  HPWHHEW(i) = HWHHLORESC*(1.D0+
+     .                 (HPWHHNLO(i)-HPWHHLO)/HPWHHLO)
                end do
             elseif(irenscheme.ne.0) then
-                  HPWHHEW(1) = HPWHHNLO(1)
+                  HPWHHEW(1) = HWHHLORESC*(1.D0+
+     .                 (HPWHHNLO(1)-HPWHHLO)/HPWHHLO)
             endif
          endif
 c end MMM changed 10/7/18          
@@ -11407,10 +11605,12 @@ c MMM changed 10/7/18
             endif
             if(irenscheme.eq.0) then
                do i=1,14,1
-                  HPWHHEW(i) = HPWHHNLO(i)
+                  HPWHHEW(i) = HWHHLORESC*(1.D0+
+     .                 (HPWHHNLO(i)-HPWHHLO)/HPWHHLO)
                end do
             elseif(irenscheme.ne.0) then
-                  HPWHHEW(1) = HPWHHNLO(1)
+                  HPWHHEW(1) = HWHHLORESC*(1.D0+
+     .                 (HPWHHNLO(1)-HPWHHLO)/HPWHHLO)
             endif
          endif
 c end MMM changed 10/7/18         
@@ -11563,10 +11763,12 @@ c MMM changed 10/7/18
             endif
             if(irenscheme.eq.0) then
                do i=1,14,1
-                  HPWAEW(i) = HPWANLO(i)
+                  HPWAEW(i) = HWALORESC*(1.D0+
+     .                 (HPWANLO(i)-HPWALO)/HPWALO)
                end do
             elseif(irenscheme.ne.0) then
-                  HPWAEW(1) = HPWANLO(1)
+                  HPWAEW(1) = HWALORESC*(1.D0+
+     .                 (HPWANLO(1)-HPWALO)/HPWALO)
             endif
          endif
 c end MMM changed 10/7/18                  
@@ -11599,10 +11801,12 @@ c MMM changed 10/7/18
             endif
             if(irenscheme.eq.0) then
                do i=1,14,1
-                  HPWAEW(i) = HPWANLO(i)
+                  HPWAEW(i) = HWALORESC*(1.D0+
+     .                 (HPWANLO(i)-HPWALO)/HPWALO)
                end do
             elseif(irenscheme.ne.0) then
-                  HPWAEW(1) = HPWANLO(1)
+                  HPWAEW(1) = HWALORESC*(1.D0+
+     .                 (HPWANLO(1)-HPWALO)/HPWALO)
             endif
          endif
 c end MMM changed 10/7/18               
@@ -11747,10 +11951,10 @@ c corrections, but rescaled by GFCALC/GF
          
       hpwdth1 = wtot1
 
-      print*,''
-      print*,'H+ decays'
-      print*,''      
-      print*,'wtot1',wtot1
+c      print*,''
+c      print*,'H+ decays'
+c      print*,''      
+c      print*,'wtot1',wtot1
 
       HBRMN1=HMNLORESC/WTOT1
       HBRLN1=HLNLORESC/WTOT1
@@ -11766,20 +11970,20 @@ c corrections, but rescaled by GFCALC/GF
       HBRWHH1=HWHHLORESC/WTOT1
       HBRWA1=HWALORESC/WTOT1
       
-      print*,'hbrmn',hmnloresc,hbrmn1
-      print*,'hbrln',hlnloresc,hbrln1
-      print*,'hbrsu',hsuqcd,hbrsu1
-      print*,'hbrsc',hscqcd,hbrsc1
-      print*,'hbrcd',hcdqcd,hbrcd1
-      print*,'hbrbc',hbcqcd,hbrbc1
-      print*,'hbrbu',hbuqcd,hbrbu1
-      print*,'hbrdt',hdtqcd,hbrdt1
-      print*,'hbrst',hstqcd,hbrst1
-      print*,'hbrbt',hbtqcd,hbrbt1
-      print*,'hbrwhl',hwhlloresc,hbrwhl1
-      print*,'hbrwhh',hwhhloresc,hbrwhh1
-      print*,'hbrwa',hwaloresc,hbrwa1
-      print*,'rescal',gfcalc/gf
+c      print*,'hbrmn',hmnloresc,hbrmn1
+c      print*,'hbrln',hlnloresc,hbrln1
+c      print*,'hbrsu',hsuqcd,hbrsu1
+c      print*,'hbrsc',hscqcd,hbrsc1
+c      print*,'hbrcd',hcdqcd,hbrcd1
+c      print*,'hbrbc',hbcqcd,hbrbc1
+c      print*,'hbrbu',hbuqcd,hbrbu1
+c      print*,'hbrdt',hdtqcd,hbrdt1
+c      print*,'hbrst',hstqcd,hbrst1
+c      print*,'hbrbt',hbtqcd,hbrbt1
+c      print*,'hbrwhl',hwhlloresc,hbrwhl1
+c      print*,'hbrwhh',hwhhloresc,hbrwhh1
+c      print*,'hbrwa',hwaloresc,hbrwa1
+c      print*,'rescal',gfcalc/gf
 
 c If OMIT ELW2 = 0, then the following decay widths include the usual
 c QCD corrections and the EW corrections. The latter are only included for
@@ -11808,25 +12012,25 @@ c on-shell decays and non-loop induced decays
       HBRWHH2(i)=HPWHHEW(i)/WTOT2(i)
       HBRWA2(i)=HPWAEW(i)/WTOT2(i)
          
-      if(i.eq.2) then
-      print*,''
-      print*,'wtot2',wtot2(i),i
-      print*,''
-      print*,'hbrmn2(i)',hmnew(i),hbrmn2(i)
-      print*,'hbrln2(i)',hlnew(i),hbrln2(i)
-      print*,'hbrsu2(i)',hsuqcdew(i),hbrsu2(i)
-      print*,'hbrsc2(i)',hscqcdew(i),hbrsc2(i)
-      print*,'hbrcd2(i)',hcdqcdew(i),hbrcd2(i)
-      print*,'hbrbc2(i)',hbcqcdew(i),hbrbc2(i)
-      print*,'hbrbu2(i)',hbuqcdew(i),hbrbu2(i)
-      print*,'hbrdt2(i)',hdtqcdew(i),hbrdt2(i)
-      print*,'hbrst2(i)',hstqcdew(i),hbrst2(i)
-      print*,'hbrbt2(i)',hbtqcdew(i),hbrbt2(i)
-      print*,'hbrwhl2(i)',hpwhlew(i),hbrwhl2(i)
-      print*,'hbrwhh2(i)',hpwhhew(i),hbrwhh2(i)
-      print*,'hbrwa2(i)',hpwaew(i),hbrwa2(i)
-      print*,''
-      endif
+c      if(i.eq.2) then
+c      print*,''
+c      print*,'wtot2',wtot2(i),i
+c      print*,''
+c      print*,'hbrmn2(i)',hmnew(i),hbrmn2(i)
+c      print*,'hbrln2(i)',hlnew(i),hbrln2(i)
+c      print*,'hbrsu2(i)',hsuqcdew(i),hbrsu2(i)
+c      print*,'hbrsc2(i)',hscqcdew(i),hbrsc2(i)
+c      print*,'hbrcd2(i)',hcdqcdew(i),hbrcd2(i)
+c      print*,'hbrbc2(i)',hbcqcdew(i),hbrbc2(i)
+c      print*,'hbrbu2(i)',hbuqcdew(i),hbrbu2(i)
+c      print*,'hbrdt2(i)',hdtqcdew(i),hbrdt2(i)
+c      print*,'hbrst2(i)',hstqcdew(i),hbrst2(i)
+c      print*,'hbrbt2(i)',hbtqcdew(i),hbrbt2(i)
+c      print*,'hbrwhl2(i)',hpwhlew(i),hbrwhl2(i)
+c      print*,'hbrwhh2(i)',hpwhhew(i),hbrwhh2(i)
+c      print*,'hbrwa2(i)',hpwaew(i),hbrwa2(i)
+c      print*,''
+c      endif
 
       end do
 
@@ -11853,23 +12057,23 @@ c on-shell decays and non-loop induced decays
       HBRWHH2(1)=HPWHHEW(1)/WTOT2(1)
       HBRWA2(1)=HPWAEW(1)/WTOT2(1)
          
-      print*,''
-      print*,'wtot2',wtot2(1),irenscheme
-      print*,''
-      print*,'hbrmn2(1)',hmnew(1),hbrmn2(1)
-      print*,'hbrln2(1)',hlnew(1),hbrln2(1)
-      print*,'hbrsu2(1)',hsuqcdew(1),hbrsu2(1)
-      print*,'hbrsc2(1)',hscqcdew(1),hbrsc2(1)
-      print*,'hbrcd2(1)',hcdqcdew(1),hbrcd2(1)
-      print*,'hbrbc2(1)',hbcqcdew(1),hbrbc2(1)
-      print*,'hbrbu2(1)',hbuqcdew(1),hbrbu2(1)
-      print*,'hbrdt2(1)',hdtqcdew(1),hbrdt2(1)
-      print*,'hbrst2(1)',hstqcdew(1),hbrst2(1)
-      print*,'hbrbt2(1)',hbtqcdew(1),hbrbt2(1)
-      print*,'hbrwhl2(1)',hpwhlew(1),hbrwhl2(1)
-      print*,'hbrwhh2(1)',hpwhhew(1),hbrwhh2(1)
-      print*,'hbrwa2(1)',hpwaew(1),hbrwa2(1)
-      print*,''
+c      print*,''
+c      print*,'wtot2',wtot2(1),irenscheme
+c      print*,''
+c      print*,'hbrmn2(1)',hmnew(1),hbrmn2(1)
+c      print*,'hbrln2(1)',hlnew(1),hbrln2(1)
+c      print*,'hbrsu2(1)',hsuqcdew(1),hbrsu2(1)
+c      print*,'hbrsc2(1)',hscqcdew(1),hbrsc2(1)
+c      print*,'hbrcd2(1)',hcdqcdew(1),hbrcd2(1)
+c      print*,'hbrbc2(1)',hbcqcdew(1),hbrbc2(1)
+c      print*,'hbrbu2(1)',hbuqcdew(1),hbrbu2(1)
+c      print*,'hbrdt2(1)',hdtqcdew(1),hbrdt2(1)
+c      print*,'hbrst2(1)',hstqcdew(1),hbrst2(1)
+c      print*,'hbrbt2(1)',hbtqcdew(1),hbrbt2(1)
+c      print*,'hbrwhl2(1)',hpwhlew(1),hbrwhl2(1)
+c      print*,'hbrwhh2(1)',hpwhhew(1),hbrwhh2(1)
+c      print*,'hbrwa2(1)',hpwaew(1),hbrwa2(1)
+c      print*,''
       
       endif
 
@@ -12082,10 +12286,12 @@ c MMM changed 10/7/18
             endif
             if(irenscheme.eq.0) then
                do i=1,14,1
-                  HHMMEW(i) = HHMMNLO(i)
+                  HHMMEW(i) = HHMMLORESC*(1.D0+
+     .                 (HHMMNLO(i)-HHMMLO)/HHMMLO)
                end do
             elseif(irenscheme.ne.0) then
-               HHMMEW(1) = HHMMNLO(1)
+               HHMMEW(1) = HHMMLORESC*(1.D0+
+     .              (HHMMNLO(1)-HHMMLO)/HHMMLO)
             endif
          endif
 c end MMM changed 10/7/18                 
@@ -12127,10 +12333,12 @@ c MMM changed 10/7/18
             endif
             if(irenscheme.eq.0) then
                do i=1,14,1
-                  HHLLEW(i) = HHLLNLO(i)
+                  HHLLEW(i) = HHLLLORESC*(1.D0+
+     .                 (HHLLNLO(i)-HHLLLO)/HHLLLO)
                end do
             elseif(irenscheme.ne.0) then
-               HHLLEW(1) = HHLLNLO(1)
+               HHLLEW(1) = HHLLLORESC*(1.D0+
+     .              (HHLLNLO(1)-HHLLLO)/HHLLLO)
             endif
          endif
 c end MMM changed 10/7/18         
@@ -12183,11 +12391,13 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HHSSEW(i) = HHSSNLO(i)
-                  HHSSQCDEW(i) = HHSSQCD + (HHSSNLO(i)-HHSSLO)
+                  HHSSQCDEW(i) = HHSSQCD*(1.D0+
+     .                 (HHSSNLO(i)-HHSSLO)/HHSSLO)
                end do
             elseif(irenscheme.ne.0) then
                   HHSSEW(1) = HHSSNLO(1)
-                  HHSSQCDEW(1) = HHSSQCD + (HHSSNLO(1)-HHSSLO)
+                  HHSSQCDEW(1) = HHSSQCD*(1.D0+
+     .                 (HHSSNLO(1)-HHSSLO)/HHSSLO)
             endif
          endif
 c end MMM changed 10/7/18        
@@ -12234,13 +12444,15 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HHCCEW(i) = HHCCNLO(i)
-                  HHCCQCDEW(i) = HHCCQCD + (HHCCNLO(i)-HHCCLO)
+                  HHCCQCDEW(i) = HHCCQCD*(1.D0
+     .                 + (HHCCNLO(i)-HHCCLO)/HHCCLO)
 c                  print*,'values',hlccqcd,hlccnlo(i),hlcclo,
 c     .                 HLCCNLO(i)-HLCCLO
                end do
             elseif(irenscheme.ne.0) then
                   HHCCEW(1) = HHCCNLO(1)
-                  HHCCQCDEW(1) = HHCCQCD + (HHCCNLO(1)-HHCCLO)
+                  HHCCQCDEW(1) = HHCCQCD*(1.D0
+     .                 + (HHCCNLO(1)-HHCCLO)/HHCCLO)
             endif
          endif
 c end MMM changed 10/7/18             
@@ -12309,11 +12521,13 @@ c            print*,'check',check
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HHBBEW(i) = HHBBNLO(i)
-                  HHBBQCDEW(i) = HHBBQCD + (HHBBNLO(i)-HHBBLO)
+                  HHBBQCDEW(i) = HHBBQCD*(1.D0
+     .                 + (HHBBNLO(i)-HHBBLO)/HHBBLO)
                end do
             elseif(irenscheme.ne.0) then
                   HHBBEW(1) = HHBBNLO(1)
-                  HHBBQCDEW(1) = HHBBQCD + (HHBBNLO(1)-HHBBLO)
+                  HHBBQCDEW(1) = HHBBQCD*(1.D0
+     .                 + (HHBBNLO(1)-HHBBLO)/HHBBLO)
 c                  print*,'values',hhbbqcd,hhbbnlo(1),hhbblo,
 c     .                 hhbbqcdew(1)
             endif
@@ -12524,11 +12738,13 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HHTTEW(i) = HHTTNLO(i)
-                  HHTTQCDEW(i) = HHTTQCD + (HHTTNLO(i)-HHTTLO)
+                  HHTTQCDEW(i) = HHTTQCD*(1.D0
+     .                 + (HHTTNLO(i)-HHTTLO)/HHTTLO)
                end do
             elseif(irenscheme.ne.0) then
                   HHTTEW(1) = HHTTNLO(1)
-                  HHTTQCDEW(1) = HHTTQCD + (HHTTNLO(1)-HHTTLO)
+                  HHTTQCDEW(1) = HHTTQCD*(1.D0
+     .                 + (HHTTNLO(1)-HHTTLO)/HHTTLO)
             endif
          endif
 c end MMM changed 10/7/18               
@@ -12570,11 +12786,13 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   HHTTEW(i) = HHTTNLO(i)
-                  HHTTQCDEW(i) = HHTTQCD + (HHTTNLO(i)-HHTTLO)
+                  HHTTQCDEW(i) = HHTTQCD*(1.D0
+     .                 + (HHTTNLO(i)-HHTTLO)/HHTTLO)
                end do
             elseif(irenscheme.ne.0) then
                   HHTTEW(1) = HHTTNLO(1)
-                  HHTTQCDEW(1) = HHTTQCD + (HHTTNLO(1)-HHTTLO)
+                  HHTTQCDEW(1) = HHTTQCD*(1.D0
+     .                 + (HHTTNLO(1)-HHTTLO)/HHTTLO)
             endif
          endif
 c end MMM changed 10/7/18  
@@ -12797,15 +13015,18 @@ c MMM changed 10/7/18
              endif             
           elseif(amh.gt.2.D0*amw) then
              HHWWLORESC=HVV(AMH,AMW**2/AMH**2)*GHVV**2*GFCALC/GF
+             check= (HHWWLORESC-HHWWLO)/HHWWLORESC
             if(dabs(check).ge.1.D-5) then
                print*,'There is a problem in the LO width H->WW.'
             endif
             if(irenscheme.eq.0) then
                do i=1,14,1
-                  HHWWEW(i) = HHWWNLO(i)
+                  HHWWEW(i) = HHWWLORESC*(1.D0+
+     .                 (HHWWNLO(i)-HHWWLO)/HHWWLO)
                end do
             elseif(irenscheme.ne.0) then
-                  HHWWEW(1) = HHWWNLO(1)                  
+               HHWWEW(1) = HHWWLORESC*(1.D0
+     .              +(HHWWNLO(1)-HHWWLO)/HHWWLO)
             endif
          endif
       endif
@@ -12867,10 +13088,12 @@ c MMM changed 10/7/18
             endif
             if(irenscheme.eq.0) then
                do i=1,14,1
-                  HHWWEW(i) = HHWWNLO(i)
+                  HHWWEW(i) = HHWWLORESC*(1.D0+
+     .                 (HHWWNLO(i)-HHWWLO)/HHWWLO)
                end do
             elseif(irenscheme.ne.0) then
-               HHWWEW(1) = HHWWNLO(1)                  
+               HHWWEW(1) = HHWWLORESC*(1.D0+
+     .              (HHWWNLO(1)-HHWWLO)/HHWWLO)
             endif
          endif
 c end MMM changed 10/7/18     
@@ -12945,10 +13168,12 @@ c MMM changed 10/7/18
             endif
             if(irenscheme.eq.0) then
                do i=1,14,1
-                  HHWWEW(i) = HHWWNLO(i)
+                  HHWWEW(i) = HHWWLORESC*(1.D0+
+     .                 (HHWWNLO(i)-HHWWLO)/HHWWLO)
                end do
             elseif(irenscheme.ne.0) then
-               HHWWEW(1) = HHWWNLO(1)
+               HHWWEW(1) = HHWWLORESC*(1.D0+
+     .              (HHWWNLO(1)-HHWWLO)/HHWWLO)
             endif
          endif
 c end MMM changed 10/7/18
@@ -12957,9 +13182,9 @@ c end MMM changed 10/7/18
       ENDIF
 
 c     print*,'H -> WW',hww
-      print*,'We have ionwz=0. Note that the original hdecay always' 
-      print*,'takes the off-shell decay. We do not do this here.'
-      print*,'TO BE DISCUSSED.'
+c      print*,'We have ionwz=0. Note that the original hdecay always' 
+c      print*,'takes the off-shell decay. We do not do this here.'
+c      print*,'TO BE DISCUSSED.'
 C  H ---> Z Z
       IF(IONWZ.EQ.0)THEN
        CALL HTOVV_HDEC(0,AMH,AMZ,GAMZ,HTZZ)
@@ -12984,10 +13209,12 @@ c MMM changed 10/7/18
             endif
             if(irenscheme.eq.0) then
                do i=1,14,1
-                  HHZZEW(i) = HHZZNLO(i)
+                  HHZZEW(i) = HHZZLORESC*(1.D0+
+     .                 (HHZZNLO(i)-HHZZLO)/HHZZLO)
                end do
             elseif(irenscheme.ne.0) then
-               HHZZEW(1) = HHZZNLO(1)
+               HHZZEW(1) = HHZZLORESC*(1.D0+
+     .              (HHZZNLO(1)-HHZZLO)/HHZZLO)
             endif
          endif
       endif
@@ -13049,10 +13276,12 @@ c MMM changed 10/7/18
             endif
             if(irenscheme.eq.0) then
                do i=1,14,1
-                  HHZZEW(i) = HHZZNLO(i)
+                  HHZZEW(i) = HHZZLORESC*(1.D0+
+     .                 (HHZZNLO(i)-HHZZLO)/HHZZLO)
                end do
             elseif(irenscheme.ne.0) then
-                  HHZZEW(1) = HHZZNLO(1)
+               HHZZEW(1) = HHZZLORESC*(1.D0+
+     .              (HHZZNLO(1)-HHZZLO)/HHZZLO)
             endif
          endif          
 c end MMM changed 10/7/18
@@ -13127,10 +13356,12 @@ c MMM changed 10/7/18
             endif
             if(irenscheme.eq.0) then
                do i=1,14,1
-                  HHZZEW(i) = HHZZNLO(i)
+                  HHZZEW(i) = HHZZLORESC*(1.D0+
+     .                 (HHZZNLO(i)-HHZZLO)/HHZZLO)
                end do
             elseif(irenscheme.ne.0) then
-                  HHZZEW(1) = HHZZNLO(1)
+                  HHZZEW(1) = HHZZLORESC*(1.D0+
+     .                 (HHZZNLO(1)-HHZZLO)/HHZZLO)
             endif
          endif
 c end MMM changed 10/7/18         
@@ -13498,10 +13729,12 @@ c MMM changed 10/7/18
           endif
           if(irenscheme.eq.0) then
              do i=1,14,1
-                HHHEW(i) = HHHLHLNLO(i)
+                HHHEW(i) = HHHLORESC*(1.D0+
+     .               (HHHLHLNLO(i)-HHHLHLLO)/HHHLHLLO)
              end do
           elseif(irenscheme.ne.0) then
-             HHHEW(1) = HHHLHLNLO(1)                  
+             HHHEW(1) = HHHLORESC*(1.D0+
+     .               (HHHLHLNLO(1)-HHHLHLLO)/HHHLHLLO)
           endif
       endif
 c end MMM changed 10/7/18        
@@ -13535,10 +13768,12 @@ c MMM changed 10/7/18
           endif
           if(irenscheme.eq.0) then
              do i=1,14,1
-                HHHEW(i) = HHHLHLNLO(i)
+                HHHEW(i) = HHHLORESC*(1.D0+
+     .               (HHHLHLNLO(i)-HHHLHLLO)/HHHLHLLO)
              end do
           elseif(irenscheme.ne.0) then
-             HHHEW(1) = HHHLHLNLO(1)                  
+             HHHEW(1) = HHHLORESC*(1.D0+
+     .               (HHHLHLNLO(1)-HHHLHLLO)/HHHLHLLO)
           endif
       endif
 c end MMM changed 10/7/18
@@ -13797,10 +14032,12 @@ c MMM changed 10/7/18
          endif
          if(irenscheme.eq.0) then
             do i=1,14,1
-               HHAAEW(i) = HHAANLO(i)
+               HHAAEW(i) = HHAALORESC*(1.D0+
+     .              (HHAANLO(i)-HHAALO)/HHAALO)
             end do
          elseif(irenscheme.ne.0) then
-               HHAAEW(1) = HHAANLO(1)
+               HHAAEW(1) = HHAALORESC*(1.D0+
+     .              (HHAANLO(1)-HHAALO)/HHAALO)
          endif
       endif
 c end MMM changed 10/7/18                
@@ -13834,10 +14071,12 @@ c MMM changed 10/7/18
          endif
          if(irenscheme.eq.0) then
             do i=1,14,1
-               HHAAEW(i) = HHAANLO(i)
+               HHAAEW(i) = HHAALORESC*(1.D0+
+     .              (HHAANLO(i)-HHAALO)/HHAALO)
             end do
          elseif(irenscheme.ne.0) then
-               HHAAEW(1) = HHAANLO(1)
+               HHAAEW(1) = HHAALORESC*(1.D0+
+     .              (HHAANLO(1)-HHAALO)/HHAALO)
          endif
       endif
 c end MMM changed 10/7/18                
@@ -13878,10 +14117,12 @@ c MMM changed 10/7/18
                endif
                if(irenscheme.eq.0) then
                   do i=1,14,1
-                     HHHPHMEW(i) = HHHPHMNLO(i)
+                     HHHPHMEW(i) = HHCHCHLORESC*(1.D0+
+     .                    (HHHPHMNLO(i)-HHHPHMLO)/HHHPHMLO)
                   end do
                elseif(irenscheme.ne.0) then
-                     HHHPHMEW(1) = HHHPHMNLO(1)                  
+                     HHHPHMEW(1) = HHCHCHLORESC*(1.D0+
+     .                    (HHHPHMNLO(1)-HHHPHMLO)/HHHPHMLO)                 
                endif
             endif
 c end MMM changed 10/7/18      
@@ -14094,10 +14335,12 @@ c MMM changed 10/7/18
                endif
                if(irenscheme.eq.0) then
                   do i=1,14,1
-                     HHAZEW(i) = HHZANLO(i)
+                     HHAZEW(i) = HHAZLORESC*(1.D0+
+     .                    (HHZANLO(i)-HHZALO)/HHZALO)
                   end do
                elseif(irenscheme.ne.0) then
-                     HHAZEW(1) = HHZANLO(1)                  
+                     HHAZEW(1) = HHAZLORESC*(1.D0+
+     .                    (HHZANLO(1)-HHZALO)/HHZALO)                 
                endif
             endif
 c end MMM changed 10/7/18     
@@ -14132,10 +14375,12 @@ c MMM changed 10/7/18
                endif
                if(irenscheme.eq.0) then
                   do i=1,14,1
-                     HHAZEW(i) = HHZANLO(i)
+                     HHAZEW(i) = HHAZLORESC*(1.D0+
+     .                    (HHZANLO(i)-HHZALO)/HHZALO)
                   end do
                elseif(irenscheme.ne.0) then
-                     HHAZEW(1) = HHZANLO(1)                  
+                     HHAZEW(1) = HHAZLORESC*(1.D0+
+     .                    (HHZANLO(1)-HHZALO)/HHZALO)                  
                endif
             endif
 c end MMM changed 10/7/18
@@ -14351,10 +14596,12 @@ c MMM changed 10/7/18
                endif
                if(irenscheme.eq.0) then
                   do i=1,14,1
-                     HHHPWMEW(i) = HHHPWMNLO(i)
+                     HHHPWMEW(i) = HHHPWMLORESC*(1.D0+
+     .                    (HHHPWMNLO(i)-HHHPWMLO)/HHHPWMLO)
                   end do
                elseif(irenscheme.ne.0) then
-                     HHHPWMEW(1) = HHHPWMNLO(1)
+                     HHHPWMEW(1) = HHHPWMLORESC*(1.D0+
+     .                    (HHHPWMNLO(1)-HHHPWMLO)/HHHPWMLO)
                endif
             endif
 c end MMM changed 10/7/18  
@@ -14389,10 +14636,12 @@ c MMM changed 10/7/18
                endif
                if(irenscheme.eq.0) then
                   do i=1,14,1
-                     HHHPWMEW(i) = HHHPWMNLO(i)
+                     HHHPWMEW(i) = HHHPWMLORESC*(1.D0+
+     .                    (HHHPWMNLO(i)-HHHPWMLO)/HHHPWMLO)
                   end do
                elseif(irenscheme.ne.0) then
-                     HHHPWMEW(1) = HHHPWMNLO(1)
+                     HHHPWMEW(1) = HHHPWMLORESC*(1.D0+
+     .                    (HHHPWMNLO(1)-HHHPWMLO)/HHHPWMLO)
                endif
             endif
 c end MMM changed 10/7/18 
@@ -14693,10 +14942,10 @@ c corrections, but rescaled by GFCALC/GF
 
       hhwdth1 = wtot1
 
-      print*,''
-      print*,'H decays'
-      print*,''
-      print*,'wtot1',wtot1
+c      print*,''
+c      print*,'H decays'
+c      print*,''
+c      print*,'wtot1',wtot1
       
       HHBRG1=HHGGRESC/WTOT1
       HHBRM1=HHMMLORESC/WTOT1
@@ -14715,23 +14964,23 @@ c corrections, but rescaled by GFCALC/GF
       HHBRAZ1=HHAZLORESC/WTOT1
       HHBRHW1=HHHPWMLORESC/WTOT1
 
-      print*,'hhbrg',hhggresc,hhbrg1
-      print*,'hhbrm',hhmmloresc,hhbrm1
-      print*,'hhbrl',hhllloresc,hhbrl1
-      print*,'hhbrs',hhssqcd,hhbrs1
-      print*,'hhbrc',hhccqcd,hhbrc1
-      print*,'hhbrb',hhbbqcd,hhbrb1
-      print*,'hhbrt',hhttqcd,hhbrt1
-      print*,'hhbrga1',hhgaresc,hhbrga1
-      print*,'hhbrzga',hhzgaresc,hhbrzga1
-      print*,'hhbrw',hhwwloresc,hhbrw1
-      print*,'hhbrz',hhzzloresc,hhbrz1
-      print*,'hhbrhl',hhhloresc,hhbrhl1
-      print*,'hhbra',hhaaloresc,hhbra1
-      print*,'hhbrchch',hhchchloresc,hhbrchch1
-      print*,'hhbraz',hhazloresc,hhbraz1
-      print*,'hhbrhw1',hhhpwmloresc,hhbrhw1
-      print*,'rescal',gfcalc/gf
+c      print*,'hhbrg',hhggresc,hhbrg1
+c      print*,'hhbrm',hhmmloresc,hhbrm1
+c      print*,'hhbrl',hhllloresc,hhbrl1
+c      print*,'hhbrs',hhssqcd,hhbrs1
+c      print*,'hhbrc',hhccqcd,hhbrc1
+c      print*,'hhbrb',hhbbqcd,hhbrb1
+c      print*,'hhbrt',hhttqcd,hhbrt1
+c      print*,'hhbrga1',hhgaresc,hhbrga1
+c      print*,'hhbrzga',hhzgaresc,hhbrzga1
+c      print*,'hhbrw',hhwwloresc,hhbrw1
+c      print*,'hhbrz',hhzzloresc,hhbrz1
+c      print*,'hhbrhl',hhhloresc,hhbrhl1
+c      print*,'hhbra',hhaaloresc,hhbra1
+c      print*,'hhbrchch',hhchchloresc,hhbrchch1
+c      print*,'hhbraz',hhazloresc,hhbraz1
+c      print*,'hhbrhw1',hhhpwmloresc,hhbrhw1
+c      print*,'rescal',gfcalc/gf
 
 c If OMIT ELW2 = 0, then the following decay widths include the usual
 c QCD corrections and the EW corrections. The latter are only included for
@@ -14763,28 +15012,28 @@ c on-shell decays and non-loop induced decays
       HHBRAZ2(i)=HHAZEW(i)/WTOT2(i)
       HHBRHW2(i)=HHHPWMEW(i)/WTOT2(i)
 
-      if(i.eq.2) then
-      print*,''
-      print*,'wtot2',wtot2(i),i
-      print*,''
-      print*,'hhbrg2',hhggresc,hhbrg2(i)
-      print*,'hhbrm2(i)',hhmmew(i),hhbrm2(i)
-      print*,'hhbrl2(i)',hhllew(i),hhbrl2(i)
-      print*,'hhbrs2(i)',hhssqcdew(i),hhbrs2(i)
-      print*,'hhbrc2(i)',hhccqcdew(i),hhbrc2(i)
-      print*,'hhbrb2(i)',hhbbqcdew(i),hhbrb2(i)
-      print*,'hhbrt2(i)',hhttqcdew(i),hhbrt2(i)
-      print*,'hhbrga2',hhgaresc,hhbrga2(i)
-      print*,'hhbrzga2',hhzgaresc,hhbrzga2(i)
-      print*,'hhbrw2(i)',hhwwew(i),hhbrw2(i)
-      print*,'hhbrz2(i)',hhzzew(i),hhbrz2(i)
-      print*,'hhbrhl2(i)',hhhew(i),hhbrhl2(i)      
-      print*,'hhbra2(i)',hhaaew(i),hhbra2(i)
-      print*,'hhbrchch2(i)',hhhphmew(i),hhbrchch2(i)
-      print*,'brbraz2(i)',hhazew(i),hhbraz2(i)
-      print*,'hhbrhw2(i)',hhhpwmew(i),hhbrhw2(i)
-      print*,''
-      endif
+c      if(i.eq.2) then
+c      print*,''
+c      print*,'wtot2',wtot2(i),i
+c      print*,''
+c      print*,'hhbrg2',hhggresc,hhbrg2(i)
+c      print*,'hhbrm2(i)',hhmmew(i),hhbrm2(i)
+c      print*,'hhbrl2(i)',hhllew(i),hhbrl2(i)
+c      print*,'hhbrs2(i)',hhssqcdew(i),hhbrs2(i)
+c      print*,'hhbrc2(i)',hhccqcdew(i),hhbrc2(i)
+c      print*,'hhbrb2(i)',hhbbqcdew(i),hhbrb2(i)
+c      print*,'hhbrt2(i)',hhttqcdew(i),hhbrt2(i)
+c      print*,'hhbrga2',hhgaresc,hhbrga2(i)
+c      print*,'hhbrzga2',hhzgaresc,hhbrzga2(i)
+c      print*,'hhbrw2(i)',hhwwew(i),hhbrw2(i)
+c      print*,'hhbrz2(i)',hhzzew(i),hhbrz2(i)
+c      print*,'hhbrhl2(i)',hhhew(i),hhbrhl2(i)      
+c      print*,'hhbra2(i)',hhaaew(i),hhbra2(i)
+c      print*,'hhbrchch2(i)',hhhphmew(i),hhbrchch2(i)
+c      print*,'brbraz2(i)',hhazew(i),hhbraz2(i)
+c      print*,'hhbrhw2(i)',hhhpwmew(i),hhbrhw2(i)
+c      print*,''
+c      endif
 
       end do
 
@@ -14814,26 +15063,26 @@ c on-shell decays and non-loop induced decays
       HHBRAZ2(1)=HHAZEW(1)/WTOT2(1)
       HHBRHW2(1)=HHHPWMEW(1)/WTOT2(1)
 
-      print*,''
-      print*,'wtot2',wtot2(1),irenscheme
-      print*,''
-      print*,'hhbrg2',hhggresc,hhbrg2(1)
-      print*,'hhbrm2(1)',hhmmew(1),hhbrm2(1)
-      print*,'hhbrl2(1)',hhllew(1),hhbrl2(1)
-      print*,'hhbrs2(1)',hhssqcdew(1),hhbrs2(1)
-      print*,'hhbrc2(1)',hhccqcdew(1),hhbrc2(1)
-      print*,'hhbrb2(1)',hhbbqcdew(1),hhbrb2(1)
-      print*,'hhbrt2(1)',hhttqcdew(1),hhbrt2(1)
-      print*,'hhbrga2',hhgaresc,hhbrga2(1)
-      print*,'hhbrzga2',hhzgaresc,hhbrzga2(1)
-      print*,'hhbrw2(1)',hhwwew(1),hhbrw2(1)
-      print*,'hhbrz2(1)',hhzzew(1),hhbrz2(1)
-      print*,'hhbrhl2(1)',hhhew(1),hhbrhl2(1)      
-      print*,'hhbra2(1)',hhaaew(1),hhbra2(1)
-      print*,'hhbrchch2(1)',hhhphmew(1),hhbrchch2(1)
-      print*,'brbraz2(1)',hhazew(1),hhbraz2(1)
-      print*,'hhbrhw2(1)',hhhpwmew(1),hhbrhw2(1)
-      print*,''      
+c      print*,''
+c      print*,'wtot2',wtot2(1),irenscheme
+c      print*,''
+c      print*,'hhbrg2',hhggresc,hhbrg2(1)
+c      print*,'hhbrm2(1)',hhmmew(1),hhbrm2(1)
+c      print*,'hhbrl2(1)',hhllew(1),hhbrl2(1)
+c      print*,'hhbrs2(1)',hhssqcdew(1),hhbrs2(1)
+c      print*,'hhbrc2(1)',hhccqcdew(1),hhbrc2(1)
+c      print*,'hhbrb2(1)',hhbbqcdew(1),hhbrb2(1)
+c      print*,'hhbrt2(1)',hhttqcdew(1),hhbrt2(1)
+c      print*,'hhbrga2',hhgaresc,hhbrga2(1)
+c      print*,'hhbrzga2',hhzgaresc,hhbrzga2(1)
+c      print*,'hhbrw2(1)',hhwwew(1),hhbrw2(1)
+c      print*,'hhbrz2(1)',hhzzew(1),hhbrz2(1)
+c      print*,'hhbrhl2(1)',hhhew(1),hhbrhl2(1)      
+c      print*,'hhbra2(1)',hhaaew(1),hhbra2(1)
+c      print*,'hhbrchch2(1)',hhhphmew(1),hhbrchch2(1)
+c      print*,'brbraz2(1)',hhazew(1),hhbraz2(1)
+c      print*,'hhbrhw2(1)',hhhpwmew(1),hhbrhw2(1)
+c      print*,''      
       endif
       
       endif
@@ -15014,10 +15263,12 @@ c MMM changed 10/7/18
             endif
             if(irenscheme.eq.0) then
                do i=1,14,1
-                  AMMEW(i) = AMMNLO(i)
+                  AMMEW(i) = AMMLORESC*(1.D0+
+     .                 (AMMNLO(i)-AMMLO)/AMMLO)
                end do
             elseif(irenscheme.ne.0) then
-               AMMEW(1) = AMMNLO(1)
+               AMMEW(1) = AMMLORESC*(1.D0+
+     .                 (AMMNLO(1)-AMMLO)/AMMLO)
             endif
          endif
 c end MMM changed 10/7/18                
@@ -15060,10 +15311,12 @@ c MMM changed 10/7/18
             endif
             if(irenscheme.eq.0) then
                do i=1,14,1
-                  ALLEW(i) = ALLNLO(i)
+                  ALLEW(i) = ALLLORESC*(1.D0
+     .                 +(ALLNLO(i)-ALLLO)/ALLLO)
                end do
             elseif(irenscheme.ne.0) then
-               ALLEW(1) = ALLNLO(1)
+               ALLEW(1) = ALLLORESC*(1.D0
+     .                 +(ALLNLO(1)-ALLLO)/ALLLO)
             endif
          endif
 c end MMM changed 10/7/18           
@@ -15117,11 +15370,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   ASSEW(i) = ASSNLO(i)
-                  ASSQCDEW(i) = ASSQCD + (ASSNLO(i)-ASSLO)
+                  ASSQCDEW(i)=ASSQCD*(1.D0+(ASSNLO(i)-ASSLO)/ASSLO)
                end do
             elseif(irenscheme.ne.0) then
                   ASSEW(1) = ASSNLO(1)
-                  ASSQCDEW(1) = ASSQCD + (ASSNLO(1)-ASSLO)
+                  ASSQCDEW(1)=ASSQCD*(1.D0+(ASSNLO(1)-ASSLO)/ASSLO)
             endif
          endif
 c end MMM changed 10/7/18               
@@ -15169,11 +15422,11 @@ c MMM changed 10/7/18
             if(irenscheme.eq.0) then
                do i=1,14,1
                   ACCEW(i) = ACCNLO(i)
-                  ACCQCDEW(i) = ACCQCD + (ACCNLO(i)-ACCLO)
+                  ACCQCDEW(i)=ACCQCD*(1.D0+(ACCNLO(i)-ACCLO)/ACCLO)
                end do
             elseif(irenscheme.ne.0) then
                   ACCEW(1) = ACCNLO(1)
-                  ACCQCDEW(1) = ACCQCD + (ACCNLO(1)-ACCLO)
+                  ACCQCDEW(1)=ACCQCD*(1.D0+(ACCNLO(1)-ACCLO)/ACCLO)
             endif
          endif
 c end MMM changed 10/7/18              
@@ -15239,11 +15492,11 @@ c MMM changed 10/7/18
           if(irenscheme.eq.0) then
              do i=1,14,1
                 ABBEW(i) = ABBNLO(i)
-                ABBQCDEW(i) = ABBQCD + (ABBNLO(i)-ABBLO)
+                ABBQCDEW(i)=ABBQCD*(1.D0+(ABBNLO(i)-ABBLO)/ABBLO)
              end do
           elseif(irenscheme.ne.0) then
              ABBEW(1) = ABBNLO(1)
-             ABBQCDEW(1) = ABBQCD + (ABBNLO(1)-ABBLO)
+             ABBQCDEW(1)=ABBQCD*(1.D0+(ABBNLO(1)-ABBLO)/ABBLO)
           endif
        endif
 c end MMM changed 10/7/18              
@@ -15364,11 +15617,11 @@ c MMM changed 10/7/18
            if(irenscheme.eq.0) then
               do i=1,14,1
                  ATTEW(i) = ATTNLO(i)
-                 ATTQCDEW(i) = ATTQCD + (ATTNLO(i)-ATTLO)
+                 ATTQCDEW(i)=ATTQCD*(1.D0+(ATTNLO(i)-ATTLO)/ATTLO)
               end do
            elseif(irenscheme.ne.0) then
               ATTEW(1) = ATTNLO(1)
-              ATTQCDEW(1) = ATTQCD + (ATTNLO(1)-ATTLO)
+              ATTQCDEW(1)=ATTQCD*(1.D0+(ATTNLO(1)-ATTLO)/ATTLO)
            endif
         endif
 c end MMM changed 10/7/18  
@@ -15410,11 +15663,11 @@ c MMM changed 10/7/18
            if(irenscheme.eq.0) then
               do i=1,14,1
                  ATTEW(i) = ATTNLO(i)
-                 ATTQCDEW(i) = ATTQCD + (ATTNLO(i)-ATTLO)
+                 ATTQCDEW(i)=ATTQCD*(1.D0+(ATTNLO(i)-ATTLO)/ATTLO)
               end do
            elseif(irenscheme.ne.0) then
               ATTEW(1) = ATTNLO(1)
-              ATTQCDEW(1) = ATTQCD + (ATTNLO(1)-ATTLO)
+              ATTQCDEW(1)=ATTQCD*(1.D0+(ATTNLO(1)-ATTLO)/ATTLO)
            endif
         endif
 c end MMM changed 10/7/18        
@@ -15615,10 +15868,12 @@ c MMM changed 10/7/18
            endif
            if(irenscheme.eq.0) then
               do i=1,14,1
-                 AHLZEW(i) = AHLZNLO(i)
+                 AHLZEW(i) = AHLZLORESC*(1.D0+
+     .                (AHLZNLO(i)-AHLZLO)/AHLZLO)
               end do
            elseif(irenscheme.ne.0) then
-              AHLZEW(1) = AHLZNLO(1)                  
+              AHLZEW(1) = AHLZLORESC*(1.D0+
+     .                (AHLZNLO(1)-AHLZLO)/AHLZLO)                  
            endif
         endif
 c end MMM changed 10/7/18        
@@ -15635,7 +15890,7 @@ c MMM changed 10/7/2018
                  AHLZEW(i) = AHLZLORESC
               end do
            elseif(irenscheme.ne.0) then
-              AHLZEW(1) = AHKZLORESC                  
+              AHLZEW(1) = AHLZLORESC                  
            endif                     
         endif
 c end MMM changed 10/7/2018            
@@ -15653,10 +15908,12 @@ c MMM changed 10/7/18
            endif
            if(irenscheme.eq.0) then
               do i=1,14,1
-                 AHLZEW(i) = AHLZNLO(i)
+                 AHLZEW(i) = AHLZLORESC*(1.D0+
+     .                (AHLZNLO(i)-AHLZLO)/AHLZLO)
               end do
            elseif(irenscheme.ne.0) then
-              AHLZEW(1) = AHLZNLO(1)                  
+              AHLZEW(1) = AHLZLORESC*(1.D0+
+     .                (AHLZNLO(1)-AHLZLO)/AHLZLO)                  
            endif
         endif
 c end MMM changed 10/7/18               
@@ -15765,10 +16022,12 @@ c MMM changed 10/7/18
            endif
            if(irenscheme.eq.0) then
               do i=1,14,1
-                 AHHZEW(i) = AHHZNLO(i)
+                 AHHZEW(i) = AHHZLORESC*(1.D0+
+     .                (AHHZNLO(i)-AHHZLO)/AHHZLO)
               end do
            elseif(irenscheme.ne.0) then
-              AHHZEW(1) = AHHZNLO(1)                  
+              AHHZEW(1) = AHHZLORESC*(1.D0+
+     .                (AHHZNLO(1)-AHHZLO)/AHHZLO)                
            endif
         endif
 c end MMM changed 10/7/18          
@@ -15803,10 +16062,12 @@ c MMM changed 10/7/18
            endif
            if(irenscheme.eq.0) then
               do i=1,14,1
-                 AHHZEW(i) = AHHZNLO(i)
+                 AHHZEW(i) = AHHZLORESC*(1.D0+
+     .                (AHHZNLO(i)-AHHZLO)/AHHZLO)
               end do
            elseif(irenscheme.ne.0) then
-              AHHZEW(1) = AHHZNLO(1)                  
+              AHHZEW(1) = AHHZLORESC*(1.D0+
+     .                (AHHZNLO(1)-AHHZLO)/AHHZLO)                
            endif
         endif
 c end MMM changed 10/7/18  
@@ -15915,10 +16176,12 @@ c MMM changed 10/7/18
                endif
                if(irenscheme.eq.0) then
                   do i=1,14,1
-                     AHPWMEW(i) = AHPWMNLO(i)
+                     AHPWMEW(i) = AHPWMLORESC*(1.D0+
+     .                    (AHPWMNLO(i)-AHPWMLO)/AHPWMLO)
                   end do
                elseif(irenscheme.ne.0) then
-                     AHPWMEW(1) = AHPWMNLO(1)
+                     AHPWMEW(1) = AHPWMLORESC*(1.D0+
+     .                    (AHPWMNLO(1)-AHPWMLO)/AHPWMLO)
                endif
             endif
 c end MMM changed 10/7/18                
@@ -15953,10 +16216,12 @@ c MMM changed 10/7/18
                endif
                if(irenscheme.eq.0) then
                   do i=1,14,1
-                     AHPWMEW(i) = AHPWMNLO(i)
+                     AHPWMEW(i) = AHPWMLORESC*(1.D0+
+     .                    (AHPWMNLO(i)-AHPWMLO)/AHPWMLO)
                   end do
                elseif(irenscheme.ne.0) then
-                     AHPWMEW(1) = AHPWMNLO(1)
+                     AHPWMEW(1) = AHPWMLORESC*(1.D0+
+     .                    (AHPWMNLO(1)-AHPWMLO)/AHPWMLO)
                endif
             endif
 c end MMM changed 10/7/18 
@@ -16172,10 +16437,10 @@ c corrections, but rescaled by GFCALC/GF
 
       awdth1 = wtot1
 
-      print*,''
-      print*,'A decays'
-      print*,''
-      print*,'wtot1',wtot1
+c      print*,''
+c      print*,'A decays'
+c      print*,''
+c      print*,'wtot1',wtot1
       
       ABRG1=AGGRESC/WTOT1
       ABRM1=AMMLORESC/WTOT1
@@ -16190,19 +16455,19 @@ c corrections, but rescaled by GFCALC/GF
       ABRHHZ1=AHHZLORESC/WTOT1      
       ABRHW1=AHPWMLORESC/WTOT1
 
-      print*,'abrg',aggresc,abrg1
-      print*,'abrm',ammloresc,abrm1
-      print*,'abrl',allloresc,abrl1
-      print*,'abrs',assqcd,abrs1
-      print*,'abrc',accqcd,abrc1
-      print*,'abrb',abbqcd,abrb1
-      print*,'abrt',attqcd,abrt1
-      print*,'abrga',agaresc,abrga1
-      print*,'abrzga',azgaresc,abrzga1
-      print*,'abrhlz',ahlzloresc,abrhlz1      
-      print*,'abrhhz',ahhzloresc,abrhhz1
-      print*,'abrhw',ahpwmloresc,abrhw1
-      print*,'rescal',gfcalc/gf
+c      print*,'abrg',aggresc,abrg1
+c      print*,'abrm',ammloresc,abrm1
+c      print*,'abrl',allloresc,abrl1
+c      print*,'abrs',assqcd,abrs1
+c      print*,'abrc',accqcd,abrc1
+c      print*,'abrb',abbqcd,abrb1
+c      print*,'abrt',attqcd,abrt1
+c      print*,'abrga',agaresc,abrga1
+c      print*,'abrzga',azgaresc,abrzga1
+c      print*,'abrhlz',ahlzloresc,abrhlz1      
+c      print*,'abrhhz',ahhzloresc,abrhhz1
+c      print*,'abrhw',ahpwmloresc,abrhw1
+c      print*,'rescal',gfcalc/gf
 
 c If OMIT ELW2 = 0, then the following decay widths include the usual
 c QCD corrections and the EW corrections. The latter are only included for
@@ -16229,24 +16494,24 @@ c on-shell decays and non-loop induced decays
       ABRHHZ2(i)=AHHZEW(i)/WTOT2(i)      
       ABRHW2(i)=AHPWMEW(i)/WTOT2(i)
       
-      if(i.eq.2) then
-      print*,''
-      print*,'wtot2',wtot2(i),i
-      print*,''
-      print*,'abrg2(i)',aggresc,abrg2(i)
-      print*,'abrm2(i)',ammew(i),abrm2(i)
-      print*,'abrl2(i)',allew(i),abrl2(i)
-      print*,'abrs2(i)',assqcdew(i),abrs2(i)
-      print*,'abrc2(i)',accqcdew(i),abrc2(i)
-      print*,'abrb2(i)',abbqcdew(i),abrb2(i)
-      print*,'abrt2(i)',attqcdew(i),abrt2(i)
-      print*,'abrga2(i)',agaresc,abrga2(i)
-      print*,'abrzga2(i)',azgaresc,abrzga2(i)
-      print*,'abrhlz2(i)',ahlzew(i),abrhlz2(i)
-      print*,'abrhhz2(i)',ahhzew(i),abrhhz2(i)
-      print*,'abrhw2(i)',ahpwmew(i),abrhw2(i)
-      print*,''
-      endif
+c      if(i.eq.2) then
+c      print*,''
+c      print*,'wtot2',wtot2(i),i
+c      print*,''
+c      print*,'abrg2(i)',aggresc,abrg2(i)
+c      print*,'abrm2(i)',ammew(i),abrm2(i)
+c      print*,'abrl2(i)',allew(i),abrl2(i)
+c      print*,'abrs2(i)',assqcdew(i),abrs2(i)
+c      print*,'abrc2(i)',accqcdew(i),abrc2(i)
+c      print*,'abrb2(i)',abbqcdew(i),abrb2(i)
+c      print*,'abrt2(i)',attqcdew(i),abrt2(i)
+c      print*,'abrga2(i)',agaresc,abrga2(i)
+c      print*,'abrzga2(i)',azgaresc,abrzga2(i)
+c      print*,'abrhlz2(i)',ahlzew(i),abrhlz2(i)
+c      print*,'abrhhz2(i)',ahhzew(i),abrhhz2(i)
+c      print*,'abrhw2(i)',ahpwmew(i),abrhw2(i)
+c      print*,''
+c      endif
 
       end do
 
@@ -16271,22 +16536,22 @@ c on-shell decays and non-loop induced decays
       ABRHHZ2(1)=AHHZEW(1)/WTOT2(1)      
       ABRHW2(1)=AHPWMEW(1)/WTOT2(1)
 
-      print*,''
-      print*,'wtot2',wtot2(1),irenscheme
-      print*,''
-      print*,'abrg2(1)',aggresc,abrg2(1)
-      print*,'abrm2(1)',ammew(1),abrm2(1)
-      print*,'abrl2(1)',allew(1),abrl2(1)
-      print*,'abrs2(1)',assqcdew(1),abrs2(1)
-      print*,'abrc2(1)',accqcdew(1),abrc2(1)
-      print*,'abrb2(1)',abbqcdew(1),abrb2(1)
-      print*,'abrt2(1)',attqcdew(1),abrt2(1)
-      print*,'abrga2(1)',agaresc,abrga2(1)
-      print*,'abrzga2(1)',azgaresc,abrzga2(1)
-      print*,'abrhlz2(1)',ahlzew(1),abrhlz2(1)
-      print*,'abrhhz2(1)',ahhzew(1),abrhhz2(1)
-      print*,'abrhw2(1)',ahpwmew(1),abrhw2(1)
-      print*,''
+c      print*,''
+c      print*,'wtot2',wtot2(1),irenscheme
+c      print*,''
+c      print*,'abrg2(1)',aggresc,abrg2(1)
+c      print*,'abrm2(1)',ammew(1),abrm2(1)
+c      print*,'abrl2(1)',allew(1),abrl2(1)
+c      print*,'abrs2(1)',assqcdew(1),abrs2(1)
+c      print*,'abrc2(1)',accqcdew(1),abrc2(1)
+c      print*,'abrb2(1)',abbqcdew(1),abrb2(1)
+c      print*,'abrt2(1)',attqcdew(1),abrt2(1)
+c      print*,'abrga2(1)',agaresc,abrga2(1)
+c      print*,'abrzga2(1)',azgaresc,abrzga2(1)
+c      print*,'abrhlz2(1)',ahlzew(1),abrhlz2(1)
+c      print*,'abrhhz2(1)',ahhzew(1),abrhhz2(1)
+c      print*,'abrhw2(1)',ahpwmew(1),abrhw2(1)
+c      print*,''
       
       endif
       
