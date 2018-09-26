@@ -19,19 +19,19 @@ ALS(MZ)  = 1.18000e-01
 MSBAR(2) = 9.50000e-02
 MCBAR(3) = 0.98600e+00
 MBBAR(MB)= 4.18000e+00
-MCOSCALC = 1.4313134
-MBOSCALC = 4.8413134
+MCOSCALC = 1.431413
+MBOSCALC = 4.841413
 MT       = 1.73200e+02
 MTAU     = 1.77682e+00
 MMUON    = 1.056583715e-01
 1/ALPHA  = 1.37036e+02
 ALPHAMZ  = 7.754222173973729e-03
 GF       = 1.1663787e-05
-GFCALC   = 1.1970862030317991e-05
+GFCALC   = 1.1959648784972223e-05
 GAMW     = 2.08500e+00
 GAMZ     = 2.49520e+00
-MZ       = 9.115348e+01
-MW       = 8.035797e+01
+MZ       = 9.11876e+01
+MW       = 8.0385e+01
 VTB      = 9.9910e-01
 VTS      = 4.040e-02
 VTD      = 8.67e-03
@@ -57,11 +57,11 @@ MEP      = 450.D0
 
 PARAM    = 1
 TYPE     = 1
-RENSCHEM = 5
+RENSCHEM = 7
 ********************
 TGBET2HDM= 4.23635D0
 M_12^2   = 28505.5D0
-INSCALE  = 1D0
+INSCALE  = MIN
 ******************** PARAM=1:
 ALPHA_H  = -0.189345D0
 MHL      = 125.09D0
@@ -120,144 +120,144 @@ Cbp      = 0.D0
 Cnup     = 0.D0
 Cep      = 0.D0
 ************** h -> bb (electroweak corrections) *************************
-h0toBBBarLO         =  5.979169577370500E-003
-h0toBBBarNLO5       =  5.716942918522711E-003
+h0toBBBarLO         =  5.973812387596805E-003
+h0toBBBarNLO7       =  5.719563726211383E-003
 ************** h -> tau tau (electroweak corrections) ********************
-h0toTauTauBarLO     =  2.705633909270661E-004
-h0toTauTauBarNLO5   =  2.589660832096720E-004
+h0toTauTauBarLO     =  2.703099510597980E-004
+h0toTauTauBarNLO7   =  2.590677038707585E-004
 ************** h -> mu mu (electroweak corrections) **********************
-h0toMuMuBarLO       =  9.578865853669644E-007
-h0toMuMuBarNLO5     =  8.967801291154729E-007
+h0toMuMuBarLO       =  9.569893218893687E-007
+h0toMuMuBarNLO7     =  8.971586717793124E-007
 ************** h -> ss (electroweak corrections) *************************
-h0toSSBarLO         =  2.323138420802401E-006
-h0toSSBarNLO5       =  2.268560363733546E-006
+h0toSSBarLO         =  2.320962310091354E-006
+h0toSSBarNLO7       =  2.269392323905310E-006
 ************** h -> cc (electroweak corrections) *************************
-h0toCCBarLO         =  5.269356760127904E-004
-h0toCCBarNLO5       =  5.113549909934132E-004
+h0toCCBarLO         =  5.265153006647946E-004
+h0toCCBarNLO7       =  5.116177712725746E-004
 ************** h -> tt (electroweak corrections) *************************
 h0toTTBarLO         =  0.000000000000000E+000
-h0toTTBarNLO5       =  0.000000000000000E+000
+h0toTTBarNLO7       =  0.000000000000000E+000
 ************** h -> WW (electroweak corrections) *************************
 h0toWmWpLO          =  0.000000000000000E+000
-h0toWmWpNLO5        =  0.000000000000000E+000
+h0toWmWpNLO7        =  0.000000000000000E+000
 ************** h -> ZZ (electroweak corrections) *************************
 h0toZ0Z0LO          =  0.000000000000000E+000
-h0toZ0Z0NLO5        =  0.000000000000000E+000
+h0toZ0Z0NLO7        =  0.000000000000000E+000
 ************** h -> AA (electroweak corrections) *************************
 h0toA0A0LO          =  0.000000000000000E+000
-h0toA0A0NLO5        =  0.000000000000000E+000
+h0toA0A0NLO7        =  0.000000000000000E+000
 ************** h -> ZA (electroweak corrections) *************************
 h0toA0Z0LO          =  0.000000000000000E+000
-h0toA0Z0NLO5        =  0.000000000000000E+000
+h0toA0Z0NLO7        =  0.000000000000000E+000
 ************** h -> H+ W- (electroweak corrections) **********************
 h0toHpWmLO          =  0.000000000000000E+000
-h0toHpWmNLO5        =  0.000000000000000E+000
+h0toHpWmNLO7        =  0.000000000000000E+000
 ************** h -> H+ H- (electroweak corrections) **********************
 h0toHmHpLO          =  0.000000000000000E+000
-h0toHmHpNLO5        =  0.000000000000000E+000
+h0toHmHpNLO7        =  0.000000000000000E+000
 ************** H -> bb (electroweak corrections) *************************
-HHtoBBBarLO         =  6.755972365937750E-004
-HHtoBBBarNLO5       =  6.342134125265023E-004
+HHtoBBBarLO         =  6.749921422842520E-004
+HHtoBBBarNLO7       =  6.436330102146536E-004
 ************** H -> tautau (electroweak corrections) *********************
-HHtoTauTauBarLO     =  3.035916480698030E-005
-HHtoTauTauBarNLO5   =  2.705137805201890E-005
+HHtoTauTauBarLO     =  3.033072702508865E-005
+HHtoTauTauBarNLO7   =  2.747528156432774E-005
 ************** H -> mu mu (electroweak corrections) **********************
-HHtoMuMuBarLO       =  1.073660621791019E-007
-HHtoMuMuBarNLO5     =  9.342405633734799E-008
+HHtoMuMuBarLO       =  1.072654911430333E-007
+HHtoMuMuBarNLO7     =  9.492530477348131E-008
 ************** H -> ss (electroweak corrections) *************************
-HHtoSSBarLO         =  2.603920394757811E-007
-HHtoSSBarNLO5       =  2.390407752468042E-007
+HHtoSSBarLO         =  2.601481272314220E-007
+HHtoSSBarNLO7       =  2.426703441064254E-007
 ************** H -> cc (electroweak corrections) *************************
-HHtoCCBarLO         =  5.910354081483815E-005
-HHtoCCBarNLO5       =  5.372498760743829E-005
+HHtoCCBarLO         =  5.905639533977887E-005
+HHtoCCBarNLO7       =  5.455688671993824E-005
 ************** H -> tt (electroweak corrections) *************************
-HHtoTTBarLO         =  6.428728679667024E-002
-HHtoTTBarNLO5       =  6.216157211893254E-002
+HHtoTTBarLO         =  6.422706814928802E-002
+HHtoTTBarNLO7       =  6.305220476113105E-002
 ************** H -> WW (electroweak corrections) *************************
-HHtoWmWpLO          =  2.592548404297786E-002
-HHtoWmWpNLO5        =  2.414279809706027E-002
+HHtoWmWpLO          =  2.589664360657713E-002
+HHtoWmWpNLO7        =  2.694884146934442E-002
 ************** H -> ZZ (electroweak corrections) *************************
-HHtoZ0Z0LO          =  1.203131163273010E-002
-HHtoZ0Z0NLO5        =  1.365088983643692E-002
+HHtoZ0Z0LO          =  1.201704771988796E-002
+HHtoZ0Z0NLO7        =  1.494437191173822E-002
 ************** H -> hh (electroweak corrections) *************************
-HHtoh0h0LO          =  5.307765085152756E-002
-HHtoh0h0NLO5        =  5.826928236723861E-002
+HHtoh0h0LO          =  5.302793240018563E-002
+HHtoh0h0NLO7        =  6.773115840543781E-002
 ************** H -> AA (electroweak corrections) *************************
 HHtoA0A0LO          =  0.000000000000000E+000
-HHtoA0A0NLO5        =  0.000000000000000E+000
+HHtoA0A0NLO7        =  0.000000000000000E+000
 ************** H -> ZA (electroweak corrections) *************************
 HHtoA0Z0LO          =  0.000000000000000E+000
-HHtoA0Z0NLO5        =  0.000000000000000E+000
+HHtoA0Z0NLO7        =  0.000000000000000E+000
 ************** H -> H+ W- (electroweak corrections) **********************
 HHtoHpWmLO          =  0.000000000000000E+000
-HHtoHpWmNLO5        =  0.000000000000000E+000
+HHtoHpWmNLO7        =  0.000000000000000E+000
 ************** H -> H+ H- (electroweak corrections) **********************
 HHtoHmHpLO          =  0.000000000000000E+000
-HHtoHmHpNLO5        =  0.000000000000000E+000
+HHtoHmHpNLO7        =  0.000000000000000E+000
 ************** A -> bb (electroweak corrections) *************************
-A0toBBBarLO         =  9.251056715517352E-004
-A0toBBBarNLO5       =  8.348246951983444E-004
+A0toBBBarLO         =  9.242771288312273E-004
+A0toBBBarNLO7       =  8.636598334940901E-004
 ************** A -> tau,tau (electroweak corrections) ********************
-A0toTauTauBarLO     =  4.155027319277360E-005
-A0toTauTauBarNLO5   =  3.529517319011972E-005
+A0toTauTauBarLO     =  4.151135256982144E-005
+A0toTauTauBarNLO7   =  3.659161158026746E-005
 ************** A -> mu,mu (electroweak corrections) **********************
-A0toMuMuBarLO       =  1.469322279176927E-007
-A0toMuMuBarNLO5     =  1.217423746617789E-007
+A0toMuMuBarLO       =  1.467945947951432E-007
+A0toMuMuBarNLO7     =  1.263297823309485E-007
 ************** A -> ss (electroweak corrections) *************************
-A0toSSBarLO         =  3.563507842047719E-007
-A0toSSBarNLO5       =  3.121560875349222E-007
+A0toSSBarLO         =  3.560169862909436E-007
+A0toSSBarNLO7       =  3.232663105865693E-007
 ************** A -> cc (electroweak corrections) *************************
-A0toCCBarLO         =  8.088827518956729E-005
-A0toCCBarNLO5       =  7.013811416393884E-005
+A0toCCBarLO         =  8.082375312900225E-005
+A0toCCBarNLO7       =  7.267079051896556E-005
 ************** A -> tt (electroweak corrections) *************************
-A0toTTBarLO         =  1.841747473486433E-001
-A0toTTBarNLO5       =  1.788393531181999E-001
+A0toTTBarLO         =  1.840022287260676E-001
+A0toTTBarNLO7       =  1.845540009852737E-001
 ************** A -> Zh (electroweak corrections) *************************
-A0toZ0h0LO          =  1.258902769467917E-002
-A0toZ0h0NLO5        =  7.284123469527871E-003
+A0toZ0h0LO          =  1.257394044612243E-002
+A0toZ0h0NLO7        =  8.652111939401300E-003
 ************** A -> ZH (electroweak corrections) *************************
 A0toHHZ0LO          =  0.000000000000000E+000
-A0toHHZ0NLO5        =  0.000000000000000E+000
+A0toHHZ0NLO7        =  0.000000000000000E+000
 ************** A -> H- W+ (electroweak corrections) **********************
 A0toHmWpLO          =  0.000000000000000E+000
-A0toHmWpNLO5        =  0.000000000000000E+000
+A0toHmWpNLO7        =  0.000000000000000E+000
 ************** H+ -> bbar c (electroweak corrections) ********************
-HptoBBarCLO         =  2.016790324770010E-006
-HptoBBarCNLO5       =  2.211715995246730E-006
+HptoBBarCLO         =  2.014999938894520E-006
+HptoBBarCNLO7       =  1.806354063814885E-006
 ************** H+ -> taubar nu (electroweak corrections) *****************
-HptoNeuTTauBarLO    =  4.906905416331110E-005
-HptoNeuTTauBarNLO5  =  4.310484033752182E-005
+HptoNeuTTauBarLO    =  4.902309061099344E-005
+HptoNeuTTauBarNLO7  =  4.463469441076882E-005
 ************** H+ -> mubar nu (electroweak corrections) ******************
-HptoMuBarNeuMLO     =  1.735180179318347E-007
-HptoMuBarNeuMNLO5   =  1.488012370739163E-007
+HptoMuBarNeuMLO     =  1.733554815913394E-007
+HptoMuBarNeuMNLO7   =  1.542145041408937E-007
 ************** H+ -> sbar u (electroweak corrections) ********************
-HptoSBarULO         =  2.136888263184528E-008
-HptoSBarUNLO5       =  1.934060153991180E-008
+HptoSBarULO         =  2.134886615156934E-008
+HptoSBarUNLO7       =  1.999611424067177E-008
 ************** H+ -> sbar c (electroweak corrections) ********************
-HptoCSBarLO         =  9.091689368788477E-005
-HptoCSBarNLO5       =  8.165074525045101E-005
+HptoCSBarLO         =  9.084431678285106E-005
+HptoCSBarNLO7       =  8.448765954929102E-005
 ************** H+ -> bbar t (electroweak corrections) ********************
-HptoBBarTLO         =  9.515008094538662E-001
-HptoBBarTNLO5       =  8.809439612518454E-001
+HptoBBarTLO         =  9.506095683013145E-001
+HptoBBarTNLO7       =  9.105634856914262E-001
 ************** H+ -> dbar c (electroweak corrections) ********************
-HptoCDBarLO         =  4.844555486845866E-006
-HptoCDBarNLO5       =  4.350668344503631E-006
+HptoCDBarLO         =  4.840691142008543E-006
+HptoCDBarNLO7       =  4.501625851236779E-006
 ************** H+ -> bbar u (electroweak corrections) ********************
-HptoBBarULO         =  1.346108200422597E-008
-HptoBBarUNLO5       =  2.015816632696734E-008
+HptoBBarULO         =  1.344902605591992E-008
+HptoBBarUNLO7       =  1.068555760035631E-008
 ************** H+ -> sbar t (electroweak corrections) ********************
-HptoSBarTLO         =  1.554182003205456E-003
-HptoSBarTNLO5       =  1.441315637347034E-003
+HptoSBarTLO         =  1.552726182891950E-003
+HptoSBarTNLO7       =  1.489388594800863E-003
 ************** H+ -> dbar t (electroweak corrections) ********************
-HptoDBarTLO         =  7.157760555941183E-005
-HptoDBarTNLO5       =  6.670259335971664E-005
+HptoDBarTLO         =  7.151055798586469E-005
+HptoDBarTNLO7       =  6.891341762730188E-005
 ************** H+ -> W h (electroweak corrections) ***********************
-HptoWph0LO          =  2.772098616568327E-002
-HptoWph0NLO5        =  2.777760464429357E-002
+HptoWph0LO          =  2.769204299895964E-002
+HptoWph0NLO7        =  3.076721077395669E-002
 ************** H+ -> W H (electroweak corrections) ***********************
 HptoHHWpLO          =  0.000000000000000E+000
-HptoHHWpNLO5        =  0.000000000000000E+000
+HptoHHWpNLO7        =  0.000000000000000E+000
 ************** H+ -> W A (electroweak corrections) ***********************
 HptoA0WpLO          =  0.000000000000000E+000
-HptoA0WpNLO5        =  0.000000000000000E+000
+HptoA0WpNLO7        =  0.000000000000000E+000
 
