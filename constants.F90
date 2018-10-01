@@ -36,6 +36,12 @@ module constants
     double precision :: GaugeXiZ = 1.0D0
     double precision :: GaugeXiA = 1.0D0
 
+	! vev for the tree-level mass calculation
+	double precision :: vevCalc
+
+	! Fermi constant for consistency cross-checks
+	double precision :: GFinput
+
 	! UV scale and regularization scale
 	double precision :: UVDelta = 0D0
 	double precision :: InputScale

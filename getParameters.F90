@@ -100,9 +100,11 @@ subroutine getParameters(OStype)
             
             ! Read the inverse fine-structure constant at the Z mass
             read(42, *) dump, dump2, alphaAtMZ
+
+            ! Read the Fermi constant for consistency checks
+            read(42, *) dump, dump2, GFinput
             
-            ! Skip four lines
-            read(42, *)
+            ! Skip three lines
             read(42, *)
             read(42, *)
             read(42, *)
@@ -240,6 +242,10 @@ subroutine getParameters(OStype)
     S2B = dsin(2D0*beta)
     C2B = dcos(2D0*beta)
 
+    ! Calculate the vev for the conversion of the masses
+    ! vevCalc = 1D0/DSQRT(DSQRT(2D0)*GFinput)
+    vevCalc = 2D0*MW*SW/EL
+
     ! If parameter type 1 is chosen, then alpha and the scalar masses are the relevant parameters and the potential parameters lamdba1 to lambda5 are calculated
     ! If parameter type 2 is chosen, then lambda1 to lambda5 are the relevant parameters and alpha and the scalar masses are calculated through these lambdas
     ! The conversion from alpha and the masses to the lambdas and vice versa is described in hep-ph/0408364
@@ -247,18 +253,18 @@ subroutine getParameters(OStype)
         CA = dcos(alpha)
         SA = dsin(alpha)
         S2A = dsin(2D0*alpha)
-        hdecayLam1 = 1D0/(2D0*MW*SW/EL)**2/CB**2*( -SB**2*(2D0*m12squared/S2B) + SA**2*Mh0**2 + CA**2*MHH**2 )
-        hdecayLam2 = 1D0/(2D0*MW*SW/EL)**2/SB**2*( -CB**2*(2D0*m12squared/S2B) + CA**2*Mh0**2 + SA**2*MHH**2 )
-        hdecayLam3 = 1D0/(2D0*MW*SW/EL)**2*( -(2D0*m12squared/S2B) + 2D0*MHp**2 + S2A/S2B*(MHH**2 - Mh0**2) )
-        hdecayLam4 = 1D0/(2D0*MW*SW/EL)**2*( (2D0*m12squared/S2B) + MA0**2 - 2D0*MHp**2 )
-        hdecayLam5 = 1D0/(2D0*MW*SW/EL)**2*( (2D0*m12squared/S2B) - MA0**2 )
+        hdecayLam1 = 1D0/vevCalc**2/CB**2*( -SB**2*(2D0*m12squared/S2B) + SA**2*Mh0**2 + CA**2*MHH**2 )
+        hdecayLam2 = 1D0/vevCalc**2/SB**2*( -CB**2*(2D0*m12squared/S2B) + CA**2*Mh0**2 + SA**2*MHH**2 )
+        hdecayLam3 = 1D0/vevCalc**2*( -(2D0*m12squared/S2B) + 2D0*MHp**2 + S2A/S2B*(MHH**2 - Mh0**2) )
+        hdecayLam4 = 1D0/vevCalc**2*( (2D0*m12squared/S2B) + MA0**2 - 2D0*MHp**2 )
+        hdecayLam5 = 1D0/vevCalc**2*( (2D0*m12squared/S2B) - MA0**2 )
     else if (parameterType .eq. 2) then
         ! CP-even mass matrix elements
-        M11SqPot = (hdecayLam1*CB**4 + hdecayLam2*SB**4 + 2D0*(hdecayLam3 + hdecayLam4 + hdecayLam5)*CB**2*SB**2)*(2D0*MW*SW/EL)**2
+        M11SqPot = (hdecayLam1*CB**4 + hdecayLam2*SB**4 + 2D0*(hdecayLam3 + hdecayLam4 + hdecayLam5)*CB**2*SB**2)*vevCalc**2
         M12SqPot = ( -hdecayLam1*CB**2 + hdecayLam2*SB**2 + (hdecayLam3 + hdecayLam4 + hdecayLam5)*(CB**2 - SB**2) )*CB*SB*&
-                    &(2D0*MW*SW/EL)**2
+                    &vevCalc**2
         M22SqPot = (2D0*m12squared/S2B) + 1D0/8D0*( hdecayLam1 + hdecayLam2 - 2D0*(hdecayLam3 + hdecayLam4 + hdecayLam5) )*&
-                    &(1D0 - dcos(4D0*beta))*(2D0*MW*SW/EL)**2
+                    &(1D0 - dcos(4D0*beta))*vevCalc**2
 
         ! Calculate the mixing angle alpha
         alpha = 1D0/2D0*datan( 2D0*M12SqPot/(M11SqPot - M22SqPot) ) + beta
@@ -276,8 +282,8 @@ subroutine getParameters(OStype)
         endif
 
         ! Calculate the charged and CP-odd Higgs masses 
-        MHp = DSQRT( (2D0*m12squared/S2B) - 1D0/2D0*(hdecayLam4 + hdecayLam5)*(2D0*MW*SW/EL)**2 )
-        MA0 = DSQRT( (2D0*m12squared/S2B) - hdecayLam5*(2D0*MW*SW/EL)**2 )
+        MHp = DSQRT( (2D0*m12squared/S2B) - 1D0/2D0*(hdecayLam4 + hdecayLam5)*vevCalc**2 )
+        MA0 = DSQRT( (2D0*m12squared/S2B) - hdecayLam5*vevCalc**2 )
     else
         write(*,*) "Error: unknown parameter type. Please choose the integers 1 or 2 for the parameter type in the input file!"
     end if

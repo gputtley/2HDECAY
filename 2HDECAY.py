@@ -11,7 +11,7 @@
 #   Authors:    Marcel Krause (marcel.krause@kit.edu)                                                           #
 #               Prof. Dr. M. Margarete Muehlleitner (margarete.muehlleitner@kit.edu)                            #
 #   Version:    1.0.0                                                                                           #
-#   Date:       05.09.2018                                                                                      #
+#   Date:       01.10.2018                                                                                      #
 #   Copyright:  Copyright (C) 2018, Marcel Krause and Milada Margarete Muehlleitner                             #
 #   License:    GNU General Public License (GNU GPL-3.0-or-later)                                               #
 #                                                                                                               #

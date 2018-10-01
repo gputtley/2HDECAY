@@ -6,14 +6,14 @@ BLOCK DCINFO  # Decay Program information
 BLOCK SMINPUTS  # Standard Model inputs
          2     1.19596488E-05   # G_F [GeV^-2]
          3     1.18000000E-01   # alpha_S(M_Z)^MSbar
-         4     9.11876000E+01   # M_Z pole mass
+         4     9.11876000E+01   # M_Z on-shell mass
          5     4.18000000E+00   # mb(mb)^MSbar
          6     1.73200000E+02   # mt pole mass
          7     1.77682000E+00   # mtau pole mass
          8     4.84141297E+00   # mb pole mass
          9     1.43141297E+00   # mc pole mass
         10     1.05658372E-01   # muon mass
-        11     8.03850000E+01   # M_W mass
+        11     8.03850000E+01   # M_W on-shell mass
         12     2.08500000E+00   # W boson total width
         13     2.49520000E+00   # Z boson total width
 #
@@ -27,8 +27,13 @@ BLOCK 2HDMINPUTS  # 2HDM inputs
          7     3.81767000E+02   # M_H
          8     3.50665000E+02   # M_A
          9     4.14114000E+02   # M_CH
-        10                  7   # renormalization scheme EW corrs
-        11     MIN              # input scale
+        10     6.53022117E+00   # LAMBDA1 calc. from masses/alpha
+        11     2.41545678E-01   # LAMBDA2 calc. from masses/alpha
+        12     1.82557826E+00   # LAMBDA3 calc. from masses/alpha
+        13    -1.56495189E+00   # LAMBDA4 calc. from masses/alpha
+        14     7.64848730E-02   # LAMBDA5 calc. from masses/alpha
+        15                  7   # renormalization scheme EW corrs
+        16     MIN              # input scale
 #
 BLOCK VCKMIN  # CKM mixing
          1     9.99100000E-01   # V_tb

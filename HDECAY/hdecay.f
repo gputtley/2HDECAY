@@ -2718,7 +2718,9 @@ c MMM changed 10/7/18
       COMMON/NLOQCDHP/hpwdth1,HBRMN1,HBRLN1,HBRSU1,HBRSC1,HBRCD1,
      .     HBRBC1,HBRBU1,HBRDT1,HBRST1,HBRBT1,HBRWHL1,HBRWHH1,HBRWA1
       COMMON/NLOQCDEWHP/hpwdth2,HBRMN2,HBRLN2,HBRSU2,HBRSC2,HBRCD2,
-     .     HBRBC2,HBRBU2,HBRDT2,HBRST2,HBRBT2,HBRWHL2,HBRWHH2,HBRWA2      
+     .     HBRBC2,HBRBU2,HBRDT2,HBRST2,HBRBT2,HBRWHL2,HBRWHH2,HBRWA2
+      COMMON/CALCLAMBDA/alamcalc1,alamcalc2,alamcalc3,alamcalc4,
+     .     alamcalc5            
 c end MMM changed 10/7/18
 
       PI = 4*DATAN(1D0)
@@ -2876,7 +2878,7 @@ c MMM changed 10/7/18
       endif
 c end MMM changed 10/7/18      
       write(nout,52) 3,alsmz,'alpha_S(M_Z)^MSbar'
-      write(nout,52) 4,amz,'M_Z pole mass'
+      write(nout,52) 4,amz,'M_Z on-shell mass'
       write(nout,52) 5,rmb,'mb(mb)^MSbar'
       write(nout,52) 6,amt,'mt pole mass'
       write(nout,52) 7,amtau,'mtau pole mass'
@@ -2885,7 +2887,7 @@ c MMM changed 10/7/18
          write(nout,52) 8,amb,'mb pole mass'
          write(nout,52) 9,amc,'mc pole mass'
          write(nout,52) 10,ammuon,'muon mass'
-         write(nout,52) 11,amw,'M_W mass'
+         write(nout,52) 11,amw,'M_W on-shell mass'
          write(nout,52) 12,gamw,'W boson total width'
          write(nout,52) 13,gamz,'Z boson total width'
       endif
@@ -2909,18 +2911,28 @@ c ------------------------- c
          write(nout,52) 7,AMHH2HDM,'M_H'
          write(nout,52) 8,AMHA2HDM,'M_A'
          write(nout,52) 9,AMHC2HDM,'M_CH'
+         write(nout,52) 10,alamcalc1,'LAMBDA1 calc. from masses/alpha'
+         write(nout,52) 11,alamcalc2,'LAMBDA2 calc. from masses/alpha'
+         write(nout,52) 12,alamcalc3,'LAMBDA3 calc. from masses/alpha'
+         write(nout,52) 13,alamcalc4,'LAMBDA4 calc. from masses/alpha'
+         write(nout,52) 14,alamcalc5,'LAMBDA5 calc. from masses/alpha' 
       elseif(iparam2hdm.eq.2) then
-         write(nout,52) 5,LAMBDA1,'A1LAM2HDM'
-         write(nout,52) 6,LAMBDA2,'A2LAM2HDM'
-         write(nout,52) 7,LAMBDA3,'A3LAM2HDM'
-         write(nout,52) 8,LAMBDA4,'A4LAM2HDM'
-         write(nout,52) 9,LAMBDA5,'A5LAM2HDM'
+         write(nout,52) 5,ALPH2HDM,'alpha calculated from the lambda_i'
+         write(nout,52) 6,aml,'M_h calculated from the lambda_i'
+         write(nout,52) 7,amh,'M_H calculated from the lambda_i'
+         write(nout,52) 8,ama,'M_A calculated from the lambda_i'
+         write(nout,52) 9,amch,'M_CH calculated from the lambda_i'         
+         write(nout,52) 10,A1LAM2HDM,'LAMBDA1'
+         write(nout,52) 11,A2LAM2HDM,'LAMBDA2'
+         write(nout,52) 12,A3LAM2HDM,'LAMBDA3'
+         write(nout,52) 13,A4LAM2HDM,'LAMBDA4'
+         write(nout,52) 14,A5LAM2HDM,'LAMBDA5'
       endif
-      write(nout,525) 10,IRENSCHEME,'renormalization scheme EW corrs'
-      write(nout,5333) 11,VALINSCALE,'input scale'
+      write(nout,525) 15,IRENSCHEME,'renormalization scheme EW corrs'
+      write(nout,5333) 16,VALINSCALE,'input scale'
       endif
 c end MMM changed 10/7/18            
-      
+
 c ------------------------------------------------ c
 c Input parameters for minimal/default SUSY models c
 c ------------------------------------------------ c
@@ -4861,15 +4873,25 @@ c ------------------------- c
          write(nou1,52) 7,AMHH2HDM,'M_H'
          write(nou1,52) 8,AMHA2HDM,'M_A'
          write(nou1,52) 9,AMHC2HDM,'M_CH'
+         write(nou1,52) 10,alamcalc1,'LAMBDA1 calc. from masses/alpha'
+         write(nou1,52) 11,alamcalc2,'LAMBDA2 calc. from masses/alpha'
+         write(nou1,52) 12,alamcalc3,'LAMBDA3 calc. from masses/alpha'
+         write(nou1,52) 13,alamcalc4,'LAMBDA4 calc. from masses/alpha'
+         write(nou1,52) 14,alamcalc5,'LAMBDA5 calc. from masses/alpha'          
       elseif(iparam2hdm.eq.2) then
-         write(nou1,52) 5,LAMBDA1,'A1LAM2HDM'
-         write(nou1,52) 6,LAMBDA2,'A2LAM2HDM'
-         write(nou1,52) 7,LAMBDA3,'A3LAM2HDM'
-         write(nou1,52) 8,LAMBDA4,'A4LAM2HDM'
-         write(nou1,52) 9,LAMBDA5,'A5LAM2HDM'
+         write(nou1,52) 5,ALPH2HDM,'alpha calculated from the lambda_i'
+         write(nou1,52) 6,aml,'M_h calculated from the lambda_i'
+         write(nou1,52) 7,amh,'M_H calculated from the lambda_i'
+         write(nou1,52) 8,ama,'M_A calculated from the lambda_i'
+         write(nou1,52) 9,amch,'M_CH calculated from the lambda_i'         
+         write(nou1,52) 10,A1LAM2HDM,'LAMBDA1'
+         write(nou1,52) 11,A2LAM2HDM,'LAMBDA2'
+         write(nou1,52) 12,A3LAM2HDM,'LAMBDA3'
+         write(nou1,52) 13,A4LAM2HDM,'LAMBDA4'
+         write(nou1,52) 14,A5LAM2HDM,'LAMBDA5'
       endif
-      write(nou1,525) 10,IRENSCHEME,'renormalization scheme EW corrs'
-      write(nou1,5333) 11,VALINSCALE,'input scale'
+      write(nou1,525) 15,IRENSCHEME,'renormalization scheme EW corrs'
+      write(nou1,5333) 16,VALINSCALE,'input scale'
                   
 c --------------------- c
 c The CKM mixing matrix c
@@ -16847,6 +16869,7 @@ C ************* SUBROUTINE FOR THE SUSY COUPLINGS *****************
 C *****************************************************************
       SUBROUTINE SUSYCP_HDEC(TGBET)
       IMPLICIT DOUBLE PRECISION (A-H,M,O-Z)
+      CHARACTER(50) valinscale      
       DOUBLE PRECISION LA1,LA2,LA3,LA4,LA5,LA6,LA7,LA3T
       COMPLEX*16 F0_HDEC
       DIMENSION MST(2),GLTT(2,2),GHTT(2,2),
@@ -16884,6 +16907,12 @@ c MMM changed 21/8/13
       COMMON/THDM_COUP_HDEC/gllep,ghlep,galep
 c end MMM changed 21/8/13
       COMMON/HMSSM_HDEC/AMHL10
+c MMM changed 10/7/2018
+      COMMON/PARS2HDMEW/IELW2HDM,IRENSCHEME,GFCALC,VALINSCALE
+      COMMON/CALCLAMBDA/alamcalc1,alamcalc2,alamcalc3,alamcalc4,
+     .     alamcalc5
+c end MMM changed 10/7/2018
+      
       FTRIANG(X,Y)= (x**2+y**2)/2.D0-x**2*y**2/(x**2-y**2)*
      .     dlog(x**2/y**2)
       FPTRIANG(X,Y)=-1.D0/3.D0*(4.D0/3.D0-(x**2*dlog(x**2)
@@ -16903,6 +16932,13 @@ c end MMM changed 21/8/13
 
       PI=4*DATAN(1D0)
       V=1.D0/DSQRT(DSQRT(2.D0)*GF)
+c MMM changed 10/7/2018
+            if(ielw2hdm.eq.0) then
+               vtmp = v
+               v = 1.D0/dsqrt(dsqrt(2.D0)*gfcalc)
+c               print*,'v',v
+            endif
+c end MMM changed 10/7/2018             
       BET=DATAN(TGBET)
       SB = DSIN(BET)
       CB = DCOS(BET)
@@ -17150,7 +17186,15 @@ c from hep-ph/0408364, Eqs. (26)-(30)
             LA5 = 1.D0/v**2*(ammh2-amar**2)
             LA6 = 0.D0
             LA7 = 0.D0
-c            print*,'lambdas',la1,la2,la3,la4,la5
+c MMM changed 10/7/2018
+            if(ielw2hdm.eq.0) then
+               alamcalc1 = la1
+               alamcalc2 = la2
+               alamcalc3 = la3
+               alamcalc4 = la4
+               alamcalc5 = la5               
+            endif
+c end MMM changed 10/7/2018             
          elseif(iparam2hdm.eq.2) then
             la1=a1lam2hdm
             la2=a2lam2hdm
@@ -17203,7 +17247,6 @@ c            print*,'lambdas',la1,la2,la3,la4,la5
             amar = dsqrt(amach2)
             amch = dsqrt(amcch2)
 
-c            print*,'vals',aml,amh,amar,amch,alph2hdm
          endif
 
          if(itestcond.eq.1) then
@@ -17339,7 +17382,7 @@ c end MMM changed 21/8/13
       AML2=AMLR**2
       AMH2=AMHR**2
       AMP2=AMCH**2
-C ========== HIGGS COUPLINGS 
+C ========== HIGGS COUPLINGS
       SBMA = SB*CA-CB*SA
       CBMA = CB*CA+SB*SA
       SBPA = SB*CA+CB*SA
@@ -17456,6 +17499,8 @@ c      print*,'HH+H-',ghpm,xhpm
       GLAA = GLAA/XNORM
       GLPM = GLPM/XNORM
 
+c      print*,'glll',glll
+      
 c--hMSSM?
       IF(IMODEL.EQ.10)THEN
         GHHH = 3*C2A*CBPA            + 3*deps/amz**2*sa**3/sb
@@ -17715,6 +17760,16 @@ c        amh = AMHH2HDM
 c        amch= AMHC2HDM
 c     endif
 c end MMM changed 21/8/13
+
+c      print*,'hallo',aml,amh,ama,amch
+c MMM changed 10/7/2018
+            if(ielw2hdm.eq.0) then
+               v = vtmp
+c               print*,'v',v
+            endif
+c end MMM changed 10/7/2018
+      
+      
       RETURN
 111   STOP
       END

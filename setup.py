@@ -6,8 +6,7 @@
 #                                                                                                               #
 #                                                 setup.py                                                      #
 #                                                                                                               #
-#   Purpose:                                                                                                    #
-#               Calls the LoopTools installer                                                                   #
+#   Purpose:    Calls the LoopTools installer                                                                   #
 #               Makes the HDECAY sub-program                                                                    #
 #               Sets up 2HDECAY                                                                                 #
 #               Creates the makefile and electroweakCorrections.F90                                             #

@@ -10,8 +10,6 @@ A program for the calculation One-Loop Electroweak Corrections to Higgs Decays i
 
 **Manual** https://arxiv.org/abs/YYMM.XXX
 
-**Quick-start guide** https://marcel-krause.github.io/2HDECAY/
-
 **Citations** When you use this program, please acknowledge our work by citing the following papers:
 - The manual for 2HDECAY:
   - M. Krause, M. Muhlleitner, M. Spira, arXiv:YYMM.XXX

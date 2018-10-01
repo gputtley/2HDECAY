@@ -27,8 +27,13 @@ BLOCK 2HDMINPUTS  # 2HDM inputs
          7     3.81767000E+02   # M_H
          8     3.50665000E+02   # M_A
          9     4.14114000E+02   # M_CH
-        10                  7   # renormalization scheme EW corrs
-        11     MIN              # input scale
+        10     6.53022117E+00   # LAMBDA1 calc. from masses/alpha
+        11     2.41545678E-01   # LAMBDA2 calc. from masses/alpha
+        12     1.82557826E+00   # LAMBDA3 calc. from masses/alpha
+        13    -1.56495189E+00   # LAMBDA4 calc. from masses/alpha
+        14     7.64848730E-02   # LAMBDA5 calc. from masses/alpha
+        15                  7   # renormalization scheme EW corrs
+        16     MIN              # input scale
 #
 BLOCK VCKMIN  # CKM mixing
          1     9.99100000E-01   # V_tb
