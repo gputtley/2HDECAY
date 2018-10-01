@@ -74,7 +74,7 @@ The installer further asks you whether the makefile and electroweakCorrections.F
 
 ### Using 2HDECAY
 
-Using 2HDECAY is simple. Save all input files that you want to use in the 'Input' subdirectory. You can put as many input files in the directory as you wish and the input files can have arbitrary file names. Make sure that the input files have the exact input format required by 2HDECAY, as described both in the [full manual](Documentation/manual.pdf "full manual") as well as in the [quick-start guide](https://marcel-krause.github.io/2HDECAY/ "quick-start guide").
+Using 2HDECAY is simple. Save all input files that you want to use in the 'Input' subdirectory. You can put as many input files in the directory as you wish and the input files can have arbitrary file names. Make sure that the input files have the exact input format required by 2HDECAY, as described in the [full manual](Documentation/manual.pdf "full manual").
 
 To start 2HDECAY, execute the following command in the main folder of 2HDECAY:
 ```
