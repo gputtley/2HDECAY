@@ -48,13 +48,15 @@ The following components must be installed on your system to compile and run 2HD
 - GNU g++
 - GNU gfortran
 - Python 2 or 3 (tested with versions 2.7.14 and 3.5.0)
+- find
+- cURL
 
 If you install 2HDECAY on Windows, make sure that you install [Cygwin](https://www.cygwin.com/ "Cygwin") first, including the following components:
-- gcc
-- g++
-- gfortran
+- GNU gcc
+- GNU g++
+- GNU gfortran
 - find
-- wget
+- cURL
 
 ### Installing
 
