@@ -29,7 +29,7 @@
 #                                                                                                               #
 #   Citation:   When you use this program, please acknowledge our work by citing the following papers:          #
 #                   The manual for 2HDECAY:                                                                     #
-#                    - M. Krause, M. Muhlleitner, M. Spira, arXiv:YYMM.XXX                                      #
+#                    - M. Krause, M. Muhlleitner, M. Spira, arXiv:1810.00768                                      #
 #                   The manuals for HDECAY:                                                                     #
 #                    - A. Djouadi, J. Kalinowski, M. Spira, Comp. Phys. Commun. 108 (1998) 56, hep-ph/9704448   #
 #                    - A. Djouadi, J. Kalinowski, M. Muhlleitner, M. Spira, arXiv:1801.09506 [hep-ph]           #
@@ -91,7 +91,7 @@ if __name__ == "__main__":
 
 When you use this program please cite:
 	The manual for 2HDECAY:
-	 - M. Krause, M. Muhlleitner, M. Spira, arXiv:YYMM.XXX
+	 - M. Krause, M. Muhlleitner, M. Spira, arXiv:1810.00768
 	The manuals for HDECAY:
 	 - A. Djouadi, J. Kalinowski, M. Spira, Comp. Phys. Commun. 108 (1998) 56, hep-ph/9704448
 	 - A. Djouadi, J. Kalinowski, M. Muhlleitner, M. Spira, arXiv:1801.09506 [hep-ph]
@@ -261,7 +261,7 @@ Copyright 2018, Marcel Krause and Milada Margarete Muehlleitner.
 	print('''
 When you use this program please cite:
 	The manual for 2HDECAY:
-	 - M. Krause, M. Muhlleitner, M. Spira, arXiv:YYMM.XXX
+	 - M. Krause, M. Muhlleitner, M. Spira, arXiv:1810.00768
 	The manuals for HDECAY:
 	 - A. Djouadi, J. Kalinowski, M. Spira, Comp. Phys. Commun. 108 (1998) 56, hep-ph/9704448
 	 - A. Djouadi, J. Kalinowski, M. Muhlleitner, M. Spira, arXiv:1801.09506 [hep-ph]
