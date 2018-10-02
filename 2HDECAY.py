@@ -10,6 +10,7 @@
 #               Two-Higgs-Doublet Model (2HDM) Including State-of-the-Art QCD Corrections                       #
 #   Authors:    Marcel Krause (marcel.krause@kit.edu)                                                           #
 #               Prof. Dr. M. Margarete Muehlleitner (margarete.muehlleitner@kit.edu)                            #
+#               Dr. Michael Spira (michael.spira@psi.ch)                                                        #
 #   Version:    1.0.0                                                                                           #
 #   Date:       01.10.2018                                                                                      #
 #   Copyright:  Copyright (C) 2018, Marcel Krause and Milada Margarete Muehlleitner                             #
@@ -29,7 +30,7 @@
 #                                                                                                               #
 #   Citation:   When you use this program, please acknowledge our work by citing the following papers:          #
 #                   The manual for 2HDECAY:                                                                     #
-#                    - M. Krause, M. Muhlleitner, M. Spira, arXiv:1810.00768                                      #
+#                    - M. Krause, M. Muhlleitner, M. Spira, arXiv:1810.00768                                    #
 #                   The manuals for HDECAY:                                                                     #
 #                    - A. Djouadi, J. Kalinowski, M. Spira, Comp. Phys. Commun. 108 (1998) 56, hep-ph/9704448   #
 #                    - A. Djouadi, J. Kalinowski, M. Muhlleitner, M. Spira, arXiv:1801.09506 [hep-ph]           #

@@ -6,7 +6,7 @@ A program for the Calculation of Electroweak One-Loop Corrections to Higgs Decay
 
 **Program** 2HDECAY 1.0.0
 
-**Authors** [Marcel Krause](mailto:marcel.krause@kit.edu) and [M. Margarete Mühlleitner](mailto:margarete.muehlleitner@kit.edu)
+**Authors** [Marcel Krause](mailto:marcel.krause@kit.edu), [M. Margarete Mühlleitner](mailto:margarete.muehlleitner@kit.edu) and [Michael Spira](mailto:michael.spira@psi.ch)
 
 **Manual** https://arxiv.org/abs/1810.00768
 
@@ -30,7 +30,7 @@ A program for the Calculation of Electroweak One-Loop Corrections to Higgs Decay
 
 **License** GNU General Public License (GNU GPL-3.0-or-later). 2HDECAY is released under GNU General Public License (GNU GPL-3.0-or-later). This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You have received a copy ([LICENSE.md](LICENSE.md)) of the GNU General Public License along with this program.
 
-**Contact** For feedback, complaints and bug reports, please send an e-mail to <marcel.krause@kit.edu> and <margarete.muehlleitner@kit.edu>.
+**Contact** For feedback, complaints and bug reports, please send an e-mail to <marcel.krause@kit.edu>, <margarete.muehlleitner@kit.edu> and <michael.spira@psi.ch>.
 
 ## Getting Started
 
