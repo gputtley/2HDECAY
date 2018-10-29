@@ -2,7 +2,7 @@ module counterterms
     implicit none
     save
 
-    ! Copyright (C) 2018, Marcel Krause and Milada Margarete Muehlleitner
+    ! Copyright (C) 2018, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira
 	
 	! License: GNU General Public License (GNU GPL-3.0-or-later)
 

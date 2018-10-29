@@ -11,7 +11,7 @@
 #               Sets up 2HDECAY                                                                                 #
 #               Creates the makefile and electroweakCorrections.F90                                             #
 #               Makes 2HDECAY                                                                                   #
-#   Copyright:  Copyright (C) 2018, Marcel Krause and Milada Margarete Muehlleitner                             #
+#   Copyright:  Copyright (C) 2018, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira              #
 #   License:    GNU General Public License (GNU GPL-3.0-or-later)                                               #
 #                                                                                                               #
 #               2HDECAY is released under GNU General Public License (GNU GPL-3.0-or-later).                    #
@@ -55,6 +55,10 @@ def createMakefile(pathToMakefile, relativePathToLoopTools, relativePathToLoopTo
 	pathToProcesses = 'BuildingBlocks' + os.sep + 'Processes'
 	processDirList = os.listdir(pathToProcesses)
 
+	# Get 2HDECAY's working directory and escape all whitespaces
+	prompt = ['pwd']
+	workingDirectory = subprocess.check_output(prompt, stdin=None, stderr=None, shell=False).decode('utf-8').replace(' ', '\ ')
+
 	# Check whether the OS is Windows or not for giving the decayWidth application the correct file ending 
 	applicationEnding = ''
 	if os.name == 'nt':
@@ -67,7 +71,7 @@ def createMakefile(pathToMakefile, relativePathToLoopTools, relativePathToLoopTo
 	makefile.write("###################################\n\n")
 	makefile.write("# Specify the path to the LoopTools library:\n")
 	if useRelativePath:
-		makefile.write("PWD=$(strip $(shell pwd))\n")
+		makefile.write("PWD=" + workingDirectory + "\n")
 		makefile.write("LT=$(PWD)/" + relativePathToLoopTools + "\n")
 	else:
 		makefile.write("LT=" + relativePathToLoopTools + "\n")
@@ -330,7 +334,7 @@ def createElectroweakCorrections():
 	electroweakCorrectionsFile.write("\tdouble precision inScaleDebug\n")
 	electroweakCorrectionsFile.write("\tinteger m, n, o, p, q, r, fileNameLength, point, statWrite\n\n")
 
-	electroweakCorrectionsFile.write("\t! Copyright (C) 2018, Marcel Krause and Milada Margarete Muehlleitner\n\n")
+	electroweakCorrectionsFile.write("\t! Copyright (C) 2018, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira\n\n")
 
 	electroweakCorrectionsFile.write("\t! License: GNU General Public License (GNU GPL-3.0-or-later)\n\n")
 

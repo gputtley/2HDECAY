@@ -11,9 +11,9 @@
 #   Authors:    Marcel Krause (marcel.krause@kit.edu)                                                           #
 #               Prof. Dr. M. Margarete Muehlleitner (margarete.muehlleitner@kit.edu)                            #
 #               Dr. Michael Spira (michael.spira@psi.ch)                                                        #
-#   Version:    1.0.0                                                                                           #
-#   Date:       01.10.2018                                                                                      #
-#   Copyright:  Copyright (C) 2018, Marcel Krause and Milada Margarete Muehlleitner                             #
+#   Version:    1.0.1                                                                                           #
+#   Date:       29.10.2018                                                                                      #
+#   Copyright:  Copyright (C) 2018, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira              #
 #   License:    GNU General Public License (GNU GPL-3.0-or-later)                                               #
 #                                                                                                               #
 #               2HDECAY is released under GNU General Public License (GNU GPL-3.0-or-later).                    #
@@ -28,7 +28,8 @@
 #               You have received a copy LICENSE.md of the GNU General Public License along with this program   #
 #               in the 2HDECAY root directoy.                                                                   #
 #                                                                                                               #
-#   Citation:   When you use this program, please acknowledge our work by citing the following papers:          #
+#   Citation:   When you use this program, please acknowledge the work of our and other groups by citing the    #
+#               following papers:                                                                               #
 #                   The manual for 2HDECAY:                                                                     #
 #                    - M. Krause, M. Muhlleitner, M. Spira, arXiv:1810.00768                                    #
 #                   The manuals for HDECAY:                                                                     #
@@ -75,7 +76,7 @@ if __name__ == "__main__":
 	print('''
 +---------------------------------------+
 |                                       |
-|             2HDECAY 1.0.0             |
+|             2HDECAY 1.0.1             |
 |                                       |
 |                             /         |
 |                            /          |
@@ -113,7 +114,7 @@ for more details.
 You have received a copy LICENSE.md of the GNU General Public License along with this program in the 2HDECAY
 root directoy.
 
-Copyright 2018, Marcel Krause and Milada Margarete Muehlleitner.
+Copyright 2018, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira.
 	''')
 
 	# Get a list of all input files
