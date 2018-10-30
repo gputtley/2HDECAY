@@ -74,7 +74,7 @@ double precision function HHtoMuMuBarReal()
  OLLFull = 1D0/1D0*( OLL11 + OLL12 + OLL22 )
  OLRFull = 1D0/1D0*( OLR11 + OLR12 + OLR22 )
 
- totalAmplitude = 1D0*EL2*m2**2*Yuk2**2/(4D0*MW2*SW2)*(EL2/(2D0*(4D0*PI)**3*m1))*&
+ totalAmplitude = 1D0*EL2*m2**2*Yuk5**2/(4D0*MW2*SW2)*(EL2/(2D0*(4D0*PI)**3*m1))*&
      &(16D0*PI*m1**3)/DSQRT(m1**4 + m2**4 + m3**4 - 2D0*m1**2*m2**2 - 2D0*m1**2*m3**2 - 2D0*m2**2*m3**2 )*&
      &( 2D0*( OLLFull ) + 2D0*( OLRFull ) )
 
