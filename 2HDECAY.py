@@ -11,9 +11,9 @@
 #   Authors:    Marcel Krause (marcel.krause@kit.edu)                                                           #
 #               Prof. Dr. M. Margarete Muehlleitner (margarete.muehlleitner@kit.edu)                            #
 #               Dr. Michael Spira (michael.spira@psi.ch)                                                        #
-#   Version:    1.0.2                                                                                           #
+#   Version:    1.1.0                                                                                           #
 #   Date:       30.10.2018                                                                                      #
-#   Copyright:  Copyright (C) 2018, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira              #
+#   Copyright:  Copyright (C) 2018-2019, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira         #
 #   License:    GNU General Public License (GNU GPL-3.0-or-later)                                               #
 #                                                                                                               #
 #               2HDECAY is released under GNU General Public License (GNU GPL-3.0-or-later).                    #
@@ -59,7 +59,7 @@ import CommonFunctions      # Provides common, often used functions for differen
 #        Settings         #
 #-------------------------#
 # WARNING: do not change these settings if you do not know what they do!
-lineToInsert = 122      # This is the line at which the temporary input file ends and at which we append the electroweak corrections
+lineToInsert = 123      # This is the line at which the temporary input file ends and at which we append the electroweak corrections
 lineWhereAlphaAtMZ = 26 # This is the line at which in the temporary input file the fine-structure constant at the Z boson mass MZ is specified
 lineWhereGFCalc = 28    # This is the line at which in the temporary input file the calculated Fermi constant GFCALC is specified
 lineWhereMZ = 31        # This is the line at which in the temporary input file the Z boson mass MZ is specified
@@ -76,7 +76,7 @@ if __name__ == "__main__":
 	print('''
 +---------------------------------------+
 |                                       |
-|             2HDECAY 1.0.2             |
+|             2HDECAY 1.1.0             |
 |                                       |
 |                             /         |
 |                            /          |
@@ -114,7 +114,7 @@ for more details.
 You have received a copy LICENSE.md of the GNU General Public License along with this program in the 2HDECAY
 root directoy.
 
-Copyright 2018, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira.
+Copyright 2018-2019, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira.
 	''')
 
 	# Get a list of all input files
@@ -136,8 +136,9 @@ Copyright 2018, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira.
 		# Remove any existing input and fermion masses file in HDECAY
 		if os.path.isfile(filenameOut):
 			os.remove(filenameOut)
-		if os.path.isfile("HDECAY" + os.sep + "fermionmasses.dat"):
-			os.remove("HDECAY" + os.sep + "fermionmasses.dat")
+		# TEMP
+		# if os.path.isfile("HDECAY" + os.sep + "fermionmasses.dat"):
+		# 	os.remove("HDECAY" + os.sep + "fermionmasses.dat")
 		copyfile(filenameIn, filenameOut)
 		print("... done.\n")
 
@@ -145,7 +146,8 @@ Copyright 2018, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira.
 		print("Starting HDECAY in minimal mode...")
 		os.chdir('HDECAY')
 		prompt = ['./run', '1']
-		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
+		# TEMP
+		# subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
 		os.chdir('..')
 		print("HDECAY in minimal mode terminated.\n")
 
@@ -176,6 +178,16 @@ Copyright 2018, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira.
 				alphaAtMZ = float((line.split())[2])
 			lineCount += 1
 		fileHandler.close()
+
+		# Check whether the new file format (2HDECAY 1.1.0 and upwards) is used
+		isNewFormat = False
+		for line in convertedFileHandler:
+			if "REFSCHEM" in line:
+				isNewFormat = True
+		if not isNewFormat:
+			print("\nERROR: incompatible file format! The input file format was changed with 2HDECAY 1.1.0 to enable input parameter conversion. Please check your input files for compatibility with the new input file format, cf. the Changelog.md file and the manual of the latest 2HDECAY version.")
+			print("2HDECAY will be terminated now (ERROR: incompatible file format for 2HDECAY >= 1.1.0).")
+			sys.exit()
 
 		# Write a copy of the file to the output folder, but add GFCALC, MCOSCALC and MBOSCALC with the calculated values
 		GFcalc = pi/sqrt(2)*alphaAtMZ/(massMW**2*(1-massMW**2/massMZ**2))
@@ -236,7 +248,8 @@ Copyright 2018, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira.
 		print("Starting HDECAY in standard mode...")
 		os.chdir('HDECAY')
 		prompt = ['./run']
-		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
+		# TEMP
+		# subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
 		os.chdir('..')
 		print("HDECAY in standard mode terminated.\n")
 
@@ -251,8 +264,9 @@ Copyright 2018, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira.
 		print("... done.\n")
 
 		# Cleaning 
-		if os.path.isfile("HDECAY" + os.sep + "fermionmasses.dat"):
-			os.remove("HDECAY" + os.sep + "fermionmasses.dat")
+		# TEMP
+		# if os.path.isfile("HDECAY" + os.sep + "fermionmasses.dat"):
+		# 	os.remove("HDECAY" + os.sep + "fermionmasses.dat")
 
 		print("Corrections for input file " + inputFileTemp + " done.\n")
 
@@ -284,7 +298,7 @@ for more details.
 You have received a copy LICENSE.md of the GNU General Public License along with this program in the 2HDECAY
 root directoy.
 
-Copyright 2018, Marcel Krause and Milada Margarete Muehlleitner.
+Copyright 2018-2019, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira.
 	''')
 
 	sys.exit()

@@ -8,7 +8,7 @@
 #                                                                                                               #
 #   Purpose:    Main configuration file of 2HDECAY. Contains all configuration                                  #
 #               settings needed to change the program.                                                          #
-#   Copyright:  Copyright (C) 2018, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira              #
+#   Copyright:  Copyright (C) 2018-2019, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira         #
 #   License:    GNU General Public License (GNU GPL-3.0-or-later)                                               #
 #                                                                                                               #
 #               2HDECAY is released under GNU General Public License (GNU GPL-3.0-or-later).                    #

@@ -2,7 +2,7 @@ module constants
     implicit none
     save
 
-	! Copyright (C) 2018, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira
+	! Copyright (C) 2018-2019, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira
 	
 	! License: GNU General Public License (GNU GPL-3.0-or-later)
 
@@ -47,10 +47,11 @@ module constants
 	double precision :: InputScale
 	character(len=50) :: InputScaleReadIn
 
-	! 2HDM type, input parameter type (1: masses and alpha are given; 2: lambda1 to lambda5 are given) and renormalization scheme
+	! 2HDM type, input parameter type (1: masses and alpha are given; 2: lambda1 to lambda5 are given), renormalization scheme and reference scheme
 	integer :: TypeOf2HDM
 	integer :: parameterType
 	integer :: RenormScheme
+	integer :: RefScheme
 
     ! Standard Model parameters; the values are stored in the input file in the ./Parameters/input folder (1101.0593 [hep-ph], 1503.07589 [hep-ex],  Chin. Phys. C38 (2014) 090001)
 	double precision :: alphaAtMZ
