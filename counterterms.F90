@@ -2,7 +2,7 @@ module counterterms
     implicit none
     save
 
-    ! Copyright (C) 2018-2019, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira
+	! Copyright (C) 2018-2019, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira
 	
 	! License: GNU General Public License (GNU GPL-3.0-or-later)
 
@@ -15,9 +15,9 @@ module counterterms
 	! without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 	! See the GNU General Public License for more details.
 
-	! You have received a copy LICENSE.md of the GNU General Public License along with this program
-	! in the 2HDECAY root directoy.
-
+	! You have received a copy (LICENSE.md) of the GNU General Public License along with this program
+	! in the 2HDECAY root directory.
+    
     contains
         ! Tadpole counterterms
             ! Alternative tadpole based counterterms
@@ -1388,6 +1388,121 @@ module counterterms
                         & dZh0h0OS()/2D0 - dZHHHHOS()/2D0 + Yuk5/Yuk4*dZHHh0OSAlter()/2D0 - Yuk4/Yuk5*dZh0HHOSAlter()/2D0 )
                 end function dAlphaProcDep3Alter
 
+                double precision function dAlphaOS1Alter()
+                    use constants
+                    implicit none
+                    double complex h0toN1N1ProcDepRelVC, HHtoN1N1ProcDepRelVC
+                    dAlphaOS1Alter = ( HHtoN1N1ProcDepRelVC() - h0toN1N1ProcDepRelVC() )*SA*CA + &
+                                    & SA*CA/2D0*( dZHHHHOS() - dZh0h0OS() ) + 1D0/2D0*( CA2*dZHHh0OSAlter() - SA2*dZh0HHOSAlter() )
+                end function dAlphaOS1Alter
+
+                double precision function dBetaOS1Alter()
+                    use constants
+                    implicit none
+                    double complex h0toN1N1ProcDepRelVC, HHtoN1N1ProcDepRelVC, A0toN1N1ProcDepRelVC
+                    double precision GaugeXiATemp, GaugeXiWTemp, GaugeXiZTemp
+                    GaugeXiATemp = GaugeXiA
+                    GaugeXiWTemp = GaugeXiW
+                    GaugeXiZTemp = GaugeXiZ
+                    GaugeXiA = 1D0
+                    GaugeXiW = 1D0
+                    GaugeXiZ = 1D0
+                    dBetaOS1Alter = SB/CB*( CA2*HHtoN1N1ProcDepRelVC() + SA2*h0toN1N1ProcDepRelVC() - A0toN1N1ProcDepRelVC() - &
+                            & ( dZA0A0OS() - CA2*dZHHHHOS() - SA2*dZh0h0OS() + SA*CA*( dZHHh0OSAlter() + dZh0HHOSAlter() ) )/2D0 )&
+                            & + dZG0A0OSAlter()/2D0
+                    GaugeXiA = GaugeXiATemp
+                    GaugeXiW = GaugeXiWTemp
+                    GaugeXiZ = GaugeXiZTemp
+                end function dBetaOS1Alter
+
+                double precision function dAlphaOS2Alter()
+                    use constants
+                    implicit none
+                    double complex h0toN2N2ProcDepRelVC, HHtoN2N2ProcDepRelVC
+                    dAlphaOS2Alter = ( h0toN2N2ProcDepRelVC() - HHtoN2N2ProcDepRelVC() )*SA*CA + &
+                                    & SA*CA/2D0*( dZh0h0OS() - dZHHHHOS() ) + 1D0/2D0*( SA2*dZHHh0OSAlter() - CA2*dZh0HHOSAlter() )
+                end function dAlphaOS2Alter
+
+                double precision function dBetaOS2Alter()
+                    use constants
+                    implicit none
+                    double complex h0toN2N2ProcDepRelVC, HHtoN2N2ProcDepRelVC, A0toN2N2ProcDepRelVC
+                    double precision GaugeXiATemp, GaugeXiWTemp, GaugeXiZTemp
+                    GaugeXiATemp = GaugeXiA
+                    GaugeXiWTemp = GaugeXiW
+                    GaugeXiZTemp = GaugeXiZ
+                    GaugeXiA = 1D0
+                    GaugeXiW = 1D0
+                    GaugeXiZ = 1D0
+                    dBetaOS2Alter = CB/SB*( A0toN2N2ProcDepRelVC() - SA2*HHtoN2N2ProcDepRelVC() - CA2*h0toN2N2ProcDepRelVC() + &
+                            & ( dZA0A0OS() - SA2*dZHHHHOS() - CA2*dZh0h0OS() - SA*CA*( dZHHh0OSAlter() + dZh0HHOSAlter() ) )/2D0 )&
+                            & + dZG0A0OSAlter()/2D0
+                    GaugeXiA = GaugeXiATemp
+                    GaugeXiW = GaugeXiWTemp
+                    GaugeXiZ = GaugeXiZTemp
+                end function dBetaOS2Alter
+
+                double precision function dAlphaOS12Alter()
+                    use constants
+                    implicit none
+                    double complex h0toN2N2ProcDepRelVC, HHtoN2N2ProcDepRelVC
+                    dAlphaOS12Alter = ( h0toN2N2ProcDepRelVC() - HHtoN2N2ProcDepRelVC() )*SA*CA + &
+                                    & SA*CA/2D0*( dZh0h0OS() - dZHHHHOS() ) + 1D0/2D0*( SA2*dZHHh0OSAlter() - CA2*dZh0HHOSAlter() )
+                end function dAlphaOS12Alter
+
+                double precision function dBetaOS12Alter()
+                    use constants
+                    implicit none
+                    double complex h0toN1N1ProcDepRelVC, HHtoN1N1ProcDepRelVC, A0toN1N1ProcDepRelVC
+                    double complex h0toN2N2ProcDepRelVC, HHtoN2N2ProcDepRelVC, A0toN2N2ProcDepRelVC
+                    double precision GaugeXiATemp, GaugeXiWTemp, GaugeXiZTemp
+                    GaugeXiATemp = GaugeXiA
+                    GaugeXiWTemp = GaugeXiW
+                    GaugeXiZTemp = GaugeXiZ
+                    GaugeXiA = 1D0
+                    GaugeXiW = 1D0
+                    GaugeXiZ = 1D0
+                    dBetaOS12Alter = SB*CB/2D0*( C2A*(dZHHHHOS() - dZh0h0OS()) - S2A*(dZHHh0OSAlter() + dZh0HHOSAlter()) ) + &
+                            & SB*CB*( - A0toN1N1ProcDepRelVC() + CA2*HHtoN1N1ProcDepRelVC() + SA2*h0toN1N1ProcDepRelVC() &
+                                    & + A0toN2N2ProcDepRelVC() - SA2*HHtoN2N2ProcDepRelVC() - CA2*h0toN2N2ProcDepRelVC() ) + &
+                            & dZG0A0OSAlter()/2D0
+                    GaugeXiA = GaugeXiATemp
+                    GaugeXiW = GaugeXiWTemp
+                    GaugeXiZ = GaugeXiZTemp
+                end function dBetaOS12Alter
+
+                double precision function dBetaBFMSAlter()
+                    use constants
+                    implicit none
+                    double complex TadHH, Tadh0
+                    double complex SelfHHh0Alter, SelfHHh0Add
+                    double precision GaugeXiATemp, GaugeXiWTemp, GaugeXiZTemp
+                    GaugeXiATemp = GaugeXiA
+                    GaugeXiWTemp = GaugeXiW
+                    GaugeXiZTemp = GaugeXiZ
+                    GaugeXiA = 1D0
+                    GaugeXiW = 1D0
+                    GaugeXiZ = 1D0
+                    dBetaBFMSAlter = S2B*( DBLE(SelfHHh0Alter(Mh02)) - DBLE(SelfHHh0Alter(MHH2)) + DBLE(SelfHHh0Add(Mh02)) - &
+                                    & DBLE(SelfHHh0Add(MHH2)) )/( 2.D0*S2A*(MHH2 - Mh02) ) - &
+                                    & EL/(2D0*MW*SW)*( CBA*Tadh0()/Mh02 - SBA*TadHH()/MHH2 )
+                    GaugeXiA = GaugeXiATemp
+                    GaugeXiW = GaugeXiWTemp
+                    GaugeXiZ = GaugeXiZTemp
+                end function dBetaBFMSAlter
+
+                double precision function dAlphaMSBarAlter()
+                    use constants
+                    implicit none
+                    dAlphaMSBarAlter = 0D0
+                end function dAlphaMSBarAlter
+
+                double precision function dBetaMSBarAlter()
+                    use constants
+                    implicit none
+                    dBetaMSBarAlter = 0D0
+                end function dBetaMSBarAlter
+
             ! Usual tadpole based counterterms
                 double precision function dAlphaKanUsual()
                     use constants
@@ -1461,6 +1576,18 @@ module counterterms
                     dAlphaProcDep3Usual = Yuk4*Yuk5/(Yuk4**2 + Yuk5**2) * ( h0toTauPTauMProcDepVC() - HHtoTauPTauMProcDepVC() + &
                         & dZh0h0OS()/2D0 - dZHHHHOS()/2D0 + Yuk5/Yuk4*dZHHh0OSUsual()/2D0 - Yuk4/Yuk5*dZh0HHOSUsual()/2D0 )
                 end function dAlphaProcDep3Usual
+
+                double precision function dAlphaMSBarUsual()
+                    use constants
+                    implicit none
+                    dAlphaMSBarUsual = 0D0
+                end function dAlphaMSBarUsual
+
+                double precision function dBetaMSBarUsual()
+                    use constants
+                    implicit none
+                    dBetaMSBarUsual = 0D0
+                end function dBetaMSBarUsual
 
         ! 2HDM Z2-soft-breaking parameter m_{12}^2
             ! Tadpole invariant counterterms

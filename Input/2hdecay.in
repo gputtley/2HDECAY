@@ -56,7 +56,7 @@ MEP      = 450.D0
 PARAM    = 1
 TYPE     = 1
 RENSCHEM = 7
-REFSCHEM = 5
+REFSCHEM = 0
 ********************
 TGBET2HDM= 4.23635D0
 M_12^2   = 28505.5D0

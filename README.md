@@ -19,6 +19,7 @@ A program for the Calculation of Electroweak One-Loop Corrections to Higgs Decay
 - The papers on the electroweak correction to the 2HDM decays:
   - M. Krause, R. Lorenz, M. Muhlleitner, R. Santos, H. Ziesche, JHEP 1609 (2016) 143
   - M. Krause, M. Muhlleitner, R. Santos, H. Ziesche, Phys.Rev. D95 (2017) no.7, 075019
+  - A. Denner, S. Dittmaier, J.-N. Lang, J. High Energ. Phys. (2018) 2018: 104
 - The publication of LoopTools:
   - T. Hahn, M. Perez-Victoria, Comp. Phys. Commun. 118 (1999) 153-165, hep-ph/9807565
 

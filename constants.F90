@@ -15,8 +15,8 @@ module constants
 	! without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 	! See the GNU General Public License for more details.
 
-	! You have received a copy LICENSE.md of the GNU General Public License along with this program
-	! in the 2HDECAY root directoy.
+	! You have received a copy (LICENSE.md) of the GNU General Public License along with this program
+	! in the 2HDECAY root directory.
 
 	! Integer for choosing whether the electroweak corrections should be calculated or not
 	integer :: omitELCorr

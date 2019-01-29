@@ -49,6 +49,15 @@ double precision function A0toHmWpCT(x)
     case (14)
         totalAmplitude = ( dgAtMZ()/(EL/SW) + dZA0A0OS()/2D0 + dZHpHpOS()/2D0 + dZWpWpOS()/2D0 ) * (EL2/SW2) * &
             & ( (MHp2**2 + MW2**2 + MA02**2 - 2D0*MHp2*MW2 - 2D0*MHp2*MA02 - 2D0*MW2*MA02)/(4D0*MW2) )
+    case (15)
+        totalAmplitude = ( dgAtMZ()/(EL/SW) + dZA0A0OS()/2D0 + dZHpHpOS()/2D0 + dZWpWpOS()/2D0 ) * (EL2/SW2) * &
+            & ( (MHp2**2 + MW2**2 + MA02**2 - 2D0*MHp2*MW2 - 2D0*MHp2*MA02 - 2D0*MW2*MA02)/(4D0*MW2) )
+    case (16)
+        totalAmplitude = ( dgAtMZ()/(EL/SW) + dZA0A0OS()/2D0 + dZHpHpOS()/2D0 + dZWpWpOS()/2D0 ) * (EL2/SW2) * &
+            & ( (MHp2**2 + MW2**2 + MA02**2 - 2D0*MHp2*MW2 - 2D0*MHp2*MA02 - 2D0*MW2*MA02)/(4D0*MW2) )
+    case (17)
+        totalAmplitude = ( dgAtMZ()/(EL/SW) + dZA0A0OS()/2D0 + dZHpHpOS()/2D0 + dZWpWpOS()/2D0 ) * (EL2/SW2) * &
+            & ( (MHp2**2 + MW2**2 + MA02**2 - 2D0*MHp2*MW2 - 2D0*MHp2*MA02 - 2D0*MW2*MA02)/(4D0*MW2) )
  end select
 
  A0toHmWpCT = totalAmplitude

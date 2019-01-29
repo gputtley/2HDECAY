@@ -25,8 +25,8 @@
 #               without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.       #
 #               See the GNU General Public License for more details.                                            #
 #                                                                                                               #
-#               You have received a copy LICENSE.md of the GNU General Public License along with this program   #
-#               in the 2HDECAY root directoy.                                                                   #
+#               You have received a copy (LICENSE.md) of the GNU General Public License along with this program #
+#               in the 2HDECAY root directory.                                                                  #
 #                                                                                                               #
 #   Citation:   When you use this program, please acknowledge the work of our and other groups by citing the    #
 #               following papers:                                                                               #
@@ -38,6 +38,7 @@
 #                   The papers on the EW correction to the 2HDM decays:                                         #
 #                    - M. Krause, R. Lorenz, M. Muhlleitner, R. Santos, H. Ziesche, JHEP 1609 (2016) 143        #
 #                    - M. Krause, M. Muhlleitner, R. Santos, H. Ziesche, Phys.Rev. D95 (2017) no.7, 075019      #
+#                    - A. Denner, S. Dittmaier, J.-N. Lang, J. High Energ. Phys. (2018) 2018: 104               #
 #                   The publication of LoopTools:                                                               #
 #                    - T. Hahn, M. Perez-Victoria, Comp. Phys. Commun. 118 (1999) 153-165, hep-ph/9807565       #
 #                                                                                                               #
@@ -66,6 +67,8 @@ lineWhereMZ = 31        # This is the line at which in the temporary input file 
 lineWhereMW = 32        # This is the line at which in the temporary input file the W boson mass MW is specified
 lineWhereOSMC = 22      # This is the line at which the OS MC value has to be inserted in the temporary input file
 lineWhereOSMB = 23      # This is the line at which the OS MB value has to be inserted in the temporary input file
+lineWhereParamType = 56 # This is the line at which the parameter type is specified
+lineWhereRefScheme = 59 # This is the line at which the reference renormalization scheme is specified
 
 #----------------------------#
 #        Main Program        #
@@ -100,6 +103,7 @@ When you use this program please cite:
 	The papers on the EW correction to the 2HDM decays:
 	 - M. Krause, R. Lorenz, M. Muhlleitner, R. Santos, H. Ziesche, JHEP 1609 (2016) 143
 	 - M. Krause, M. Muhlleitner, R. Santos, H. Ziesche, Phys.Rev. D95 (2017) no.7, 075019
+	 - A. Denner, S. Dittmaier, J.-N. Lang, J. High Energ. Phys. (2018) 2018: 104
 	The publication of LoopTools:
 	 - T. Hahn, M. Perez-Victoria, Comp. Phys. Commun. 118 (1999) 153-165, hep-ph/9807565
 
@@ -111,8 +115,8 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
 for more details.
 
-You have received a copy LICENSE.md of the GNU General Public License along with this program in the 2HDECAY
-root directoy.
+You have received a copy (LICENSE.md) of the GNU General Public License along with this program in the 2HDECAY
+root directory.
 
 Copyright 2018-2019, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira.
 	''')
@@ -136,9 +140,8 @@ Copyright 2018-2019, Marcel Krause, Milada Margarete Muehlleitner and Michael Sp
 		# Remove any existing input and fermion masses file in HDECAY
 		if os.path.isfile(filenameOut):
 			os.remove(filenameOut)
-		# TEMP
-		# if os.path.isfile("HDECAY" + os.sep + "fermionmasses.dat"):
-		# 	os.remove("HDECAY" + os.sep + "fermionmasses.dat")
+		if os.path.isfile("HDECAY" + os.sep + "fermionmasses.dat"):
+			os.remove("HDECAY" + os.sep + "fermionmasses.dat")
 		copyfile(filenameIn, filenameOut)
 		print("... done.\n")
 
@@ -146,8 +149,7 @@ Copyright 2018-2019, Marcel Krause, Milada Margarete Muehlleitner and Michael Sp
 		print("Starting HDECAY in minimal mode...")
 		os.chdir('HDECAY')
 		prompt = ['./run', '1']
-		# TEMP
-		# subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
+		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
 		os.chdir('..')
 		print("HDECAY in minimal mode terminated.\n")
 
@@ -167,8 +169,20 @@ Copyright 2018-2019, Marcel Krause, Milada Margarete Muehlleitner and Michael Sp
 		convertedFileHandler = []
 		lineCount = 1
 		for line in fileHandler:
+			# If the parameter type is 2, then the reference renormalization scheme has to be set to zero
+			if (lineCount == lineWhereRefScheme):
+				refScheme = int((line.split())[2])
+				if (refScheme != 0) and (paramType == 2):
+					convertedFileHandler.append("REFSCHEM = 0\n")
+					print("\nWARNING: RefScheme is given as a non-zero value, but parameterType=2 (lambdas as input) is set.")
+					print("RefScheme is overwritten to zero, automatic parameter conversion is deactivated!")
+					lineCount += 1
+					continue
 			# Write the current line in an array
 			convertedFileHandler.append(line)
+			# Check for the parameter type
+			if lineCount == lineWhereParamType:
+				paramType = int((line.split())[2])
 			# Pick out the values of MW, MZ and alphaAtMZ
 			if lineCount == lineWhereMZ:
 				massMZ = float((line.split())[2])
@@ -248,8 +262,7 @@ Copyright 2018-2019, Marcel Krause, Milada Margarete Muehlleitner and Michael Sp
 		print("Starting HDECAY in standard mode...")
 		os.chdir('HDECAY')
 		prompt = ['./run']
-		# TEMP
-		# subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
+		subprocess.call(prompt, stdin=None, stdout=None, stderr=None, shell=False)
 		os.chdir('..')
 		print("HDECAY in standard mode terminated.\n")
 
@@ -264,9 +277,8 @@ Copyright 2018-2019, Marcel Krause, Milada Margarete Muehlleitner and Michael Sp
 		print("... done.\n")
 
 		# Cleaning 
-		# TEMP
-		# if os.path.isfile("HDECAY" + os.sep + "fermionmasses.dat"):
-		# 	os.remove("HDECAY" + os.sep + "fermionmasses.dat")
+		if os.path.isfile("HDECAY" + os.sep + "fermionmasses.dat"):
+			os.remove("HDECAY" + os.sep + "fermionmasses.dat")
 
 		print("Corrections for input file " + inputFileTemp + " done.\n")
 
@@ -284,6 +296,7 @@ When you use this program please cite:
 	The papers on the EW correction to the 2HDM decays:
 	 - M. Krause, R. Lorenz, M. Muhlleitner, R. Santos, H. Ziesche, JHEP 1609 (2016) 143
 	 - M. Krause, M. Muhlleitner, R. Santos, H. Ziesche, Phys.Rev. D95 (2017) no.7, 075019
+	 - A. Denner, S. Dittmaier, J.-N. Lang, J. High Energ. Phys. (2018) 2018: 104
 	The publication of LoopTools:
 	 - T. Hahn, M. Perez-Victoria, Comp. Phys. Commun. 118 (1999) 153-165, hep-ph/9807565
 
@@ -295,8 +308,8 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
 for more details.
 
-You have received a copy LICENSE.md of the GNU General Public License along with this program in the 2HDECAY
-root directoy.
+You have received a copy (LICENSE.md) of the GNU General Public License along with this program in the 2HDECAY
+root directory.
 
 Copyright 2018-2019, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira.
 	''')

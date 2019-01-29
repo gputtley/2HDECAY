@@ -105,18 +105,6 @@ double precision function h0toHmHpCT(x)
 		&)
 	case (9)
 		totalAmplitude = (0.25D0*EL2*DBLE(((Mh02 - 2.D0*MHp2)*SBA - (1.D0*CAB*(2.D0*Mh02 - (4.D0*Lambda5*MW2*SW2)&
-		&/EL2))/S2B)**INT(2.D0)))/(MW2*SW2)*( dZh0h0OS()/2D0 + dZHpHpOS() + dgAtMZ()/(EL/SW) - dMW2Usual()/(2D0*MW2) ) + &
-		&(-(EL*(-((Mh02 - 2*MHp2)*SBA) + (CAB*(2*Mh02 - (4*Lambda5*MW2*SW2)/EL2))/S2B))/(2D0*MW*SW))*(-EL/(2D0*MW*SW))*(&
-			& SBA*(2D0*dMHp2OSUsual() - dMh02OSUsual() ) + CBA*(dBetaProcDep1Usual() - dAlphaProcDep1Usual())*(2D0*MHp2 - Mh02) +&
-			& CAB/S2B*(2D0*dMh02OSUsual() - 4D0*dm122MSBarUsual()/S2B + 8D0*Lambda5*MW2*SW2*C2B*dBetaProcDep1Usual()/(S2B*EL2)) +&
-			& (- SAB/S2B*(dAlphaProcDep1Usual() + dBetaProcDep1Usual()) - 2D0*CAB*C2B/S2B**2*dBetaProcDep1Usual())*(2D0*Mh02 - &
-			& 4D0*Lambda5*MW2*SW2/EL2) &
-		&) + (-(EL*(-((Mh02 - 2*MHp2)*SBA) + (CAB*(2*Mh02 - (4*Lambda5*MW2*SW2)/EL2))/S2B))/(2D0*MW*SW))*(&
-			&(-EL*CBA/(2D0*MW*SW))*(Mh02 - MHp2)*dZGpHpOSUsual() + &
-			&(-EL/(2D0*MW*SW)*(-CBA*(MHH2 - 2D0*MHp2) + SAB/S2B*(2D0*MHH2 - 4D0*Lambda5*MW2*SW2/EL2)))*dZHHh0OSUsual()/2D0 &
-		&)
-	case (10)
-		totalAmplitude = (0.25D0*EL2*DBLE(((Mh02 - 2.D0*MHp2)*SBA - (1.D0*CAB*(2.D0*Mh02 - (4.D0*Lambda5*MW2*SW2)&
 		&/EL2))/S2B)**INT(2.D0)))/(MW2*SW2)*( dZh0h0OS()/2D0 + dZHpHpOS() + dgAtMZ()/(EL/SW) - dMW2Alter()/(2D0*MW2) ) + &
 		&(-(EL*(-((Mh02 - 2*MHp2)*SBA) + (CAB*(2*Mh02 - (4*Lambda5*MW2*SW2)/EL2))/S2B))/(2D0*MW*SW))*(-EL/(2D0*MW*SW))*(&
 			& SBA*(2D0*dMHp2OSAlter() - dMh02OSAlter() ) + CBA*(dBetaProcDep1Alter() - dAlphaProcDep1Alter())*(2D0*MHp2 - Mh02) +&
@@ -127,19 +115,7 @@ double precision function h0toHmHpCT(x)
 			&(-EL*CBA/(2D0*MW*SW))*(Mh02 - MHp2)*dZGpHpOSAlter() + &
 			&(-EL/(2D0*MW*SW)*(-CBA*(MHH2 - 2D0*MHp2) + SAB/S2B*(2D0*MHH2 - 4D0*Lambda5*MW2*SW2/EL2)))*dZHHh0OSAlter()/2D0 &
 		&)
-	case (11)
-		totalAmplitude = (0.25D0*EL2*DBLE(((Mh02 - 2.D0*MHp2)*SBA - (1.D0*CAB*(2.D0*Mh02 - (4.D0*Lambda5*MW2*SW2)&
-		&/EL2))/S2B)**INT(2.D0)))/(MW2*SW2)*( dZh0h0OS()/2D0 + dZHpHpOS() + dgAtMZ()/(EL/SW) - dMW2Usual()/(2D0*MW2) ) + &
-		&(-(EL*(-((Mh02 - 2*MHp2)*SBA) + (CAB*(2*Mh02 - (4*Lambda5*MW2*SW2)/EL2))/S2B))/(2D0*MW*SW))*(-EL/(2D0*MW*SW))*(&
-			& SBA*(2D0*dMHp2OSUsual() - dMh02OSUsual() ) + CBA*(dBetaProcDep2Usual() - dAlphaProcDep2Usual())*(2D0*MHp2 - Mh02) +&
-			& CAB/S2B*(2D0*dMh02OSUsual() - 4D0*dm122MSBarUsual()/S2B + 8D0*Lambda5*MW2*SW2*C2B*dBetaProcDep2Usual()/(S2B*EL2)) +&
-			& (- SAB/S2B*(dAlphaProcDep2Usual() + dBetaProcDep2Usual()) - 2D0*CAB*C2B/S2B**2*dBetaProcDep2Usual())*(2D0*Mh02 - &
-			& 4D0*Lambda5*MW2*SW2/EL2) &
-		&) + (-(EL*(-((Mh02 - 2*MHp2)*SBA) + (CAB*(2*Mh02 - (4*Lambda5*MW2*SW2)/EL2))/S2B))/(2D0*MW*SW))*(&
-			&(-EL*CBA/(2D0*MW*SW))*(Mh02 - MHp2)*dZGpHpOSUsual() + &
-			&(-EL/(2D0*MW*SW)*(-CBA*(MHH2 - 2D0*MHp2) + SAB/S2B*(2D0*MHH2 - 4D0*Lambda5*MW2*SW2/EL2)))*dZHHh0OSUsual()/2D0 &
-		&)
-	case (12)
+	case (10)
 		totalAmplitude = (0.25D0*EL2*DBLE(((Mh02 - 2.D0*MHp2)*SBA - (1.D0*CAB*(2.D0*Mh02 - (4.D0*Lambda5*MW2*SW2)&
 		&/EL2))/S2B)**INT(2.D0)))/(MW2*SW2)*( dZh0h0OS()/2D0 + dZHpHpOS() + dgAtMZ()/(EL/SW) - dMW2Alter()/(2D0*MW2) ) + &
 		&(-(EL*(-((Mh02 - 2*MHp2)*SBA) + (CAB*(2*Mh02 - (4*Lambda5*MW2*SW2)/EL2))/S2B))/(2D0*MW*SW))*(-EL/(2D0*MW*SW))*(&
@@ -151,25 +127,85 @@ double precision function h0toHmHpCT(x)
 			&(-EL*CBA/(2D0*MW*SW))*(Mh02 - MHp2)*dZGpHpOSAlter() + &
 			&(-EL/(2D0*MW*SW)*(-CBA*(MHH2 - 2D0*MHp2) + SAB/S2B*(2D0*MHH2 - 4D0*Lambda5*MW2*SW2/EL2)))*dZHHh0OSAlter()/2D0 &
 		&)
-	case (13)
-		totalAmplitude = (0.25D0*EL2*DBLE(((Mh02 - 2.D0*MHp2)*SBA - (1.D0*CAB*(2.D0*Mh02 - (4.D0*Lambda5*MW2*SW2)&
-		&/EL2))/S2B)**INT(2.D0)))/(MW2*SW2)*( dZh0h0OS()/2D0 + dZHpHpOS() + dgAtMZ()/(EL/SW) - dMW2Usual()/(2D0*MW2) ) + &
-		&(-(EL*(-((Mh02 - 2*MHp2)*SBA) + (CAB*(2*Mh02 - (4*Lambda5*MW2*SW2)/EL2))/S2B))/(2D0*MW*SW))*(-EL/(2D0*MW*SW))*(&
-			& SBA*(2D0*dMHp2OSUsual() - dMh02OSUsual() ) + CBA*(dBetaProcDep3Usual() - dAlphaProcDep3Usual())*(2D0*MHp2 - Mh02) +&
-			& CAB/S2B*(2D0*dMh02OSUsual() - 4D0*dm122MSBarUsual()/S2B + 8D0*Lambda5*MW2*SW2*C2B*dBetaProcDep3Usual()/(S2B*EL2)) +&
-			& (- SAB/S2B*(dAlphaProcDep3Usual() + dBetaProcDep3Usual()) - 2D0*CAB*C2B/S2B**2*dBetaProcDep3Usual())*(2D0*Mh02 - &
-			& 4D0*Lambda5*MW2*SW2/EL2) &
-		&) + (-(EL*(-((Mh02 - 2*MHp2)*SBA) + (CAB*(2*Mh02 - (4*Lambda5*MW2*SW2)/EL2))/S2B))/(2D0*MW*SW))*(&
-			&(-EL*CBA/(2D0*MW*SW))*(Mh02 - MHp2)*dZGpHpOSUsual() + &
-			&(-EL/(2D0*MW*SW)*(-CBA*(MHH2 - 2D0*MHp2) + SAB/S2B*(2D0*MHH2 - 4D0*Lambda5*MW2*SW2/EL2)))*dZHHh0OSUsual()/2D0 &
-		&)
-	case (14)
+	case (11)
 		totalAmplitude = (0.25D0*EL2*DBLE(((Mh02 - 2.D0*MHp2)*SBA - (1.D0*CAB*(2.D0*Mh02 - (4.D0*Lambda5*MW2*SW2)&
 		&/EL2))/S2B)**INT(2.D0)))/(MW2*SW2)*( dZh0h0OS()/2D0 + dZHpHpOS() + dgAtMZ()/(EL/SW) - dMW2Alter()/(2D0*MW2) ) + &
 		&(-(EL*(-((Mh02 - 2*MHp2)*SBA) + (CAB*(2*Mh02 - (4*Lambda5*MW2*SW2)/EL2))/S2B))/(2D0*MW*SW))*(-EL/(2D0*MW*SW))*(&
 			& SBA*(2D0*dMHp2OSAlter() - dMh02OSAlter() ) + CBA*(dBetaProcDep3Alter() - dAlphaProcDep3Alter())*(2D0*MHp2 - Mh02) +&
 			& CAB/S2B*(2D0*dMh02OSAlter() - 4D0*dm122MSBarAlter()/S2B + 8D0*Lambda5*MW2*SW2*C2B*dBetaProcDep3Alter()/(S2B*EL2)) +&
 			& (- SAB/S2B*(dAlphaProcDep3Alter() + dBetaProcDep3Alter()) - 2D0*CAB*C2B/S2B**2*dBetaProcDep3Alter())*(2D0*Mh02 - &
+			& 4D0*Lambda5*MW2*SW2/EL2) &
+		&) + (-(EL*(-((Mh02 - 2*MHp2)*SBA) + (CAB*(2*Mh02 - (4*Lambda5*MW2*SW2)/EL2))/S2B))/(2D0*MW*SW))*(&
+			&(-EL*CBA/(2D0*MW*SW))*(Mh02 - MHp2)*dZGpHpOSAlter() + &
+			&(-EL/(2D0*MW*SW)*(-CBA*(MHH2 - 2D0*MHp2) + SAB/S2B*(2D0*MHH2 - 4D0*Lambda5*MW2*SW2/EL2)))*dZHHh0OSAlter()/2D0 &
+		&)	
+	case (12)
+		totalAmplitude = (0.25D0*EL2*DBLE(((Mh02 - 2.D0*MHp2)*SBA - (1.D0*CAB*(2.D0*Mh02 - (4.D0*Lambda5*MW2*SW2)&
+		&/EL2))/S2B)**INT(2.D0)))/(MW2*SW2)*( dZh0h0OS()/2D0 + dZHpHpOS() + dgAtMZ()/(EL/SW) - dMW2Alter()/(2D0*MW2) ) + &
+		&(-(EL*(-((Mh02 - 2*MHp2)*SBA) + (CAB*(2*Mh02 - (4*Lambda5*MW2*SW2)/EL2))/S2B))/(2D0*MW*SW))*(-EL/(2D0*MW*SW))*(&
+			& SBA*(2D0*dMHp2OSAlter() - dMh02OSAlter() ) + CBA*(dBetaOS1Alter() - dAlphaOS1Alter())*(2D0*MHp2 - Mh02) +&
+			& CAB/S2B*(2D0*dMh02OSAlter() - 4D0*dm122MSBarAlter()/S2B + 8D0*Lambda5*MW2*SW2*C2B*dBetaOS1Alter()/(S2B*EL2)) +&
+			& (- SAB/S2B*(dAlphaOS1Alter() + dBetaOS1Alter()) - 2D0*CAB*C2B/S2B**2*dBetaOS1Alter())*(2D0*Mh02 - &
+			& 4D0*Lambda5*MW2*SW2/EL2) &
+		&) + (-(EL*(-((Mh02 - 2*MHp2)*SBA) + (CAB*(2*Mh02 - (4*Lambda5*MW2*SW2)/EL2))/S2B))/(2D0*MW*SW))*(&
+			&(-EL*CBA/(2D0*MW*SW))*(Mh02 - MHp2)*dZGpHpOSAlter() + &
+			&(-EL/(2D0*MW*SW)*(-CBA*(MHH2 - 2D0*MHp2) + SAB/S2B*(2D0*MHH2 - 4D0*Lambda5*MW2*SW2/EL2)))*dZHHh0OSAlter()/2D0 &
+		&)
+	case (13)
+		totalAmplitude = (0.25D0*EL2*DBLE(((Mh02 - 2.D0*MHp2)*SBA - (1.D0*CAB*(2.D0*Mh02 - (4.D0*Lambda5*MW2*SW2)&
+		&/EL2))/S2B)**INT(2.D0)))/(MW2*SW2)*( dZh0h0OS()/2D0 + dZHpHpOS() + dgAtMZ()/(EL/SW) - dMW2Alter()/(2D0*MW2) ) + &
+		&(-(EL*(-((Mh02 - 2*MHp2)*SBA) + (CAB*(2*Mh02 - (4*Lambda5*MW2*SW2)/EL2))/S2B))/(2D0*MW*SW))*(-EL/(2D0*MW*SW))*(&
+			& SBA*(2D0*dMHp2OSAlter() - dMh02OSAlter() ) + CBA*(dBetaOS2Alter() - dAlphaOS2Alter())*(2D0*MHp2 - Mh02) +&
+			& CAB/S2B*(2D0*dMh02OSAlter() - 4D0*dm122MSBarAlter()/S2B + 8D0*Lambda5*MW2*SW2*C2B*dBetaOS2Alter()/(S2B*EL2)) +&
+			& (- SAB/S2B*(dAlphaOS2Alter() + dBetaOS2Alter()) - 2D0*CAB*C2B/S2B**2*dBetaOS2Alter())*(2D0*Mh02 - &
+			& 4D0*Lambda5*MW2*SW2/EL2) &
+		&) + (-(EL*(-((Mh02 - 2*MHp2)*SBA) + (CAB*(2*Mh02 - (4*Lambda5*MW2*SW2)/EL2))/S2B))/(2D0*MW*SW))*(&
+			&(-EL*CBA/(2D0*MW*SW))*(Mh02 - MHp2)*dZGpHpOSAlter() + &
+			&(-EL/(2D0*MW*SW)*(-CBA*(MHH2 - 2D0*MHp2) + SAB/S2B*(2D0*MHH2 - 4D0*Lambda5*MW2*SW2/EL2)))*dZHHh0OSAlter()/2D0 &
+		&)
+	case (14)
+		totalAmplitude = (0.25D0*EL2*DBLE(((Mh02 - 2.D0*MHp2)*SBA - (1.D0*CAB*(2.D0*Mh02 - (4.D0*Lambda5*MW2*SW2)&
+		&/EL2))/S2B)**INT(2.D0)))/(MW2*SW2)*( dZh0h0OS()/2D0 + dZHpHpOS() + dgAtMZ()/(EL/SW) - dMW2Alter()/(2D0*MW2) ) + &
+		&(-(EL*(-((Mh02 - 2*MHp2)*SBA) + (CAB*(2*Mh02 - (4*Lambda5*MW2*SW2)/EL2))/S2B))/(2D0*MW*SW))*(-EL/(2D0*MW*SW))*(&
+			& SBA*(2D0*dMHp2OSAlter() - dMh02OSAlter() ) + CBA*(dBetaOS12Alter() - dAlphaOS12Alter())*(2D0*MHp2 - Mh02) +&
+			& CAB/S2B*(2D0*dMh02OSAlter() - 4D0*dm122MSBarAlter()/S2B + 8D0*Lambda5*MW2*SW2*C2B*dBetaOS12Alter()/(S2B*EL2)) +&
+			& (- SAB/S2B*(dAlphaOS12Alter() + dBetaOS12Alter()) - 2D0*CAB*C2B/S2B**2*dBetaOS12Alter())*(2D0*Mh02 - &
+			& 4D0*Lambda5*MW2*SW2/EL2) &
+		&) + (-(EL*(-((Mh02 - 2*MHp2)*SBA) + (CAB*(2*Mh02 - (4*Lambda5*MW2*SW2)/EL2))/S2B))/(2D0*MW*SW))*(&
+			&(-EL*CBA/(2D0*MW*SW))*(Mh02 - MHp2)*dZGpHpOSAlter() + &
+			&(-EL/(2D0*MW*SW)*(-CBA*(MHH2 - 2D0*MHp2) + SAB/S2B*(2D0*MHH2 - 4D0*Lambda5*MW2*SW2/EL2)))*dZHHh0OSAlter()/2D0 &
+		&)
+	case (15)
+		totalAmplitude = (0.25D0*EL2*DBLE(((Mh02 - 2.D0*MHp2)*SBA - (1.D0*CAB*(2.D0*Mh02 - (4.D0*Lambda5*MW2*SW2)&
+		&/EL2))/S2B)**INT(2.D0)))/(MW2*SW2)*( dZh0h0OS()/2D0 + dZHpHpOS() + dgAtMZ()/(EL/SW) - dMW2Alter()/(2D0*MW2) ) + &
+		&(-(EL*(-((Mh02 - 2*MHp2)*SBA) + (CAB*(2*Mh02 - (4*Lambda5*MW2*SW2)/EL2))/S2B))/(2D0*MW*SW))*(-EL/(2D0*MW*SW))*(&
+			& SBA*(2D0*dMHp2OSAlter() - dMh02OSAlter() ) + CBA*(dBetaBFMSAlter() - dAlphaPinchOS())*(2D0*MHp2 - Mh02) +&
+			& CAB/S2B*(2D0*dMh02OSAlter() - 4D0*dm122MSBarAlter()/S2B + 8D0*Lambda5*MW2*SW2*C2B*dBetaBFMSAlter()/(S2B*EL2)) +&
+			& (- SAB/S2B*(dAlphaPinchOS() + dBetaBFMSAlter()) - 2D0*CAB*C2B/S2B**2*dBetaBFMSAlter())*(2D0*Mh02 - &
+			& 4D0*Lambda5*MW2*SW2/EL2) &
+		&) + (-(EL*(-((Mh02 - 2*MHp2)*SBA) + (CAB*(2*Mh02 - (4*Lambda5*MW2*SW2)/EL2))/S2B))/(2D0*MW*SW))*(&
+			&(-EL*CBA/(2D0*MW*SW))*(Mh02 - MHp2)*dZGpHpOSAlter() + &
+			&(-EL/(2D0*MW*SW)*(-CBA*(MHH2 - 2D0*MHp2) + SAB/S2B*(2D0*MHH2 - 4D0*Lambda5*MW2*SW2/EL2)))*dZHHh0OSAlter()/2D0 &
+		&)
+	case (16)
+		totalAmplitude = (0.25D0*EL2*DBLE(((Mh02 - 2.D0*MHp2)*SBA - (1.D0*CAB*(2.D0*Mh02 - (4.D0*Lambda5*MW2*SW2)&
+		&/EL2))/S2B)**INT(2.D0)))/(MW2*SW2)*( dZh0h0OS()/2D0 + dZHpHpOS() + dgAtMZ()/(EL/SW) - dMW2Usual()/(2D0*MW2) ) + &
+		&(-(EL*(-((Mh02 - 2*MHp2)*SBA) + (CAB*(2*Mh02 - (4*Lambda5*MW2*SW2)/EL2))/S2B))/(2D0*MW*SW))*(-EL/(2D0*MW*SW))*(&
+			& SBA*(2D0*dMHp2OSUsual() - dMh02OSUsual() ) + CBA*(dBetaMSBarUsual() - dAlphaMSBarUsual())*(2D0*MHp2 - Mh02) + &
+			& CAB/S2B*(2D0*dMh02OSUsual() - 4D0*dm122MSBarUsual()/S2B + 8D0*Lambda5*MW2*SW2*C2B*dBetaMSBarUsual()/(S2B*EL2)) +&
+			& (- SAB/S2B*(dAlphaMSBarUsual() + dBetaMSBarUsual()) - 2D0*CAB*C2B/S2B**2*dBetaMSBarUsual())*(2D0*Mh02 - &
+			& 4D0*Lambda5*MW2*SW2/EL2) &
+		&) + (-(EL*(-((Mh02 - 2*MHp2)*SBA) + (CAB*(2*Mh02 - (4*Lambda5*MW2*SW2)/EL2))/S2B))/(2D0*MW*SW))*(&
+			&(-EL*CBA/(2D0*MW*SW))*(Mh02 - MHp2)*dZGpHpOSUsual() + &
+			&(-EL/(2D0*MW*SW)*(-CBA*(MHH2 - 2D0*MHp2) + SAB/S2B*(2D0*MHH2 - 4D0*Lambda5*MW2*SW2/EL2)))*dZHHh0OSUsual()/2D0 &
+		&)
+	case (17)
+		totalAmplitude = (0.25D0*EL2*DBLE(((Mh02 - 2.D0*MHp2)*SBA - (1.D0*CAB*(2.D0*Mh02 - (4.D0*Lambda5*MW2*SW2)&
+		&/EL2))/S2B)**INT(2.D0)))/(MW2*SW2)*( dZh0h0OS()/2D0 + dZHpHpOS() + dgAtMZ()/(EL/SW) - dMW2Alter()/(2D0*MW2) ) + &
+		&(-(EL*(-((Mh02 - 2*MHp2)*SBA) + (CAB*(2*Mh02 - (4*Lambda5*MW2*SW2)/EL2))/S2B))/(2D0*MW*SW))*(-EL/(2D0*MW*SW))*(&
+			& SBA*(2D0*dMHp2OSAlter() - dMh02OSAlter() ) + CBA*(dBetaMSBarAlter() - dAlphaMSBarAlter())*(2D0*MHp2 - Mh02) +&
+			& CAB/S2B*(2D0*dMh02OSAlter() - 4D0*dm122MSBarAlter()/S2B + 8D0*Lambda5*MW2*SW2*C2B*dBetaMSBarAlter()/(S2B*EL2)) +&
+			& (- SAB/S2B*(dAlphaMSBarAlter() + dBetaMSBarAlter()) - 2D0*CAB*C2B/S2B**2*dBetaMSBarAlter())*(2D0*Mh02 - &
 			& 4D0*Lambda5*MW2*SW2/EL2) &
 		&) + (-(EL*(-((Mh02 - 2*MHp2)*SBA) + (CAB*(2*Mh02 - (4*Lambda5*MW2*SW2)/EL2))/S2B))/(2D0*MW*SW))*(&
 			&(-EL*CBA/(2D0*MW*SW))*(Mh02 - MHp2)*dZGpHpOSAlter() + &

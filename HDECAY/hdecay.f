@@ -9,7 +9,7 @@ C     Marcel Krause, Margarete M. Mühlleitner, M. Spira
 C
 C When you use this program please cite:
 C The manual for EW2HDM_HDECAY:
-C - M. Krause, M. Muhlleitner, M. Spira, arXiv:YYMM.XXX
+C - M. Krause, M. Muhlleitner, M. Spira, arXiv:1810.00768
 C The manual for HDECAY:
 C - A. Djouadi, J. Kalinowski, M. Spira, Comp. Phys. Commun.
 C  108  (1998) 56, hep-ph/9704448
@@ -21,7 +21,7 @@ C   JHEP 1609 (2016) 143
 C - M. Krause, M. Muhlleitner, R. Santos, H. Ziesche,
 C   Phys.Rev. D95 (2017) no.7, 075019
 C     
-C  EW2HDM_HDECAY: Last modification on July 10 2018 by M.M.
+C  EW2HDM_HDECAY: Last modification on Jan 28 2019 by M.M.
 C ==================================================================
 C      
 C     HDECAY: Last modification on May 7 2018 by M.S.
@@ -156,12 +156,19 @@ C MEP:       E' MASS      (4TH GENERATION)
 C PARAM:     PARAMETRISATION OF THE 2HDM INPUT: 1 (MASS VALUES, ALPHA),
 C            2 (LAMBDAS)
 C RENSCHEME: RENORMALIZATION SCHEME FOR THE EW CORRECTIONS TO THE 2HDM:
-C            0 (CALCULATION FOR ALL SCHEMES), 1-14 (CHOOSE ONE AMONG THE
-C            14 POSSIBLE SCHEMES)      
+C            0 (CALCULATION FOR ALL SCHEMES), 1-17 (CHOOSE ONE AMONG THE
+C            17 POSSIBLE SCHEMES)      
+C RENSCHEME: REFERENCE SCHEME FOR THE EW CORRECTIONS TO THE 2HDM:
+C            The input values are understood to be defined in this reference
+C            renormalization scheme. They will be converted to the scheme
+C            RENSCHEME for which the user has chosen to evaluate the EW
+C            corrections.
 C TYPE:      TYPE OF 2HDM: 1 (type I), 2 (type II)
 C TGBET2HDM: TAN(BETA)
 C M_12^2:    PARAMETER M12 SQUARED
 C INSCALE:   INPUT SCALE, NEEDED FOR THE EW CORRECTIONS TO THE 2HDM
+C            IF SET EQUAL TO MIN, THEN IT IS THE SCALE OF THE DECAYING
+C            PARTICLE.
 C FOR PARAM = 1:
 C ALPHA_H:   MIXING ANGLE IN THE CP-EVEN NEUTRAL HIGGS SECTOR
 C MHL:       MASS OF THE LIGHT CP-EVEN HIGGS BOSON
@@ -255,7 +262,7 @@ C HIGGS VACUUM EXPECTATION VALUE.
 C
 C A0toBBBarLO, A0toBBBarNLO1, etc.:      
 C THE EW CORRECTIONS TO THE 2HDM HIGGS BOSONS FOR ONE CHOSEN
-C RENORMALIZATION SCHEME OR ALL 14 SCHEMES: VALUES ARE GIVEN OUT FOR
+C RENORMALIZATION SCHEME OR ALL 17 SCHEMES: VALUES ARE GIVEN OUT FOR
 C THE LO WIDTHS (AS CROSS-CHECK WITH HDECAY), FOR THE EW NLO WIDTHS      
 C
 C =======================================================================
@@ -342,24 +349,46 @@ c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
      .                 slhase(2),slhasl(2),slhasn(2),slhasnl(2),
      .                 warning(1:10)
       double precision vckmval(4)
+c MMM changed 19/1/19
+      double precision tmpal(1:17),ALPH2HDMRENL(1:17),
+     .     TGBET2HDMRENL(1:17),tmptgbet(1:17),ALPH2HDMRENH(1:17),
+     .     TGBET2HDMRENH(1:17),ALPH2HDMRENA(1:17),TGBET2HDMRENA(1:17),
+     .     ALPH2HDMRENHP(1:17),TGBET2HDMRENHP(1:17)
+      double precision HLBBLOR(1:17),HLLLLOR(1:17),HLMMLOR(1:17),
+     .     HLSSLOR(1:17),HLCCLOR(1:17),HLTTLOR(1:17),HLWWLOR(1:17),
+     .     HLZZLOR(1:17),HLAALOR(1:17),HLZALOR(1:17),HLHPWMLOR(1:17),
+     .     HLHPHMLOR(1:17),tmplo(1:17)
+      double precision HHBBLOR(1:17),HHLLLOR(1:17),HHMMLOR(1:17),
+     .     HHSSLOR(1:17),HHCCLOR(1:17),HHTTLOR(1:17),HHWWLOR(1:17),
+     .     HHZZLOR(1:17),HHHLHLLOR(1:17),HHAALOR(1:17),HHZALOR(1:17),
+     .     HHHPWMLOR(1:17),HHHPHMLOR(1:17)
+      double precision ABBLOR(1:17),ALLLOR(1:17),AMMLOR(1:17),
+     .     ASSLOR(1:17),ACCLOR(1:17),ATTLOR(1:17),AUULOR(1:17),
+     .     ADDLOR(1:17),AEELOR(1:17),AHLZLOR(1:17),AHHZLOR(1:17),
+     .     AHPWMLOR(1:17)
+      double precision HPBCLOR(1:17),HPTAUNULOR(1:17),HPMUNULOR(1:17),
+     .     HPSULOR(1:17),HPSCLOR(1:17),HPTBLOR(1:17),HPDCLOR(1:17),
+     .     HPBULOR(1:17),HPTSLOR(1:17),HPTDLOR(1:17),HPWHLLOR(1:17),
+     .     HPWHHLOR(1:17),HPWALOR(1:17)      
+c end MMM changed 19/1/19      
 c MMM changed 10/7/18
-      double precision HLBBNLO(1:14),HLLLNLO(1:14),HLMMNLO(1:14),
-     .     HLSSNLO(1:14),HLCCNLO(1:14),HLTTNLO(1:14),HLWWNLO(1:14),
-     .     HLZZNLO(1:14),HLAANLO(1:14),HLZANLO(1:14),HLHPWMNLO(1:14),
-     .     HLHPHMNLO(1:14),tmp(1:14)
-      double precision HHBBNLO(1:14),HHLLNLO(1:14),HHMMNLO(1:14),
-     .     HHSSNLO(1:14),HHCCNLO(1:14),HHTTNLO(1:14),HHWWNLO(1:14),
-     .     HHZZNLO(1:14),HHHLHLNLO(1:14),HHAANLO(1:14),HHZANLO(1:14),
-     .     HHHPWMNLO(1:14),HHHPHMNLO(1:14)
-      double precision ABBNLO(1:14),ALLNLO(1:14),AMMNLO(1:14),
-     .     ASSNLO(1:14),ACCNLO(1:14),ATTNLO(1:14),AUUNLO(1:14),
-     .     ADDNLO(1:14),AEENLO(1:14),AHLZNLO(1:14),AHHZNLO(1:14),
-     .     AHPWMNLO(1:14)
-      double precision HPBCNLO(1:14),HPTAUNUNLO(1:14),HPMUNUNLO(1:14),
-     .     HPSUNLO(1:14),HPSCNLO(1:14),HPTBNLO(1:14),HPDCNLO(1:14),
-     .     HPBUNLO(1:14),HPTSNLO(1:14),HPTDNLO(1:14),HPWHLNLO(1:14),
-     .     HPWHHNLO(1:14),HPWANLO(1:14)
-c end MMM changed 10/7/18      
+      double precision HLBBNLO(1:17),HLLLNLO(1:17),HLMMNLO(1:17),
+     .     HLSSNLO(1:17),HLCCNLO(1:17),HLTTNLO(1:17),HLWWNLO(1:17),
+     .     HLZZNLO(1:17),HLAANLO(1:17),HLZANLO(1:17),HLHPWMNLO(1:17),
+     .     HLHPHMNLO(1:17),tmp(1:17)
+      double precision HHBBNLO(1:17),HHLLNLO(1:17),HHMMNLO(1:17),
+     .     HHSSNLO(1:17),HHCCNLO(1:17),HHTTNLO(1:17),HHWWNLO(1:17),
+     .     HHZZNLO(1:17),HHHLHLNLO(1:17),HHAANLO(1:17),HHZANLO(1:17),
+     .     HHHPWMNLO(1:17),HHHPHMNLO(1:17)
+      double precision ABBNLO(1:17),ALLNLO(1:17),AMMNLO(1:17),
+     .     ASSNLO(1:17),ACCNLO(1:17),ATTNLO(1:17),AUUNLO(1:17),
+     .     ADDNLO(1:17),AEENLO(1:17),AHLZNLO(1:17),AHHZNLO(1:17),
+     .     AHPWMNLO(1:17)
+      double precision HPBCNLO(1:17),HPTAUNUNLO(1:17),HPMUNUNLO(1:17),
+     .     HPSUNLO(1:17),HPSCNLO(1:17),HPTBNLO(1:17),HPDCNLO(1:17),
+     .     HPBUNLO(1:17),HPTSNLO(1:17),HPTDNLO(1:17),HPWHLNLO(1:17),
+     .     HPWHHNLO(1:17),HPWANLO(1:17)
+c end MMM changed 10/7/18
       integer   imod(1:2)
       integer check(1:22)
       double precision mbmsbar,mbl,mbu
@@ -463,7 +492,24 @@ c MMM changed 21/8/13
 c end MMM changed 21/8/13
 c MMM changed 10/7/18
       COMMON/RUNVARIABLE/iminimal
-      COMMON/PARS2HDMEW/IELW2HDM,IRENSCHEME,GFCALC,VALINSCALE
+c MMM changed 19/1/19      
+      COMMON/PARS2HDMEW/GFCALC,VALINSCALE
+      COMMON/PARS2HDMEW1/IELW2HDM,IRENSCHEME,IREFSCHEME
+      COMMON/RENMIXANGLES/tgbet2hdmrenl,alph2hdmrenl,tgbet2hdmrenh,
+     .     alph2hdmrenh,tgbet2hdmrena,alph2hdmrena,tgbet2hdmrenhp,
+     .     alph2hdmrenhp      
+      COMMON/RENLOHLWIDTH_2HDM/HLBBLOR,HLLLLOR,HLMMLOR,HLSSLOR,HLCCLOR,
+     .     HLTTLOR,HLWWLOR,HLZZLOR,HLAALOR,HLZALOR,HLHPWMLOR,HLHPHMLOR
+      COMMON/RENLOHHWIDTH_2HDM/HHBBLOR,HHLLLOR,HHMMLOR,HHSSLOR,HHCCLOR,
+     .     HHTTLOR,HHWWLOR,HHZZLOR,HHHLHLLOR,HHAALOR,HHZALOR,HHHPWMLOR,
+     .     HHHPHMLOR
+      COMMON/RENLOAWIDTH_2HDM/ABBLOR,ALLLOR,AMMLOR,ASSLOR,ACCLOR,
+     .     ATTLOR,AHLZLOR,AHHZLOR,AHPWMLOR
+      COMMON/RENLOHPWIDTH_2HDM/HPBCLOR,HPTAUNULOR,HPMUNULOR,HPSULOR,
+     .     HPSCLOR,HPTBLOR,HPDCLOR,HPBULOR,HPTSLOR,HPTDLOR,HPWHLLOR,
+     .     HPWHHLOR,HPWALOR
+      COMMON/THDM_TEST/itest      
+c end MMM changed 19/1/19      
       COMMON/NLOHLWIDTH_2HDM/HLBBLO,HLLLLO,HLMMLO,HLSSLO,HLCCLO,HLTTLO,
      .     HLWWLO,HLZZLO,HLAALO,HLZALO,HLHPWMLO,HLHPHMLO,HLBBNLO,
      .     HLLLNLO,HLMMNLO,HLSSNLO,HLCCNLO,HLTTNLO,HLWWNLO,HLZZNLO,
@@ -525,7 +571,7 @@ C MMM changed 10/7/18
       if(iminimal.ne.1) then
          READ(NI,100)DUMMYAA
          READ(NI,100)DUMMYBB
-      endif   
+      endif
 C end MMM changed 10/7/18
       READ(NI,100)AMT
       READ(NI,100)AMTAU
@@ -569,8 +615,11 @@ c MMM changed 21/8/13
       READ(NI,101)IPARAM2HDM 
       READ(NI,101)ITYPE2HDM
 C MMM changed 10/7/18
-      READ(NI,101)IRENSCHEME
-C end MMM changed 10/7/18            
+      READ(NI,101)IRENSCHEME     
+C end MMM changed 10/7/18
+C MMM changed 19/1/19
+      READ(NI,101)IREFSCHEME  
+c end MMM changed 19/1/19      
       READ(NI,*)
       READ(NI,100)TGBET2HDM
       READ(NI,100)AM12SQ
@@ -638,577 +687,838 @@ c     READ(NI,101)NNLO
       READ(NI,100)CPNUP
       READ(NI,100)CPEP
 c MMM changed 10/7/18
+c MMM changed 19/1/19      
       if(iminimal.ne.1) then
       READ(NI,*)
-      READ(NI,111)HLBBLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)tmpal(i)
+         enddo
+         do i=1,17,1
+            ALPH2HDMRENL(i)=tmpal(i)
+         enddo
+      ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)ttmpal
+         ALPH2HDMRENL(1)=ttmpal
+         do i=2,17,1
+            ALPH2HDMRENL(i) = 0.D0
+         enddo
+      ENDIF
+      IF(IRENSCHEME.EQ.0) then
+         do i=1,17,1
+            READ(NI,111)tmptgbet(i)
+         enddo
+         do i=1,17,1
+            TGBET2HDMRENL(i)=dtan(tmptgbet(i))
+         enddo
+      ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)ttmptgbet
+         TGBET2HDMRENL(1)=dtan(ttmptgbet)
+         do i=2,17,1
+            TGBET2HDMRENL(i) = 0.D0
+         enddo
+      ENDIF
+c      call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),IRENSCHEME)
+c
+c
+      READ(NI,*)
+      IF(IRENSCHEME.EQ.0) then
+         do i=1,17,1
+            READ(NI,111)tmplo(i)            
             READ(NI,111)tmp(i)
          enddo
-         do i=1,14,1
+         do i=1,17,1
+            HLBBLOR(i)=tmplo(i)            
             HLBBNLO(i)=tmp(i)
          enddo         
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)ttmplo         
          READ(NI,111)ttmp
+         HLBBLOR(1)=ttmplo       
          HLBBNLO(1)=ttmp
-         do i=2,14,1
+         do i=2,17,1
+            HLBBLOR(i) = 0.D0            
             HLBBNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HLLLLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)HLLLLOR(i)                        
             READ(NI,111)HLLLNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)HLLLLOR(1)
          READ(NI,111)HLLLNLO(1)
-         do i=2,14,1
+         do i=2,17,1
+            HLLLLOR(i) = 0.D0            
             HLLLNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HLMMLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)HLMMLOR(i)
             READ(NI,111)HLMMNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)HLMMLOR(1)         
          READ(NI,111)HLMMNLO(1)
-         do i=2,14,1
+         do i=2,17,1
+            HLMMLOR(i) = 0.D0            
             HLMMNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HLSSLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
-            READ(NI,111)HLSSNLO(i)
+         do i=1,17,1
+            READ(NI,111)HLSSLOR(i)
+            READ(NI,111)HLSSNLO(i)            
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)HLSSLOR(1)
          READ(NI,111)HLSSNLO(1)
-         do i=2,14,1
+         do i=2,17,1
+            HLSSLOR(i) = 0.D0            
             HLSSNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HLCCLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)HLCCLOR(i)            
             READ(NI,111)HLCCNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)HLCCLOR(1)
          READ(NI,111)HLCCNLO(1)
-         do i=2,14,1
+         do i=2,17,1
+            HLCCLOR(i) = 0.D0            
             HLCCNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HLTTLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
-            READ(NI,111)HLTTNLO(i)
+         do i=1,17,1
+            READ(NI,111)HLTTLOR(i)
+            READ(NI,111)HLTTNLO(i)            
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
-         READ(NI,111)HLTTNLO(1)
-         do i=2,14,1
-            HLTTNLO(i) = 0.D0
+         READ(NI,111)HLTTLOR(1)
+         READ(NI,111)HLTTNLO(1)         
+         do i=2,17,1
+            HLTTLOR(i) = 0.D0
+            HLTTNLO(i) = 0.D0            
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HLWWLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
-            READ(NI,111)HLWWNLO(i)
+         do i=1,17,1
+            READ(NI,111)HLWWLOR(i)
+            READ(NI,111)HLWWNLO(i)            
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
-         READ(NI,111)HLWWNLO(1)
-         do i=2,14,1
+         READ(NI,111)HLWWLOR(1)
+         READ(NI,111)HLWWNLO(1)         
+         do i=2,17,1
+            HLWWLOR(i) = 0.D0            
             HLWWNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HLZZLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)HLZZLOR(i)
             READ(NI,111)HLZZNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)HLZZLOR(1)
          READ(NI,111)HLZZNLO(1)
-         do i=2,14,1
+         do i=2,17,1
+            HLZZLOR(i) = 0.D0
             HLZZNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HLAALO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)HLAALOR(i)            
             READ(NI,111)HLAANLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
-         READ(NI,111)HLAANLO(1)
-         do i=2,14,1
-            HLAANLO(i) = 0.D0
+         READ(NI,111)HLAALOR(1)
+         READ(NI,111)HLAANLO(1)         
+         do i=2,17,1
+            HLAALOR(i) = 0.D0
+            HLAANLO(i) = 0.D0            
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HLZALO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)HLZALOR(i)            
             READ(NI,111)HLZANLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
-         READ(NI,111)HLZANLO(1)
-         do i=2,14,1
+         READ(NI,111)HLZALOR(1)
+         READ(NI,111)HLZANLO(1)         
+         do i=2,17,1
+            HLZALOR(i) = 0.D0
             HLZANLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HLHPWMLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)HLHPWMLOR(i)
             READ(NI,111)HLHPWMNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
-         READ(NI,111)HLHPWMNLO(1)
-         do i=2,14,1
+         READ(NI,111)HLHPWMLOR(1)
+         READ(NI,111)HLHPWMNLO(1)         
+         do i=2,17,1
+            HLHPWMLOR(i) = 0.D0
             HLHPWMNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HLHPHMLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)HLHPHMLOR(i)
             READ(NI,111)HLHPHMNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)HLHPHMLOR(1)
          READ(NI,111)HLHPHMNLO(1)
-         do i=2,14,1
+         do i=2,17,1
+            HLHPHMLOR(i) = 0.D0
             HLHPHMNLO(i) = 0.D0
          enddo
       ENDIF
-      READ(NI,*)
-      READ(NI,111)HHBBLO
+c
+c
+      READ(NI,*)      
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)tmpal(i)
+         enddo
+         do i=1,17,1
+            ALPH2HDMRENH(i)=tmpal(i)
+         enddo
+      ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)ttmpal
+         ALPH2HDMRENH(1)=ttmpal
+         do i=2,17,1
+            ALPH2HDMRENH(i) = 0.D0
+         enddo
+      ENDIF
+      IF(IRENSCHEME.EQ.0) then
+         do i=1,17,1
+            READ(NI,111)tmptgbet(i)
+         enddo
+         do i=1,17,1
+            TGBET2HDMRENH(i)=dtan(tmptgbet(i))
+         enddo
+      ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)ttmtgbet
+         TGBET2HDMRENH(1)=dtan(ttmptgbet)
+         do i=2,17,1
+            TGBET2HDMRENH(i) = 0.D0
+         enddo
+      ENDIF
+c
+      READ(NI,*)
+      IF(IRENSCHEME.EQ.0) then
+         do i=1,17,1
+            READ(NI,111)HHBBLOR(i)            
             READ(NI,111)HHBBNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
-         READ(NI,111)HHBBNLO(1)
-         do i=2,14,1
-            HHBBNLO(i) = 0.D0
+         READ(NI,111)HHBBLOR(1)
+         READ(NI,111)HHBBNLO(1)         
+         do i=2,17,1
+            HHBBLOR(i) = 0.D0
+            HHBBNLO(i) = 0.D0            
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HHLLLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)HHLLLOR(i)
             READ(NI,111)HHLLNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
-         READ(NI,111)HHLLNLO(1)
-         do i=2,14,1
-            HHLLNLO(i) = 0.D0
+         READ(NI,111)HHLLLOR(1)
+         READ(NI,111)HHLLNLO(1)         
+         do i=2,17,1
+            HHLLLOR(i) = 0.D0
+            HHLLNLO(i) = 0.D0            
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HHMMLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
-            READ(NI,111)HHMMNLO(i)
+         do i=1,17,1
+            READ(NI,111)HHMMLOR(i)
+            READ(NI,111)HHMMNLO(i)            
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
-         READ(NI,111)HHMMNLO(1)
-         do i=2,14,1
+         READ(NI,111)HHMMLOR(1)
+         READ(NI,111)HHMMNLO(1)         
+         do i=2,17,1
+            HHMMLOR(i) = 0.D0            
             HHMMNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HHSSLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
-            READ(NI,111)HHSSNLO(i)
+         do i=1,17,1
+            READ(NI,111)HHSSLOR(i)
+            READ(NI,111)HHSSNLO(i)            
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)HHSSLOR(1)         
          READ(NI,111)temp
          HHSSNLO(1) = temp
-         do i=2,14,1
+         do i=2,17,1
+            HHSSLOR(i) = 0.D0            
             HHSSNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HHCCLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
-            READ(NI,111)HHCCNLO(i)
+         do i=1,17,1
+            READ(NI,111)HHCCLOR(i)
+            READ(NI,111)HHCCNLO(i)            
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
-         READ(NI,111)HHCCNLO(1)
-         do i=2,14,1
-            HHCCNLO(i) = 0.D0
+         READ(NI,111)HHCCLOR(1)
+         READ(NI,111)HHCCNLO(1)         
+         do i=2,17,1
+            HHCCLOR(i) = 0.D0
+            HHCCNLO(i) = 0.D0            
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HHTTLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
-            READ(NI,111)HHTTNLO(i)
+         do i=1,17,1
+            READ(NI,111)HHTTLOR(i)
+            READ(NI,111)HHTTNLO(i)            
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
-         READ(NI,111)HHTTNLO(1)
-         do i=2,14,1
+         READ(NI,111)HHTTLOR(1)
+         READ(NI,111)HHTTNLO(1)         
+         do i=2,17,1
+            HHTTLOR(i) = 0.D0            
             HHTTNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HHWWLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)HHWWLOR(i)            
             READ(NI,111)HHWWNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
-         READ(NI,111)HHWWNLO(1)
-         do i=2,14,1
+         READ(NI,111)HHWWLOR(1)
+         READ(NI,111)HHWWNLO(1)         
+         do i=2,17,1
+            HHWWLOR(i) = 0.D0            
             HHWWNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HHZZLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)HHZZLOR(i)            
             READ(NI,111)HHZZNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
-         READ(NI,111)HHZZNLO(1)
-         do i=2,14,1
+         READ(NI,111)HHZZLOR(1)
+         READ(NI,111)HHZZNLO(1)         
+         do i=2,17,1
+            HHZZLOR(i) = 0.D0
             HHZZNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HHHLHLLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)HHHLHLLOR(i)
             READ(NI,111)HHHLHLNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
-         READ(NI,111)HHHLHLNLO(1)
-         do i=2,14,1
+         READ(NI,111)HHHLHLLOR(1)
+         READ(NI,111)HHHLHLNLO(1)         
+         do i=2,17,1
+            HHHLHLLOR(i) = 0.D0            
             HHHLHLNLO(i) = 0.D0
          enddo
       ENDIF
-      READ(NI,*)
-      READ(NI,111)HHAALO
+c
+      READ(NI,*)      
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)HHAALOR(i)            
             READ(NI,111)HHAANLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)HHAALOR(1)         
          READ(NI,111)HHAANLO(1)
-         do i=2,14,1
+         do i=2,17,1
+            HHAALOR(i) = 0.D0
             HHAANLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HHZALO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)HHZALOR(i)
             READ(NI,111)HHZANLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
-         READ(NI,111)HHZANLO(1)
-         do i=2,14,1
+         READ(NI,111)HHZALOR(1)
+         READ(NI,111)HHZANLO(1)         
+         do i=2,17,1
+            HHZALOR(i) = 0.D0
             HHZANLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HHHPWMLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)HHHPWMLOR(i)            
             READ(NI,111)HHHPWMNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
-         READ(NI,111)HHHPWMNLO(1)
-         do i=2,14,1
+         READ(NI,111)HHHPWMLOR(1)
+         READ(NI,111)HHHPWMNLO(1)         
+         do i=2,17,1
+            HHHPWMLOR(i) = 0.D0            
             HHHPWMNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HHHPHMLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
-            READ(NI,111)HHHPHMNLO(i)
+         do i=1,17,1
+            READ(NI,111)HHHPHMLOR(i)
+            READ(NI,111)HHHPHMNLO(i)            
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
-         READ(NI,111)HHHPHMNLO(1)
-         do i=2,14,1
+         READ(NI,111)HHHPHMLOR(1)
+         READ(NI,111)HHHPHMNLO(1)         
+         do i=2,17,1
+            HHHPHMLOR(i) = 0.D0            
             HHHPHMNLO(i) = 0.D0
          enddo
-      ENDIF          
+      ENDIF
+c
+c      
       READ(NI,*)
-      READ(NI,111)ABBLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)ALPH2HDMRENA(i)
+         enddo
+      ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)ALPH2HDMRENA(1)
+         do i=2,17,1
+            ALPH2HDMRENA(i) = 0.D0
+         enddo
+      ENDIF      
+      IF(IRENSCHEME.EQ.0) then
+         do i=1,17,1
+            READ(NI,111)tmptgbet(i)
+         enddo
+         do i=1,17,1
+            TGBET2HDMRENA(i)=dtan(tmptgbet(i))
+         enddo
+      ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)ttmptgbet
+         TGBET2HDMRENA(1)=dtan(ttmptgbet)
+         do i=2,17,1
+            TGBET2HDMRENA(i) = 0.D0
+         enddo
+      ENDIF
+c
+      READ(NI,*)
+      IF(IRENSCHEME.EQ.0) then
+         do i=1,17,1
+            READ(NI,111)ABBLOR(i)            
             READ(NI,111)ABBNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
-         READ(NI,111)ABBNLO(1)
-         do i=2,14,1
+         READ(NI,111)ABBLOR(1)
+         READ(NI,111)ABBNLO(1)         
+         do i=2,17,1
+            ABBLOR(i) = 0.D0            
             ABBNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)ALLLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)ALLLOR(i)            
             READ(NI,111)ALLNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
-         READ(NI,111)ALLNLO(1)
-         do i=2,14,1
+         READ(NI,111)ALLLOR(1)
+         READ(NI,111)ALLNLO(1)         
+         do i=2,17,1
+            ALLLOR(i) = 0.D0            
             ALLNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)AMMLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)AMMLOR(i)            
             READ(NI,111)AMMNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
-         READ(NI,111)AMMNLO(1)
-         do i=2,14,1
+         READ(NI,111)AMMLOR(1)
+         READ(NI,111)AMMNLO(1)         
+         do i=2,17,1
+            AMMLOR(i) = 0.D0            
             AMMNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)ASSLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)ASSLOR(i)
             READ(NI,111)ASSNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)ASSLOR(1)
          READ(NI,111)ASSNLO(1)
-         do i=2,14,1
+         do i=2,17,1
+            ASSLOR(i) = 0.D0
             ASSNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)ACCLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)ACCLOR(i)
             READ(NI,111)ACCNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)ACCLOR(1)
          READ(NI,111)ACCNLO(1)
-         do i=2,14,1
+         do i=2,17,1
+            ACCLOR(i) = 0.D0
             ACCNLO(i) = 0.D0
          enddo
-      ENDIF       
+      ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)ATTLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)ATTLOR(i)
             READ(NI,111)ATTNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)ATTLOR(1)
          READ(NI,111)ATTNLO(1)
-         do i=2,14,1
+         do i=2,17,1
+            ATTLOR(i) = 0.D0
             ATTNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)AHLZLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)AHLZLOR(i)
             READ(NI,111)AHLZNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)AHLZLOR(1)
          READ(NI,111)AHLZNLO(1)
-         do i=2,14,1
+         do i=2,17,1
+            AHLZLOR(i) = 0.D0
             AHLZNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)AHHZLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)AHHZLOR(i)
             READ(NI,111)AHHZNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)AHHZLOR(1)
          READ(NI,111)AHHZNLO(1)
-         do i=2,14,1
+         do i=2,17,1
+            AHHZLOR(i) = 0.D0
             AHHZNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)AHPWMLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)AHPWMLOR(i)
             READ(NI,111)AHPWMNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)AHPWMLOR(1)
          READ(NI,111)AHPWMNLO(1)
-         do i=2,14,1
+         do i=2,17,1
+            AHPWMLOR(i) = 0.D0
             AHPWMNLO(i) = 0.D0
          enddo
       ENDIF
+c
+c
       READ(NI,*)
-      READ(NI,111)HPBCLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)ALPH2HDMRENHP(i)
+         enddo
+      ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)ALPH2HDMRENHP(1)
+         do i=2,17,1
+            ALPH2HDMRENHP(i) = 0.D0
+         enddo
+      ENDIF      
+      IF(IRENSCHEME.EQ.0) then
+         do i=1,17,1
+            READ(NI,111)tmptgbet(i)
+         enddo
+         do i=1,17,1
+            TGBET2HDMRENHP(i)=dtan(tmptgbet(i))
+         enddo
+      ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)ttmptgbet
+         TGBET2HDMRENHP(1)=dtan(ttmptgbet)
+         do i=2,17,1
+            TGBET2HDMRENHP(i) = 0.D0
+         enddo
+      ENDIF
+c
+      READ(NI,*)
+      IF(IRENSCHEME.EQ.0) then
+         do i=1,17,1
+            READ(NI,111)HPBCLOR(i)
             READ(NI,111)HPBCNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)HPBCLOR(1)
          READ(NI,111)HPBCNLO(1)
-         do i=2,14,1
+         do i=2,17,1
+            HPBCLOR(i) = 0.D0
             HPBCNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HPTAUNULO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)HPTAUNULOR(i)
             READ(NI,111)HPTAUNUNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)HPTAUNULOR(1)
          READ(NI,111)HPTAUNUNLO(1)
-         do i=2,14,1
+         do i=2,17,1
+            HPTAUNULOR(i) = 0.D0
             HPTAUNUNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HPMUNULO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)HPMUNULOR(i)
             READ(NI,111)HPMUNUNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)HPMUNULOR(1)
          READ(NI,111)HPMUNUNLO(1)
-         do i=2,14,1
+         do i=2,17,1
+            HPMUNULOR(i) = 0.D0
             HPMUNUNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HPSULO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)HPSULOR(i)
             READ(NI,111)HPSUNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)HPSULOR(1)
          READ(NI,111)HPSUNLO(1)
-         do i=2,14,1
+         do i=2,17,1
+            HPSULOR(i) = 0.D0
             HPSUNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HPSCLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)HPSCLOR(i)
             READ(NI,111)HPSCNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)HPSCLOR(1)
          READ(NI,111)HPSCNLO(1)
-         do i=2,14,1
+         do i=2,17,1
+            HPSCLOR(i) = 0.D0
             HPSCNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HPTBLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)HPTBLOR(i)
             READ(NI,111)HPTBNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)HPTBLOR(1)
          READ(NI,111)HPTBNLO(1)
-         do i=2,14,1
+         do i=2,17,1
+            HPTBLOR(i) = 0.D0
             HPTBNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HPDCLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)HPDCLOR(i)
             READ(NI,111)HPDCNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)HPDCLOR(1)
          READ(NI,111)HPDCNLO(1)
-         do i=2,14,1
+         do i=2,17,1
+            HPDCLOR(i) = 0.D0
             HPDCNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HPBULO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)HPBULOR(i)
             READ(NI,111)HPBUNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)HPBULOR(1)
          READ(NI,111)HPBUNLO(1)
-         do i=2,14,1
+         do i=2,17,1
+            HPBULOR(i) = 0.D0
             HPBUNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HPTSLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)HPTSLOR(i)
             READ(NI,111)HPTSNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)HPTSLOR(1)
          READ(NI,111)HPTSNLO(1)
-         do i=2,14,1
+         do i=2,17,1
+            HPTSLOR(i) = 0.D0
             HPTSNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HPTDLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)HPTDLOR(i)
             READ(NI,111)HPTDNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)HPTDLOR(1)
          READ(NI,111)HPTDNLO(1)
-         do i=2,14,1
+         do i=2,17,1
+            HPTDLOR(i) = 0.D0
             HPTDNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HPWHLLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)HPWHLLOR(i)
             READ(NI,111)HPWHLNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)HPWHLLOR(1)
          READ(NI,111)HPWHLNLO(1)
-         do i=2,14,1
+         do i=2,17,1
+            HPWHLLOR(i) = 0.D0
             HPWHLNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HPWHHLO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)HPWHHLOR(i)
             READ(NI,111)HPWHHNLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)HPWHHLOR(1)
          READ(NI,111)HPWHHNLO(1)
-         do i=2,14,1
+         do i=2,17,1
+            HPWHHLOR(i) = 0.D0
             HPWHHNLO(i) = 0.D0
          enddo
       ENDIF
+c      
       READ(NI,*)
-      READ(NI,111)HPWALO
       IF(IRENSCHEME.EQ.0) then
-         do i=1,14,1
+         do i=1,17,1
+            READ(NI,111)HPWALOR(i)
             READ(NI,111)HPWANLO(i)
          enddo
       ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)HPWALOR(1)
          READ(NI,111)HPWANLO(1)
-         do i=2,14,1
+         do i=2,17,1
+            HPWALOR(i) = 0.D0
             HPWANLO(i) = 0.D0
          enddo
       ENDIF
       endif
+c end MMM changed 19/1/19      
 
       if(ielw2hdm.eq.0.and.i2hdm.eq.0) then
          print*,''
@@ -1227,7 +1537,7 @@ c end MMM changed 10/7/18
       
       IF(IELW.NE.0) THEN
        IF(IHIGGS.NE.0.OR.ISM4.NE.0.OR.IFERMPHOB.NE.0.OR.I2HDM.NE.0) THEN
-        print*,'omitting elw. corrections only for SM or SM with rescale
+        print*,'Omitting elw. corrections only for SM or SM with rescale
      .d couplings. OMIT ELW will be set to 0.'
         IELW = 0
        ENDIF
@@ -1263,6 +1573,18 @@ c MMM changed 10/7/2018
      .ason is that all decay widths are rescaled to the value of GF used
      . in the computation of the EW corrections.'
          print*,''
+      endif
+c MMM changed 19/1/19
+         if(irefscheme.eq.0) then
+         print*,'Attention: You have turned off the conversion of the in
+     .put values from the reference scheme to the renormalization scheme
+     .that you use. For consistency choose the reference scheme of your 
+     .input values, i.e. set RENSCHEM to the value of your chosen refere
+     .nce scheme. All input values will then be converted from this refe
+     .rence scheme to the renormalization scheme RENSCHEME in which you 
+     .chose to evaluate the corrections.'
+         print*,''
+c end MMM changed 19/1/19         
       endif
 c end MMM changed 10/7/2018      
       
@@ -1334,12 +1656,17 @@ c--hMSSM?
       g2ew = 2*amw/vewsb
       g1ew = g2ew*swcalc/cwcalc
 
-c      if(i2hdm.eq.1) then 
-c         itest = 1
-c         CALL SUSYCP_HDEC(TGBET)
-c         itest = 0
-c      endif
-
+c MMM changed 19/1/19
+      itest = 0 
+      amstmp = ams
+      if(i2hdm.eq.1) then 
+         itest = 1
+         CALL SUSYCP_HDEC(TGBET)
+         itest = 0
+      endif
+      ams = amstmp
+c end MMM changed 19/1/19      
+      
 c -- initialization of the check array --
       do i1=1,22,1
          check(i1) = 0
@@ -2559,42 +2886,83 @@ c end MMM changed 23/8/2013
      .                 slhase(2),slhasl(2),slhasn(2),slhasnl(2),
      .                 warning(1:10)
       double precision vckmval(4)
+c MMM changed 19/1/19      
+      double precision HLBRM1(1:17),HLBRL1(1:17),HLBRS1(1:17),
+     .     HLBRC1(1:17),HLBRB1(1:17),HLBRT1(1:17),HLBRW1(1:17),
+     .     HLBRZ1(1:17),HLBRA1(1:17),HLBRCHCH1(1:17),HLBRAZ1(1:17),
+     .     HLBRHW1(1:17),HLBRG1(1:17),HLBRGA1(1:17),HLBRZGA1(1:17),
+     .     WTOT1(1:17),hlwdth1(1:17)
+      double precision HBRMN1(1:17),HBRLN1(1:17),HBRSU1(1:17),
+     .     HBRSC1(1:17),HBRCD1(1:17),HBRBC1(1:17),HBRBU1(1:17),
+     .     HBRDT1(1:17),HBRST1(1:17),HBRBT1(1:17),HBRWHL1(1:17),
+     .     HBRWHH1(1:17),HBRWA1(1:17),hpwdth1(1:17)
+      double precision HHBRM1(1:17),HHBRL1(1:17),HHBRS1(1:17),
+     .     HHBRC1(1:17),HHBRB1(1:17),HHBRT1(1:17),HHBRW1(1:17),
+     .     HHBRZ1(1:17),HHBRA1(1:17),HHBRCHCH1(1:17),HHBRAZ1(1:17),
+     .     HHBRHW1(1:17),HHBRG1(1:17),HHBRGA1(1:17),HHBRZGA1(1:17),
+     .     hhwdth1(1:17),HHBRHL1(1:17)
+      double precision ABRM1(1:17),ABRL1(1:17),ABRS1(1:17),
+     .     ABRC1(1:17),ABRB1(1:17),ABRT1(1:17),
+     .     ABRHW1(1:17),ABRG1(1:17),ABRGA1(1:17),ABRZGA1(1:17),
+     .     awdth1(1:17),ABRHLZ1(1:17),ABRHHZ1(1:17)      
 c MMM changed 10/7/18     
-      double precision HLBRM2(1:14),HLBRL2(1:14),HLBRS2(1:14),
-     .     HLBRC2(1:14),HLBRB2(1:14),HLBRT2(1:14),HLBRW2(1:14),
-     .     HLBRZ2(1:14),HLBRA2(1:14),HLBRCHCH2(1:14),HLBRAZ2(1:14),
-     .     HLBRHW2(1:14),HLBRG2(1:14),HLBRGA2(1:14),HLBRZGA2(1:14),
-     .     WTOT2(1:14),hlwdth2(1:14)
-      double precision HHBRM2(1:14),HHBRL2(1:14),HHBRS2(1:14),
-     .     HHBRC2(1:14),HHBRB2(1:14),HHBRT2(1:14),HHBRW2(1:14),
-     .     HHBRZ2(1:14),HHBRA2(1:14),HHBRCHCH2(1:14),HHBRAZ2(1:14),
-     .     HHBRHW2(1:14),HHBRG2(1:14),HHBRGA2(1:14),HHBRZGA2(1:14),
-     .     hhwdth2(1:14),HHBRHL2(1:14)
-      double precision ABRM2(1:14),ABRL2(1:14),ABRS2(1:14),
-     .     ABRC2(1:14),ABRB2(1:14),ABRT2(1:14),
-     .     ABRHW2(1:14),ABRG2(1:14),ABRGA2(1:14),ABRZGA2(1:14),
-     .     awdth2(1:14),ABRHLZ2(1:14),ABRHHZ2(1:14)
-      double precision HBRMN2(1:14),HBRLN2(1:14),HBRSU2(1:14),
-     .     HBRSC2(1:14),HBRCD2(1:14),HBRBC2(1:14),HBRBU2(1:14),
-     .     HBRDT2(1:14),HBRST2(1:14),HBRBT2(1:14),HBRWHL2(1:14),
-     .     HBRWHH2(1:14),HBRWA2(1:14),hpwdth2(1:14)      
-      double precision HLBBNLO(1:14),HLLLNLO(1:14),HLMMNLO(1:14),
-     .     HLSSNLO(1:14),HLCCNLO(1:14),HLTTNLO(1:14),HLWWNLO(1:14),
-     .     HLZZNLO(1:14),HLAANLO(1:14),HLZANLO(1:14),HLHPWMNLO(1:14),
-     .     HLHPHMNLO(1:14)
-      double precision HHBBNLO(1:14),HHLLNLO(1:14),HHMMNLO(1:14),
-     .     HHSSNLO(1:14),HHCCNLO(1:14),HHTTNLO(1:14),HHWWNLO(1:14),
-     .     HHZZNLO(1:14),HHHLHLNLO(1:14),HHAANLO(1:14),HHZANLO(1:14),
-     .     HHHPWMNLO(1:14),HHHPHMNLO(1:14)
-      double precision ABBNLO(1:14),ALLNLO(1:14),AMMNLO(1:14),
-     .     ASSNLO(1:14),ACCNLO(1:14),ATTNLO(1:14),AUUNLO(1:14),
-     .     ADDNLO(1:14),AEENLO(1:14),AHLZNLO(1:14),AHHZNLO(1:14),
-     .     AHPWMNLO(1:14)
-      double precision HPBCNLO(1:14),HPTAUNUNLO(1:14),HPMUNUNLO(1:14),
-     .     HPSUNLO(1:14),HPSCNLO(1:14),HPTBNLO(1:14),HPDCNLO(1:14),
-     .     HPBUNLO(1:14),HPTSNLO(1:14),HPTDNLO(1:14),HPWHLNLO(1:14),
-     .     HPWHHNLO(1:14),HPWANLO(1:14)      
-c end MMM changed 10/7/18      
+      double precision HLBRM2(1:17),HLBRL2(1:17),HLBRS2(1:17),
+     .     HLBRC2(1:17),HLBRB2(1:17),HLBRT2(1:17),HLBRW2(1:17),
+     .     HLBRZ2(1:17),HLBRA2(1:17),HLBRCHCH2(1:17),HLBRAZ2(1:17),
+     .     HLBRHW2(1:17),HLBRG2(1:17),HLBRGA2(1:17),HLBRZGA2(1:17),
+     .     WTOT2(1:17),hlwdth2(1:17)
+      double precision HHBRM2(1:17),HHBRL2(1:17),HHBRS2(1:17),
+     .     HHBRC2(1:17),HHBRB2(1:17),HHBRT2(1:17),HHBRW2(1:17),
+     .     HHBRZ2(1:17),HHBRA2(1:17),HHBRCHCH2(1:17),HHBRAZ2(1:17),
+     .     HHBRHW2(1:17),HHBRG2(1:17),HHBRGA2(1:17),HHBRZGA2(1:17),
+     .     hhwdth2(1:17),HHBRHL2(1:17)
+      double precision ABRM2(1:17),ABRL2(1:17),ABRS2(1:17),
+     .     ABRC2(1:17),ABRB2(1:17),ABRT2(1:17),
+     .     ABRHW2(1:17),ABRG2(1:17),ABRGA2(1:17),ABRZGA2(1:17),
+     .     awdth2(1:17),ABRHLZ2(1:17),ABRHHZ2(1:17)
+      double precision HBRMN2(1:17),HBRLN2(1:17),HBRSU2(1:17),
+     .     HBRSC2(1:17),HBRCD2(1:17),HBRBC2(1:17),HBRBU2(1:17),
+     .     HBRDT2(1:17),HBRST2(1:17),HBRBT2(1:17),HBRWHL2(1:17),
+     .     HBRWHH2(1:17),HBRWA2(1:17),hpwdth2(1:17)      
+      double precision HLBBNLO(1:17),HLLLNLO(1:17),HLMMNLO(1:17),
+     .     HLSSNLO(1:17),HLCCNLO(1:17),HLTTNLO(1:17),HLWWNLO(1:17),
+     .     HLZZNLO(1:17),HLAANLO(1:17),HLZANLO(1:17),HLHPWMNLO(1:17),
+     .     HLHPHMNLO(1:17)
+      double precision HHBBNLO(1:17),HHLLNLO(1:17),HHMMNLO(1:17),
+     .     HHSSNLO(1:17),HHCCNLO(1:17),HHTTNLO(1:17),HHWWNLO(1:17),
+     .     HHZZNLO(1:17),HHHLHLNLO(1:17),HHAANLO(1:17),HHZANLO(1:17),
+     .     HHHPWMNLO(1:17),HHHPHMNLO(1:17)
+      double precision ABBNLO(1:17),ALLNLO(1:17),AMMNLO(1:17),
+     .     ASSNLO(1:17),ACCNLO(1:17),ATTNLO(1:17),AUUNLO(1:17),
+     .     ADDNLO(1:17),AEENLO(1:17),AHLZNLO(1:17),AHHZNLO(1:17),
+     .     AHPWMNLO(1:17)
+      double precision HPBCNLO(1:17),HPTAUNUNLO(1:17),HPMUNUNLO(1:17),
+     .     HPSUNLO(1:17),HPSCNLO(1:17),HPTBNLO(1:17),HPDCNLO(1:17),
+     .     HPBUNLO(1:17),HPTSNLO(1:17),HPTDNLO(1:17),HPWHLNLO(1:17),
+     .     HPWHHNLO(1:17),HPWANLO(1:17)      
+c end MMM changed 10/7/18
+c MMM changed 19/1/19
+      double precision tmpal(1:17),ALPH2HDMRENL(1:17),
+     .     TGBET2HDMRENL(1:17),tmptgbet(1:17),ALPH2HDMRENH(1:17),
+     .     TGBET2HDMRENH(1:17),ALPH2HDMRENA(1:17),TGBET2HDMRENA(1:17),
+     .     ALPH2HDMRENHP(1:17),TGBET2HDMRENHP(1:17)
+      double precision HLBBLOR(1:17),HLLLLOR(1:17),HLMMLOR(1:17),
+     .     HLSSLOR(1:17),HLCCLOR(1:17),HLTTLOR(1:17),HLWWLOR(1:17),
+     .     HLZZLOR(1:17),HLAALOR(1:17),HLZALOR(1:17),HLHPWMLOR(1:17),
+     .     HLHPHMLOR(1:17),tmplo(1:17)
+      double precision HHBBLOR(1:17),HHLLLOR(1:17),HHMMLOR(1:17),
+     .     HHSSLOR(1:17),HHCCLOR(1:17),HHTTLOR(1:17),HHWWLOR(1:17),
+     .     HHZZLOR(1:17),HHHLHLLOR(1:17),HHAALOR(1:17),HHZALOR(1:17),
+     .     HHHPWMLOR(1:17),HHHPHMLOR(1:17)
+      double precision ABBLOR(1:17),ALLLOR(1:17),AMMLOR(1:17),
+     .     ASSLOR(1:17),ACCLOR(1:17),ATTLOR(1:17),AUULOR(1:17),
+     .     ADDLOR(1:17),AEELOR(1:17),AHLZLOR(1:17),AHHZLOR(1:17),
+     .     AHPWMLOR(1:17)
+      double precision HPBCLOR(1:17),HPTAUNULOR(1:17),HPMUNULOR(1:17),
+     .     HPSULOR(1:17),HPSCLOR(1:17),HPTBLOR(1:17),HPDCLOR(1:17),
+     .     HPBULOR(1:17),HPTSLOR(1:17),HPTDLOR(1:17),HPWHLLOR(1:17),
+     .     HPWHHLOR(1:17),HPWALOR(1:17)      
+c end MMM changed 19/1/19            
       integer   imod(1:2)
       integer check(1:22)
       double precision mbmsbar,mbl,mbu
@@ -2683,7 +3051,23 @@ c MMM changed 21/8/13
       COMMON/WIDTH_2HDM/hcbrwhh,hhbrchch,hlbrchch,abrhhaz,abrhawphm
 c end MMM changed 21/8/13
 c MMM changed 10/7/18      
-      COMMON/PARS2HDMEW/IELW2HDM,IRENSCHEME,GFCALC,VALINSCALE
+c MMM changed 19/1/19
+      COMMON/PARS2HDMEW/GFCALC,VALINSCALE
+      COMMON/PARS2HDMEW1/IELW2HDM,IRENSCHEME,IREFSCHEME
+      COMMON/RENMIXANGLES/tgbet2hdmrenl,alph2hdmrenl,tgbet2hdmrenh,
+     .     alph2hdmrenh,tgbet2hdmrena,alph2hdmrena,tgbet2hdmrenhp,
+     .     alph2hdmrenhp            
+      COMMON/RENLOHLWIDTH_2HDM/HLBBLOR,HLLLLOR,HLMMLOR,HLSSLOR,HLCCLOR,
+     .     HLTTLOR,HLWWLOR,HLZZLOR,HLAALOR,HLZALOR,HLHPWMLOR,HLHPHMLOR
+      COMMON/RENLOHHWIDTH_2HDM/HHBBLOR,HHLLLOR,HHMMLOR,HHSSLOR,HHCCLOR,
+     .     HHTTLOR,HHWWLOR,HHZZLOR,HHHLHLLOR,HHAALOR,HHZALOR,HHHPWMLOR,
+     .     HHHPHMLOR
+      COMMON/RENLOAWIDTH_2HDM/ABBLOR,ALLLOR,AMMLOR,ASSLOR,ACCLOR,
+     .     ATTLOR,AHLZLOR,AHHZLOR,AHPWMLOR
+      COMMON/RENLOHPWIDTH_2HDM/HPBCLOR,HPTAUNULOR,HPMUNULOR,HPSULOR,
+     .     HPSCLOR,HPTBLOR,HPDCLOR,HPBULOR,HPTSLOR,HPTDLOR,HPWHLLOR,
+     .     HPWHHLOR,HPWALOR      
+c end MMM changed 19/1/19
       COMMON/NLOHLWIDTH_2HDM/HLBBLO,HLLLLO,HLMMLO,HLSSLO,HLCCLO,HLTTLO,
      .     HLWWLO,HLZZLO,HLAALO,HLZALO,HLHPWMLO,HLHPHMLO,HLBBNLO,
      .     HLLLNLO,HLMMNLO,HLSSNLO,HLCCNLO,HLTTNLO,HLWWNLO,HLZZNLO,
@@ -2807,7 +3191,7 @@ c ----------------------------------- c
 c MMM changed 10/7/18
       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
       write(nout,61) 1,'2HDECAY     # decay calculator'
-      write(nout,61) 2,'1.0.0       # version number'
+      write(nout,61) 2,'1.1.0       # version number'
       endif
 c end MMM changed 10/7/18
 c MMM changed 10/7/18      
@@ -2900,7 +3284,7 @@ c ------------------------- c
 
       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
       write(nout,105)
-      write(nout,51) '2HDMINPUTS','2HDM inputs'
+      write(nout,51) '2HDMINPUTS','2HDM inputs of reference scheme'
       write(nout,525) 1,iparam2hdm,'2HDM parametrization'
       write(nout,525) 2,itype2hdm,'2HDM type'            
       write(nout,52) 3,tgbet2hdm,'tan(beta)'
@@ -2929,6 +3313,9 @@ c ------------------------- c
          write(nout,52) 14,A5LAM2HDM,'LAMBDA5'
       endif
       write(nout,525) 15,IRENSCHEME,'renormalization scheme EW corrs'
+c MMM changed 19/1/19
+      write(nout,525) 15,IREFSCHEME,'reference ren. scheme EW corrs'
+c end MMM changed 19/1/19
       write(nout,5333) 16,VALINSCALE,'input scale'
       endif
 c end MMM changed 10/7/18            
@@ -3525,70 +3912,181 @@ c ============================================================================ c
 c MMM changed 10/7/18
       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
 
-      if(hlwdth1.ne.0.D0) then
+      if(irenscheme.eq.0) then
+      do i=1,17,1         
+         
+      if(hlwdth1(i).ne.0.D0) then
 
       write(nout,999)
-      write(nout,110) 25,hlwdth1,'h decays with QCD corrections only'
+      write(nout,110) 25,hlwdth1(i),'h decays with QCD corrections only'
+      write(nout,5255) i,'Renormalization Scheme Number'      
+      write(nout,5257) alph2hdmrenl(i),'Corresponding mixing angle alpha
+     .'
+      write(nout,5257) tgbet2hdmrenl(i),'Corresponding tan(beta)'
+
 
       write(nout,101)
-      if(hlbrb1.ne.0.D0) then
-      write(nout,102) hlbrb1,2,ib,ibb       ,'BR(h -> b       bb     )'
+      if(hlbrb1(i).ne.0.D0) then
+      write(nout,102) hlbrb1(i),2,ib,ibb       ,'BR(h -> b       bb   
+     .  )'
       endif
-      if(hlbrl1.ne.0.D0) then
-      write(nout,102) hlbrl1,2,-itau,itau   ,'BR(h -> tau+    tau-   )'
+      if(hlbrl1(i).ne.0.D0) then
+      write(nout,102) hlbrl1(i),2,-itau,itau   ,'BR(h -> tau+    tau- 
+     .  )'
       endif
-      if(hlbrm1.ne.0.D0) then
-      write(nout,102) hlbrm1,2,-imu,imu     ,'BR(h -> mu+     mu-    )'
+      if(hlbrm1(i).ne.0.D0) then
+      write(nout,102) hlbrm1(i),2,-imu,imu     ,'BR(h -> mu+     mu-  
+     .  )'
       endif
-      if(hlbrs1.ne.0.D0) then
-      write(nout,102) hlbrs1,2,is,isb       ,'BR(h -> s       sb     )'
+      if(hlbrs1(i).ne.0.D0) then
+      write(nout,102) hlbrs1(i),2,is,isb       ,'BR(h -> s       sb   
+     .  )'
       endif
-      if(hlbrc1.ne.0.D0) then
-      write(nout,102) hlbrc1,2,ic,icb       ,'BR(h -> c       cb     )'
+      if(hlbrc1(i).ne.0.D0) then
+      write(nout,102) hlbrc1(i),2,ic,icb       ,'BR(h -> c       cb   
+     .  )'
       endif
-      if(hlbrt1.ne.0.D0) then
-      write(nout,102) hlbrt1,2,it,itb       ,'BR(h -> t       tb     )' 
+      if(hlbrt1(i).ne.0.D0) then
+      write(nout,102) hlbrt1(i),2,it,itb       ,'BR(h -> t       tb   
+     .  )' 
       endif
-      if(hlbrg1.ne.0.D0) then
-      write(nout,102) hlbrg1,2,igl,igl      ,'BR(h -> g       g      )' 
+      if(hlbrg1(i).ne.0.D0) then
+      write(nout,102) hlbrg1(i),2,igl,igl      ,'BR(h -> g       g    
+     .  )' 
       endif
-      if(hlbrga1.ne.0.D0) then
-      write(nout,102) hlbrga1,2,iga,iga     ,'BR(h -> gam     gam    )' 
+      if(hlbrga1(i).ne.0.D0) then
+      write(nout,102) hlbrga1(i),2,iga,iga     ,'BR(h -> gam     gam  
+     .  )' 
       endif
-      if(hlbrzga1.ne.0.D0) then
-      write(nout,102) hlbrzga1,2,iga,iz     ,'BR(h -> Z       gam    )' 
+      if(hlbrzga1(i).ne.0.D0) then
+      write(nout,102) hlbrzga1(i),2,iga,iz     ,'BR(h -> Z       gam  
+     .  )' 
       endif
-      if(hlbrw1.ne.0.D0) then
-      write(nout,102) hlbrw1,2,iwc,-iwc     ,'BR(h -> W+      W-     )' 
+      if(hlbrw1(i).ne.0.D0) then
+      write(nout,102) hlbrw1(i),2,iwc,-iwc     ,'BR(h -> W+      W-   
+     .  )' 
       endif
-      if(hlbrz1.ne.0.D0) then
-      write(nout,102) hlbrz1,2,iz,iz        ,'BR(h -> Z       Z      )' 
+      if(hlbrz1(i).ne.0.D0) then
+      write(nout,102) hlbrz1(i),2,iz,iz        ,'BR(h -> Z       Z    
+     .  )' 
       endif
-      if(hlbra1.ne.0.D0) then
-      write(nout,102) hlbra1,2,iha,iha      ,'BR(h -> A       A      )' 
+      if(hlbra1(i).ne.0.D0) then
+      write(nout,102) hlbra1(i),2,iha,iha      ,'BR(h -> A       A    
+     .  )' 
       endif
-      if(hlbraz1.ne.0.D0) then
-      write(nout,102) hlbraz1,2,iz,iha      ,'BR(h -> Z       A      )' 
+      if(hlbraz1(i).ne.0.D0) then
+      write(nout,102) hlbraz1(i),2,iz,iha      ,'BR(h -> Z       A    
+     .  )' 
       endif
-      if(hlbrhw1.ne.0.D0) then
-      write(nout,102) hlbrhw1/2.D0,2,iwc,-ihc,'BR(h -> W+      H-     )' 
+      if(hlbrhw1(i).ne.0.D0) then
+      write(nout,102) hlbrhw1(i)/2.D0,2,iwc,-ihc,'BR(h -> W+      H-  
+     .   )' 
       endif
-      if(hlbrhw1.ne.0.D0) then
-      write(nout,102) hlbrhw1/2.D0,2,-iwc,ihc,'BR(h -> W-      H+     )' 
+      if(hlbrhw1(i).ne.0.D0) then
+      write(nout,102) hlbrhw1(i)/2.D0,2,-iwc,ihc,'BR(h -> W-      H+  
+     .   )' 
       endif
-      if(hlbrchch1.ne.0.D0) then
-      write(nout,102) hlbrchch1,2,ihc,-ihc,  'BR(h -> H+      H-     )'
+      if(hlbrchch1(i).ne.0.D0) then
+      write(nout,102) hlbrchch1(i),2,ihc,-ihc,  'BR(h -> H+      H-   
+     .  )'
       endif
 
-      elseif(hlwdth1.eq.0.D0) then
+      elseif(hlwdth1(i).eq.0.D0) then
       write(nout,999)
       write(nout,110) 25,0.000000000E+00,'h decays with QCD corrections
      . only'
 
       endif
+      end do
+      
+      elseif(irenscheme.ne.0) then
 
+      if(hlwdth1(1).ne.0.D0) then
+
+      write(nout,999)
+      write(nout,110) 25,hlwdth1(1),'h decays with QCD corrections only'
+      write(nout,5255) irenscheme,'Renormalization Scheme Number'
+      write(nout,5257) alph2hdmrenl(1),'Corresponding mixing angle alpha
+     .'
+      write(nout,5257) tgbet2hdmrenl(1),'Corresponding tan(beta)'
+
+      write(nout,101)
+      if(hlbrb1(1).ne.0.D0) then
+      write(nout,102) hlbrb1(1),2,ib,ibb       ,'BR(h -> b       bb   
+     .  )'
+      endif
+      if(hlbrl1(1).ne.0.D0) then
+      write(nout,102) hlbrl1(1),2,-itau,itau   ,'BR(h -> tau+    tau- 
+     .  )'
+      endif
+      if(hlbrm1(1).ne.0.D0) then
+      write(nout,102) hlbrm1(1),2,-imu,imu     ,'BR(h -> mu+     mu-  
+     .  )'
+      endif
+      if(hlbrs1(1).ne.0.D0) then
+      write(nout,102) hlbrs1(1),2,is,isb       ,'BR(h -> s       sb   
+     .  )'
+      endif
+      if(hlbrc1(1).ne.0.D0) then
+      write(nout,102) hlbrc1(1),2,ic,icb       ,'BR(h -> c       cb   
+     .  )'
+      endif
+      if(hlbrt1(1).ne.0.D0) then
+      write(nout,102) hlbrt1(1),2,it,itb       ,'BR(h -> t       tb   
+     .  )' 
+      endif
+      if(hlbrg1(1).ne.0.D0) then
+      write(nout,102) hlbrg1(1),2,igl,igl      ,'BR(h -> g       g    
+     .  )' 
+      endif
+      if(hlbrga1(1).ne.0.D0) then
+      write(nout,102) hlbrga1(1),2,iga,iga     ,'BR(h -> gam     gam  
+     .  )' 
+      endif
+      if(hlbrzga1(1).ne.0.D0) then
+      write(nout,102) hlbrzga1(1),2,iga,iz     ,'BR(h -> Z       gam  
+     .  )' 
+      endif
+      if(hlbrw1(1).ne.0.D0) then
+      write(nout,102) hlbrw1(1),2,iwc,-iwc     ,'BR(h -> W+      W-   
+     .  )' 
+      endif
+      if(hlbrz1(1).ne.0.D0) then
+      write(nout,102) hlbrz1(1),2,iz,iz        ,'BR(h -> Z       Z    
+     .  )' 
+      endif
+      if(hlbra1(1).ne.0.D0) then
+      write(nout,102) hlbra1(1),2,iha,iha      ,'BR(h -> A       A    
+     .  )' 
+      endif
+      if(hlbraz1(1).ne.0.D0) then
+      write(nout,102) hlbraz1(1),2,iz,iha      ,'BR(h -> Z       A    
+     .  )' 
+      endif
+      if(hlbrhw1(1).ne.0.D0) then
+      write(nout,102) hlbrhw1(1)/2.D0,2,iwc,-ihc,'BR(h -> W+      H-  
+     .   )' 
+      endif
+      if(hlbrhw1(1).ne.0.D0) then
+      write(nout,102) hlbrhw1(1)/2.D0,2,-iwc,ihc,'BR(h -> W-      H+  
+     .   )' 
+      endif
+      if(hlbrchch1(1).ne.0.D0) then
+      write(nout,102) hlbrchch1(1),2,ihc,-ihc,  'BR(h -> H+      H-   
+     .  )'
+      endif
+
+      elseif(hlwdth1(1).eq.0.D0) then
+      write(nout,999)
+      write(nout,110) 25,0.000000000E+00,'h decays with QCD corrections
+     . only'
+
+      endif
+         
+      endif
+         
       if(irenscheme.eq.0) then
-      do i=1,14,1
+      do i=1,17,1
       if(hlwdth2(i).ne.0.D0) then
 
       write(nout,105)
@@ -3596,6 +4094,9 @@ c MMM changed 10/7/18
       write(nout,111) 25,hlwdth2(i),'h decays with QCD and EW correction
      .s'
       write(nout,5255) i,'Renormalization Scheme Number'
+      write(nout,5257) alph2hdmrenl(i),'Corresponding mixing angle alpha
+     .'
+      write(nout,5257) tgbet2hdmrenl(i),'Corresponding tan(beta)'
 
       write(nout,101)
       if(hlbrb2(i).ne.0.D0) then
@@ -3669,6 +4170,10 @@ c MMM changed 10/7/18
       write(nout,111) 25,hlwdth2(1),'h decays with QCD and EW correction
      .s'
       write(nout,5255) irenscheme,'Renormalization Scheme Number'
+      write(nout,5257) alph2hdmrenl(1),'Corresponding mixing angle alpha
+     .'
+      write(nout,5257) tgbet2hdmrenl(1),'Corresponding tan(beta)'
+
 
       write(nout,101)
       if(hlbrb2(1).ne.0.D0) then
@@ -3957,73 +4462,188 @@ c ============================================================================ c
 c MMM changed 10/7/18      
       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
 
-      if(hhwdth1.ne.0.D0) then
+      if(irenscheme.eq.0) then
+      do i=1,17,1         
+         
+      if(hhwdth1(i).ne.0.D0) then
 
       write(nout,999)
-      write(nout,110) 35,hhwdth1,'H decays with QCD corrections only'
+      write(nout,110) 35,hhwdth1(i),'H decays with QCD corrections only'
+      write(nout,5255) i,'Renormalization Scheme Number'      
+      write(nout,5257) alph2hdmrenh(i),'Corresponding mixing angle alpha
+     .'
+      write(nout,5257) tgbet2hdmrenh(i),'Corresponding tan(beta)'
 
       write(nout,101)
-      if(hhbrb1.ne.0.D0) then
-      write(nout,102) hhbrb1,2,ib,ibb       ,'BR(H -> b       bb     )'
+      if(hhbrb1(i).ne.0.D0) then
+      write(nout,102) hhbrb1(i),2,ib,ibb       ,'BR(H -> b       bb   
+     .)'
       endif
-      if(hhbrl1.ne.0.D0) then
-      write(nout,102) hhbrl1,2,-itau,itau   ,'BR(H -> tau+    tau-   )'
+      if(hhbrl1(i).ne.0.D0) then
+      write(nout,102) hhbrl1(i),2,-itau,itau   ,'BR(H -> tau+    tau- 
+     .)'
       endif
-      if(hhbrm1.ne.0.D0) then
-      write(nout,102) hhbrm1,2,-imu,imu     ,'BR(H -> mu+     mu-    )'
+      if(hhbrm1(i).ne.0.D0) then
+      write(nout,102) hhbrm1(i),2,-imu,imu     ,'BR(H -> mu+     mu-  
+     .)'
       endif
-      if(hhbrs1.ne.0.D0) then
-      write(nout,102) hhbrs1,2,is,isb       ,'BR(H -> s       sb     )'
+      if(hhbrs1(i).ne.0.D0) then
+      write(nout,102) hhbrs1(i),2,is,isb       ,'BR(H -> s       sb   
+     .)'
       endif
-      if(hhbrc1.ne.0.D0) then
-      write(nout,102) hhbrc1,2,ic,icb       ,'BR(H -> c       cb     )'
+      if(hhbrc1(i).ne.0.D0) then
+      write(nout,102) hhbrc1(i),2,ic,icb       ,'BR(H -> c       cb   
+     .)'
       endif
-      if(hhbrt1.ne.0.D0) then
-      write(nout,102) hhbrt1,2,it,itb       ,'BR(H -> t       tb     )' 
+      if(hhbrt1(i).ne.0.D0) then
+      write(nout,102) hhbrt1(i),2,it,itb       ,'BR(H -> t       tb   
+     .)' 
       endif
-      if(hhbrg1.ne.0.D0) then
-      write(nout,102) hhbrg1,2,igl,igl      ,'BR(H -> g       g      )' 
+      if(hhbrg1(i).ne.0.D0) then
+      write(nout,102) hhbrg1(i),2,igl,igl      ,'BR(H -> g       g    
+     .)' 
       endif
-      if(hhbrga1.ne.0.D0) then
-      write(nout,102) hhbrga1,2,iga,iga     ,'BR(H -> gam     gam    )' 
+      if(hhbrga1(i).ne.0.D0) then
+      write(nout,102) hhbrga1(i),2,iga,iga     ,'BR(H -> gam     gam  
+     .)' 
       endif
-      if(hhbrzga1.ne.0.D0) then
-      write(nout,102) hhbrzga1,2,iga,iz     ,'BR(H -> Z       gam    )' 
+      if(hhbrzga1(i).ne.0.D0) then
+      write(nout,102) hhbrzga1(i),2,iga,iz     ,'BR(H -> Z       gam  
+     .)' 
       endif
-      if(hhbrw1.ne.0.D0) then
-      write(nout,102) hhbrw1,2,iwc,-iwc     ,'BR(H -> W+      W-     )' 
+      if(hhbrw1(i).ne.0.D0) then
+      write(nout,102) hhbrw1(i),2,iwc,-iwc     ,'BR(H -> W+      W-   
+     .)' 
       endif
-      if(hhbrz1.ne.0.D0) then
-      write(nout,102) hhbrz1,2,iz,iz        ,'BR(H -> Z       Z      )' 
+      if(hhbrz1(i).ne.0.D0) then
+      write(nout,102) hhbrz1(i),2,iz,iz        ,'BR(H -> Z       Z    
+     .)' 
       endif
-      if(hhbra1.ne.0.D0) then
-      write(nout,102) hhbra1,2,iha,iha      ,'BR(H -> A       A      )' 
+      if(hhbra1(i).ne.0.D0) then
+      write(nout,102) hhbra1(i),2,iha,iha      ,'BR(H -> A       A    
+     .)' 
       endif
-      if(hhbrhl1.ne.0.D0) then
-      write(nout,102) hhbrhl1,2,ihl,ihl     ,'BR(H -> h       h      )' 
+      if(hhbrhl1(i).ne.0.D0) then
+      write(nout,102) hhbrhl1(i),2,ihl,ihl     ,'BR(H -> h       h    
+     .)' 
       endif      
-      if(hhbraz1.ne.0.D0) then
-      write(nout,102) hhbraz1,2,iz,iha      ,'BR(H -> Z       A      )' 
+      if(hhbraz1(i).ne.0.D0) then
+      write(nout,102) hhbraz1(i),2,iz,iha      ,'BR(H -> Z       A    
+     .)' 
       endif
-      if(hhbrhw1.ne.0.D0) then
-      write(nout,102) hhbrhw1/2.D0,2,iwc,-ihc,'BR(H -> W+      H-     )' 
+      if(hhbrhw1(i).ne.0.D0) then
+      write(nout,102) hhbrhw1(i)/2.D0,2,iwc,-ihc,'BR(H -> W+      H-  
+     .)' 
       endif
-      if(hhbrhw1.ne.0.D0) then
-      write(nout,102) hhbrhw1/2.D0,2,-iwc,ihc,'BR(H -> W-      H+     )' 
+      if(hhbrhw1(i).ne.0.D0) then
+      write(nout,102) hhbrhw1(i)/2.D0,2,-iwc,ihc,'BR(H -> W-      H+  
+     .)' 
       endif
-      if(hhbrchch1.ne.0.D0) then
-      write(nout,102) hhbrchch1,2,ihc,-ihc,  'BR(H -> H+      H-     )'
+      if(hhbrchch1(i).ne.0.D0) then
+      write(nout,102) hhbrchch1(i),2,ihc,-ihc,  'BR(H -> H+      H-   
+     .)'
       endif
 
-      elseif(hhwdth1.eq.0.D0) then
+      elseif(hhwdth1(i).eq.0.D0) then
       write(nout,999)
       write(nout,110) 35,0.000000000E+00,'H decays with QCD corrections
      . only'
 
       endif
+      end do
+
+      elseif(irenscheme.ne.0) then
+
+      if(hhwdth1(1).ne.0.D0) then
+
+      write(nout,999)
+      write(nout,110) 35,hhwdth1(1),'H decays with QCD corrections only'
+      write(nout,5255) irenscheme,'Renormalization Scheme Number'
+      write(nout,5257) alph2hdmrenh(1),'Corresponding mixing angle alpha
+     .'
+      write(nout,5257) tgbet2hdmrenh(1),'Corresponding tan(beta)'
+
+      write(nout,101)
+      if(hhbrb1(1).ne.0.D0) then
+      write(nout,102) hhbrb1(1),2,ib,ibb       ,'BR(H -> b       bb   
+     .)'
+      endif
+      if(hhbrl1(1).ne.0.D0) then
+      write(nout,102) hhbrl1(1),2,-itau,itau   ,'BR(H -> tau+    tau- 
+     .)'
+      endif
+      if(hhbrm1(1).ne.0.D0) then
+      write(nout,102) hhbrm1(1),2,-imu,imu     ,'BR(H -> mu+     mu-  
+     .)'
+      endif
+      if(hhbrs1(1).ne.0.D0) then
+      write(nout,102) hhbrs1(1),2,is,isb       ,'BR(H -> s       sb   
+     .)'
+      endif
+      if(hhbrc1(1).ne.0.D0) then
+      write(nout,102) hhbrc1(1),2,ic,icb       ,'BR(H -> c       cb   
+     .)'
+      endif
+      if(hhbrt1(1).ne.0.D0) then
+      write(nout,102) hhbrt1(1),2,it,itb       ,'BR(H -> t       tb   
+     .)' 
+      endif
+      if(hhbrg1(1).ne.0.D0) then
+      write(nout,102) hhbrg1(1),2,igl,igl      ,'BR(H -> g       g    
+     .)' 
+      endif
+      if(hhbrga1(1).ne.0.D0) then
+      write(nout,102) hhbrga1(1),2,iga,iga     ,'BR(H -> gam     gam  
+     .)' 
+      endif
+      if(hhbrzga1(1).ne.0.D0) then
+      write(nout,102) hhbrzga1(1),2,iga,iz     ,'BR(H -> Z       gam  
+     .)' 
+      endif
+      if(hhbrw1(1).ne.0.D0) then
+      write(nout,102) hhbrw1(1),2,iwc,-iwc     ,'BR(H -> W+      W-   
+     .)' 
+      endif
+      if(hhbrz1(1).ne.0.D0) then
+      write(nout,102) hhbrz1(1),2,iz,iz        ,'BR(H -> Z       Z    
+     .)' 
+      endif
+      if(hhbra1(1).ne.0.D0) then
+      write(nout,102) hhbra1(1),2,iha,iha      ,'BR(H -> A       A    
+     .)' 
+      endif
+      if(hhbrhl1(1).ne.0.D0) then
+      write(nout,102) hhbrhl1(1),2,ihl,ihl     ,'BR(H -> h       h    
+     .)' 
+      endif      
+      if(hhbraz1(1).ne.0.D0) then
+      write(nout,102) hhbraz1(1),2,iz,iha      ,'BR(H -> Z       A    
+     .)' 
+      endif
+      if(hhbrhw1(1).ne.0.D0) then
+      write(nout,102) hhbrhw1(1)/2.D0,2,iwc,-ihc,'BR(H -> W+      H-  
+     .)' 
+      endif
+      if(hhbrhw1(1).ne.0.D0) then
+      write(nout,102) hhbrhw1(1)/2.D0,2,-iwc,ihc,'BR(H -> W-      H+  
+     .)' 
+      endif
+      if(hhbrchch1(1).ne.0.D0) then
+      write(nout,102) hhbrchch1(1),2,ihc,-ihc,  'BR(H -> H+      H-   
+     .)'
+      endif
+
+      elseif(hhwdth1(1).eq.0.D0) then
+      write(nout,999)
+      write(nout,110) 35,0.000000000E+00,'H decays with QCD corrections
+     . only'
+
+      endif
+         
+      endif
 
       if(irenscheme.eq.0) then
-      do i=1,14,1
+      do i=1,17,1
       if(hhwdth2(i).ne.0.D0) then
 
       write(nout,105)
@@ -4031,6 +4651,9 @@ c MMM changed 10/7/18
       write(nout,111) 35,hhwdth2(i),'H decays with QCD and EW correction
      .s'
       write(nout,5255) i,'Renormalization Scheme Number'
+      write(nout,5257) alph2hdmrenh(i),'Corresponding mixing angle alpha
+     .'
+      write(nout,5257) tgbet2hdmrenh(i),'Corresponding tan(beta)'
 
       write(nout,101)
       if(hhbrb2(i).ne.0.D0) then
@@ -4107,6 +4730,9 @@ c MMM changed 10/7/18
       write(nout,111) 35,hhwdth2(1),'H decays with QCD and EW correction
      .s'
       write(nout,5255) irenscheme,'Renormalization Scheme Number'
+      write(nout,5257) alph2hdmrenh(1),'Corresponding mixing angle alpha
+     .'
+      write(nout,5257) tgbet2hdmrenh(1),'Corresponding tan(beta)'
 
       write(nout,101)
       if(hhbrb2(1).ne.0.D0) then
@@ -4305,68 +4931,166 @@ c ============================================================================ c
 c MMM changed 10/7/18      
       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
 
-      if(awdth1.ne.0.D0) then
+      if(irenscheme.eq.0) then
+      do i=1,17,1         
+         
+      if(awdth1(i).ne.0.D0) then
 
       write(nout,999)
-      write(nout,110) 36,awdth1,'A decays with QCD corrections only'
+      write(nout,110) 36,awdth1(i),'A decays with QCD corrections only'
+      write(nout,5255) i,'Renormalization Scheme Number'      
+      write(nout,5257) alph2hdmrena(i),'Corresponding mixing angle alpha
+     .'
+      write(nout,5257) tgbet2hdmrena(i),'Corresponding tan(beta)'
 
       write(nout,101)
-      if(abrb1.ne.0.D0) then
-      write(nout,102) abrb1,2,ib,ibb        ,'BR(A -> b       bb     )'
+      if(abrb1(i).ne.0.D0) then
+      write(nout,102) abrb1(i),2,ib,ibb        ,'BR(A -> b       bb   
+     .)'
       endif
-      if(abrl1.ne.0.D0) then
-      write(nout,102) abrl1,2,-itau,itau    ,'BR(A -> tau+    tau-   )'
+      if(abrl1(i).ne.0.D0) then
+      write(nout,102) abrl1(i),2,-itau,itau    ,'BR(A -> tau+    tau- 
+     .)'
       endif
-      if(abrm1.ne.0.D0) then
-      write(nout,102) abrm1,2,-imu,imu      ,'BR(A -> mu+     mu-    )'
+      if(abrm1(i).ne.0.D0) then
+      write(nout,102) abrm1(i),2,-imu,imu      ,'BR(A -> mu+     mu-  
+     .)'
       endif
-      if(abrs1.ne.0.D0) then
-      write(nout,102) abrs1,2,is,isb        ,'BR(A -> s       sb     )'
+      if(abrs1(i).ne.0.D0) then
+      write(nout,102) abrs1(i),2,is,isb        ,'BR(A -> s       sb   
+     .)'
       endif
-      if(abrc1.ne.0.D0) then
-      write(nout,102) abrc1,2,ic,icb        ,'BR(A -> c       cb     )'
+      if(abrc1(i).ne.0.D0) then
+      write(nout,102) abrc1(i),2,ic,icb        ,'BR(A -> c       cb   
+     .)'
       endif
-      if(abrt1.ne.0.D0) then
-      write(nout,102) abrt1,2,it,itb        ,'BR(A -> t       tb     )' 
+      if(abrt1(i).ne.0.D0) then
+      write(nout,102) abrt1(i),2,it,itb        ,'BR(A -> t       tb   
+     .)' 
       endif
-      if(abrg1.ne.0.D0) then
-      write(nout,102) abrg1,2,igl,igl       ,'BR(A -> g       g      )' 
+      if(abrg1(i).ne.0.D0) then
+      write(nout,102) abrg1(i),2,igl,igl       ,'BR(A -> g       g    
+     .)' 
       endif
-      if(abrga1.ne.0.D0) then
-      write(nout,102) abrga1,2,iga,iga      ,'BR(A -> gam     gam    )' 
+      if(abrga1(i).ne.0.D0) then
+      write(nout,102) abrga1(i),2,iga,iga      ,'BR(A -> gam     gam  
+     .)' 
       endif
-      if(abrzga1.ne.0.D0) then
-      write(nout,102) abrzga1,2,iga,iz      ,'BR(A -> Z       gam    )' 
+      if(abrzga1(i).ne.0.D0) then
+      write(nout,102) abrzga1(i),2,iga,iz      ,'BR(A -> Z       gam  
+     -)' 
       endif
-      if(abrhlz1.ne.0.D0) then
-      write(nout,102) abrhlz1,2,iz,ihl      ,'BR(A -> Z       h      )' 
+      if(abrhlz1(i).ne.0.D0) then
+      write(nout,102) abrhlz1(i),2,iz,ihl      ,'BR(A -> Z       h    
+     .)' 
       endif
-      if(abrhhz1.ne.0.D0) then
-      write(nout,102) abrhlz1,2,iz,ihh      ,'BR(A -> Z       H      )' 
+      if(abrhhz1(i).ne.0.D0) then
+      write(nout,102) abrhlz1(i),2,iz,ihh      ,'BR(A -> Z       H    
+     .)' 
       endif      
-      if(abrhw1.ne.0.D0) then
-      write(nout,102) abrhw1/2.D0,2,iwc,-ihc,'BR(A -> W+      H-     )' 
+      if(abrhw1(i).ne.0.D0) then
+      write(nout,102) abrhw1(i)/2.D0,2,iwc,-ihc,'BR(A -> W+      H-   
+     .)' 
       endif
-      if(abrhw1.ne.0.D0) then
-      write(nout,102) abrhw1/2.D0,2,-iwc,ihc,'BR(A -> W-      H+     )' 
+      if(abrhw1(i).ne.0.D0) then
+      write(nout,102) abrhw1(i)/2.D0,2,-iwc,ihc,'BR(A -> W-      H+   
+     .)' 
       endif
 
-      elseif(awdth1.eq.0.D0) then
+      elseif(awdth1(i).eq.0.D0) then
       write(nout,999)
       write(nout,110) 36,0.000000000E+00,'A decays with QCD corrections
      . only'
 
       endif
+      end do
 
+      elseif(irenscheme.ne.0) then
+
+      if(awdth1(1).ne.0.D0) then
+
+      write(nout,999)
+      write(nout,110) 36,awdth1(1),'A decays with QCD corrections only'
+      write(nout,5255) irenscheme,'Renormalization Scheme Number'
+      write(nout,5257) alph2hdmrena(1),'Corresponding mixing angle alpha
+     .'
+      write(nout,5257) tgbet2hdmrena(1),'Corresponding tan(beta)'
+
+      write(nout,101)
+      if(abrb1(1).ne.0.D0) then
+      write(nout,102) abrb1(1),2,ib,ibb        ,'BR(A -> b       bb   
+     .)'
+      endif
+      if(abrl1(1).ne.0.D0) then
+      write(nout,102) abrl1(1),2,-itau,itau    ,'BR(A -> tau+    tau- 
+     .)'
+      endif
+      if(abrm1(1).ne.0.D0) then
+      write(nout,102) abrm1(1),2,-imu,imu      ,'BR(A -> mu+     mu-  
+     .)'
+      endif
+      if(abrs1(1).ne.0.D0) then
+      write(nout,102) abrs1(1),2,is,isb        ,'BR(A -> s       sb   
+     .)'
+      endif
+      if(abrc1(1).ne.0.D0) then
+      write(nout,102) abrc1(1),2,ic,icb        ,'BR(A -> c       cb   
+     .)'
+      endif
+      if(abrt1(1).ne.0.D0) then
+      write(nout,102) abrt1(1),2,it,itb        ,'BR(A -> t       tb   
+     .)' 
+      endif
+      if(abrg1(1).ne.0.D0) then
+      write(nout,102) abrg1(1),2,igl,igl       ,'BR(A -> g       g    
+     .)' 
+      endif
+      if(abrga1(1).ne.0.D0) then
+      write(nout,102) abrga1(1),2,iga,iga      ,'BR(A -> gam     gam  
+     .)' 
+      endif
+      if(abrzga1(1).ne.0.D0) then
+      write(nout,102) abrzga1(1),2,iga,iz      ,'BR(A -> Z       gam  
+     -)' 
+      endif
+      if(abrhlz1(1).ne.0.D0) then
+      write(nout,102) abrhlz1(1),2,iz,ihl      ,'BR(A -> Z       h    
+     .)' 
+      endif
+      if(abrhhz1(1).ne.0.D0) then
+      write(nout,102) abrhlz1(1),2,iz,ihh      ,'BR(A -> Z       H    
+     .)' 
+      endif      
+      if(abrhw1(1).ne.0.D0) then
+      write(nout,102) abrhw1(1)/2.D0,2,iwc,-ihc,'BR(A -> W+      H-   
+     .)' 
+      endif
+      if(abrhw1(1).ne.0.D0) then
+      write(nout,102) abrhw1(1)/2.D0,2,-iwc,ihc,'BR(A -> W-      H+   
+     .)' 
+      endif
+
+      elseif(awdth1(1).eq.0.D0) then
+      write(nout,999)
+      write(nout,110) 36,0.000000000E+00,'A decays with QCD corrections
+     . only'
+         
+      endif
+
+      endif
+      
       if(irenscheme.eq.0) then
-      do i=1,14,1
+      do i=1,17,1
       if(awdth2(i).ne.0.D0) then
 
       write(nout,105)
       write(nout,9999)
-      write(nout,111) 36,awdth2(i),'A decays with QCD and EW correction
-     .s'
+      write(nout,111) 36,awdth2(i),'A decays with QCD and EW corrections
+     .'
       write(nout,5255) i,'Renormalization Scheme Number'
+      write(nout,5257) alph2hdmrena(i),'Corresponding mixing angle alpha
+     .'
+      write(nout,5257) tgbet2hdmrena(i),'Corresponding tan(beta)'
 
       write(nout,101)
       if(abrb2(i).ne.0.D0) then
@@ -4427,9 +5151,12 @@ c MMM changed 10/7/18
 
       write(nout,105)
       write(nout,9999)
-      write(nout,111) 36,awdth2(1),'A decays with QCD and EW correction
-     .s'
+      write(nout,111) 36,awdth2(1),'A decays with QCD and EW corrections
+     .'
       write(nout,5255) irenscheme,'Renormalization Scheme Number'
+      write(nout,5257) alph2hdmrena(1),'Corresponding mixing angle alpha
+     .'
+      write(nout,5257) tgbet2hdmrena(1),'Corresponding tan(beta)'
 
       write(nout,101)
       if(abrb2(1).ne.0.D0) then
@@ -4616,61 +5343,160 @@ c ============================================================================ c
 c MMM changed 10/7/18
       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
          
-      if(hpwdth1.ne.0.D0) then
+      if(irenscheme.eq.0) then
+      do i=1,17,1         
+         
+      if(hpwdth1(i).ne.0.D0) then
 
       write(nout,999)
-      write(nout,110) 37,hpwdth1,'H+ decays with QCD corrections only'
-
-      write(nout,101)
-      if(hbrbc1.ne.0.D0) then
-      write(nout,102) hbrbc1,2,ic,ibb       ,'BR(H+ -> c       bb     )'
-      endif
-      if(hbrln1.ne.0.D0) then
-      write(nout,102) hbrln1,2,-itau,intau  ,'BR(H+ -> tau+    nu_tau )'
-      endif
-      if(hbrmn1.ne.0.D0) then
-      write(nout,102) hbrmn1,2,-imu,inmu    ,'BR(H+ -> mu+     nu_mu  )'
-      endif
-      if(hbrbu1.ne.0.D0) then
-      write(nout,102) hbrbu1,2,iu,ibb       ,'BR(H+ -> u       bb     )'
-      endif
-      if(hbrsu1.ne.0.D0) then
-      write(nout,102) hbrsu1,2,iu,isb       ,'BR(H+ -> u       sb     )'
-      endif
-      if(hbrcd1.ne.0.D0) then
-      write(nout,102) hbrcd1,2,ic,idb       ,'BR(H+ -> c       db     )'
-      endif
-      if(hbrsc1.ne.0.D0) then
-      write(nout,102) hbrsc1,2,ic,isb       ,'BR(H+ -> c       sb     )'
-      endif
-      if(hbrbt1.ne.0.D0) then
-      write(nout,102) hbrbt1,2,it,ibb       ,'BR(H+ -> t       bb     )'
-      endif
-      if(hbrst1.ne.0.D0) then
-      write(nout,102) hbrst1,2,it,isb       ,'BR(H+ -> t       sb     )'
-      endif
-      if(hbrdt1.ne.0.D0) then
-      write(nout,102) hbrdt1,2,it,idb       ,'BR(H+ -> t       db     )'
-      endif
-      if(hbrwhl1.ne.0.D0) then
-      write(nout,102) hbrwhl1,2,iwc,ihl     ,'BR(H+ -> W+      h      )'
-      endif
-      if(hbrwhh1.ne.0.D0) then
-      write(nout,102) hbrwhh1,2,iwc,ihh     ,'BR(H+ -> W+      H      )'
-      endif
-      if(hbrwa1.ne.0.D0) then
-      write(nout,102) hbrwa1,2,iwc,iha      ,'BR(H+ -> W+      A      )'
-      endif
+      write(nout,110) 37,hpwdth1(i),'H+ decays with QCD corrections only
+     .'
+      write(nout,5255) i,'Renormalization Scheme Number'      
+      write(nout,5257) alph2hdmrenhp(i),'Corresponding mixing angle alph
+     .a'
+      write(nout,5257) tgbet2hdmrenhp(i),'Corresponding tan(beta)'
       
-      elseif(hcwdth1.eq.0.D0) then
+      write(nout,101)
+      if(hbrbc1(i).ne.0.D0) then
+      write(nout,102) hbrbc1(i),2,ic,ibb       ,'BR(H+ -> c       bb  
+     .)'
+      endif
+      if(hbrln1(i).ne.0.D0) then
+      write(nout,102) hbrln1(i),2,-itau,intau  ,'BR(H+ -> tau+    nu_t
+     .au )'
+      endif
+      if(hbrmn1(i).ne.0.D0) then
+      write(nout,102) hbrmn1(i),2,-imu,inmu    ,'BR(H+ -> mu+     nu_m
+     .u  )'
+      endif
+      if(hbrbu1(i).ne.0.D0) then
+      write(nout,102) hbrbu1(i),2,iu,ibb       ,'BR(H+ -> u       bb  
+     .)'
+      endif
+      if(hbrsu1(i).ne.0.D0) then
+      write(nout,102) hbrsu1(i),2,iu,isb       ,'BR(H+ -> u       sb  
+     .)'
+      endif
+      if(hbrcd1(i).ne.0.D0) then
+      write(nout,102) hbrcd1(i),2,ic,idb       ,'BR(H+ -> c       db  
+     .)'
+      endif
+      if(hbrsc1(i).ne.0.D0) then
+      write(nout,102) hbrsc1(i),2,ic,isb       ,'BR(H+ -> c       sb  
+     .)'
+      endif
+      if(hbrbt1(i).ne.0.D0) then
+      write(nout,102) hbrbt1(i),2,it,ibb       ,'BR(H+ -> t       bb  
+     .)'
+      endif
+      if(hbrst1(i).ne.0.D0) then
+      write(nout,102) hbrst1(i),2,it,isb       ,'BR(H+ -> t       sb  
+     .)'
+      endif
+      if(hbrdt1(i).ne.0.D0) then
+      write(nout,102) hbrdt1(i),2,it,idb       ,'BR(H+ -> t       db  
+     .)'
+      endif
+      if(hbrwhl1(i).ne.0.D0) then
+      write(nout,102) hbrwhl1(i),2,iwc,ihl     ,'BR(H+ -> W+      h   
+     .)'
+      endif
+      if(hbrwhh1(i).ne.0.D0) then
+      write(nout,102) hbrwhh1(i),2,iwc,ihh     ,'BR(H+ -> W+      H   
+     .)'
+      endif
+      if(hbrwa1(i).ne.0.D0) then
+      write(nout,102) hbrwa1(i),2,iwc,iha      ,'BR(H+ -> W+      A   
+     .)'
+      endif
+
+c Bug fix hcwdth1 -> hpwdth1 19/1/19      
+      elseif(hpwdth1(i).eq.0.D0) then
       write(nout,999)
       write(nout,110) 37,0.000000000E+00,'H+ decays with QCD corrections
      . only'
 
       endif
+      end do
+
+      elseif(irenscheme.ne.0) then
+
+      if(hpwdth1(1).ne.0.D0) then
+
+      write(nout,999)
+      write(nout,110) 37,hpwdth1(1),'H+ decays with QCD corrections only
+     .'
+      write(nout,5255) irenscheme,'Renormalization Scheme Number'      
+      write(nout,5257) alph2hdmrenhp(1),'Corresponding mixing angle alph
+     .a'
+      write(nout,5257) tgbet2hdmrenhp(1),'Corresponding tan(beta)'
+
+      write(nout,101)
+      if(hbrbc1(1).ne.0.D0) then
+      write(nout,102) hbrbc1(1),2,ic,ibb       ,'BR(H+ -> c       bb  
+     .)'
+      endif
+      if(hbrln1(1).ne.0.D0) then
+      write(nout,102) hbrln1(1),2,-itau,intau  ,'BR(H+ -> tau+    nu_t
+     .au )'
+      endif
+      if(hbrmn1(1).ne.0.D0) then
+      write(nout,102) hbrmn1(1),2,-imu,inmu    ,'BR(H+ -> mu+     nu_m
+     .u  )'
+      endif
+      if(hbrbu1(1).ne.0.D0) then
+      write(nout,102) hbrbu1(1),2,iu,ibb       ,'BR(H+ -> u       bb  
+     .)'
+      endif
+      if(hbrsu1(1).ne.0.D0) then
+      write(nout,102) hbrsu1(1),2,iu,isb       ,'BR(H+ -> u       sb  
+     .)'
+      endif
+      if(hbrcd1(1).ne.0.D0) then
+      write(nout,102) hbrcd1(1),2,ic,idb       ,'BR(H+ -> c       db  
+     .)'
+      endif
+      if(hbrsc1(1).ne.0.D0) then
+      write(nout,102) hbrsc1(1),2,ic,isb       ,'BR(H+ -> c       sb  
+     .)'
+      endif
+      if(hbrbt1(1).ne.0.D0) then
+      write(nout,102) hbrbt1(1),2,it,ibb       ,'BR(H+ -> t       bb  
+     .)'
+      endif
+      if(hbrst1(1).ne.0.D0) then
+      write(nout,102) hbrst1(1),2,it,isb       ,'BR(H+ -> t       sb  
+     .)'
+      endif
+      if(hbrdt1(1).ne.0.D0) then
+      write(nout,102) hbrdt1(1),2,it,idb       ,'BR(H+ -> t       db  
+     .)'
+      endif
+      if(hbrwhl1(1).ne.0.D0) then
+      write(nout,102) hbrwhl1(1),2,iwc,ihl     ,'BR(H+ -> W+      h   
+     .)'
+      endif
+      if(hbrwhh1(1).ne.0.D0) then
+      write(nout,102) hbrwhh1(1),2,iwc,ihh     ,'BR(H+ -> W+      H   
+     .)'
+      endif
+      if(hbrwa1(1).ne.0.D0) then
+      write(nout,102) hbrwa1(1),2,iwc,iha      ,'BR(H+ -> W+      A   
+     .)'
+      endif
+
+c Bug fix hcwdth1 -> hpwdth1 19/1/19      
+      elseif(hpwdth1(1).eq.0.D0) then
+      write(nout,999)
+      write(nout,110) 37,0.000000000E+00,'H+ decays with QCD corrections
+     . only'
+
+      endif         
+
+      endif 
 
       if(irenscheme.eq.0) then
-      do i=1,14,1
+      do i=1,17,1
       if(hpwdth2(i).ne.0.D0) then
 
       write(nout,105)
@@ -4678,6 +5504,9 @@ c MMM changed 10/7/18
       write(nout,111) 37,hpwdth2(i),'H+ decays with QCD and EW correction
      .s'
       write(nout,5255) i,'Renormalization Scheme Number'
+      write(nout,5257) alph2hdmrenhp(i),'Corresponding mixing angle alpha
+     .'
+      write(nout,5257) tgbet2hdmrenhp(i),'Corresponding tan(beta)'
 
       write(nout,101)
       if(hbrbc2(i).ne.0.D0) then
@@ -4740,6 +5569,9 @@ c MMM changed 10/7/18
       write(nout,111) 37,hpwdth2(1),'H+ decays with QCD and EW correction
      .s'
       write(nout,5255) irenscheme,'Renormalization Scheme Number'
+      write(nout,5257) alph2hdmrenhp(1),'Corresponding mixing angle alpha
+     .'
+      write(nout,5257) tgbet2hdmrenhp(1),'Corresponding tan(beta)'
 
       write(nout,101)
       if(hbrbc2(1).ne.0.D0) then
@@ -4836,7 +5668,7 @@ c ----------------------------------- c
       write(nou1,105)
       write(nou1,51) 'DCINFO','Decay Program information'
       write(nou1,61) 1,'2HDECAY     # decay calculator'
-      write(nou1,61) 2,'1.0.0       # version number'
+      write(nou1,61) 2,'1.1.0       # version number'
       
 c ----------------------- c
 c The SM input parameters c
@@ -4846,14 +5678,14 @@ c ----------------------- c
       write(nou1,51) 'SMINPUTS','Standard Model inputs'
       write(nou1,52) 2,gfcalc,'G_F [GeV^-2]'
       write(nou1,52) 3,alsmz,'alpha_S(M_Z)^MSbar'
-      write(nou1,52) 4,amz,'M_Z pole mass'
+      write(nou1,52) 4,amz,'M_Z on-shell mass'
       write(nou1,52) 5,rmb,'mb(mb)^MSbar'
       write(nou1,52) 6,amt,'mt pole mass'
       write(nou1,52) 7,amtau,'mtau pole mass'
       write(nou1,52) 8,amb,'mb pole mass'
       write(nou1,52) 9,amc,'mc pole mass'
       write(nou1,52) 10,ammuon,'muon mass'
-      write(nou1,52) 11,amw,'M_W mass'
+      write(nou1,52) 11,amw,'M_W on-shell mass'
       write(nou1,52) 12,gamw,'W boson total width'
       write(nou1,52) 13,gamz,'Z boson total width'
 
@@ -4862,7 +5694,7 @@ c The 2HDM input parameters c
 c ------------------------- c
 
       write(nou1,105)
-      write(nou1,51) '2HDMINPUTS','2HDM inputs'
+      write(nou1,51) '2HDMINPUTS','2HDM inputs of reference scheme'
       write(nou1,525) 1,iparam2hdm,'2HDM parametrization'
       write(nou1,525) 2,itype2hdm,'2HDM type'            
       write(nou1,52) 3,tgbet2hdm,'tan(beta)'
@@ -4891,6 +5723,9 @@ c ------------------------- c
          write(nou1,52) 14,A5LAM2HDM,'LAMBDA5'
       endif
       write(nou1,525) 15,IRENSCHEME,'renormalization scheme EW corrs'
+c MMM changed 19/1/19
+      write(nou1,525) 15,IREFSCHEME,'reference ren. scheme EW corrs'
+c end MMM changed 19/1/19
       write(nou1,5333) 16,VALINSCALE,'input scale'
                   
 c --------------------- c
@@ -4913,62 +5748,151 @@ c --------------------- c
 
 c ============================================================================ c
 
+      if(irenscheme.eq.0) then
+      do i=1,17,1
       write(nou1,105)
       write(nou1,888)
       write(nou1,112) 25,'h non-zero LO decay widths of on-shell and non
      .-loop induced decays'
+      write(nou1,5256) i,'Renormalization Scheme Number'
+      write(nou1,5257) alph2hdmrenl(i),'Corresponding mixing angle alpha
+     .'
+      write(nou1,5257) tgbet2hdmrenl(i),'Corresponding tan(beta)'
+      
+      write(nou1,113)
+      if(hlbblor(i).ne.0.D0) then
+      write(nou1,102) hlbblor(i),2,ib,ibb       ,'GAM(h -> b       bb 
+     .)'
+      endif
+      if(hllllor(i).ne.0.D0) then
+      write(nou1,102) hllllor(i),2,-itau,itau   ,'GAM(h -> tau+    tau-
+     .)'
+      endif
+      if(hlmmlor(i).ne.0.D0) then
+      write(nou1,102) hlmmlor(i),2,-imu,imu     ,'GAM(h -> mu+     mu-
+     .)'
+      endif
+      if(hlsslor(i).ne.0.D0) then
+      write(nou1,102) hlsslor(i),2,is,isb       ,'GAM(h -> s       sb 
+     .)'
+      endif
+      if(hlcclor(i).ne.0.D0) then
+      write(nou1,102) hlcclor(i),2,ic,icb       ,'GAM(h -> c       cb 
+     .)'
+      endif
+      if(hlttlor(i).ne.0.D0) then
+      write(nou1,102) hlttlor(i),2,it,itb       ,'GAM(h -> t       tb 
+     .)' 
+      endif
+      if(hlwwlor(i).ne.0.D0) then
+      write(nou1,102) hlwwlor(i),2,iwc,-iwc     ,'GAM(h -> W+      W- 
+     .)' 
+      endif
+      if(hlzzlor(i).ne.0.D0) then
+      write(nou1,102) hlzzlor(i),2,iz,iz        ,'GAM(h -> Z       Z  
+     .)' 
+      endif
+      if(hlaalor(i).ne.0.D0) then
+      write(nou1,102) hlaalor(i),2,iha,iha      ,'GAM(h -> A       A  
+     .)' 
+      endif
+      if(hlzalor(i).ne.0.D0) then
+      write(nou1,102) hlzalor(i),2,iz,iha       ,'GAM(h -> Z       A  
+     .)' 
+      endif
+      if(hlhpwmlor(i).ne.0.D0) then
+      write(nou1,102) hlhpwmlor(i)/2.D0,2,iwc,-ihc,'GAM(h -> W+      H
+     .-    )'     
+      endif
+      if(hlhpwmlor(i).ne.0.D0) then
+      write(nou1,102) hlhpwmlor(i)/2.D0,2,-iwc,ihc,'GAM(h -> W-      H
+     .+    )' 
+      endif
+      if(hlhphmlor(i).ne.0.D0) then
+      write(nou1,102) hlhphmlor(i),2,ihc,-ihc    ,'GAM(h -> H+      H-
+     .)'
+      endif
+
+      enddo
+
+      elseif(irenscheme.ne.0) then
+
+      write(nou1,105)
+      write(nou1,888)
+      write(nou1,114) 25,'h non-zero LO EW decay widths of on-shell and
+     .non-loop induced decays'
+      write(nou1,5256) irenscheme,'Renormalization Scheme Number'     
+      write(nou1,5257) alph2hdmrenl(1),'Corresponding mixing angle alpha
+     .'
+      write(nou1,5257) tgbet2hdmrenl(1),'Corresponding tan(beta)'
 
       write(nou1,113)
-      if(hlbblo.ne.0.D0) then
-      write(nou1,102) hlbblo,2,ib,ibb       ,'GAM(h -> b       bb    )'
+      if(hlbblor(1).ne.0.D0) then
+      write(nou1,102) hlbblor(1),2,ib,ibb       ,'GAM(h -> b       bb 
+     .)'
       endif
-      if(hllllo.ne.0.D0) then
-      write(nou1,102) hllllo,2,-itau,itau   ,'GAM(h -> tau+    tau-  )'
+      if(hllllor(1).ne.0.D0) then
+      write(nou1,102) hllllor(1),2,-itau,itau   ,'GAM(h -> tau+    tau-
+     .)'
       endif
-      if(hlmmlo.ne.0.D0) then
-      write(nou1,102) hlmmlo,2,-imu,imu     ,'GAM(h -> mu+     mu-   )'
+      if(hlmmlor(1).ne.0.D0) then
+      write(nou1,102) hlmmlor(1),2,-imu,imu     ,'GAM(h -> mu+     mu-
+     .)'
       endif
-      if(hlsslo.ne.0.D0) then
-      write(nou1,102) hlsslo,2,is,isb       ,'GAM(h -> s       sb    )'
+      if(hlsslor(1).ne.0.D0) then
+      write(nou1,102) hlsslor(1),2,is,isb       ,'GAM(h -> s       sb 
+     .)'
       endif
-      if(hlcclo.ne.0.D0) then
-      write(nou1,102) hlcclo,2,ic,icb       ,'GAM(h -> c       cb    )'
+      if(hlcclor(1).ne.0.D0) then
+      write(nou1,102) hlcclor(1),2,ic,icb       ,'GAM(h -> c       cb 
+     .)'
       endif
-      if(hlttlo.ne.0.D0) then
-      write(nou1,102) hlttlo,2,it,itb       ,'GAM(h -> t       tb    )' 
+      if(hlttlor(1).ne.0.D0) then
+      write(nou1,102) hlttlor(1),2,it,itb       ,'GAM(h -> t       tb 
+     .)' 
       endif
-      if(hlwwlo.ne.0.D0) then
-      write(nou1,102) hlwwlo,2,iwc,-iwc     ,'GAM(h -> W+      W-    )' 
+      if(hlwwlor(1).ne.0.D0) then
+      write(nou1,102) hlwwlor(1),2,iwc,-iwc     ,'GAM(h -> W+      W- 
+     .)' 
       endif
-      if(hlzzlo.ne.0.D0) then
-      write(nou1,102) hlzzlo,2,iz,iz        ,'GAM(h -> Z       Z     )' 
+      if(hlzzlor(1).ne.0.D0) then
+      write(nou1,102) hlzzlor(1),2,iz,iz        ,'GAM(h -> Z       Z  
+     .)' 
       endif
-      if(hlaalo.ne.0.D0) then
-      write(nou1,102) hlaalo,2,iha,iha      ,'GAM(h -> A       A     )' 
+      if(hlaalor(1).ne.0.D0) then
+      write(nou1,102) hlaalor(1),2,iha,iha      ,'GAM(h -> A       A  
+     .)' 
       endif
-      if(hlzalo.ne.0.D0) then
-      write(nou1,102) hlzalo,2,iz,iha       ,'GAM(h -> Z       A     )' 
+      if(hlzalor(1).ne.0.D0) then
+      write(nou1,102) hlzalor(1),2,iz,iha       ,'GAM(h -> Z       A  
+     .)' 
       endif
-      if(hlhpwmlo.ne.0.D0) then
-      write(nou1,102) hlhpwmlo/2.D0,2,iwc,-ihc,'GAM(h -> W+      H-    )
-     .'     
+      if(hlhpwmlor(1).ne.0.D0) then
+      write(nou1,102) hlhpwmlor(1)/2.D0,2,iwc,-ihc,'GAM(h -> W+      H
+     .-    )'     
       endif
-      if(hlhpwmlo.ne.0.D0) then
-      write(nou1,102) hlhpwmlo/2.D0,2,-iwc,ihc,'GAM(h -> W-      H+    )
-     .' 
+      if(hlhpwmlor(1).ne.0.D0) then
+      write(nou1,102) hlhpwmlor(1)/2.D0,2,-iwc,ihc,'GAM(h -> W-      H
+     .+    )' 
       endif
-      if(hlhphmlo.ne.0.D0) then
-      write(nou1,102) hlhphmlo,2,ihc,-ihc    ,'GAM(h -> H+      H-    )'
+      if(hlhphmlor(1).ne.0.D0) then
+      write(nou1,102) hlhphmlor(1),2,ihc,-ihc    ,'GAM(h -> H+      H-
+     .)'
+      endif
+      
       endif
 
       if(irenscheme.eq.0) then
-      do i=1,14,1
+      do i=1,17,1
       write(nou1,105)
       write(nou1,888)
       write(nou1,114) 25,'h non-zero NLO EW decay widths of on-shell and
      . non-loop induced decays'
       write(nou1,5256) i,'Renormalization Scheme Number'      
-
+      write(nou1,5257) alph2hdmrenl(i),'Corresponding mixing angle alpha
+     .'
+      write(nou1,5257) tgbet2hdmrenl(i),'Corresponding tan(beta)'
+      
       write(nou1,113)
       if(hlbbnlo(i).ne.0.D0) then
       write(nou1,102) hlbbnlo(i),2,ib,ibb    ,'GAM(h -> b       bb    )'
@@ -5022,6 +5946,9 @@ c ============================================================================ c
       write(nou1,114) 25,'h non-zero NLO EW decay widths of on-shell and
      . non-loop induced decays'
       write(nou1,5256) irenscheme,'Renormalization Scheme Number'      
+      write(nou1,5257) alph2hdmrenl(1),'Corresponding mixing angle alpha
+     .'
+      write(nou1,5257) tgbet2hdmrenl(1),'Corresponding tan(beta)'
 
       write(nou1,113)
       if(hlbbnlo(1).ne.0.D0) then
@@ -5076,64 +6003,157 @@ c ============================================================================ c
 
       if(ihiggs.eq.2.or.ihiggs.eq.5) then
 
+      if(irenscheme.eq.0) then
+      do i=1,17,1
       write(nou1,105)
       write(nou1,888)
       write(nou1,112) 35,'H non-zero LO decay widths of on-shell and non
      .-loop induced decays'
+      write(nou1,5256) i,'Renormalization Scheme Number'
+      write(nou1,5257) alph2hdmrenh(i),'Corresponding mixing angle alpha
+     .'
+      write(nou1,5257) tgbet2hdmrenh(i),'Corresponding tan(beta)'
+      
+      write(nou1,113)
+      if(hhbblor(i).ne.0.D0) then
+      write(nou1,102) hhbblor(i),2,ib,ibb       ,'GAM(H -> b       bb 
+     .)'
+      endif
+      if(hhlllor(i).ne.0.D0) then
+      write(nou1,102) hhlllor(i),2,-itau,itau   ,'GAM(H -> tau+    tau-
+     .)'
+      endif
+      if(hhmmlor(i).ne.0.D0) then
+      write(nou1,102) hhmmlor(i),2,-imu,imu     ,'GAM(H -> mu+     mu-
+     .)'
+      endif
+      if(hhsslor(i).ne.0.D0) then
+      write(nou1,102) hhsslor(i),2,is,isb       ,'GAM(H -> s       sb 
+     .)'
+      endif
+      if(hhcclor(i).ne.0.D0) then
+      write(nou1,102) hhcclor(i),2,ic,icb       ,'GAM(H -> c       cb 
+     .)'
+      endif
+      if(hhttlor(i).ne.0.D0) then
+      write(nou1,102) hhttlor(i),2,it,itb       ,'GAM(H -> t       tb 
+     .)' 
+      endif
+      if(hhwwlor(i).ne.0.D0) then
+      write(nou1,102) hhwwlor(i),2,iwc,-iwc     ,'GAM(H -> W+      W- 
+     .)' 
+      endif
+      if(hhzzlor(i).ne.0.D0) then
+      write(nou1,102) hhzzlor(i),2,iz,iz        ,'GAM(H -> Z       Z  
+     .)' 
+      endif
+      if(hhhlhllor(i).ne.0.D0) then
+      write(nou1,102) hhhlhllor(i),2,ihl,ihl    ,'GAM(H -> h       h  
+     .)' 
+      endif      
+      if(hhaalor(i).ne.0.D0) then
+      write(nou1,102) hhaalor(i),2,iha,iha      ,'GAM(H -> A       A  
+     .)' 
+      endif
+      if(hhzalor(i).ne.0.D0) then
+      write(nou1,102) hhzalor(i),2,iz,iha       ,'GAM(H -> Z       A  
+     .)' 
+      endif
+      if(hhhpwmlor(i).ne.0.D0) then
+      write(nou1,102) hhhpwmlor(i)/2.D0,2,iwc,-ihc,'GAM(H -> W+      H
+     .-    )'     
+      endif
+      if(hhhpwmlor(i).ne.0.D0) then
+      write(nou1,102) hhhpwmlor(i)/2.D0,2,-iwc,ihc,'GAM(H -> W-      H
+     .+    )' 
+      endif
+      if(hhhphmlor(i).ne.0.D0) then
+      write(nou1,102) hhhphmlor(i),2,ihc,-ihc    ,'GAM(H -> H+      H-
+     .)'
+      endif
+
+      end do
+      elseif(irenschme.ne.0) then
+
+      write(nou1,105)
+      write(nou1,888)
+      write(nou1,114) 25,'H non-zero LO EW decay widths of on-shell and
+     .non-loop induced decays'
+      write(nou1,5256) irenscheme,'Renormalization Scheme Number'     
+      write(nou1,5257) alph2hdmrenh(1),'Corresponding mixing angle alpha
+     .'
+      write(nou1,5257) tgbet2hdmrenh(1),'Corresponding tan(beta)'
 
       write(nou1,113)
-      if(hhbblo.ne.0.D0) then
-      write(nou1,102) hhbblo,2,ib,ibb       ,'GAM(H -> b       bb    )'
+      if(hhbblor(1).ne.0.D0) then
+      write(nou1,102) hhbblor(1),2,ib,ibb       ,'GAM(H -> b       bb 
+     .)'
       endif
-      if(hhlllo.ne.0.D0) then
-      write(nou1,102) hhlllo,2,-itau,itau   ,'GAM(H -> tau+    tau-  )'
+      if(hhlllor(1).ne.0.D0) then
+      write(nou1,102) hhlllor(1),2,-itau,itau   ,'GAM(H -> tau+    tau-
+     .)'
       endif
-      if(hhmmlo.ne.0.D0) then
-      write(nou1,102) hhmmlo,2,-imu,imu     ,'GAM(H -> mu+     mu-   )'
+      if(hhmmlor(1).ne.0.D0) then
+      write(nou1,102) hhmmlor(1),2,-imu,imu     ,'GAM(H -> mu+     mu-
+     .)'
       endif
-      if(hhsslo.ne.0.D0) then
-      write(nou1,102) hhsslo,2,is,isb       ,'GAM(H -> s       sb    )'
+      if(hhsslor(1).ne.0.D0) then
+      write(nou1,102) hhsslor(1),2,is,isb       ,'GAM(H -> s       sb 
+     .)'
       endif
-      if(hhcclo.ne.0.D0) then
-      write(nou1,102) hhcclo,2,ic,icb       ,'GAM(H -> c       cb    )'
+      if(hhcclor(1).ne.0.D0) then
+      write(nou1,102) hhcclor(1),2,ic,icb       ,'GAM(H -> c       cb 
+     .)'
       endif
-      if(hhttlo.ne.0.D0) then
-      write(nou1,102) hhttlo,2,it,itb       ,'GAM(H -> t       tb    )' 
+      if(hhttlor(1).ne.0.D0) then
+      write(nou1,102) hhttlor(1),2,it,itb       ,'GAM(H -> t       tb 
+     .)' 
       endif
-      if(hhwwlo.ne.0.D0) then
-      write(nou1,102) hhwwlo,2,iwc,-iwc     ,'GAM(H -> W+      W-    )' 
+      if(hhwwlor(1).ne.0.D0) then
+      write(nou1,102) hhwwlor(1),2,iwc,-iwc     ,'GAM(H -> W+      W- 
+     .)' 
       endif
-      if(hhzzlo.ne.0.D0) then
-      write(nou1,102) hhzzlo,2,iz,iz        ,'GAM(H -> Z       Z     )' 
+      if(hhzzlor(1).ne.0.D0) then
+      write(nou1,102) hhzzlor(1),2,iz,iz        ,'GAM(H -> Z       Z  
+     .)' 
       endif
-      if(hhhlhllo.ne.0.D0) then
-      write(nou1,102) hhhlhllo,2,ihl,ihl    ,'GAM(H -> h       h     )' 
+      if(hhhlhllor(1).ne.0.D0) then
+      write(nou1,102) hhhlhllor(1),2,ihl,ihl    ,'GAM(H -> h       h  
+     .)' 
       endif      
-      if(hhaalo.ne.0.D0) then
-      write(nou1,102) hhaalo,2,iha,iha      ,'GAM(H -> A       A     )' 
+      if(hhaalor(1).ne.0.D0) then
+      write(nou1,102) hhaalor(1),2,iha,iha      ,'GAM(H -> A       A  
+     .)' 
       endif
-      if(hhzalo.ne.0.D0) then
-      write(nou1,102) hhzalo,2,iz,iha       ,'GAM(H -> Z       A     )' 
+      if(hhzalor(1).ne.0.D0) then
+      write(nou1,102) hhzalor(1),2,iz,iha       ,'GAM(H -> Z       A  
+     .)' 
       endif
-      if(hhhpwmlo.ne.0.D0) then
-      write(nou1,102) hhhpwmlo/2.D0,2,iwc,-ihc,'GAM(H -> W+      H-    )
-     .'     
+      if(hhhpwmlor(1).ne.0.D0) then
+      write(nou1,102) hhhpwmlor(1)/2.D0,2,iwc,-ihc,'GAM(H -> W+      H
+     .-    )'     
       endif
-      if(hhhpwmlo.ne.0.D0) then
-      write(nou1,102) hhhpwmlo/2.D0,2,-iwc,ihc,'GAM(H -> W-      H+    )
-     .' 
+      if(hhhpwmlor(1).ne.0.D0) then
+      write(nou1,102) hhhpwmlor(1)/2.D0,2,-iwc,ihc,'GAM(H -> W-      H
+     .+    )' 
       endif
-      if(hhhphmlo.ne.0.D0) then
-      write(nou1,102) hhhphmlo,2,ihc,-ihc    ,'GAM(H -> H+      H-    )'
+      if(hhhphmlor(1).ne.0.D0) then
+      write(nou1,102) hhhphmlor(1),2,ihc,-ihc    ,'GAM(H -> H+      H-
+     .)'
       endif
-
+      
+      endif
+      
       if(irenscheme.eq.0) then
-      do i=1,14,1
+      do i=1,17,1
       write(nou1,105)
       write(nou1,888)
       write(nou1,114) 35,'H non-zero NLO EW decay widths of on-shell and
      . non-loop induced decays'
       write(nou1,5256) i,'Renormalization Scheme Number'      
+      write(nou1,5257) alph2hdmrenh(i),'Corresponding mixing angle alpha
+     .'
+      write(nou1,5257) tgbet2hdmrenh(i),'Corresponding tan(beta)'
 
       write(nou1,113)
       if(hhbbnlo(i).ne.0.D0) then
@@ -5191,6 +6211,9 @@ c ============================================================================ c
       write(nou1,114) 35,'H non-zero NLO EW decay widths of on-shell and
      . non-loop induced decays'
       write(nou1,5256) irenscheme,'Renormalization Scheme Number'      
+      write(nou1,5257) alph2hdmrenh(1),'Corresponding mixing angle alpha
+     .'
+      write(nou1,5257) tgbet2hdmrenh(1),'Corresponding tan(beta)'
 
       write(nou1,113)
       if(hhbbnlo(1).ne.0.D0) then
@@ -5247,52 +6270,126 @@ c ============================================================================ c
 
       if(ihiggs.eq.3.or.ihiggs.eq.5) then
 
+      if(irenscheme.eq.0) then   
+      do i=1,17,1
       write(nou1,105)
       write(nou1,888)
       write(nou1,112) 36,'A non-zero LO decay widths of on-shell and non
      .-loop induced decays'
+      write(nou1,5256) i,'Renormalization Scheme Number'
+      write(nou1,5257) alph2hdmrena(i),'Corresponding mixing angle alpha
+     .'
+      write(nou1,5257) tgbet2hdmrena(i),'Corresponding tan(beta)'
       
       write(nou1,113)
-      if(abblo.ne.0.D0) then
-      write(nou1,102) abblo,2,ib,ibb        ,'GAM(A -> b       bb    )'
+      if(abblor(i).ne.0.D0) then
+      write(nou1,102) abblor(i),2,ib,ibb        ,'GAM(A -> b       bb 
+     .)'
       endif
-      if(alllo.ne.0.D0) then
-      write(nou1,102) alllo,2,-itau,itau    ,'GAM(A -> tau+    tau-  )'
+      if(alllor(i).ne.0.D0) then
+      write(nou1,102) alllor(i),2,-itau,itau    ,'GAM(A -> tau+    tau-
+     .)'
       endif
-      if(ammlo.ne.0.D0) then
-      write(nou1,102) ammlo,2,-imu,imu      ,'GAM(A -> mu+     mu-   )'
+      if(ammlor(i).ne.0.D0) then
+      write(nou1,102) ammlor(i),2,-imu,imu      ,'GAM(A -> mu+     mu-
+     .)'
       endif
-      if(asslo.ne.0.D0) then
-      write(nou1,102) asslo,2,is,isb        ,'GAM(A -> s       sb    )'
+      if(asslor(i).ne.0.D0) then
+      write(nou1,102) asslor(i),2,is,isb        ,'GAM(A -> s       sb 
+     .)'
       endif
-      if(acclo.ne.0.D0) then
-      write(nou1,102) acclo,2,ic,icb        ,'GAM(A -> c       cb    )'
+      if(acclor(i).ne.0.D0) then
+      write(nou1,102) acclor(i),2,ic,icb        ,'GAM(A -> c       cb 
+     .)'
       endif
-      if(attlo.ne.0.D0) then
-      write(nou1,102) attlo,2,it,itb        ,'GAM(A -> t       tb    )' 
+      if(attlor(i).ne.0.D0) then
+      write(nou1,102) attlor(i),2,it,itb        ,'GAM(A -> t       tb 
+     .)' 
       endif
-      if(ahlzlo.ne.0.D0) then
-      write(nou1,102) ahlzlo,2,iz,ihl       ,'GAM(A -> Z       h     )' 
+      if(ahlzlor(i).ne.0.D0) then
+      write(nou1,102) ahlzlor(i),2,iz,ihl       ,'GAM(A -> Z       h  
+     .)' 
       endif
-      if(ahhzlo.ne.0.D0) then
-      write(nou1,102) ahhzlo,2,iz,ihh       ,'GAM(A -> Z       H     )' 
+      if(ahhzlor(i).ne.0.D0) then
+      write(nou1,102) ahhzlor(i),2,iz,ihh       ,'GAM(A -> Z       H  
+     .)' 
       endif
-      if(ahpwmlo.ne.0.D0) then
-      write(nou1,102) ahpwmlo/2.D0,2,iwc,-ihc,'GAM(A -> W+      H-    )
-     .'     
+      if(ahpwmlor(i).ne.0.D0) then
+      write(nou1,102) ahpwmlor(i)/2.D0,2,iwc,-ihc,'GAM(A -> W+      H-
+     .)'     
       endif
-      if(ahpwmlo.ne.0.D0) then
-      write(nou1,102) ahpwmlo/2.D0,2,-iwc,ihc,'GAM(A -> W-      H+    )
-     .' 
+      if(ahpwmlor(i).ne.0.D0) then
+      write(nou1,102) ahpwmlor(i)/2.D0,2,-iwc,ihc,'GAM(A -> W-      H+
+     .)' 
       endif
 
+      end do
+
+      elseif(irenscheme.ne.0) then
+
+      write(nou1,105)
+      write(nou1,888)
+      write(nou1,112) 36,'A non-zero LO decay widths of on-shell and non
+     .-loop induced decays'
+      write(nou1,5256) irenscheme,'Renormalization Scheme Number'
+      write(nou1,5257) alph2hdmrena(1),'Corresponding mixing angle alpha
+     .'
+      write(nou1,5257) tgbet2hdmrena(1),'Corresponding tan(beta)'
+      
+      write(nou1,113)
+      if(abblor(1).ne.0.D0) then
+      write(nou1,102) abblor(1),2,ib,ibb        ,'GAM(A -> b       bb 
+     .)'
+      endif
+      if(alllor(1).ne.0.D0) then
+      write(nou1,102) alllor(1),2,-itau,itau    ,'GAM(A -> tau+    tau-
+     .)'
+      endif
+      if(ammlor(1).ne.0.D0) then
+      write(nou1,102) ammlor(1),2,-imu,imu      ,'GAM(A -> mu+     mu-
+     .)'
+      endif
+      if(asslor(1).ne.0.D0) then
+      write(nou1,102) asslor(1),2,is,isb        ,'GAM(A -> s       sb 
+     .)'
+      endif
+      if(acclor(1).ne.0.D0) then
+      write(nou1,102) acclor(1),2,ic,icb        ,'GAM(A -> c       cb 
+     .)'
+      endif
+      if(attlor(1).ne.0.D0) then
+      write(nou1,102) attlor(1),2,it,itb        ,'GAM(A -> t       tb 
+     .)' 
+      endif
+      if(ahlzlor(1).ne.0.D0) then
+      write(nou1,102) ahlzlor(1),2,iz,ihl       ,'GAM(A -> Z       h  
+     .)' 
+      endif
+      if(ahhzlor(1).ne.0.D0) then
+      write(nou1,102) ahhzlor(1),2,iz,ihh       ,'GAM(A -> Z       H  
+     .)' 
+      endif
+      if(ahpwmlor(1).ne.0.D0) then
+      write(nou1,102) ahpwmlor(1)/2.D0,2,iwc,-ihc,'GAM(A -> W+      H-
+     .)'     
+      endif
+      if(ahpwmlor(1).ne.0.D0) then
+      write(nou1,102) ahpwmlor(1)/2.D0,2,-iwc,ihc,'GAM(A -> W-      H+
+     .)' 
+      endif
+         
+      endif
+      
       if(irenscheme.eq.0) then
-      do i=1,14,1
+      do i=1,17,1
       write(nou1,105)
       write(nou1,888)
       write(nou1,114) 36,'A non-zero NLO EW decay widths of on-shell and
      . non-loop induced decays'
       write(nou1,5256) i,'Renormalization Scheme Number'      
+      write(nou1,5257) alph2hdmrena(i),'Corresponding mixing angle alpha
+     .'
+      write(nou1,5257) tgbet2hdmrena(i),'Corresponding tan(beta)'
 
       write(nou1,113)
       if(abbnlo(i).ne.0.D0) then
@@ -5337,6 +6434,9 @@ c ============================================================================ c
       write(nou1,114) 36,'A non-zero NLO EW decay widths of on-shell and
      . non-loop induced decays'
       write(nou1,5256) irenscheme,'Renormalization Scheme Number'      
+      write(nou1,5257) alph2hdmrena(1),'Corresponding mixing angle alpha
+     .'
+      write(nou1,5257) tgbet2hdmrena(1),'Corresponding tan(beta)'
 
       write(nou1,113)
       if(abbnlo(1).ne.0.D0) then
@@ -5380,60 +6480,150 @@ c ============================================================================ c
 
       if(ihiggs.eq.4.or.ihiggs.eq.5) then
 
+      if(irenscheme.eq.0) then
+      do i=1,17,1
       write(nou1,105)
       write(nou1,888)
       write(nou1,112) 37,'H+ non-zero LO decay widths of on-shell and non
      .-loop induced decays'
-
+      write(nou1,5256) i,'Renormalization Scheme Number'
+      write(nou1,5257) alph2hdmrenhp(i),'Corresponding mixing angle alpha
+     .'
+      write(nou1,5257) tgbet2hdmrenhp(i),'Corresponding tan(beta)'
+      
       write(nou1,113)
-      if(HPBCLO.ne.0.D0) then
-      write(nou1,102) hpbclo,2,ic,ibb      ,'GAM(H+ -> c       bb     )'
-      endif
-      if(HPTAUNULO.ne.0.D0) then
-      write(nou1,102) hptaunulo,2,-itau,intau,'GAM(H+ -> tau+    nu_tau 
+      if(HPBCLOR(i).ne.0.D0) then
+      write(nou1,102) hpbclor(i),2,ic,ibb      ,'GAM(H+ -> c       bb 
      .)'
       endif
-      if(HPMUNULO.ne.0.D0) then
-      write(nou1,102) hpmunulo,2,-imu,inmu ,'GAM(H+ -> mu+     nu_mu  )'
+      if(HPTAUNULOR(i).ne.0.D0) then
+         write(nou1,102) hptaunulor(i),2,-itau,intau,'GAM(H+ -> tau+    
+     .nu_tau)'
       endif
-      if(HPBULO.ne.0.D0) then
-      write(nou1,102) HPBULO,2,iu,ibb      ,'GAM(H+ -> u       bb     )'
+      if(HPMUNULOR(i).ne.0.D0) then
+      write(nou1,102) hpmunulor(i),2,-imu,inmu ,'GAM(H+ -> mu+     nu_mu
+     .)'
       endif
-      if(HPSULO.ne.0.D0) then
-      write(nou1,102) HPSULO,2,iu,isb      ,'GAM(H+ -> u       sb     )'
+      if(HPBULOR(i).ne.0.D0) then
+      write(nou1,102) HPBULOR(i),2,iu,ibb      ,'GAM(H+ -> u       bb 
+     .)'
       endif
-      if(HPDCLO.ne.0.D0) then
-      write(nou1,102) HPDCLO,2,ic,idb      ,'GAM(H+ -> c       db     )'
+      if(HPSULOR(i).ne.0.D0) then
+      write(nou1,102) HPSULOR(i),2,iu,isb      ,'GAM(H+ -> u       sb 
+     .)'
       endif
-      if(HPSCLO.ne.0.D0) then
-      write(nou1,102) HPSCLO,2,ic,isb      ,'GAM(H+ -> c       sb     )'
+      if(HPDCLOR(i).ne.0.D0) then
+      write(nou1,102) HPDCLOR(i),2,ic,idb      ,'GAM(H+ -> c       db 
+     .)'
       endif
-      if(HPTBLO.ne.0.D0) then
-      write(nou1,102) HPTBLO,2,it,ibb      ,'GAM(H+ -> t       bb     )'
+      if(HPSCLOR(i).ne.0.D0) then
+      write(nou1,102) HPSCLOR(i),2,ic,isb      ,'GAM(H+ -> c       sb 
+     .)'
       endif
-      if(HPTSLO.ne.0.D0) then
-      write(nou1,102) HPTSLO,2,it,isb      ,'GAM(H+ -> t       sb     )'
+      if(HPTBLOR(i).ne.0.D0) then
+      write(nou1,102) HPTBLOR(i),2,it,ibb      ,'GAM(H+ -> t       bb 
+     .)'
       endif
-      if(HPTDLO.ne.0.D0) then
-      write(nou1,102) HPTDLO,2,it,idb      ,'GAM(H+ -> t       db     )'
+      if(HPTSLOR(i).ne.0.D0) then
+      write(nou1,102) HPTSLOR(i),2,it,isb      ,'GAM(H+ -> t       sb 
+     .)'
       endif
-      if(HPWHLLO.ne.0.D0) then
-      write(nou1,102) HPWHLLO,2,iwc,ihl    ,'GAM(H+ -> W+      h      )'
+      if(HPTDLOR(i).ne.0.D0) then
+      write(nou1,102) HPTDLOR(i),2,it,idb      ,'GAM(H+ -> t       db 
+     .)'
       endif
-      if(HPWHHLO.ne.0.D0) then
-      write(nou1,102) HPWHHLO,2,iwc,ihh    ,'GAM(H+ -> W+      H      )'
+      if(HPWHLLOR(i).ne.0.D0) then
+      write(nou1,102) HPWHLLOR(i),2,iwc,ihl    ,'GAM(H+ -> W+      h  
+     .)'
       endif
-      if(HPWALO.ne.0.D0) then
-      write(nou1,102) HPWALO,2,iwc,iha     ,'GAM(H+ -> W+      A      )'
+      if(HPWHHLOR(i).ne.0.D0) then
+      write(nou1,102) HPWHHLOR(i),2,iwc,ihh    ,'GAM(H+ -> W+      H  
+     .)'
+      endif
+      if(HPWALOR(i).ne.0.D0) then
+      write(nou1,102) HPWALOR(i),2,iwc,iha     ,'GAM(H+ -> W+      A  
+     .)'
+      endif
+
+      end do
+
+      elseif(irenscheme.ne.0) then
+
+      write(nou1,105)
+      write(nou1,888)
+      write(nou1,112) 37,'H+ non-zero LO decay widths of on-shell and non
+     .-loop induced decays'
+      write(nou1,5256) irenscheme,'Renormalization Scheme Number'
+      write(nou1,5257) alph2hdmrenhp(1),'Corresponding mixing angle alpha
+     .'
+      write(nou1,5257) tgbet2hdmrenhp(1),'Corresponding tan(beta)'
+      
+      write(nou1,113)
+      if(HPBCLOR(1).ne.0.D0) then
+      write(nou1,102) hpbclor(1),2,ic,ibb      ,'GAM(H+ -> c       bb 
+     .)'
+      endif
+      if(HPTAUNULOR(1).ne.0.D0) then
+         write(nou1,102) hptaunulor(1),2,-itau,intau,'GAM(H+ -> tau+    
+     .nu_tau)'
+      endif
+      if(HPMUNULOR(1).ne.0.D0) then
+      write(nou1,102) hpmunulor(1),2,-imu,inmu ,'GAM(H+ -> mu+     nu_mu
+     .)'
+      endif
+      if(HPBULOR(1).ne.0.D0) then
+      write(nou1,102) HPBULOR(1),2,iu,ibb      ,'GAM(H+ -> u       bb 
+     .)'
+      endif
+      if(HPSULOR(1).ne.0.D0) then
+      write(nou1,102) HPSULOR(1),2,iu,isb      ,'GAM(H+ -> u       sb 
+     .)'
+      endif
+      if(HPDCLOR(1).ne.0.D0) then
+      write(nou1,102) HPDCLOR(1),2,ic,idb      ,'GAM(H+ -> c       db 
+     .)'
+      endif
+      if(HPSCLOR(1).ne.0.D0) then
+      write(nou1,102) HPSCLOR(1),2,ic,isb      ,'GAM(H+ -> c       sb 
+     .)'
+      endif
+      if(HPTBLOR(1).ne.0.D0) then
+      write(nou1,102) HPTBLOR(1),2,it,ibb      ,'GAM(H+ -> t       bb 
+     .)'
+      endif
+      if(HPTSLOR(1).ne.0.D0) then
+      write(nou1,102) HPTSLOR(1),2,it,isb      ,'GAM(H+ -> t       sb 
+     .)'
+      endif
+      if(HPTDLOR(1).ne.0.D0) then
+      write(nou1,102) HPTDLOR(1),2,it,idb      ,'GAM(H+ -> t       db 
+     .)'
+      endif
+      if(HPWHLLOR(1).ne.0.D0) then
+      write(nou1,102) HPWHLLOR(1),2,iwc,ihl    ,'GAM(H+ -> W+      h  
+     .)'
+      endif
+      if(HPWHHLOR(1).ne.0.D0) then
+      write(nou1,102) HPWHHLOR(1),2,iwc,ihh    ,'GAM(H+ -> W+      H  
+     .)'
+      endif
+      if(HPWALOR(1).ne.0.D0) then
+      write(nou1,102) HPWALOR(1),2,iwc,iha     ,'GAM(H+ -> W+      A  
+     .)'
+      endif
+         
       endif
       
       if(irenscheme.eq.0) then
-      do i=1,14,1
+      do i=1,17,1
       write(nou1,105)
       write(nou1,888)
       write(nou1,114) 37,'H+ non-zero NLO EW decay widths of on-shell and
      . non-loop induced decays'
       write(nou1,5256) i,'Renormalization Scheme Number'      
+      write(nou1,5257) alph2hdmrenhp(i),'Corresponding mixing angle alpha
+     .'
+      write(nou1,5257) tgbet2hdmrenhp(i),'Corresponding tan(beta)'
 
       write(nou1,113)
       if(HPBCNLO(i).ne.0.D0) then
@@ -5487,6 +6677,9 @@ c ============================================================================ c
       write(nou1,114) 37,'H+ non-zero NLO EW decay widths of on-shell and
      . non-loop induced decays'
       write(nou1,5256) irenscheme,'Renormalization Scheme Number'      
+      write(nou1,5257) alph2hdmrenhp(1),'Corresponding mixing angle alpha
+     .'
+      write(nou1,5257) tgbet2hdmrenhp(1),'Corresponding tan(beta)'
 
       write(nou1,113)
       if(HPBCNLO(1).ne.0.D0) then
@@ -5549,6 +6742,7 @@ c MMM changed 10/7/18
  525  format(1x,I9,3x,1P,I16,0P,3x,'#',1x,A)
  5255 format(5x,I19,0P,16x,'#',1x,A)
  5256 format(5x,I16,0P,3x,'#',1x,A)
+ 5257 format(5x,E16.8,0P,3x,'#',1x,A)
  999  format('#',12x,'PDG',4x,'Width QCD Only')
  9999 format('#',15x,'PDG',4x,'Width QCD and EW')
  110  format('DECAY QCD',1x,I5,3x,1P,E16.8,0P,3x,'#',1x,A)
@@ -5861,81 +7055,146 @@ C =====================================================================
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       DOUBLE PRECISION LAMB_HDEC
       COMPLEX*16 CFACQ_HDEC,CFACSQ_HDEC,CKOFQ_HDEC,CKOFQ,CFACQ,CFACQ0
-      integer ivegas(4)
+      integer ivegas(4)      
 c MMM changed 10/7/18
       CHARACTER(50) valinscale
-      double precision HLBBNLO(1:14),HLLLNLO(1:14),HLMMNLO(1:14),
-     .     HLSSNLO(1:14),HLCCNLO(1:14),HLTTNLO(1:14),HLWWNLO(1:14),
-     .     HLZZNLO(1:14),HLAANLO(1:14),HLZANLO(1:14),HLHPWMNLO(1:14),
-     .     HLHPHMNLO(1:14)
-      double precision HHBBNLO(1:14),HHLLNLO(1:14),HHMMNLO(1:14),
-     .     HHSSNLO(1:14),HHCCNLO(1:14),HHTTNLO(1:14),HHWWNLO(1:14),
-     .     HHZZNLO(1:14),HHHLHLNLO(1:14),HHAANLO(1:14),HHZANLO(1:14),
-     .     HHHPWMNLO(1:14),HHHPHMNLO(1:14)
-      double precision ABBNLO(1:14),ALLNLO(1:14),AMMNLO(1:14),
-     .     ASSNLO(1:14),ACCNLO(1:14),ATTNLO(1:14),AUUNLO(1:14),
-     .     ADDNLO(1:14),AEENLO(1:14),AHLZNLO(1:14),AHHZNLO(1:14),
-     .     AHPWMNLO(1:14)
-      double precision HPBCNLO(1:14),HPTAUNUNLO(1:14),HPMUNUNLO(1:14),
-     .     HPSUNLO(1:14),HPSCNLO(1:14),HPTBNLO(1:14),HPDCNLO(1:14),
-     .     HPBUNLO(1:14),HPTSNLO(1:14),HPTDNLO(1:14),HPWHLNLO(1:14),
-     .     HPWHHNLO(1:14),HPWANLO(1:14)
+      double precision HLBBNLO(1:17),HLLLNLO(1:17),HLMMNLO(1:17),
+     .     HLSSNLO(1:17),HLCCNLO(1:17),HLTTNLO(1:17),HLWWNLO(1:17),
+     .     HLZZNLO(1:17),HLAANLO(1:17),HLZANLO(1:17),HLHPWMNLO(1:17),
+     .     HLHPHMNLO(1:17)
+      double precision HHBBNLO(1:17),HHLLNLO(1:17),HHMMNLO(1:17),
+     .     HHSSNLO(1:17),HHCCNLO(1:17),HHTTNLO(1:17),HHWWNLO(1:17),
+     .     HHZZNLO(1:17),HHHLHLNLO(1:17),HHAANLO(1:17),HHZANLO(1:17),
+     .     HHHPWMNLO(1:17),HHHPHMNLO(1:17)
+      double precision ABBNLO(1:17),ALLNLO(1:17),AMMNLO(1:17),
+     .     ASSNLO(1:17),ACCNLO(1:17),ATTNLO(1:17),AUUNLO(1:17),
+     .     ADDNLO(1:17),AEENLO(1:17),AHLZNLO(1:17),AHHZNLO(1:17),
+     .     AHPWMNLO(1:17)
+      double precision HPBCNLO(1:17),HPTAUNUNLO(1:17),HPMUNUNLO(1:17),
+     .     HPSUNLO(1:17),HPSCNLO(1:17),HPTBNLO(1:17),HPDCNLO(1:17),
+     .     HPBUNLO(1:17),HPTSNLO(1:17),HPTDNLO(1:17),HPWHLNLO(1:17),
+     .     HPWHHNLO(1:17),HPWANLO(1:17)
 c
-      double precision hlmmqcdew(1:14),hlllqcdew(1:14),hlssqcdew(1:14),
-     .     hlccqcdew(1:14),hlbbqcdew(1:14),hlttqcdew(1:14),
-     .     hlwwqcdew(1:14),hlzzqcdew(1:14),hlaaqcdew(1:14),
-     .     hlhphmqcdew(1:14),hlzaqcdew(1:14)      
-      double precision hlmmew(1:14),hlllew(1:14),hlssew(1:14),
-     .     hlccew(1:14),hlbbew(1:14),hlttew(1:14),hlwwew(1:14),
-     .     hlzzew(1:14),hlaaew(1:14),hlhphmew(1:14),hlazew(1:14),
-     .     hlhpwmew(1:14)
-      double precision HLBRM2(1:14),HLBRL2(1:14),HLBRS2(1:14),
-     .     HLBRC2(1:14),HLBRB2(1:14),HLBRT2(1:14),HLBRW2(1:14),
-     .     HLBRZ2(1:14),HLBRA2(1:14),HLBRCHCH2(1:14),HLBRAZ2(1:14),
-     .     HLBRHW2(1:14),HLBRG2(1:14),HLBRGA2(1:14),HLBRZGA2(1:14),
-     .     WTOT2(1:14),hlwdth2(1:14)
+      double precision hlmmqcdew(1:17),hlllqcdew(1:17),hlssqcdew(1:17),
+     .     hlccqcdew(1:17),hlbbqcdew(1:17),hlttqcdew(1:17),
+     .     hlwwqcdew(1:17),hlzzqcdew(1:17),hlaaqcdew(1:17),
+     .     hlhphmqcdew(1:17),hlzaqcdew(1:17)      
+      double precision hlmmew(1:17),hlllew(1:17),hlssew(1:17),
+     .     hlccew(1:17),hlbbew(1:17),hlttew(1:17),hlwwew(1:17),
+     .     hlzzew(1:17),hlaaew(1:17),hlhphmew(1:17),hlazew(1:17),
+     .     hlhpwmew(1:17)
+      double precision HLBRM2(1:17),HLBRL2(1:17),HLBRS2(1:17),
+     .     HLBRC2(1:17),HLBRB2(1:17),HLBRT2(1:17),HLBRW2(1:17),
+     .     HLBRZ2(1:17),HLBRA2(1:17),HLBRCHCH2(1:17),HLBRAZ2(1:17),
+     .     HLBRHW2(1:17),HLBRG2(1:17),HLBRGA2(1:17),HLBRZGA2(1:17),
+     .     WTOT2(1:17),hlwdth2(1:17)
 c
-      double precision hhmmqcdew(1:14),hhllqcdew(1:14),hhssqcdew(1:14),
-     .     hhccqcdew(1:14),hhbbqcdew(1:14),hhttqcdew(1:14),
-     .     hhwwqcdew(1:14),hhzzqcdew(1:14),hhaaqcdew(1:14),
-     .     hhhphmqcdew(1:14),hhzaqcdew(1:14)      
-      double precision hhmmew(1:14),hhllew(1:14),hhssew(1:14),
-     .     hhccew(1:14),hhbbew(1:14),hhttew(1:14),hhwwew(1:14),
-     .     hhzzew(1:14),hhaaew(1:14),hhhphmew(1:14),hhazew(1:14),
-     .     hhhpwmew(1:14),hhhew(1:14)
-      double precision HHBRM2(1:14),HHBRL2(1:14),HHBRS2(1:14),
-     .     HHBRC2(1:14),HHBRB2(1:14),HHBRT2(1:14),HHBRW2(1:14),
-     .     HHBRZ2(1:14),HHBRA2(1:14),HHBRCHCH2(1:14),HHBRAZ2(1:14),
-     .     HHBRHW2(1:14),HHBRG2(1:14),HHBRGA2(1:14),HHBRZGA2(1:14),
-     .     hhwdth2(1:14),HHBRHL2(1:14)
+      double precision hhmmqcdew(1:17),hhllqcdew(1:17),hhssqcdew(1:17),
+     .     hhccqcdew(1:17),hhbbqcdew(1:17),hhttqcdew(1:17),
+     .     hhwwqcdew(1:17),hhzzqcdew(1:17),hhaaqcdew(1:17),
+     .     hhhphmqcdew(1:17),hhzaqcdew(1:17)      
+      double precision hhmmew(1:17),hhllew(1:17),hhssew(1:17),
+     .     hhccew(1:17),hhbbew(1:17),hhttew(1:17),hhwwew(1:17),
+     .     hhzzew(1:17),hhaaew(1:17),hhhphmew(1:17),hhazew(1:17),
+     .     hhhpwmew(1:17),hhhew(1:17)
+      double precision HHBRM2(1:17),HHBRL2(1:17),HHBRS2(1:17),
+     .     HHBRC2(1:17),HHBRB2(1:17),HHBRT2(1:17),HHBRW2(1:17),
+     .     HHBRZ2(1:17),HHBRA2(1:17),HHBRCHCH2(1:17),HHBRAZ2(1:17),
+     .     HHBRHW2(1:17),HHBRG2(1:17),HHBRGA2(1:17),HHBRZGA2(1:17),
+     .     hhwdth2(1:17),HHBRHL2(1:17)
 c
-      double precision ammqcdew(1:14),allqcdew(1:14),assqcdew(1:14),
-     .     accqcdew(1:14),abbqcdew(1:14),attqcdew(1:14),
-     .     ahphmqcdew(1:14),ahhzqcdew(1:14),ahpwmqcdew(1:14),
-     .     ahqcdew(1:14),ahlzqcdew(1:14)    
-      double precision ammew(1:14),allew(1:14),assew(1:14),
-     .     accew(1:14),abbew(1:14),attew(1:14),ahphmew(1:14),
-     .     ahhzew(1:14),ahlzew(1:14),
-     .     ahpwmew(1:14),ahew(1:14)
-      double precision ABRM2(1:14),ABRL2(1:14),ABRS2(1:14),
-     .     ABRC2(1:14),ABRB2(1:14),ABRT2(1:14),
-     .     ABRHW2(1:14),ABRG2(1:14),ABRGA2(1:14),ABRZGA2(1:14),
-     .     awdth2(1:14),ABRHLZ2(1:14),ABRHHZ2(1:14)
+      double precision ammqcdew(1:17),allqcdew(1:17),assqcdew(1:17),
+     .     accqcdew(1:17),abbqcdew(1:17),attqcdew(1:17),
+     .     ahphmqcdew(1:17),ahhzqcdew(1:17),ahpwmqcdew(1:17),
+     .     ahqcdew(1:17),ahlzqcdew(1:17)    
+      double precision ammew(1:17),allew(1:17),assew(1:17),
+     .     accew(1:17),abbew(1:17),attew(1:17),ahphmew(1:17),
+     .     ahhzew(1:17),ahlzew(1:17),
+     .     ahpwmew(1:17),ahew(1:17)
+      double precision ABRM2(1:17),ABRL2(1:17),ABRS2(1:17),
+     .     ABRC2(1:17),ABRB2(1:17),ABRT2(1:17),
+     .     ABRHW2(1:17),ABRG2(1:17),ABRGA2(1:17),ABRZGA2(1:17),
+     .     awdth2(1:17),ABRHLZ2(1:17),ABRHHZ2(1:17)
 c
-      double precision hmnew(1:14),hlnew(1:14),hsuew(1:14),
-     .     hsuqcdew(1:14),hscew(1:14),hscqcdew(1:14),hcdew(1:14),
-     .     hcdqcdew(1:14),hbcew(1:14),hbcqcdew(1:14),hbuew(1:14),
-     .     hbuqcdew(1:14),hdtew(1:14),hdtqcdew(1:14),hstew(1:14),
-     .     hstqcdew(1:14),hbtew(1:14),hbtqcdew(1:14),hwhew(1:14),
-     .     hpwhlew(1:14),hpwhhew(1:14),hpwaew(1:14)
-      double precision HBRMN2(1:14),HBRLN2(1:14),HBRSU2(1:14),
-     .     HBRSC2(1:14),HBRCD2(1:14),HBRBC2(1:14),HBRBU2(1:14),
-     .     HBRDT2(1:14),HBRST2(1:14),HBRBT2(1:14),HBRWHL2(1:14),
-     .     HBRWHH2(1:14),HBRWA2(1:14),hpwdth2(1:14)
-c      double precision delhlmm(1:14),delhlll(1:14),delhlss(1:14),
-c     .     delhlcc(1:14),delhlbb(1:14),delhltt(1:14),delhlww(1:14),
-c     .     delhlzz(1:14),delhlaa(1:14),delhlhphm(1:14),delhlza(1:14)
-c end MMM changed 10/7/18      
+      double precision hmnew(1:17),hlnew(1:17),hsuew(1:17),
+     .     hsuqcdew(1:17),hscew(1:17),hscqcdew(1:17),hcdew(1:17),
+     .     hcdqcdew(1:17),hbcew(1:17),hbcqcdew(1:17),hbuew(1:17),
+     .     hbuqcdew(1:17),hdtew(1:17),hdtqcdew(1:17),hstew(1:17),
+     .     hstqcdew(1:17),hbtew(1:17),hbtqcdew(1:17),hwhew(1:17),
+     .     hpwhlew(1:17),hpwhhew(1:17),hpwaew(1:17)
+      double precision HBRMN2(1:17),HBRLN2(1:17),HBRSU2(1:17),
+     .     HBRSC2(1:17),HBRCD2(1:17),HBRBC2(1:17),HBRBU2(1:17),
+     .     HBRDT2(1:17),HBRST2(1:17),HBRBT2(1:17),HBRWHL2(1:17),
+     .     HBRWHH2(1:17),HBRWA2(1:17),hpwdth2(1:17)
+c end MMM changed 10/7/18
+c MMM changed 19/1/19
+      double precision HLBBLOR(1:17),HLLLLOR(1:17),HLMMLOR(1:17),
+     .     HLSSLOR(1:17),HLCCLOR(1:17),HLTTLOR(1:17),HLWWLOR(1:17),
+     .     HLZZLOR(1:17),HLAALOR(1:17),HLZALOR(1:17),HLHPWMLOR(1:17),
+     .     HLHPHMLOR(1:17),tmplo(1:17)
+      double precision HHBBLOR(1:17),HHLLLOR(1:17),HHMMLOR(1:17),
+     .     HHSSLOR(1:17),HHCCLOR(1:17),HHTTLOR(1:17),HHWWLOR(1:17),
+     .     HHZZLOR(1:17),HHHLHLLOR(1:17),HHAALOR(1:17),HHZALOR(1:17),
+     .     HHHPWMLOR(1:17),HHHPHMLOR(1:17)
+      double precision ABBLOR(1:17),ALLLOR(1:17),AMMLOR(1:17),
+     .     ASSLOR(1:17),ACCLOR(1:17),ATTLOR(1:17),AUULOR(1:17),
+     .     ADDLOR(1:17),AEELOR(1:17),AHLZLOR(1:17),AHHZLOR(1:17),
+     .     AHPWMLOR(1:17)
+      double precision HPBCLOR(1:17),HPTAUNULOR(1:17),HPMUNULOR(1:17),
+     .     HPSULOR(1:17),HPSCLOR(1:17),HPTBLOR(1:17),HPDCLOR(1:17),
+     .     HPBULOR(1:17),HPTSLOR(1:17),HPTDLOR(1:17),HPWHLLOR(1:17),
+     .     HPWHHLOR(1:17),HPWALOR(1:17)
+      double precision ALPH2HDMRENL(1:17),
+     .     TGBET2HDMRENL(1:17),ALPH2HDMRENH(1:17),
+     .     TGBET2HDMRENH(1:17),ALPH2HDMRENA(1:17),TGBET2HDMRENA(1:17),
+     .     ALPH2HDMRENHP(1:17),TGBET2HDMRENHP(1:17)      
+      double precision hggr(1:17),dccr(1:17),dbbr(1:17),hlggrescr(1:17),
+     .     hhggrescr(1:17),aggrescr(1:17)
+      double precision hlllloresc(1:17),hlmmloresc(1:17),
+     .     hlssloresc(1:17),hhssloresc(1:17),hlccqcd(1:17),
+     .     hlbbqcd(1:17),hlbbloresc(1:17),hhbbqcd(1:17),
+     .     hhmmloresc(1:17),hhllloresc(1:17),hhccqcd(1:17),
+     .     hlssqcd(1:17),hhssqcd(1:17),hlccloresc(1:17),
+     .     hhccloresc(1:17),hhbbloresc(1:17),hlttqcd(1:17),
+     .     hlttloresc(1:17),hhttloresc(1:17),hhttqcd(1:17),
+     .     hlgaresc(1:17),hhgaresc(1:17),hlzgaresc(1:17),
+     .     hlwwloresc(1:17),hhwwloresc(1:17),hhzgaresc(1:17),
+     .     hlzzloresc(1:17),hhzzloresc(1:17),hlaaloresc(1:17),
+     .     hhhloresc(1:17),hhaaloresc(1:17),HHCHCHLORESC(1:17),
+     .     hlchchloresc(1:17),HLAZLORESC(1:17),hlhpwmloresc(1:17),
+     .     hhazloresc(1:17),hhhpwmloresc(1:17),hwhhloresc(1:17)
+      double precision hmnloresc(1:17),hlnloresc(1:17),hsuloresc(1:17),
+     .     hsuqcd(1:17),hscloresc(1:17),hscqcd(1:17),hcdqcd(1:17),
+     .     hcdloresc(1:17),hbcqcd(1:17),hbcloresc(1:17),hbuqcd(1:17),
+     .     hbuloresc(1:17),hdtqcd(1:17),hdtloresc(1:17),hstqcd(1:17),
+     .     hstloresc(1:17),hbtqcd(1:17),hbtloresc(1:17),
+     .     hwhlloresc(1:17),hwaloresc(1:17),ammloresc(1:17),
+     .     allloresc(1:17),assloresc(1:17),assqcd(1:17),accqcd(1:17),
+     .     accloresc(1:17),abbqcd(1:17),abbloresc(1:17),attqcd(1:17),
+     .     attloresc(1:17),agaresc(1:17),azgaresc(1:17),
+     .     ahlzloresc(1:17),ahhzloresc(1:17),ahpwmloresc(1:17)
+      complex*16 catr(1:17),cabr(1:17),cacr(1:17),calr(1:17),
+     .     cawr(1:17),cahr(1:17)
+      double precision HLLLEWR(1:17)
+      double precision HLBRM1(1:17),HLBRL1(1:17),HLBRS1(1:17),
+     .     HLBRC1(1:17),HLBRB1(1:17),HLBRT1(1:17),HLBRW1(1:17),
+     .     HLBRZ1(1:17),HLBRA1(1:17),HLBRCHCH1(1:17),HLBRAZ1(1:17),
+     .     HLBRHW1(1:17),HLBRG1(1:17),HLBRGA1(1:17),HLBRZGA1(1:17),
+     .     WTOT1(1:17),hlwdth1(1:17)
+      double precision HBRMN1(1:17),HBRLN1(1:17),HBRSU1(1:17),
+     .     HBRSC1(1:17),HBRCD1(1:17),HBRBC1(1:17),HBRBU1(1:17),
+     .     HBRDT1(1:17),HBRST1(1:17),HBRBT1(1:17),HBRWHL1(1:17),
+     .     HBRWHH1(1:17),HBRWA1(1:17),hpwdth1(1:17)
+      double precision HHBRM1(1:17),HHBRL1(1:17),HHBRS1(1:17),
+     .     HHBRC1(1:17),HHBRB1(1:17),HHBRT1(1:17),HHBRW1(1:17),
+     .     HHBRZ1(1:17),HHBRA1(1:17),HHBRCHCH1(1:17),HHBRAZ1(1:17),
+     .     HHBRHW1(1:17),HHBRG1(1:17),HHBRGA1(1:17),HHBRZGA1(1:17),
+     .     hhwdth1(1:17),HHBRHL1(1:17)
+      double precision ABRM1(1:17),ABRL1(1:17),ABRS1(1:17),
+     .     ABRC1(1:17),ABRB1(1:17),ABRT1(1:17),
+     .     ABRHW1(1:17),ABRG1(1:17),ABRGA1(1:17),ABRZGA1(1:17),
+     .     awdth1(1:17),ABRHLZ1(1:17),ABRHHZ1(1:17)      
+c end MMM changed 19/1/19      
       DIMENSION XX(4),YY(4)
       DIMENSION AMCHAR(2),AMNEUT(4),XMNEUT(4),
      .          AC1(2,2),AC2(2,2),AC3(2,2),
@@ -6044,7 +7303,28 @@ c MMM changed 21/8/13
       common/DECPARAMETERS/amhi,amhj,amhk,gamtotj,gamtotk
       COMMON/OMIT_ELW_HDEC/IOELW
 c MMM changed 10/7/18
-      COMMON/PARS2HDMEW/IELW2HDM,IRENSCHEME,GFCALC,VALINSCALE
+c MMM changed 19/1/19
+      COMMON/PARS2HDMEW/GFCALC,VALINSCALE
+      COMMON/PARS2HDMEW1/IELW2HDM,IRENSCHEME,IREFSCHEME
+      COMMON/RENMIXANGLES/tgbet2hdmrenl,alph2hdmrenl,tgbet2hdmrenh,
+     .     alph2hdmrenh,tgbet2hdmrena,alph2hdmrena,tgbet2hdmrenhp,
+     .     alph2hdmrenhp      
+      COMMON/THDMCOUPREN_HDEC/GATR,GABR,GLTR,GLBR,GHTR,GHBR,GZAHR,GZALR,
+     .            GHHHR,GLLLR,GHLLR,GLHHR,GHAAR,GLAAR,GLVVR,GHVVR,
+     .            GLPMR,GHPMR,BETAREN,ALPHAREN
+      COMMON/THDM_COUPREN_HDEC/gllepr,ghlepr,galepr
+      COMMON/RENLOHLWIDTH_2HDM/HLBBLOR,HLLLLOR,HLMMLOR,HLSSLOR,HLCCLOR,
+     .     HLTTLOR,HLWWLOR,HLZZLOR,HLAALOR,HLZALOR,HLHPWMLOR,HLHPHMLOR
+      COMMON/RENLOHHWIDTH_2HDM/HHBBLOR,HHLLLOR,HHMMLOR,HHSSLOR,HHCCLOR,
+     .     HHTTLOR,HHWWLOR,HHZZLOR,HHHLHLLOR,HHAALOR,HHZALOR,HHHPWMLOR,
+     .     HHHPHMLOR
+      COMMON/RENLOAWIDTH_2HDM/ABBLOR,ALLLOR,AMMLOR,ASSLOR,ACCLOR,
+     .     ATTLOR,AHLZLOR,AHHZLOR,AHPWMLOR
+      COMMON/RENLOHPWIDTH_2HDM/HPBCLOR,HPTAUNULOR,HPMUNULOR,HPSULOR,
+     .     HPSCLOR,HPTBLOR,HPDCLOR,HPBULOR,HPTSLOR,HPTDLOR,HPWHLLOR,
+     .     HPWHHLOR,HPWALOR
+      COMMON/THDM_TEST/itest      
+c end MMM changed 19/1/19
       COMMON/NLOHLWIDTH_2HDM/HLBBLO,HLLLLO,HLMMLO,HLSSLO,HLCCLO,HLTTLO,
      .     HLWWLO,HLZZLO,HLAALO,HLZALO,HLHPWMLO,HLHPHMLO,HLBBNLO,
      .     HLLLNLO,HLMMNLO,HLSSNLO,HLCCNLO,HLTTNLO,HLWWNLO,HLZZNLO,
@@ -7947,22 +9227,27 @@ C  H ---> G G
        ASG = AS3
        CTT = 4*AMT**2/AML**2*DCMPLX(1D0,-EPS)
        CTB = 4*AMB**2/AML**2*DCMPLX(1D0,-EPS)
+       CTC = 4*AMC**2/AML**2*DCMPLX(1D0,-EPS)
        CAT = 2*CTT*(1+(1-CTT)*CF(CTT))*GLT
        CAB = 2*CTB*(1+(1-CTB)*CF(CTB))*GLB
-       CTC = 4*AMC**2/AML**2*DCMPLX(1D0,-EPS)
        CAC = 2*CTC*(1+(1-CTC)*CF(CTC))*GLT
-C
-   
-c this is for a check    
-       bb = datan(tgbet2hdm)
-c       print*,'1,glt/b',dcos(alph2hdm)/dsin(bb),glt,glb
-
-c       print*,'2,glt',dcos(alph2hdm)/dsin(bb),glt
-c       print*,'2,glb',-sin(alph2hdm)/dcos(bb),glb
-
-c       print*,'v1',amt,amb,amc,cat,cab,cac
-c end check
-
+c MMM changed 19/1/19       
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+          if(irenscheme.eq.0) then
+             do i=1,17,1
+        call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+        catr(i) = 2*CTT*(1+(1-CTT)*CF(CTT))*GLTR
+        cabr(i) = 2*CTB*(1+(1-CTB)*CF(CTB))*GLBR
+        cacr(i) = 2*CTC*(1+(1-CTC)*CF(CTC))*GLTR
+             end do
+          elseif(irenscheme.ne.0) then
+        call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+        catr(1) = 2*CTT*(1+(1-CTT)*CF(CTT))*GLTR
+        cabr(1) = 2*CTB*(1+(1-CTB)*CF(CTB))*GLBR
+        cacr(1) = 2*CTC*(1+(1-CTC)*CF(CTC))*GLTR
+          endif
+       endif
+c end MMM changed 19/1/19
        IF(IOFSUSY.EQ.0) THEN 
        CSB1= 4*AMSB(1)**2/AML**2*DCMPLX(1D0,-EPS)
        CSB2= 4*AMSB(2)**2/AML**2*DCMPLX(1D0,-EPS)
@@ -8006,21 +9291,28 @@ c end check
      .                    +CXUL+CXUR+CXDL+CXDR)
      .             *(CXB1+CXB2+CXT1+CXT2+CXUL+CXUR+CXDL+CXDR))*SQCD
 
-c this is for a check
-c       print*,'v2',xfac,CDABS(CAT+CAB+CAC)**2*FQCD
-c Maggie question // mass dependent NLO QCD corrections?
-c end check
-
        HGG=HVV(AML,0.D0)*(ASG/PI)**2*XFAC/8
 
-c      write(6,*)'gg: ',CAT,CAB,CAC,CXB1+CXB2,CXT1+CXT2,
-c    .                  CXUL+CXUR+CXDL+CXDR
-
-c      write(6,*)'amhl, glb, glt: ',aml,glb,glt
+c MMM changed 19/1/19       
+c       print*,''
+c       print*,'h decay widths'
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+          if(irenscheme.eq.0) then
+             do i=1,17,1
+                hggr(i)=HVV(AML,0.D0)*(ASG/PI)**2*
+     .               CDABS(CATR(i)+CABR(i)+CACR(i))**2*FQCD/8
+             end do
+          elseif(irenscheme.ne.0) then
+                hggr(1)=HVV(AML,0.D0)*(ASG/PI)**2*
+     .            CDABS(CATR(1)+CABR(1)+CACR(1))**2*FQCD/8
+c                print*,'hggr',hggr(1)
+          endif
+       endif
+c end MMM changed 19/1/19       
 
 c      print*,''
 c      print*,'h decay widths'
-c      print*,'hgg_NLO',hgg
+c      print*,'hgg_NLO',hgg,irefscheme
 
 C  H ---> G G* ---> G CC   TO BE ADDED TO H ---> CC
        NFEXT = 4
@@ -8034,6 +9326,25 @@ C  H ---> G G* ---> G CC   TO BE ADDED TO H ---> CC
      .             *(CXB1+CXB2+CXT1+CXT2+CXUL+CXUR+CXDL+CXDR))*SQCD
        DCC=HVV(AML,0.D0)*(ASG/PI)**2*XFAC/8 - HGG
 
+c MMM changed 19/1/19
+c       print*,''
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+          if(irenscheme.eq.0) then
+             do i=1,17,1
+                dccr(i)=HVV(AML,0.D0)*(ASG/PI)**2*
+     .               CDABS(CATR(i)+CABR(i)+CACR(i))**2*FQCD/8
+     .               -hggr(i)
+c                print*,'dccr',dccr(i),dcc,i                
+             end do
+          elseif(irenscheme.ne.0) then
+                dccr(1)=HVV(AML,0.D0)*(ASG/PI)**2*
+     .            CDABS(CATR(1)+CABR(1)+CACR(1))**2*FQCD/8
+     .            -hggr(1)
+c                print*,'dggr',dccr(1),dcc
+          endif
+       endif
+c end MMM changed 19/1/19              
+
 C  H ---> G G* ---> G BB   TO BE ADDED TO H ---> BB
        NFEXT = 5
        ASG = ASH
@@ -8046,6 +9357,31 @@ C  H ---> G G* ---> G BB   TO BE ADDED TO H ---> BB
      .             *(CXB1+CXB2+CXT1+CXT2+CXUL+CXUR+CXDL+CXDR))*SQCD
        DBB=HVV(AML,0.D0)*(ASG/PI)**2*XFAC/8 - HGG - DCC
        HGG=HVV(AML,0.D0)*(ASG/PI)**2*XFAC/8
+
+c MMM changed 19/1/19       
+c       print*,''
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+          if(irenscheme.eq.0) then
+             do i=1,17,1
+                dbbr(i)=HVV(AML,0.D0)*(ASG/PI)**2*
+     .               CDABS(CATR(i)+CABR(i)+CACR(i))**2*FQCD/8
+     .               -hggr(i)-dccr(i)
+                hggr(i)=HVV(AML,0.D0)*(ASG/PI)**2*
+     .               CDABS(CATR(i)+CABR(i)+CACR(i))**2*FQCD/8
+c                print*,'dbbr',dbbr(i),dbb,i
+c                print*,'hggr',hggr(i),hgg,i
+             end do
+          elseif(irenscheme.ne.0) then
+                dbbr(1)=HVV(AML,0.D0)*(ASG/PI)**2*
+     .            CDABS(CATR(1)+CABR(1)+CACR(1))**2*FQCD/8
+     .            -hggr(1)-dccr(1)
+                hggr(1)=HVV(AML,0.D0)*(ASG/PI)**2*
+     .               CDABS(CATR(1)+CABR(1)+CACR(1))**2*FQCD/8
+c                print*,'dbbr',dbbr(1),dbb
+c                print*,'hggr',hggr(1),hggr
+          endif
+       endif
+c end MMM changed 19/1/19            
 
 C  H ---> G G: FULL NNNLO CORRECTIONS TO TOP LOOPS FOR NF=5
        FQCD0=HGGQCD(ASG,5)
@@ -8063,9 +9399,56 @@ C  H ---> G G: FULL NNNLO CORRECTIONS TO TOP LOOPS FOR NF=5
        DBB = 0
       ENDIF
 
+c MMM changed 19/1/19       
+c       print*,''
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+          if(irenscheme.eq.0) then
+             do i=1,17,1
+                hggr(i)=hggr(i)+
+     .               HVV(AML,0.D0)*(ASG/PI)**2*
+     .               CDABS(CATR(i)+CABR(i)+CACR(i))**2*(FQCD-FQCD0)/8
+                IF(NFGG.EQ.3)THEN
+                   HGGR(i) = HGGR(i) - DBBR(i) - DCCR(i)
+                ELSEIF(NFGG.EQ.4)THEN
+                   HGGR(i) = HGGR(i) - DBBR(i)
+                   DCCR(i) = 0
+                ELSE
+                   DCCR(i) = 0
+                   DBBR(i) = 0
+                ENDIF
+c                print*,'hggr',hggr(i),hgg,i
+             end do
+          elseif(irenscheme.ne.0) then
+                hggr(1)=hggr(1)+
+     .               HVV(AML,0.D0)*(ASG/PI)**2*
+     .              CDABS(CATR(1)+CABR(1)+CACR(1))**2*(FQCD-FQCD0)/8
+                IF(NFGG.EQ.3)THEN
+                   HGGR(1) = HGGR(1) - DBBR(1) - DCCR(1)
+                ELSEIF(NFGG.EQ.4)THEN
+                   HGGR(1) = HGGR(1) - DBBR(1)
+                   DCCR(1) = 0
+                ELSE
+                   DCCR(1) = 0
+                   DBBR(1) = 0
+                ENDIF                
+c                print*,'hggr',hggr(1),hgg
+          endif
+       endif
+c end MMM changed 19/1/19        
+
 c MMM changed 10/7/18
+c      print*,'' 
       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
          HLGGRESC = HGG*GFCALC/GF
+c MMM changed 19/1/19         
+         if(irenscheme.eq.0) then
+            do i=1,17,1
+               HLGGRESCR(i) = HGGR(i)*GFCALC/GF
+            enddo
+         elseif(irenscheme.ne.0) then
+            HLGGRESCR(1) = HGGR(1)*GFCALC/GF
+         endif
+c end MMM changed 19/1/19
       endif
 c end MMM changed 10/7/18      
 
@@ -8085,36 +9468,44 @@ C  H ---> MU MU
          HMM = 0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HLMMLORESC = 0.D0
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HLMMEW(i) = HLMMLORESC
+               do i=1,17,1
+                  HLMMLORESC(i) = 0.D0
+                  HLMMEW(i) = 0.D0
                end do
             elseif(irenscheme.ne.0) then
-               HLMMEW(1) = HLMMLORESC
+               HLMMLORESC(1) = 0.D0
+               HLMMEW(1) = 0.D0
             endif
          endif
 c end MMM changed 10/7/18          
       ELSE
          HMM=HFF(AML,(AMMUON/AML)**2)*XGLM**2
-c MMM changed 10/7/18
+c MMM changed 19/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HLMMLORESC = HMM*GFCALC/GF
-            check = (HLMMLORESC-HLMMLO)/HLMMLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width h->mumu.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HLMMEW(i) = HLMMLORESC*(1.D0+
-     .                 (HLMMNLO(i)-HLMMLO)/HLMMLO)
-               end do
+               do i=1,17,1
+         call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+              HLMMLORESC(i) = HMM*gllepr**2/xglm**2*GFCALC/GF        
+              HLMMEW(i) = HLMMLORESC(i)*(1.D0+
+     .             (HLMMNLO(i)-HLMMLOR(i))/HLMMLOR(i))
+              check = (HLMMLORESC(i)-HLMMLOR(i))/HLMMLORESC(i)
+              if(dabs(check).ge.1.D-5) then
+                 print*,'There is a problem in the LO width h->mumu.'
+              endif
+              end do
             elseif(irenscheme.ne.0) then
-               HLMMEW(1) = HLMMLORESC*(1.D0+
-     .              (HLMMNLO(1)-HLMMLO)/HLMMLO)
+          call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+              HLMMLORESC(1) = HMM*gllepr**2/xglm**2*GFCALC/GF        
+              HLMMEW(1) = HLMMLORESC(1)*(1.D0+
+     .             (HLMMNLO(1)-HLMMLOR(1))/HLMMLOR(1))
+              check = (HLMMLORESC(1)-HLMMLOR(1))/HLMMLORESC(1)
+              if(dabs(check).ge.1.D-5) then
+                 print*,'There is a problem in the LO width h->mumu.'
+              endif   
             endif
          endif
-c end MMM changed 10/7/18         
+c end MMM changed 19/1/19         
       ENDIF
 
 c      print*,'h -> mumu',hmm
@@ -8132,41 +9523,48 @@ C  H ---> TAU TAU
          HLL = 0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HLLLLORESC = 0.D0
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HLLLEW(i) = HLLLLORESC
+               do i=1,17,1
+                  HLLLLORESC(i) = 0.D0
+                  HLLLEW(i) = 0.D0
                end do
             elseif(irenscheme.ne.0) then
-               HLLLEW(1) = HLLLLORESC
+               HLLLLORESC(1) = 0.D0
+               HLLLEW(1) = 0.D0
             endif
          endif
 c end MMM changed 10/7/18                 
       ELSE
          HLL=HFF(AML,(AMTAU/AML)**2)*XGLT**2
-c MMM changed 10/7/18
+c MMM changed 19/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HLLLLORESC = HLL*GFCALC/GF
-            check = (HLLLLORESC-HLLLLO)/HLLLLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width h->tau tau.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HLLLEW(i) = HLLLLORESC*(1.D0+
-     .                 (HLLLNLO(i)-HLLLLO)/HLLLLO)
+               do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+               HLLLLORESC(i) = HLL*gllepr**2/xglt**2*GFCALC/GF 
+               HLLLEW(i) = HLLLLORESC(i)*(1.D0+
+     .              (HLLLNLO(i)-HLLLLOR(i))/HLLLLOR(i))
+               check = (HLLLLORESC(i)-HLLLLOR(i))/HLLLLOR(i)
+c               print*,'check',check,hlllloresc(i),hllllor(i),i
+               if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width h->ll.',i
+               endif
                end do
             elseif(irenscheme.ne.0) then
-               HLLLEW(1) = HLLLLORESC*(1.D0+
-     .                 (HLLLNLO(1)-HLLLLO)/HLLLLO)
+          call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+               HLLLLORESC(1) = HLL*gllepr**2/xglt**2*GFCALC/GF                
+               HLLLEW(1) = HLLLLORESC(1)*(1.D0+
+     .              (HLLLNLO(1)-HLLLLOR(1))/HLLLLOR(1))
+               check = (HLLLLORESC(1)-HLLLLOR(1))/HLLLLOR(1)
+               if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width h->ll.'
+               endif               
             endif
          endif
-c end MMM changed 10/7/18
+c end MMM changed 19/1/19
       ENDIF
 
-c     write(6,*)'h: tau/mu: ',HLL/HMM*AMMUON**2/AMTAU**2,XGLT**2/XGLM**2
-c      print*,'h -> tautau',hll
-C  H --> SS
+C H --> SS
       XGLS = GLB
       XGHS = GHB
       XGAS = GAB
@@ -8178,16 +9576,18 @@ C  H --> SS
        HSS = 0
 c MMM changed 10/7/18
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-          HLSSLORESC = 0.D0
-          HLSSQCD = HLSSLORESC
           if(irenscheme.eq.0) then
-             do i=1,14,1
-                HLSSEW(i) = HLSSLORESC
-                HLSSQCDEW(i) = HLSSLORESC
+             do i=1,17,1
+                HLSSLORESC(i) = 0.D0
+                HLSSQCD(i) = 0.D0
+                HLSSEW(i) = 0.D0
+                HLSSQCDEW(i) = 0.D0
              end do
           elseif(irenscheme.ne.0) then
-                HLSSEW(1) = HLSSLORESC
-                HLSSQCDEW(1) = HLSSLORESC
+                HLSSLORESC(1) = 0.D0
+                HLSSQCD(1) = 0.D0
+                HLSSEW(1) = 0.D0
+                HLSSQCDEW(1) = 0.D0
           endif
        endif
 c end MMM changed 10/7/18
@@ -8196,31 +9596,39 @@ c end MMM changed 10/7/18
      .    *XGLS**2
      .    *TQCDH(AMS**2/AML**2)
        HS2=3.D0*HFF(AML,(RMS/AML)**2)*XGLS**2
-     .    *QCDH(RMS**2/AML**2)
+     .      *QCDH(RMS**2/AML**2)
        IF(HS2.LT.0.D0) HS2 = 0
        RAT = 2*AMS/AML
        HSS = QQINT_HDEC(RAT,HS1,HS2)
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HLSSQCD = HSS*GFCALC/GF
-            HLSSLORESC = 3.D0*HFF(AML,(AMS/AML)**2)*XGLS**2*GFCALC/GF
-            check = (HLSSLORESC-HLSSLO)/HLSSLORESC
+            if(irenscheme.eq.0) then
+               do i=1,17,1
+          call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+            HLSSQCD(i) = HSS*GLBR**2/XGLS**2*GFCALC/GF
+            HLSSLORESC(i)=3.D0*HFF(AML,(AMS/AML)**2)*GLBR**2*GFCALC/GF
+            check = (HLSSLORESC(i)-HLSSLOR(i))/HLSSLORESC(i)
             if(dabs(check).ge.1.D-5) then
                print*,'There is a problem in the LO width h->ss.'
-            endif
-            if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HLSSEW(i) = HLSSNLO(i)
-                  HLSSQCDEW(i) = HLSSQCD*(1.D0
-     .                 + (HLSSNLO(i)-HLSSLO)/HLSSLO)
+            endif            
+            HLSSEW(i) = HLSSNLO(i)
+            HLSSQCDEW(i) = HLSSQCD(i)*(1.D0
+     .                 + (HLSSNLO(i)-HLSSLOR(i))/HLSSLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  HLSSEW(1) = HLSSNLO(1)
-                  HLSSQCDEW(1) = HLSSQCD*(1.D0+
-     .                 (HLSSNLO(1)-HLSSLO)/HLSSLO)
+          call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+            HLSSQCD(1) = HSS*GLBR**2/XGLS**2*GFCALC/GF
+            HLSSLORESC(1)=3.D0*HFF(AML,(AMS/AML)**2)*GLBR**2*GFCALC/GF
+            check = (HLSSLORESC(1)-HLSSLOR(1))/HLSSLORESC(1)
+            if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width h->ss.'
+            endif               
+            HLSSEW(1) = HLSSNLO(1)
+            HLSSQCDEW(1) = HLSSQCD(1)*(1.D0+
+     .           (HLSSNLO(1)-HLSSLOR(1))/HLSSLOR(1))
             endif
          endif
-c end MMM changed 10/7/18       
+c end MMM changed 19/1/19       
       ENDIF
 
 c      print*,'h -> ss',hss
@@ -8230,16 +9638,18 @@ C  H --> CC
          HCC = 0
 c MMM changed 10/7/18
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-          HLCCLORESC = 0.D0
-          HLCCQCD = HLCCLORESC
           if(irenscheme.eq.0) then
-             do i=1,14,1
-                HLCCEW(i) = HLCCLORESC
-                HLCCQCDEW(i) = HLCCLORESC
+             do i=1,17,1
+                HLCCLORESC(i) = 0.D0
+                HLCCQCD(i) = 0.D0
+                HLCCEW(i) = 0.D0
+                HLCCQCDEW(i) = 0.D0
              end do
           elseif(irenscheme.ne.0) then
-                HLCCEW(1) = HLCCLORESC
-                HLCCQCDEW(1) = HLCCLORESC
+                HLCCLORESC(1) = 0.D0
+                HLCCQCD(1) = 0.D0
+                HLCCEW(1) = 0.D0
+                HLCCQCDEW(1) = 0.D0
           endif
        endif
 c end MMM changed 10/7/18         
@@ -8253,29 +9663,53 @@ c end MMM changed 10/7/18
        IF(HC2.LT.0.D0) HC2 = 0
        RAT = 2*AMC/AML
        HCC = QQINT_HDEC(RAT,HC1,HC2)
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HLCCQCD = HCC*GFCALC/GF
-            HLCCLORESC = 3.D0*HFF(AML,(AMC/AML)**2)*GLT**2*GFCALC/GF
-            check = (HLCCLORESC-HLCCLO)/HLCCLORESC
+          if(irenscheme.eq.0) then
+             do i=1,17,1
+             call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+             HC1=3.D0*HFF(AML,(AMC/AML)**2)
+     .            *GLTR**2
+     .            *TQCDH(AMC**2/AML**2)
+             HC2=3.D0*HFF(AML,(RMC/AML)**2)*GLTR**2
+     .            *QCDH(RMC**2/AML**2)
+     .            + DCCR(i)
+             IF(HC2.LT.0.D0) HC2 = 0
+             RAT = 2*AMC/AML
+             HCC = QQINT_HDEC(RAT,HC1,HC2)
+             HLCCQCD(i) = HCC*GFCALC/GF
+            HLCCLORESC(i) = 3.D0*HFF(AML,(AMC/AML)**2)*GLTR**2*GFCALC/GF
+            check = (HLCCLORESC(i)-HLCCLOR(i))/HLCCLORESC(i)
             if(dabs(check).ge.1.D-5) then
                print*,'There is a problem in the LO width h->cc.'
-            endif
-            if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HLCCEW(i) = HLCCNLO(i)
-                  HLCCQCDEW(i) = HLCCQCD*(1.D0+
-     .                 (HLCCNLO(i)-HLCCLO)/HLCCLO)
-c                  print*,'values',hlccqcd,hlccnlo(i),hlcclo,
-c     .                 HLCCNLO(i)-HLCCLO
+            endif                  
+            HLCCEW(i) = HLCCNLO(i)
+            HLCCQCDEW(i) = HLCCQCD(i)*(1.D0+
+     .                 (HLCCNLO(i)-HLCCLOR(i))/HLCCLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  HLCCEW(1) = HLCCNLO(1)
-                  HLCCQCDEW(1) = HLCCQCD*(1.D0+
-     .                 (HLCCNLO(1)-HLCCLO)/HLCCLO)
+          call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)                  
+             HC1=3.D0*HFF(AML,(AMC/AML)**2)
+     .            *GLTR**2
+     .            *TQCDH(AMC**2/AML**2)
+             HC2=3.D0*HFF(AML,(RMC/AML)**2)*GLTR**2
+     .            *QCDH(RMC**2/AML**2)
+     .            + DCCR(1)
+             IF(HC2.LT.0.D0) HC2 = 0
+             RAT = 2*AMC/AML
+             HCC = QQINT_HDEC(RAT,HC1,HC2)
+            HLCCQCD(1) = HCC*GFCALC/GF
+            HLCCLORESC(1) = 3.D0*HFF(AML,(AMC/AML)**2)*GLTR**2*GFCALC/GF
+            check = (HLCCLORESC(1)-HLCCLOR(1))/HLCCLORESC(1)
+            if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width h->cc.'
+            endif                  
+            HLCCEW(1) = HLCCNLO(1)
+            HLCCQCDEW(1) = HLCCQCD(1)*(1.D0+
+     .                 (HLCCNLO(1)-HLCCLOR(1))/HLCCLOR(1))
             endif
          endif
-c end MMM changed 10/7/18          
+c end MMM changed 19/1/19          
       ENDIF
 
 c      print*,'h -> cc',hcc
@@ -8306,16 +9740,18 @@ c      SUSY = SUSY*ASH/AS0
          HBB = 0
 c MMM changed 10/7/18
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-          HLBBLORESC = 0.D0
-          HLBBQCD = HLBBLORESC
           if(irenscheme.eq.0) then
-             do i=1,14,1
-                HLBBEW(i) = HLBBLORESC
-                HLBBQCDEW(i) = HLBBLORESC
+             do i=1,17,1
+                HLBBLORESC(i) = 0.D0
+                HLBBQCD(i) = 0.D0
+                HLBBEW(i) = 0.D0
+                HLBBQCDEW(i) = 0.D0
              end do
           elseif(irenscheme.ne.0) then
-                HLBBEW(1) = HLBBLORESC
-                HLBBQCDEW(1) = HLBBLORESC
+                HLBBLORESC(1) = 0.D0
+                HLBBQCD(1) = 0.D0
+                HLBBEW(1) = 0.D0
+                HLBBQCDEW(1) = 0.D0
           endif
        endif
 c end MMM changed 10/7/18           
@@ -8331,157 +9767,62 @@ c end MMM changed 10/7/18
        RAT = 2*AMB/AML
        HBB = QQINT_HDEC(RAT,HB1,HB2)
 
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-          HLBBQCD = HBB*GFCALC/GF
-c          print*,'hlbbqcd',hlbbqcd,xglb,glb,susy,aml,
-c     .         hlbbqcd/(glb**2)/(GFCALC/GF)
-            HLBBLORESC = 3.D0*HFF(AML,(AMB/AML)**2)*GLB**2*GFCALC/GF
-            check = (HLBBLORESC-HLBBLO)/HLBBLORESC
+          if(irenscheme.eq.0) then
+               do i=1,17,1
+          call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)             
+          HB1=3.D0*HFF(AML,(AMB/AML)**2)
+     .         *GLBR**2
+     .         *TQCDH(AMB**2/AML**2)
+          HB2=3.D0*HFF(AML,(RMB/AML)**2)
+     .         *GLBR**2
+     .         *QCDH(RMB**2/AML**2)
+     .         + DBBR(i)
+          IF(HB2.LT.0.D0) HB2 = 0
+          RAT = 2*AMB/AML
+          HBB = QQINT_HDEC(RAT,HB1,HB2)
+          HLBBQCD(i) = HBB*GFCALC/GF
+           HLBBLORESC(i) = 3.D0*HFF(AML,(AMB/AML)**2)*GLBR**2*GFCALC/GF
+           check = (HLBBLORESC(i)-HLBBLOR(i))/HLBBLORESC(i)
             if(dabs(check).ge.1.D-5) then
                print*,'There is a problem in the LO width h->bb.'
-            endif
-            if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HLBBEW(i) = HLBBNLO(i)
-                  HLBBQCDEW(i) = HLBBQCD*(1.D0+
-     .                 (HLBBNLO(i)-HLBBLO)/HLBBLO)
+            endif             
+            HLBBEW(i) = HLBBNLO(i)
+            HLBBQCDEW(i) = HLBBQCD(i)*(1.D0+
+     .           (HLBBNLO(i)-HLBBLOR(i))/HLBBLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  HLBBEW(1) = HLBBNLO(1)
-                  HLBBQCDEW(1) = HLBBQCD*(1.D0+
-     .                 (HLBBNLO(1)-HLBBLO)/HLBBLO)
+            call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+            HB1=3.D0*HFF(AML,(AMB/AML)**2)
+     .           *GLBR**2
+     .           *TQCDH(AMB**2/AML**2)
+            HB2=3.D0*HFF(AML,(RMB/AML)**2)
+     .           *GLBR**2
+     .           *QCDH(RMB**2/AML**2)
+     .           + DBBR(1)
+            IF(HB2.LT.0.D0) HB2 = 0
+            RAT = 2*AMB/AML
+            HBB = QQINT_HDEC(RAT,HB1,HB2)
+           HLBBQCD(1) = HBB*GFCALC/GF
+           HLBBLORESC(1) = 3.D0*HFF(AML,(AMB/AML)**2)*GLBR**2*GFCALC/GF
+           check = (HLBBLORESC(1)-HLBBLOR(1))/HLBBLORESC(1)
+            if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width h->bb.'
+            endif             
+            HLBBEW(1) = HLBBNLO(1)
+            HLBBQCDEW(1) = HLBBQCD(1)*(1.D0+
+     .           (HLBBNLO(1)-HLBBLOR(1))/HLBBLOR(1))
             endif
          endif
-c end MMM changed 10/7/18
+c end MMM changed 19/1/19
        
 c      print*,'h -> bb',hbb,rmb
 c      print*
 c      print*,'h -> bb:',hbb,glb,xglb,glb*susy,2*dglb,susy,2*dglb+susy
 
-c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-c--hMSSM?
-c      sb0 = dsin(b)
-c      cb0 = dcos(b)
-c      c2b0 = cb0**2-sb0**2
-c      amh0 =dsqrt(((ama**2+amz**2-aml**2)*(amz**2*cb0**2+ama**2*sb0**2)
-c    .     -ama**2*amz**2*c2b0**2)/(amz**2*cb0**2+ama**2*sb0**2-aml**2))
-c      amch0 = dsqrt(ama**2+amw**2)
-c      a0 = -datan((amz**2+ama**2)*sb0*cb0
-c    .            /(amz**2*cb0**2+ama**2*sb0**2-aml**2))
-c      sa0 = dsin(a0)
-c      ca0 = dcos(a0)
-c      s2a0 = 2*sa0*ca0
-c      c2a0 = ca0**2-sa0**2
-c      sbpa0 = sb0*ca0+cb0*sa0
-c      cbpa0 = cb0*ca0-sb0*sa0
-c      deps = (aml**2*(ama**2+amz**2-aml**2)-ama**2*amz**2*c2b0**2)
-c    .      / (amz**2*cb0**2+ama**2*sb0**2-aml**2)
-c      ghhh0 = 3*c2a0*cbpa0              + 3*deps/amz**2*sa0**3/sb0
-c      glll0 = 3*c2a0*sbpa0              + 3*deps/amz**2*ca0**3/sb0
-c      ghll0 = 2*s2a0*sbpa0 - c2a0*cbpa0 + 3*deps/amz**2*sa0*ca0**2/sb0
-c      glhh0 =-2*s2a0*cbpa0 - c2a0*sbpa0 + 3*deps/amz**2*sa0**2*ca0/sb0
-c      ghaa0 =-c2b0*cbpa0                 + deps/amz**2*sa0*cb0**2/sb0
-c      glaa0 = c2b0*sbpa0                 + deps/amz**2*ca0*cb0**2/sb0
-c      write(6,*)'0: ',AML,AMH,AMA
-c      write(6,*)'1: ',AML,AMH0,AMA
-c      write(6,*)'0: ',AMCH,B,A
-c      write(6,*)'1: ',AMCH0,B,A0
-c      write(6,*)'   ',glb,xglb
-c      write(6,*)'   ',ghb,xghb
-c      write(6,*)'   ',gab,xgab
-c      write(6,*)
-c      write(6,*)
-c      write(6,*)'HHH: ',glll,ghll,glhh,ghhh
-c      write(6,*)'     ',glll0,ghll0,glhh0,ghhh0
-c      write(6,*)
-c      write(6,*)'HAA: ',glaa,ghaa
-c      write(6,*)'     ',glaa0,ghaa0
-c      write(6,*)
-c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-c      write(6,('A3,4(1X,G15.8)'))'h: ',AMA,AML,SUSY+2*DGLB,
-c    .                             SUSY/(SUSY+2*DGLB)
-c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-c      HB2=3.D0*HFF(AML,(RMB/AML)**2)
-c    .    *QCDH(RMB**2/AML**2)
-c    .    *(1+ELW0(AML,RMB,-1.D0/3.D0,1.D0))
-c    .    *HFFSELF(AML)
-c    .    + DBB
-c      IF(HB2.LT.0.D0) HB2 = 0
-c      HB1=3.D0*HFF(AML,(AMB/AML)**2)
-c    .    *TQCDH(AMB**2/AML**2)
-c    .    *HFFSELF(AML)
-c      RAT = 2*AMB/AML
-c      HBB0 = QQINT_HDEC(RAT,HB1,HB2)
-c      write(6,*)AML,XGLB,GLB,XGLB/GLB-1,SUSY,HBB/HBB0
-c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-c      write(6,*)AML,HB1,HB2,HBB,GLB,XGLB,SUSY+2*DGLB,2*DGLB
-c    .          ,XGLB**2+XGLB*GLB*SUSY
-c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-c      XB0=3.D0*HFF(AML,(AMB/AML)**2)
-c    .    *GLB**2
-c      XB1=3.D0*HFF(AML,(RMB/AML)**2)
-c    .    *GLB**2
-c    .    *QCDH(RMB**2/AML**2)
-c    .   + DBB
-c      XB2=3.D0*HFF(AML,(RMB/AML)**2)
-c    .    *(XGLB**2+XGLB*GLB*SUSY)
-c    .    *QCDH(RMB**2/AML**2)
-c    .   + DBB
-c      write(51,('5(1X,G15.8)'))AMA,AML,XB0,XB1,XB2
-c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-c      write(51,('4(1X,G15.8)'))AMA,AML,SUSY+2*DGLB,SUSY/(SUSY+2*DGLB)
-c      write(51,('4(1X,G15.8)'))AMA,AML,HBB,2*DGLB,XGLB,SUSY-1+2*DLGB,
-c    .                          DSIN(A),DCOS(A)
-c      write(51,*)
-c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-c      X1 = (QCDH(RMB**2/AML**2)*HFF(AML,(RMB/AML)**2)/
-c    .       HFF(AML,(AMB/AML)**2)-1)
-c      X2 = (SUSY-1)
-
-c     RATCOUP = GLT/XGLB
-c      HB1X=3.D0*HFF(AML,(AMB/AML)**2)
-c    .    *XGLB**2
-c    .    *TQCDH(AMB**2/AML**2)
-c    .    /(BETA_HDEC(AMB**2/AML**2))**3
-c    .    *SUSY
-c      HB2X=3.D0*HFF(AML,(RMB/AML)**2)*XGLB**2
-c    .    *QCDH(RMB**2/AML**2)
-c    .    /(BETA_HDEC(RMB**2/AML**2))**3
-c    .    *SUSY
-c      HB1X=3.D0*HFF(AML,(RMB/AML)**2)*GLB**2
-c    .    *QCDH(RMB**2/AML**2)
-c    .    /(BETA_HDEC(RMB**2/AML**2))**3
-c    .    *(SUSY+2*DGLB)
-
-c     RATCOUP = 0
-c     deltaqcd = QCDH(RMB**2/AML**2)
-c     RATCOUP = GLT/XGLB
-c     deltat = QCDH(RMB**2/AML**2) - deltaqcd
-
-c      write(6,*)
-c      write(6,*)'h:'
-c      write(6,*)'MB,RUNMB,alpha_s: ',AMB,RMB,ASH
-c      write(6,*)'Mh =              ',AML
-c      write(6,*)'MA =              ',AMA
-c      write(6,*)'Delta(mb) = ',-DGAB
-c      write(6,*)'QCD           SUSY          APPROX',
-c    .           '        APPROX/FULL  Gbh(QCD)    Gbh(SQCD):'
-c      write(6,*)X1,X2+2*DGLB,2*DGLB,2*DGLB/(X2+2*DGLB),GLB,XGLB
-c      write(6,*)'Resummation: ',(XGLB/GLB)**2-1
-c      write(6,*)'Rest:        ',SUSY-1
-c      write(6,*)'Rest:        ',SUSY-1,dtan(a),tgbet
-c      write(6,*)AMSQ,AMUR,AMDR,(SUSY-1)/(X2+2*DGLB)
-c      write(6,*)'Total SUSY:  ',(XGLB/GLB)**2*SUSY-1
-c      write(6,*)'deltaqcd,t = ',deltaqcd,deltat
-c      write(6,*)'Gamma(0)   = ',AMA,HB2X,HB1X
-c      write(6,*)'Gamma(mb)  = ',HB2,HB1
-c      write(6,*)
-c      write(9,*)AMA,AML,HB2X,HB2X/SUSY,GLB,XGLB
-c      write(6,*)'Rest: h      ',AMA,AML,(SUSY-1)/(X2+2*DGLB)
-c      write(51,*)AMA,AML,(SUSY-1)/(X2+2*DGLB)
       ENDIF
+
 C H ---> TT
       RATCOUP = 0
       CALL TOPSUSY_HDEC(GLT,GHT,GAT,XGLTOP,XGHTOP,XGATOP,SCALE,1)
@@ -8509,14 +9850,16 @@ c MMM changed 22/8/2013
                htt=0.d0
 c MMM changed 10/7/2018
                if(ielw2hdm.eq.0) then
-                  HLTTLORESC = 0.D0
-                  HLTTQCD = HLTTLORESC
                   if(irenscheme.eq.0) then
-                     do i=1,14,1
-                        HLTTQCDEW(i) = HLTTLORESC
+                     do i=1,17,1
+                        HLTTLORESC(i) = 0.D0
+                        HLTTQCD(i) = 0.D0
+                        HLTTQCDEW(i) = 0.D0
                      end do
                   elseif(irenscheme.ne.0) then
-                     HLTTQCDEW(1) = HLTTLORESC
+                     HLTTLORESC(1) = 0.D0
+                     HLTTQCD(1) = 0.D0
+                     HLTTQCDEW(1) = 0.D0
                   endif                  
                endif
 c end MMM changed 10/7/2018               
@@ -8525,19 +9868,28 @@ c end MMM changed 10/7/2018
                call HTOTT_hdec(aml,amt,amb,amw,amch,glt,glb,gat,gab,
      .              glvv,gzah,htt0)
                htt=factt*htt0
-c MMM changed 10/7/2018
+c MMM changed 19/1/2019
+c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF
                if(ielw2hdm.eq.0) then
-                  HLTTLORESC = htt*GFCALC/GF
-                  HLTTQCD = HLTTLORESC
-                  if(irenscheme.eq.0) then
-                     do i=1,14,1
-                        HLTTQCDEW(i) = HLTTLORESC
+                if(irenscheme.eq.0) then
+                     do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+               call HTOTT_hdec(aml,amt,amb,amw,amch,gltr,glbr,gatr,gabr,
+     .              glvvr,gzahr,htt0)
+               HLTTLORESC(i) = factt*htt0*GFCALC**2/GF**2
+               HLTTQCD(i) = HLTTLORESC(i)
+               HLTTQCDEW(i) = HLTTLORESC(i)
                      end do
                   elseif(irenscheme.ne.0) then
-                     HLTTQCDEW(1) = HLTTLORESC
-                  endif                  
+               call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+               call HTOTT_hdec(aml,amt,amb,amw,amch,gltr,glbr,gatr,gabr,
+     .              glvvr,gzahr,htt0)
+               HLTTLORESC(1) = factt*htt0*GFCALC**2/GF**2
+               HLTTQCD(1) = HLTTLORESC(1)
+               HLTTQCDEW(1) = HLTTLORESC(1)                     
+                endif                  
                endif
-c end MMM changed 10/7/2018
+c end MMM changed 19/1/2019
             elseif (aml.le.xm2) then
                XX(1) = XM1-1D0
                XX(2) = XM1
@@ -8573,19 +9925,94 @@ c end MMM changed 10/7/2018
                yy(4) = qqint_hdec(rat,ht1,ht2)
 
                htt=fint_hdec(aml,xx,yy)
-c MMM changed 10/7/2018               
+c MMM changed 19/1/2019               
+c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF
                if(ielw2hdm.eq.0) then
-                  HLTTLORESC = htt*GFCALC/GF
-                  HLTTQCD = HLTTLORESC
                   if(irenscheme.eq.0) then
-                     do i=1,14,1
-                        HLTTQCDEW(i) = HLTTLORESC
+                     do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+               XX(1) = XM1-1D0
+               XX(2) = XM1
+               XX(3) = XM2
+               XX(4) = XM2+1D0
+
+               factt=6.d0*gf**2*xx(1)**3*amt**2/2.d0/128.d0/pi**3
+             call HTOTT_hdec(xx(1),amt,amb,amw,amch,gltr,glbr,gatr,gabr,
+     .              glvvr,gzahr,htt0)
+               yy(1)=factt*htt0*GFCALC**2/GF**2
+
+               factt=6.d0*gf**2*xx(2)**3*amt**2/2.d0/128.d0/pi**3
+             call HTOTT_hdec(xx(2),amt,amb,amw,amch,gltr,glbr,gatr,gabr,
+     .              glvvr,gzahr,htt0)
+               yy(2)=factt*htt0*GFCALC**2/GF**2
+
+               xmt = runm_hdec(xx(3),6)
+               ht1=3.d0*hff(xx(3),(amt/xx(3))**2)*gltr**2
+     .              *tqcdh(amt**2/xx(3)**2)*GFCALC/GF
+               ht2=3.d0*hff(xx(3),(xmt/xx(3))**2)*gltr**2
+     .              *qcdh(xmt**2/xx(3)**2)*GFCALC/GF
+               if(ht2.lt.0.d0) ht2 = 0
+               rat = 2*amt/xx(3)
+               yy(3) = qqint_hdec(rat,ht1,ht2)
+
+               xmt = runm_hdec(xx(4),6)
+               ht1=3.d0*hff(xx(4),(amt/xx(4))**2)*gltr**2
+     .              *tqcdh(amt**2/xx(4)**2)*GFCALC/GF
+               ht2=3.d0*hff(xx(4),(xmt/xx(4))**2)*gltr**2
+     .              *qcdh(xmt**2/xx(4)**2)*GFCALC/GF
+               if(ht2.lt.0.d0) ht2 = 0
+               rat = 2*amt/xx(4)
+               yy(4) = qqint_hdec(rat,ht1,ht2)
+
+               htt=fint_hdec(aml,xx,yy)
+                        
+               HLTTLORESC(i) = htt
+               HLTTQCD(i) = HLTTLORESC(i)
+               HLTTQCDEW(i) = HLTTLORESC(i)
                      end do
                   elseif(irenscheme.ne.0) then
-                     HLTTQCDEW(1) = HLTTLORESC
+               call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+               XX(1) = XM1-1D0
+               XX(2) = XM1
+               XX(3) = XM2
+               XX(4) = XM2+1D0
+
+               factt=6.d0*gf**2*xx(1)**3*amt**2/2.d0/128.d0/pi**3
+             call HTOTT_hdec(xx(1),amt,amb,amw,amch,gltr,glbr,gatr,gabr,
+     .              glvvr,gzahr,htt0)
+               yy(1)=factt*htt0*GFCALC**2/GF**2
+
+               factt=6.d0*gf**2*xx(2)**3*amt**2/2.d0/128.d0/pi**3
+             call HTOTT_hdec(xx(2),amt,amb,amw,amch,gltr,glbr,gatr,gabr,
+     .              glvvr,gzahr,htt0)
+               yy(2)=factt*htt0*GFCALC**2/GF**2
+
+               xmt = runm_hdec(xx(3),6)
+               ht1=3.d0*hff(xx(3),(amt/xx(3))**2)*gltr**2
+     .              *tqcdh(amt**2/xx(3)**2)*GFCALC/GF
+               ht2=3.d0*hff(xx(3),(xmt/xx(3))**2)*gltr**2
+     .              *qcdh(xmt**2/xx(3)**2)*GFCALC/GF
+               if(ht2.lt.0.d0) ht2 = 0
+               rat = 2*amt/xx(3)
+               yy(3) = qqint_hdec(rat,ht1,ht2)
+
+               xmt = runm_hdec(xx(4),6)
+               ht1=3.d0*hff(xx(4),(amt/xx(4))**2)*gltr**2
+     .              *tqcdh(amt**2/xx(4)**2)*GFCALC/GF
+               ht2=3.d0*hff(xx(4),(xmt/xx(4))**2)*gltr**2
+     .              *qcdh(xmt**2/xx(4)**2)*GFCALC/GF
+               if(ht2.lt.0.d0) ht2 = 0
+               rat = 2*amt/xx(4)
+               yy(4) = qqint_hdec(rat,ht1,ht2)
+
+               htt=fint_hdec(aml,xx,yy)
+                        
+               HLTTLORESC(1) = htt
+               HLTTQCD(1) = HLTTLORESC(1)
+               HLTTQCDEW(1) = HLTTLORESC(1)
                   endif     
                endif
-c end MMM changed 10/7/2018
+c end MMM changed 19/1/2019
             else
                ht1=3.d0*hff(aml,(amt/aml)**2)*glt**2
      .              *tqcdh(amt**2/aml**2)
@@ -8595,42 +10022,51 @@ c end MMM changed 10/7/2018
                rat = 2.D0*amt/aml
                htt = qqint_hdec(rat,ht1,ht2)
 
-c MMM changed 10/7/18
+c MMM changed 19/1/19
           if(ielw2hdm.eq.0) then
-            HLTTQCD = HTT*GFCALC/GF
-            HLTTLORESC = 3.D0*HFF(AML,(AMT/AML)**2)*GLT**2*GFCALC/GF
-            check = (HLTTLORESC-HLTTLO)/HLTTLORESC
+            if(irenscheme.eq.0) then
+               do i=1,17,1
+            call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+            HLTTQCD(i) = HTT*gltr**2/glt**2*GFCALC/GF
+            HLTTLORESC(i) = 3.D0*HFF(AML,(AMT/AML)**2)*GLTR**2*GFCALC/GF
+            check = (HLTTLORESC(i)-HLTTLOR(i))/HLTTLORESC(i)
             if(dabs(check).ge.1.D-5) then
                print*,'There is a problem in the LO width h->tt.'
             endif
-            if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HLTTEW(i) = HLTTNLO(i)
-                  HLTTQCDEW(i) = HLTTQCD*(1.D0+
-     .                 (HLTTNLO(i)-HLTTLO)/HLTTLO)
+            HLTTEW(i) = HLTTNLO(i)
+            HLTTQCDEW(i) = HLTTQCD(i)*(1.D0+
+     .           (HLTTNLO(i)-HLTTLOR(i))/HLTTLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  HLTTEW(1) = HLTTNLO(1)
-                  HLTTQCDEW(1) = HLTTQCD*(1.D0+
-     .                 (HLTTNLO(1)-HLTTLO)/HLTTLO)
+            call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+            HLTTQCD(1) = HTT*gltr**2/glt**2*GFCALC/GF
+            HLTTLORESC(1) = 3.D0*HFF(AML,(AMT/AML)**2)*GLTR**2*GFCALC/GF
+            check = (HLTTLORESC(1)-HLTTLOR(1))/HLTTLORESC(1)
+            if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width h->tt.'
+            endif
+            HLTTEW(1) = HLTTNLO(1)
+            HLTTQCDEW(1) = HLTTQCD(1)*(1.D0+
+     .           (HLTTNLO(1)-HLTTLOR(1))/HLTTLOR(1))
             endif
          endif
-c end MMM changed 10/7/18
-               
+c end MMM changed 19/1/19               
             endif
          else
             if (aml.le.2.d0*amt) then
                htt=0.d0
 c MMM changed 10/7/2018
                if(ielw2hdm.eq.0) then
-                  HLTTLORESC = 0.D0
-                  HLTTQCD = HLTTLORESC
                   if(irenscheme.eq.0) then
-                     do i=1,14,1
-                        HLTTQCDEW(i) = HLTTLORESC
+                     do i=1,17,1
+                        HLTTLORESC(i) = 0.D0
+                        HLTTQCD(i) = 0.D0
+                        HLTTQCDEW(i) = 0.D0
                      end do
                   elseif(irenscheme.ne.0) then
-                     HLTTQCDEW(1) = HLTTLORESC
+                     HLTTLORESC(1) = 0.D0
+                     HLTTQCD(1) = 0.D0
+                     HLTTQCDEW(1) = 0.D0
                   endif                  
                endif
 c end MMM changed 10/7/2018               
@@ -8643,27 +10079,35 @@ c end MMM changed 10/7/2018
                rat = 2.D0*amt/aml
                htt = qqint_hdec(rat,ht1,ht2)
 
-c MMM changed 10/7/18
+c MMM changed 19/1/19
          if(ielw2hdm.eq.0) then
-            HLTTQCD = HTT*GFCALC/GF
-            HLTTLORESC = 3.D0*HFF(AML,(AMT/AML)**2)*GLT**2*GFCALC/GF
-            check = (HLTTLORESC-HLTTLO)/HLTTLORESC
+           if(irenscheme.eq.0) then
+               do i=1,17,1
+            call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+            HLTTQCD(i) = HTT*gltr**2/glt**2*GFCALC/GF
+            HLTTLORESC(i) = 3.D0*HFF(AML,(AMT/AML)**2)*GLTR**2*GFCALC/GF
+            check = (HLTTLORESC(i)-HLTTLOR(i))/HLTTLORESC(i)
             if(dabs(check).ge.1.D-5) then
                print*,'There is a problem in the LO width h->tt.'
             endif
-            if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HLTTEW(i) = HLTTNLO(i)
-                  HLTTQCDEW(i) = HLTTQCD*(1.D0+
-     .                 (HLTTNLO(i)-HLTTLO)/HLTTLO)
+            HLTTEW(i) = HLTTNLO(i)
+            HLTTQCDEW(i) = HLTTQCD(i)*(1.D0+
+     .           (HLTTNLO(i)-HLTTLOR(i))/HLTTLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  HLTTEW(1) = HLTTNLO(1)
-                  HLTTQCDEW(1) = HLTTQCD*(1.D0+
-     .                 (HLTTNLO(1)-HLTTLO)/HLTTLO)
+            call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+            HLTTQCD(1) = HTT*gltr**2/glt**2*GFCALC/GF
+            HLTTLORESC(1) = 3.D0*HFF(AML,(AMT/AML)**2)*GLTR**2*GFCALC/GF
+            check = (HLTTLORESC(1)-HLTTLOR(1))/HLTTLORESC(1)
+            if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width h->tt.'
+            endif
+            HLTTEW(1) = HLTTNLO(1)
+            HLTTQCDEW(1) = HLTTQCD(1)*(1.D0+
+     .           (HLTTNLO(1)-HLTTLOR(1))/HLTTLOR(1))
             endif
          endif
-c end MMM changed 10/7/18               
+c end MMM changed 19/1/19               
                
             endif
          endif
@@ -8686,21 +10130,8 @@ C  H ---> GAMMA GAMMA
        CAT = 4/3D0 * 2*CTT*(1+(1-CTT)*CF(CTT))*GLT
      .     * CFACQ_HDEC(0,AML,XRMT)
 
-c       print*,'cat_LO',4/3D0 * 2*CTT*(1+(1-CTT)*CF(CTT))*GLT
-c       print*,'cat_NLO',cat
-c       print*,'h-top-top coupling',glt
-c       print*,'4*rmt**2/aml**2',ctt
-c       print*,'rmt',rmt
-c       print*,'aml',aml
-
        CAB = 1/3D0 * 2*CTB*(1+(1-CTB)*CF(CTB))*GLB
      .     * CFACQ_HDEC(0,AML,XRMB)
-c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-c      CALL BOTSUSY_HDEC(GLB,GHB,GAB,XGLB,XGHB,XGAB,SSUSY,LOOP)
-c      CAB = 1/3D0 * 2*CTB*(1+(1-CTB)*CF(CTB))*XGLB
-c    .     * CFACQ_HDEC(0,AML,XRMB)
-c      write(6,*)CTB,XGLB,CFACQ_HDEC(0,AML,XRMB)
-c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
        CAC = 4/3D0 * 2*CTC*(1+(1-CTC)*CF(CTC))*GLT
      .     * CFACQ_HDEC(0,AML,XRMC)
        CAL = 1.D0  * 2*CTL*(1+(1-CTL)*CF(CTL))*GLB
@@ -8710,11 +10141,36 @@ c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
        CAW = -(2+3*CTW+3*CTW*(2-CTW)*CF(CTW))*GLVV
        CAH = -AMZ**2/2/AMCH**2*CTH*(1-CTH*CF(CTH))*GLPM
 
-c       print*,'amz,amch,ghlh+h-',amz,amch,glpm,cth
-c       print*,'fac1',-AMZ**2/2/AMCH**2*glpm
-c       print*,'fac2',CTH*(1-CTH*CF(CTH))
-c       write(6,*)'CAH,AMZ,AMCH,CTH,CF(CTH),GLPM: ',
-c    .             CAH,AMZ,AMCH,CTH,CF(CTH),GLPM
+c MMM changed 19/1/19       
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+          if(irenscheme.eq.0) then
+             do i=1,17,1
+        call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+        catr(i) = 4/3D0 * 2*CTT*(1+(1-CTT)*CF(CTT))*GLTR
+     .     * CFACQ_HDEC(0,AML,XRMT)
+        cabr(i) = 1/3D0 * 2*CTB*(1+(1-CTB)*CF(CTB))*GLBR
+     .     * CFACQ_HDEC(0,AML,XRMB)
+        cacr(i) = 4/3D0 * 2*CTC*(1+(1-CTC)*CF(CTC))*GLTR
+     .     * CFACQ_HDEC(0,AML,XRMC)
+        calr(i) = 1.D0  * 2*CTL*(1+(1-CTL)*CF(CTL))*gllepr
+        cawr(i) = -(2+3*CTW+3*CTW*(2-CTW)*CF(CTW))*GLVVR
+        cahr(i) = -AMZ**2/2/AMCH**2*CTH*(1-CTH*CF(CTH))*GLPMR
+             end do
+          elseif(irenscheme.ne.0) then
+        call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+        catr(1) = 4/3D0 * 2*CTT*(1+(1-CTT)*CF(CTT))*GLTR
+     .     * CFACQ_HDEC(0,AML,XRMT)
+        cabr(1) = 1/3D0 * 2*CTB*(1+(1-CTB)*CF(CTB))*GLBR
+     .     * CFACQ_HDEC(0,AML,XRMB)
+        cacr(1) = 4/3D0 * 2*CTC*(1+(1-CTC)*CF(CTC))*GLTR
+     .     * CFACQ_HDEC(0,AML,XRMC)
+        calr(1) = 1.D0  * 2*CTL*(1+(1-CTL)*CF(CTL))*gllepr
+        cawr(1) = -(2+3*CTW+3*CTW*(2-CTW)*CF(CTW))*GLVVR
+        cahr(1) = -AMZ**2/2/AMCH**2*CTH*(1-CTH*CF(CTH))*GLPMR
+          endif
+       endif
+c end MMM changed 19/1/19       
+
        IF(IOFSUSY.EQ.0) THEN 
         RMSU1 = RUNMS_HDEC(AML/2,AMSU(1))
         RMSU2 = RUNMS_HDEC(AML/2,AMSU(2))
@@ -8779,11 +10235,20 @@ c      write(6,*)'hga: ',CAH,GLPM
        ENDIF
        HGA=HVV(AML,0.D0)*(ALPH/PI)**2/16.D0*XFAC
 
-c MMM changed 10/7/2018       
+c MMM changed 19/1/2019       
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-          HLGARESC = HGA*GFCALC/GF
+          if(irenscheme.eq.0) then
+             do i=1,17,1
+                hlgaresc(i) = HVV(AML,0.D0)*(ALPH/PI)**2/16.D0*
+     .    GFCALC/GF*
+     .    CDABS(CATR(i)+CABR(i)+CACR(i)+CALR(i)+CAWR(i)+CAHR(i))**2
+             end do
+          elseif(irenscheme.ne.0) then
+             hlgaresc(1) = HVV(AML,0.D0)*(ALPH/PI)**2/16.D0*GFCALC/GF*
+     .    CDABS(CATR(1)+CABR(1)+CACR(1)+CALR(1)+CAWR(1)+CAHR(1))**2
+          endif
        endif
-c end MMM changed 10/7/2018
+c end MMM changed 19/1/2019
        
 c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
        CAT0 = CAT/GLT
@@ -8793,28 +10258,14 @@ c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
        CAW0 = CAW/GLVV
        XFAC0 = CDABS(CAT0+CAB0+CAC0+CAL0+CAW0)**2
        XCLGAGA = XFAC/XFAC0
-c      write(6,*)'hgaga: ',aml,xclgaga
-c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-c       print*,'h -> gamgam',hga,aml,amch
-c       print*,'cat,cab',cat,cab
-c       print*,'cac,cal',cac,cal
-c       print*,'caw,cah',caw,cah
-c       print*,'charged Higgs loop',cah
-c       print*,'charged Higgs loop',cth,glpm,cf(cth)
-c      CAH = -AMZ**2/2/AMCH**2*CTH*(1-CTH*CF(CTH))*GLPM
-c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
        XFACQ = CDABS(CAT+CAB+CAC+CAL+CAW+CAH)**2
        XFACS = CDABS(CAT+CAB+CAC+CAL+CAW+CAH+CAX1+CAX2
      .      +  CXL1+CXL2)**2
        XFACSQ = CDABS(CAT+CAB+CAC+CAL+CAW+CAH+CAX1+CAX2
      .      +  CXB1+CXB2+CXT1+CXT2+CXL1+CXL2)**2
        HGA0 = HGA*XFACSQ/XFAC
-c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-c      CTT = 4*AMT**2/AML**2*DCMPLX(1D0,-EPS)
-c      CTB = 4*AMB**2/AML**2*DCMPLX(1D0,-EPS)
-c      CTC = 4*AMC**2/AML**2*DCMPLX(1D0,-EPS)
-c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
        CAC0 = 4/3D0 * 2*CTC*(1+(1-CTC)*CF(CTC))*GLT
        CAT0 = 4/3D0 * 2*CTT*(1+(1-CTT)*CF(CTT))*GLT
        CAB0 = 1/3D0 * 2*CTB*(1+(1-CTB)*CF(CTB))*GLB
@@ -8848,11 +10299,17 @@ C  H ---> Z GAMMA
 c     print*,'xrmc,xrmb,xrmt ',xrmc,xrmb,xrmt
       IF(AML.LE.AMZ)THEN
          HZGA=0
-c MMM changed 10/7/2018       
-       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-          HLZGARESC = 0.D0
+c MMM changed 19/1/2019       
+         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+             if(irenscheme.eq.0) then
+                do i=1,17,1            
+                   HLZGARESC(i) = 0.D0
+                end do
+             elseif(irenscheme.ne.0) then
+                HLZGARESC(1) = 0.D0
+             endif
        endif
-c end MMM changed 10/7/2018         
+c end MMM changed 19/1/2019         
       ELSE
        TS = SS/CS
        FT = -3*2D0/3*(1-4*2D0/3*SS)/DSQRT(SS*CS)*GLT
@@ -8863,18 +10320,12 @@ c end MMM changed 10/7/2018
           FL = (-1+4*SS)/DSQRT(SS*CS)*gllep
        endif
        EPS=1.D-8
-c      CTT = 4*XRMT**2/AML**2*DCMPLX(1D0,-EPS)
-c      CTB = 4*XRMB**2/AML**2*DCMPLX(1D0,-EPS)
-c      CTC = 4*XRMC**2/AML**2*DCMPLX(1D0,-EPS)
        CTT = 4*AMT**2/AML**2*DCMPLX(1D0,-EPS)
        CTB = 4*AMB**2/AML**2*DCMPLX(1D0,-EPS)
        CTC = 4*AMC**2/AML**2*DCMPLX(1D0,-EPS)
        CTL = 4*AMTAU**2/AML**2*DCMPLX(1D0,-EPS)
        CTW = 4*AMW**2/AML**2*DCMPLX(1D0,-EPS)
        CTH = 4*AMCH**2/AML**2*DCMPLX(1D0,-EPS)
-c      CLT = 4*XRMT**2/AMZ**2*DCMPLX(1D0,-EPS)
-c      CLB = 4*XRMB**2/AMZ**2*DCMPLX(1D0,-EPS)
-c      CLC = 4*XRMC**2/AMZ**2*DCMPLX(1D0,-EPS)
        CLT = 4*AMT**2/AMZ**2*DCMPLX(1D0,-EPS)
        CLB = 4*AMB**2/AMZ**2*DCMPLX(1D0,-EPS)
        CLC = 4*AMC**2/AMZ**2*DCMPLX(1D0,-EPS)
@@ -8888,17 +10339,67 @@ c      CLC = 4*XRMC**2/AMZ**2*DCMPLX(1D0,-EPS)
        CAW = -1/DSQRT(TS)*(4*(3-TS)*CI2(CTW,CLW)
      .     + ((1+2/CTW)*TS - (5+2/CTW))*CI1(CTW,CLW))*GLVV
        CAH = (1-2*SS)/DSQRT(SS*CS)*AMZ**2/2/AMCH**2*CI1(CTH,CLH)*GLPM
+
+c MMM changed 19/1/19       
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+          if(irenscheme.eq.0) then
+             do i=1,17,1
+        call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+        FT = -3*2D0/3*(1-4*2D0/3*SS)/DSQRT(SS*CS)*GLTR
+        FB = 3*1D0/3*(-1+4*1D0/3*SS)/DSQRT(SS*CS)*GLBR
+        FC = -3*2D0/3*(1-4*2D0/3*SS)/DSQRT(SS*CS)*GLTR
+        FL = (-1+4*SS)/DSQRT(SS*CS)*GLLEPR
+        CATR(i) = FT*(CI1(CTT,CLT) - CI2(CTT,CLT))
+        CABR(i) = FB*(CI1(CTB,CLB) - CI2(CTB,CLB))
+        CACR(i) = FC*(CI1(CTC,CLC) - CI2(CTC,CLC))
+        CALR(i) = FL*(CI1(CTL,CLE) - CI2(CTL,CLE))
+        CAWR(i) = -1/DSQRT(TS)*(4*(3-TS)*CI2(CTW,CLW)
+     .       + ((1+2/CTW)*TS - (5+2/CTW))*CI1(CTW,CLW))*GLVVR
+        CAHR(i) = (1-2*SS)/DSQRT(SS*CS)*AMZ**2/2/AMCH**2*CI1(CTH,CLH)*
+     .       GLPMR
+             end do
+          elseif(irenscheme.ne.0) then
+        call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+        FT = -3*2D0/3*(1-4*2D0/3*SS)/DSQRT(SS*CS)*GLTR
+        FB = 3*1D0/3*(-1+4*1D0/3*SS)/DSQRT(SS*CS)*GLBR
+        FC = -3*2D0/3*(1-4*2D0/3*SS)/DSQRT(SS*CS)*GLTR
+        FL = (-1+4*SS)/DSQRT(SS*CS)*GLLEPR
+        CATR(1) = FT*(CI1(CTT,CLT) - CI2(CTT,CLT))
+        CABR(1) = FB*(CI1(CTB,CLB) - CI2(CTB,CLB))
+        CACR(1) = FC*(CI1(CTC,CLC) - CI2(CTC,CLC))
+        CALR(1) = FL*(CI1(CTL,CLE) - CI2(CTL,CLE))
+        CAWR(1) = -1/DSQRT(TS)*(4*(3-TS)*CI2(CTW,CLW)
+     .       + ((1+2/CTW)*TS - (5+2/CTW))*CI1(CTW,CLW))*GLVVR
+        CAHR(1) = (1-2*SS)/DSQRT(SS*CS)*AMZ**2/2/AMCH**2*CI1(CTH,CLH)*
+     .       GLPMR
+      endif
+      endif
+c end MMM changed 19/1/19
+          
        XFAC = CDABS(CAT+CAB+CAC+CAL+CAW+CAH)**2
        ACOUP = DSQRT(2D0)*GF*AMZ**2*SS*CS/PI**2
        HZGA = GF/(4.D0*PI*DSQRT(2.D0))*AML**3*(ALPH/PI)*ACOUP/16.D0
-     .        *XFAC*(1-AMZ**2/AML**2)**3
-      ENDIF
+     .      *XFAC*(1-AMZ**2/AML**2)**3
 
-c MMM changed 10/7/2018       
-       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-          HLZGARESC = HZGA*GFCALC/GF
-       endif
-c end MMM changed 10/7/2018
+c MMM changed 19/1/2019       
+      if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+         if(irenscheme.eq.0) then
+            do i=1,17,1
+               ACOUP = DSQRT(2D0)*GFCALC*AMZ**2*SS*CS/PI**2
+               HLZGARESC(i) = GFCALC/(4.D0*PI*DSQRT(2.D0))*AML**3*
+     .    (ALPH/PI)*ACOUP/16.D0*(1-AMZ**2/AML**2)**3*
+     .    CDABS(CATR(i)+CABR(i)+CACR(i)+CALR(i)+CAWR(i)+CAHR(i))**2
+            end do
+         elseif(irenscheme.ne.0) then
+               ACOUP = DSQRT(2D0)*GFCALC*AMZ**2*SS*CS/PI**2
+               HLZGARESC(1) = GFCALC/(4.D0*PI*DSQRT(2.D0))*AML**3*
+     .    (ALPH/PI)*ACOUP/16.D0*(1-AMZ**2/AML**2)**3*
+     .    CDABS(CATR(1)+CABR(1)+CACR(1)+CALR(1)+CAWR(1)+CAHR(1))**2            
+         endif
+      endif      
+c end MMM changed 19/1/2019
+              
+      ENDIF
       
 c      print*,'h -> Zgam',hzga
 C  H ---> W W
@@ -8906,35 +10407,46 @@ C  H ---> W W
        CALL HTOVV_HDEC(0,AML,AMW,GAMW,HTWW)
        HWW = 3D0/2D0*GF*AMW**4/DSQRT(2D0)/PI/AML**3*HTWW*GLVV**2
 
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
           if(aml.le.2.D0*amw) then
-             HLWWLORESC = HWW*GFCALC/GF
              if(irenscheme.eq.0) then
-                do i=1,14,1
-                   HLWWEW(i) = HLWWLORESC
+                do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+                 HLWWLORESC(i) = HWW*GLVVR**2/GLVV**2*GFCALC/GF
+                 HLWWEW(i) = HLWWLORESC(i)
                 end do
              elseif(irenscheme.ne.0) then
-                HLWWEW(1) = HLWWLORESC                 
+                call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+                HLWWLORESC(1) = HWW*GLVVR**2/GLVV**2*GFCALC/GF
+                HLWWEW(1) = HLWWLORESC(1)
              endif             
           elseif(aml.gt.2.D0*amw) then
-             HLWWLORESC=HVV(AML,AMW**2/AML**2)*GLVV**2*GFCALC/GF
-             check = (HLWWLORESC-HLWWLO)/HLWWLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width h->WW.'
-            endif
+             
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HLWWEW(i) = HLWWLORESC*(1.D0+
-     .                 (HLWWNLO(i)-HLWWLO)/HLWWLO)
+               do i=1,17,1
+                call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+                HLWWLORESC(i)=HVV(AML,AMW**2/AML**2)*GLVVR**2*GFCALC/GF
+                check = (HLWWLORESC(i)-HLWWLOR(i))/HLWWLORESC(i)
+                if(dabs(check).ge.1.D-5) then
+                   print*,'There is a problem in the LO width h->WW.'
+                endif
+                HLWWEW(i) = HLWWLORESC(i)*(1.D0+
+     .               (HLWWNLO(i)-HLWWLOR(i))/HLWWLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               HLWWEW(1) = HLWWLORESC*(1.D0+
-     .              (HLWWNLO(1)-HLWWLO)/HLWWLO)
+                call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+                HLWWLORESC(1)=HVV(AML,AMW**2/AML**2)*GLVVR**2*GFCALC/GF
+                check = (HLWWLORESC(1)-HLWWLOR(1))/HLWWLORESC(1)
+                if(dabs(check).ge.1.D-5) then
+                   print*,'There is a problem in the LO width h->WW.'
+                endif
+                HLWWEW(1) = HLWWLORESC(1)*(1.D0+
+     .               (HLWWNLO(1)-HLWWLOR(1))/HLWWLOR(1))
             endif
          endif
       endif
-c end MMM changed 10/7/18   
+c end MMM changed 19/1/19   
               
       ELSEIF(IONWZ.EQ.-1)THEN
        DLD=2D0
@@ -8944,18 +10456,21 @@ c end MMM changed 10/7/18
        IF (AML.LE.XM1) THEN
         CALL HTOVV_HDEC(0,AML,AMW,GAMW,HTWW)
         HWW = 3D0/2D0*GF*AMW**4/DSQRT(2D0)/PI/AML**3*HTWW*GLVV**2
-c MMM changed 10/7/2018
+c MMM changed 19/1/2019
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-           HLWWLORESC = HWW*GFCALC/GF
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 HLWWEW(i) = HLWWLORESC
+              do i=1,17,1
+                call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+                HLWWLORESC(i) = HWW*GLVVR**2/GLVV**2*GFCALC/GF
+                HLWWEW(i) = HLWWLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              HLWWEW(1) = HLWWLORESC                 
+              call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+              HLWWLORESC(1) = HWW*GLVVR**2/GLVV**2*GFCALC/GF    
+              HLWWEW(1) = HLWWLORESC(1)
            endif   
         endif
-c end MMM changed 10/7/2018        
+c end MMM changed 19/1/2019        
       ELSEIF (AML.LE.XM2) THEN
         XX(1) = XM1-1D0
         XX(2) = XM1
@@ -8968,39 +10483,49 @@ c end MMM changed 10/7/2018
         YY(3)=HVV(XX(3),AMW**2/XX(3)**2)
         YY(4)=HVV(XX(4),AMW**2/XX(4)**2)
         HWW = FINT_HDEC(AML,XX,YY)*GLVV**2
-c MMM changed 10/7/2018
+c MMM changed 19/1/2019
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-           HLWWLORESC = HWW*GFCALC/GF
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 HLWWEW(i) = HLWWLORESC
+              do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+                 HLWWLORESC(i) = HWW*GLVVR**2/GLVV**2*GFCALC/GF
+                 HLWWEW(i) = HLWWLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              HLWWEW(1) = HLWWLORESC                 
+              call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+              HLWWLORESC(1) = HWW*GLVVR**2/GLVV**2*GFCALC/GF
+              HLWWEW(1) = HLWWLORESC(1)
            endif              
         endif
-c end MMM changed 10/7/2018              
+c end MMM changed 19/1/2019              
        ELSE
           HWW=HVV(AML,AMW**2/AML**2)*GLVV**2
 
-c MMM changed 10/7/18
+c MMM changed 19/1/19
           if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-             HLWWLORESC=HWW*GFCALC/GF
-             check = (HLWWLORESC-HLWWLO)/HLWWLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width h->WW.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HLWWEW(i) = HLWWLORESC*(1.D0+
-     .                 (HLWWNLO(i)-HLWWLO)/HLWWLO)
+               do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+               HLWWLORESC(i)=HWW*GLVVR**2/GLVV**2*GFCALC/GF
+               check = (HLWWLORESC(i)-HLWWLOR(i))/HLWWLORESC(i)
+               if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width h->WW.'
+               endif                  
+               HLWWEW(i) = HLWWLORESC(i)*(1.D0+
+     .              (HLWWNLO(i)-HLWWLOR(i))/HLWWLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               HLWWEW(1) = HLWWLORESC*(1.D0+
-     .              (HLWWNLO(1)-HLWWLO)/HLWWLO)
+               call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+               HLWWLORESC(1)=HWW*GLVVR**2/GLVV**2*GFCALC/GF
+               check = (HLWWLORESC(1)-HLWWLOR(1))/HLWWLORESC(1)
+               if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width h->WW.'
+               endif                  
+               HLWWEW(1) = HLWWLORESC(1)*(1.D0+
+     .              (HLWWNLO(1)-HLWWLOR(1))/HLWWLOR(1))               
             endif
          endif
-c end MMM changed 10/7/18          
+c end MMM changed 19/1/19          
           
        ENDIF
       ELSE
@@ -9012,31 +10537,36 @@ c end MMM changed 10/7/18
          HWW=0
 c MMM changed 10/7/18
           if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-             HLWWLORESC=0.D0
              if(irenscheme.eq.0) then
-                do i=1,14,1
-                   HLWWEW(i) = HLWWLORESC
+                do i=1,17,1
+                   HLWWLORESC(i) = 0.D0
+                   HLWWEW(i) = 0.D0
                 end do
              elseif(irenscheme.ne.0) then
-                HLWWEW(1) = HLWWLORESC
+                HLWWLORESC(1) = 0.D0
+                HLWWEW(1) = 0.D0
              endif
           endif
 c end MMM changed 10/7/18         
       ELSE IF (AML.LE.XM1) THEN
        CWW=3.D0*GF**2*AMW**4/16.D0/PI**3
        HWW=HV(AMW**2/AML**2)*CWW*AML*GLVV**2
-c MMM changed 10/7/2018
-        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-           HLWWLORESC = HWW*GFCALC/GF
+c MMM changed 19/1/2019
+c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 HLWWEW(i) = HLWWLORESC
+              do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+                 HLWWLORESC(i) = HWW*GLVVR**2/GLVV**2*GFCALC**2/GF**2
+                 HLWWEW(i) = HLWWLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              HLWWEW(1) = HLWWLORESC                 
+              call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+              HLWWLORESC(1) = HWW*GLVVR**2/GLVV**2*GFCALC**2/GF**2
+              HLWWEW(1) = HLWWLORESC(1)
            endif              
         endif
-c end MMM changed 10/7/2018        
+c end MMM changed 19/1/2019        
       ELSE IF (AML.LT.XM2) THEN
        CWW=3.D0*GF**2*AMW**4/16.D0/PI**3
        XX(1) = XM1-1D0
@@ -9048,39 +10578,70 @@ c end MMM changed 10/7/2018
        YY(3)=HVV(XX(3),AMW**2/XX(3)**2)
        YY(4)=HVV(XX(4),AMW**2/XX(4)**2)
        HWW = FINT_HDEC(AML,XX,YY)*GLVV**2
-c MMM changed 10/7/2018
-        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-           HLWWLORESC = HWW*GFCALC/GF
+c MMM changed 19/1/2019
+c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 HLWWEW(i) = HLWWLORESC
+              do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+                 CWW=3.D0*GF**2*AMW**4/16.D0/PI**3
+                 XX(1) = XM1-1D0
+                 XX(2) = XM1
+                 XX(3) = XM2
+                 XX(4) = XM2+1D0
+                 YY(1)=HV(AMW**2/XX(1)**2)*CWW*XX(1)*GFCALC**2/GF**2
+                 YY(2)=HV(AMW**2/XX(2)**2)*CWW*XX(2)*GFCALC**2/GF**2
+                 YY(3)=HVV(XX(3),AMW**2/XX(3)**2)*GFCALC/GF
+                 YY(4)=HVV(XX(4),AMW**2/XX(4)**2)*GFCALC/GF
+                 HWW = FINT_HDEC(AML,XX,YY)*GLVV**2
+                 HLWWLORESC(i) = HWW*GLVVR**2/GLVV**2
+                 HLWWEW(i) = HLWWLORESC(i) 
               end do
            elseif(irenscheme.ne.0) then
-              HLWWEW(1) = HLWWLORESC                 
+              call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+                 CWW=3.D0*GF**2*AMW**4/16.D0/PI**3
+                 XX(1) = XM1-1D0
+                 XX(2) = XM1
+                 XX(3) = XM2
+                 XX(4) = XM2+1D0
+                 YY(1)=HV(AMW**2/XX(1)**2)*CWW*XX(1)*GFCALC**2/GF**2
+                 YY(2)=HV(AMW**2/XX(2)**2)*CWW*XX(2)*GFCALC**2/GF**2
+                 YY(3)=HVV(XX(3),AMW**2/XX(3)**2)*GFCALC/GF
+                 YY(4)=HVV(XX(4),AMW**2/XX(4)**2)*GFCALC/GF
+                 HWW = FINT_HDEC(AML,XX,YY)*GLVV**2
+              HLWWLORESC(1) = HWW*GLVVR**2/GLVV**2
+              HLWWEW(1) = HLWWLORESC(1)
            endif   
         endif
-c end MMM changed 10/7/2018        
+c end MMM changed 19/1/2019        
       ELSE
          HWW=HVV(AML,AMW**2/AML**2)*GLVV**2
 
-c MMM changed 10/7/18
+c MMM changed 19/1/19
           if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-             HLWWLORESC=HWW*GFCALC/GF
-             check = (HLWWLORESC-HLWWLO)/HLWWLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width h->WW.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HLWWEW(i) = HLWWLORESC*(1.D0+
-     .                 (HLWWNLO(i)-HLWWLO)/HLWWLO)
+               do i=1,17,1
+                call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+                HLWWLORESC(i)=HWW*GLVVR**2/GLVV**2*GFCALC/GF
+                check = (HLWWLORESC(i)-HLWWLOR(i))/HLWWLORESC(i)
+                if(dabs(check).ge.1.D-5) then
+                   print*,'There is a problem in the LO width h->WW.'
+                endif
+                HLWWEW(i) = HLWWLORESC(i)*(1.D0+
+     .               (HLWWNLO(i)-HLWWLOR(i))/HLWWLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               HLWWEW(1) = HLWWLORESC*(1.D0+
-     .              (HLWWNLO(1)-HLWWLO)/HLWWLO)
+                call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+                HLWWLORESC(1)=HWW*GLVVR**2/GLVV**2*GFCALC/GF
+                check = (HLWWLORESC(1)-HLWWLOR(1))/HLWWLORESC(1)
+                if(dabs(check).ge.1.D-5) then
+                   print*,'There is a problem in the LO width h->WW.'
+                endif
+                HLWWEW(1) = HLWWLORESC(1)*(1.D0+
+     .               (HLWWNLO(1)-HLWWLOR(1))/HLWWLOR(1))
             endif
          endif
-c end MMM changed 10/7/18
+c end MMM changed 19/1/19
          
       ENDIF
       ENDIF
@@ -9091,35 +10652,47 @@ C  H ---> Z Z
        CALL HTOVV_HDEC(0,AML,AMZ,GAMZ,HTZZ)
        HZZ = 3D0/4D0*GF*AMZ**4/DSQRT(2D0)/PI/AML**3*HTZZ*GLVV**2
 
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
           if(aml.le.2.D0*amz) then
-             HLZZLORESC = HZZ*GFCALC/GF
              if(irenscheme.eq.0) then
-                do i=1,14,1
-                  HLZZEW(i) = HLZZLORESC
+                do i=1,17,1
+                call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i) 
+                HLZZLORESC(i) = HZZ*GLVVR**2/GLVV**2*GFCALC/GF
+                HLZZEW(i) = HLZZLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-                  HLZZEW(1) = HLZZLORESC
+                call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1) 
+                HLZZLORESC(1) = HZZ*GLVVR**2/GLVV**2*GFCALC/GF
+                HLZZEW(1) = HLZZLORESC(1)
             endif             
           elseif(aml.gt.2.D0*amz) then
-             HLZZLORESC=HVV(AML,AMZ**2/AML**2)/2.D0*GLVV**2*GFCALC/GF
-             check = (HLZZLORESC-HLZZLO)/HLZZLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width h->ZZ.'
-            endif
-            if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HLZZEW(i) = HLZZLORESC*(1.D0+
-     .                 (HLZZNLO(i)-HLZZLO)/HLZZLO)
+           if(irenscheme.eq.0) then
+               do i=1,17,1
+                call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+                HLZZLORESC(i)=HVV(AML,AMZ**2/AML**2)/2.D0*
+     .               GLVVR**2*GFCALC/GF
+             check = (HLZZLORESC(i)-HLZZLOR(i))/HLZZLORESC(i)
+             if(dabs(check).ge.1.D-5) then
+                print*,'There is a problem in the LO width h->ZZ.'
+             endif
+             HLZZEW(i) = HLZZLORESC(i)*(1.D0+
+     .            (HLZZNLO(i)-HLZZLOR(i))/HLZZLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               HLZZEW(1) = HLZZLORESC*(1.D0+
-     .              (HLZZNLO(1)-HLZZLO)/HLZZLO)
+               call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+               HLZZLORESC(1)=HVV(AML,AMZ**2/AML**2)/2.D0*
+     .              GLVVR**2*GFCALC/GF
+               check = (HLZZLORESC(1)-HLZZLOR(1))/HLZZLORESC(1)
+               if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width h->ZZ.'
+               endif
+               HLZZEW(1) = HLZZLORESC(1)*(1.D0+
+     .              (HLZZNLO(1)-HLZZLOR(1))/HLZZLOR(1))
             endif
          endif
       endif
-c end MMM changed 10/7/18   
+c end MMM changed 19/1/19   
               
       ELSEIF(IONWZ.EQ.-1)THEN
        DLD=2D0
@@ -9129,18 +10702,21 @@ c end MMM changed 10/7/18
        IF (AML.LE.XM1) THEN
         CALL HTOVV_HDEC(0,AML,AMZ,GAMZ,HTZZ)
         HZZ = 3D0/4D0*GF*AMZ**4/DSQRT(2D0)/PI/AML**3*HTZZ*GLVV**2
-c MMM changed 10/7/2018
+c MMM changed 19/1/2019
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-           HLZZLORESC = HZZ*GFCALC/GF
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 HLZZEW(i) = HLZZLORESC
+              do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+                 HLZZLORESC(i) = HZZ*GLVVR**2/GLVV**2*GFCALC/GF
+                 HLZZEW(i) = HLZZLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              HLZZEW(1) = HLZZLORESC
+              call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+              HLZZLORESC(1) = HZZ*GLVVR**2/GLVV**2*GFCALC/GF
+              HLZZEW(1) = HLZZLORESC(1)
            endif            
         endif
-c end MMM changed 10/7/2018             
+c end MMM changed 19/1/2019             
        ELSEIF (AML.LE.XM2) THEN
         XX(1) = XM1-1D0
         XX(2) = XM1
@@ -9153,39 +10729,49 @@ c end MMM changed 10/7/2018
         YY(3)=HVV(XX(3),AMZ**2/XX(3)**2)/2
         YY(4)=HVV(XX(4),AMZ**2/XX(4)**2)/2
         HZZ = FINT_HDEC(AML,XX,YY)*GLVV**2
-c MMM changed 10/7/2018
+c MMM changed 19/1/2019
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-           HLZZLORESC = HZZ*GFCALC/GF
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 HLZZEW(i) = HLZZLORESC
+              do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+                 HLZZLORESC(i) = HZZ*GLVVR**2/GLVV**2*GFCALC/GF
+                 HLZZEW(i) = HLZZLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              HLZZEW(1) = HLZZLORESC
+              call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+              HLZZLORESC(1) = HZZ*GLVVR**2/GLVV**2*GFCALC/GF
+              HLZZEW(1) = HLZZLORESC(1)
            endif            
         endif
-c end MMM changed 10/7/2018         
+c end MMM changed 19/1/2019         
        ELSE
           HZZ=HVV(AML,AMZ**2/AML**2)/2.D0*GLVV**2
 
-c MMM changed 10/7/18          
+c MMM changed 19/1/19          
           if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-             HLZZLORESC=HZZ*GFCALC/GF
-             check = (HLZZLORESC-HLZZLO)/HLZZLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width h->ZZ.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HLZZEW(i) = HLZZLORESC*(1.D0+
-     .                 (HLZZNLO(i)-HLZZLO)/HLZZLO)
+               do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+                  HLZZLORESC(i)=HZZ*GLVVR**2/GLVV**2*GFCALC/GF
+                  check = (HLZZLORESC(i)-HLZZLOR(i))/HLZZLORESC(i)
+                  if(dabs(check).ge.1.D-5) then
+                     print*,'There is a problem in the LO width h->ZZ.'
+                  endif
+                  HLZZEW(i) = HLZZLORESC(i)*(1.D0+
+     .                 (HLZZNLO(i)-HLZZLOR(i))/HLZZLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               HLZZEW(1) = HLZZLORESC*(1.D0+
-     .              (HLZZNLO(1)-HLZZLO)/HLZZLO)
+               call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+               HLZZLORESC(1)=HZZ*GLVVR**2/GLVV**2*GFCALC/GF
+               check = (HLZZLORESC(1)-HLZZLOR(1))/HLZZLORESC(1)
+               if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width h->ZZ.'
+               endif
+               HLZZEW(1) = HLZZLORESC(1)*(1.D0+
+     .              (HLZZNLO(1)-HLZZLOR(1))/HLZZLOR(1))
             endif
          endif          
-c end MMM changed 10/7/18
+c end MMM changed 19/1/19
          
        ENDIF
       ELSE
@@ -9195,33 +10781,38 @@ c end MMM changed 10/7/18
       XM2 = 2D0*AMZ+DLU
       IF (AML.LE.AMZ) THEN
          HZZ=0
-c MMM changed 10/7/18
+c MMM changed 19/1/19
           if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-             HLZZLORESC=0.D0
              if(irenscheme.eq.0) then
-                do i=1,14,1
-                   HLZZEW(i) = HLZZLORESC
+                do i=1,17,1
+                   HLZZLORESC(i)=0.D0
+                   HLZZEW(i) = HLZZLORESC(i)
                 end do
              elseif(irenscheme.ne.0) then
-                HLZZEW(1) = HLZZLORESC
+                HLZZLORESC(1)=0.D0                
+                HLZZEW(1) = HLZZLORESC(1)
              endif
           endif
-c end MMM changed 10/7/18          
+c end MMM changed 19/1/19          
       ELSE IF (AML.LE.XM1) THEN
        CZZ=3.D0*GF**2*AMZ**4/192.D0/PI**3*(7-40/3.D0*SS+160/9.D0*SS**2)
        HZZ=HV(AMZ**2/AML**2)*CZZ*AML*GLVV**2
-c MMM changed 10/7/2018
-        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-           HLZZLORESC = HZZ*GFCALC/GF
+c MMM changed 19/1/2019
+c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 HLZZEW(i) = HLZZLORESC
+              do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+                  HLZZLORESC(i) = HZZ*GLVVR**2/GLVV**2*GFCALC**2/GF**2
+                  HLZZEW(i) = HLZZLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              HLZZEW(1) = HLZZLORESC
+              call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+              HLZZLORESC(1) = HZZ*GLVVR**2/GLVV**2*GFCALC**2/GF**2
+              HLZZEW(1) = HLZZLORESC(1)
            endif 
         endif
-c end MMM changed 10/7/2018        
+c end MMM changed 19/1/2019        
       ELSE IF (AML.LT.XM2) THEN
        CZZ=3.D0*GF**2*AMZ**4/192.D0/PI**3*(7-40/3.D0*SS+160/9.D0*SS**2)
        XX(1) = XM1-1D0
@@ -9233,39 +10824,70 @@ c end MMM changed 10/7/2018
        YY(3)=HVV(XX(3),AMZ**2/XX(3)**2)/2D0
        YY(4)=HVV(XX(4),AMZ**2/XX(4)**2)/2D0
        HZZ = FINT_HDEC(AML,XX,YY)*GLVV**2
-c MMM changed 10/7/2018
-        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-           HLZZLORESC = HZZ*GFCALC/GF
+c MMM changed 19/1/2019
+c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 HLZZEW(i) = HLZZLORESC
+              do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+       CZZ=3.D0*GF**2*AMZ**4/192.D0/PI**3*(7-40/3.D0*SS+160/9.D0*SS**2)
+       XX(1) = XM1-1D0
+       XX(2) = XM1
+       XX(3) = XM2
+       XX(4) = XM2+1D0
+       YY(1)=HV(AMZ**2/XX(1)**2)*CZZ*XX(1)*GFCALC**2/GF**2
+       YY(2)=HV(AMZ**2/XX(2)**2)*CZZ*XX(2)*GFCALC**2/GF**2
+       YY(3)=HVV(XX(3),AMZ**2/XX(3)**2)/2D0*GFCALC/GF
+       YY(4)=HVV(XX(4),AMZ**2/XX(4)**2)/2D0*GFCALC/GF
+       HZZ = FINT_HDEC(AML,XX,YY)*GLVV**2
+                  HLZZLORESC(i) = HZZ*GLVVR**2/GLVV**2
+                  HLZZEW(i) = HLZZLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              HLZZEW(1) = HLZZLORESC
+              call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+       CZZ=3.D0*GF**2*AMZ**4/192.D0/PI**3*(7-40/3.D0*SS+160/9.D0*SS**2)
+       XX(1) = XM1-1D0
+       XX(2) = XM1
+       XX(3) = XM2
+       XX(4) = XM2+1D0
+       YY(1)=HV(AMZ**2/XX(1)**2)*CZZ*XX(1)*GFCALC**2/GF**2
+       YY(2)=HV(AMZ**2/XX(2)**2)*CZZ*XX(2)*GFCALC**2/GF**2
+       YY(3)=HVV(XX(3),AMZ**2/XX(3)**2)/2D0*GFCALC/GF
+       YY(4)=HVV(XX(4),AMZ**2/XX(4)**2)/2D0*GFCALC/GF
+       HZZ = FINT_HDEC(AML,XX,YY)*GLVV**2
+              HLZZLORESC(1) = HZZ*GLVVR**2/GLVV**2
+              HLZZEW(1) = HLZZLORESC(i)
            endif 
         endif
-c end MMM changed 10/7/2018        
+c end MMM changed 19/1/2019        
       ELSE
          HZZ=HVV(AML,AMZ**2/AML**2)/2.D0*GLVV**2
 
-c MMM changed 10/7/18         
+c MMM changed 19/1/19         
           if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-             HLZZLORESC=HZZ*GFCALC/GF
-             check = (HLZZLORESC-HLZZLO)/HLZZLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width h->ZZ.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HLZZEW(i) = HLZZLORESC*(1.D0+
-     .                 (HLZZNLO(i)-HLZZLO)/HLZZLO)
+               do i=1,17,1
+                call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+                HLZZLORESC(i)=HZZ*GLVVR**2/GLVV**2*GFCALC/GF
+                check = (HLZZLORESC(i)-HLZZLOR(i))/HLZZLORESC(i)
+                if(dabs(check).ge.1.D-5) then
+                   print*,'There is a problem in the LO width h->ZZ.'
+                endif
+                HLZZEW(i) = HLZZLORESC(i)*(1.D0+
+     .                 (HLZZNLO(i)-HLZZLOR(i))/HLZZLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               HLZZEW(1) = HLZZLORESC*(1.D0+
-     .              (HLZZNLO(1)-HLZZLO)/HLZZLO)
+               call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+               HLZZLORESC(1)=HZZ*GLVVR**2/GLVV**2*GFCALC/GF
+               check = (HLZZLORESC(1)-HLZZLOR(1))/HLZZLORESC(1)
+               if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width h->ZZ.'
+               endif
+               HLZZEW(1) = HLZZLORESC(1)*(1.D0+
+     .              (HLZZNLO(1)-HLZZLOR(1))/HLZZLOR(1))
             endif
          endif
-c end MMM changed 10/7/18
+c end MMM changed 19/1/19
          
       ENDIF
       ENDIF
@@ -9290,13 +10912,14 @@ c MMM changed 22/8/2013
                haa = 0d0
 c MMM changed 10/7/2018
                if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-                  HLAALORESC = 0.D0
                   if(irenscheme.eq.0) then
-                     do i=1,14,1
-                        HLAAEW(i) = HLAALORESC
+                     do i=1,17,1
+                        HLAALORESC(i) = 0.D0
+                        HLAAEW(i) = HLAALORESC(i)
                      end do
                   elseif(irenscheme.ne.0) then
-                     HLAAEW(1) = HLAALORESC
+                     HLAALORESC(1) = 0.D0
+                     HLAAEW(1) = HLAALORESC(1)
                   endif
                endif
 c end MMM changed 10/7/2018                 
@@ -9308,18 +10931,24 @@ c end MMM changed 10/7/2018
      .              /dsqrt(4.d0*xa-1.d0)
                xa2=3*gf**2/32.d0/pi**3*amz**4/aml*glaa**2*gab**2*amb**2
                haa=xa1*xa2
-c MMM changed 10/7/2018
-        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-           HLAALORESC = HAA*GFCALC/GF
+c MMM changed 19/1/2019
+c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
+               if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 HLAAEW(i) = HLAALORESC
+              do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+                 HLAALORESC(i) = HAA*GLAAR**2/GLAA**2*GABR**2/GAB**2
+     .                *GFCALC**2/GF**2
+                 HLAAEW(i) = HLAALORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              HLAAEW(1) = HLAALORESC
+              call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+              HLAALORESC(1) = HAA*GLAAR**2/GLAA**2*GABR**2/GAB**2
+     .                *GFCALC**2/GF**2
+              HLAAEW(1) = HLAALORESC(1)
            endif
         endif
-c end MMM changed 10/7/2018                
+c end MMM changed 19/1/2019                
             elseif (aml.le.xm2) then
                xx(1) = xm1-1d0
                xx(2) = xm1
@@ -9344,53 +10973,113 @@ c end MMM changed 10/7/2018
                yy(4)=gf/16d0/dsqrt(2d0)/pi*amz**4/xx(4)
      .              *beta_hdec(ama**2/xx(4)**2)
                haa = fint_hdec(aml,xx,yy)*glaa**2
-c MMM changed 10/7/2018
-        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-           HLAALORESC = HAA*GFCALC/GF
+c MMM changed 19/1/2019
+c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
+               if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 HLAAEW(i) = HLAALORESC
+              do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+                 xx(1) = xm1-1d0
+                 xx(2) = xm1
+                 xx(3) = xm2
+                 xx(4) = xm2+1d0
+                 xa=ama**2/xx(1)**2
+                 xa1=(xa-1.d0)*(2.d0-.5d0*dlog(xa))+(1.d0-5.d0*xa)
+     .                *(datan((2.d0*xa-1.d0)/dsqrt(4.d0*xa-1.d0))
+     .                -datan(1.d0/dsqrt(4.d0*xa-1.d0)))
+     .                /dsqrt(4.d0*xa-1.d0)
+                 xa2=3*gf**2/32.d0/pi**3*amz**4/xx(1)*gabr**2*amb**2
+                 yy(1)=xa1*xa2*GFCALC**2/GF**2
+                 xa=ama**2/xx(2)**2
+                 xa1=(xa-1.d0)*(2.d0-.5d0*dlog(xa))+(1.d0-5.d0*xa)
+     .                *(datan((2.d0*xa-1.d0)/dsqrt(4.d0*xa-1.d0))
+     .                -datan(1.d0/dsqrt(4.d0*xa-1.d0)))
+     .                /dsqrt(4.d0*xa-1.d0)
+                 xa2=3*gf**2/32.d0/pi**3*amz**4/xx(2)*gabr**2*amb**2
+                 yy(2)=xa1*xa2*GFCALC**2/GF**2
+                 yy(3)=GFCALC/16d0/dsqrt(2d0)/pi*amz**4/xx(3)
+     .                *beta_hdec(ama**2/xx(3)**2)
+                 yy(4)=GFCALC/16d0/dsqrt(2d0)/pi*amz**4/xx(4)
+     .                *beta_hdec(ama**2/xx(4)**2)
+                 haa = fint_hdec(aml,xx,yy)*glaar**2
+                 
+                 HLAALORESC(i) = HAA
+                 HLAAEW(i) = HLAALORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              HLAAEW(1) = HLAALORESC
+              call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+              xx(1) = xm1-1d0
+              xx(2) = xm1
+              xx(3) = xm2
+              xx(4) = xm2+1d0
+              xa=ama**2/xx(1)**2
+              xa1=(xa-1.d0)*(2.d0-.5d0*dlog(xa))+(1.d0-5.d0*xa)
+     .             *(datan((2.d0*xa-1.d0)/dsqrt(4.d0*xa-1.d0))
+     .             -datan(1.d0/dsqrt(4.d0*xa-1.d0)))
+     .             /dsqrt(4.d0*xa-1.d0)
+              xa2=3*gf**2/32.d0/pi**3*amz**4/xx(1)*gabr**2*amb**2
+              yy(1)=xa1*xa2*GFCALC**2/GF**2
+              xa=ama**2/xx(2)**2
+              xa1=(xa-1.d0)*(2.d0-.5d0*dlog(xa))+(1.d0-5.d0*xa)
+     .             *(datan((2.d0*xa-1.d0)/dsqrt(4.d0*xa-1.d0))
+     .             -datan(1.d0/dsqrt(4.d0*xa-1.d0)))
+     .             /dsqrt(4.d0*xa-1.d0)
+              xa2=3*gf**2/32.d0/pi**3*amz**4/xx(2)*gabr**2*amb**2
+              yy(2)=xa1*xa2*GFCALC**2/GF**2
+              yy(3)=GFCALC/16d0/dsqrt(2d0)/pi*amz**4/xx(3)
+     .             *beta_hdec(ama**2/xx(3)**2)
+              yy(4)=GFCALC/16d0/dsqrt(2d0)/pi*amz**4/xx(4)
+     .             *beta_hdec(ama**2/xx(4)**2)
+              haa = fint_hdec(aml,xx,yy)*glaar**2
+              
+              HLAALORESC(1) = HAA
+              HLAAEW(1) = HLAALORESC(1)
            endif
         endif
-c end MMM changed 10/7/2018                    
+c end MMM changed 19/1/2019                    
             else
                haa=gf/16d0/dsqrt(2d0)/pi*amz**4/aml*
      .              beta_hdec(ama**2/aml**2)*glaa**2
 
-c MMM changed 10/7/18         
+c MMM changed 19/1/19         
       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-         HLAALORESC=HAA*GFCALC/GF
-         check = (HLAALORESC-HLAALO)/HLAALORESC
-         if(dabs(check).ge.1.D-5) then
-            print*,'There is a problem in the LO width h->AA.'
-         endif
          if(irenscheme.eq.0) then
-            do i=1,14,1
-               HLAAEW(i) = HLAALORESC*(1.D0+
-     .              (HLAANLO(i)-HLAALO)/HLAALO)
+            do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+               HLAALORESC(i)=HAA*glaar**2/glaa**2*GFCALC/GF
+               check = (HLAALORESC(i)-HLAALOR(i))/HLAALORESC(i)
+               if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width h->AA.'
+               endif
+               HLAAEW(i) = HLAALORESC(i)*(1.D0+
+     .              (HLAANLO(i)-HLAALOR(i))/HLAALOR(i))
             end do
          elseif(irenscheme.ne.0) then
-            HLAAEW(1) = HLAALORESC*(1.D0+
-     .           (HLAANLO(1)-HLAALO)/HLAALO)
+            call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+            HLAALORESC(1)=HAA*glaar**2/glaa**2*GFCALC/GF
+            check = (HLAALORESC(1)-HLAALOR(1))/HLAALORESC(1)
+            if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width h->AA.'
+            endif
+            HLAAEW(1) = HLAALORESC(1)*(1.D0+
+     .           (HLAANLO(1)-HLAALOR(1))/HLAALOR(1))
          endif
       endif
-c end MMM changed 10/7/18                     
+c end MMM changed 19/1/19                     
             endif
          else
             if (aml.le.2*ama) then
                haa=0
 c MMM changed 10/7/2018
                if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-                  HLAALORESC = 0.D0
                   if(irenscheme.eq.0) then
-                     do i=1,14,1
-                        HLAAEW(i) = HLAALORESC
+                     do i=1,17,1
+                        HLAALORESC(i) = 0.D0
+                        HLAAEW(i) = HLAALORESC(i)
                      end do
                   elseif(irenscheme.ne.0) then
-                     HLAAEW(1) = HLAALORESC
+                     HLAALORESC(1) = 0.D0
+                     HLAAEW(1) = HLAALORESC(1)
                   endif
                endif
 c end MMM changed 10/7/2018                 
@@ -9398,24 +11087,31 @@ c end MMM changed 10/7/2018
                haa=gf/16d0/dsqrt(2d0)/pi*amz**4/aml*
      .              beta_hdec(ama**2/aml**2)*glaa**2
 
-c MMM changed 10/7/18         
+c MMM changed 19/1/19         
                if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-                  HLAALORESC=HAA*GFCALC/GF
-                  check = (HLAALORESC-HLAALO)/HLAALORESC
+                  if(irenscheme.eq.0) then
+                     do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+                 HLAALORESC(i)=HAA*glaar**2/glaa**2*GFCALC/GF
+                 check = (HLAALORESC(i)-HLAALOR(i))/HLAALORESC(i)
                   if(dabs(check).ge.1.D-5) then
                      print*,'There is a problem in the LO width h->AA.'
                   endif
-                  if(irenscheme.eq.0) then
-                     do i=1,14,1
-                        HLAAEW(i) = HLAALORESC*(1.D0+
-     .                       (HLAANLO(i)-HLAALO)/HLAALO)
+                  HLAAEW(i) = HLAALORESC(i)*(1.D0+
+     .                 (HLAANLO(i)-HLAALOR(i))/HLAALOR(i))
                      end do
                   elseif(irenscheme.ne.0) then
-                     HLAAEW(1) = HLAALORESC*(1.D0+
-     .                    (HLAANLO(1)-HLAALO)/HLAALO)                
+                 call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+                 HLAALORESC(1)=HAA*glaar**2/glaa**2*GFCALC/GF
+                 check = (HLAALORESC(1)-HLAALOR(1))/HLAALORESC(1)
+                  if(dabs(check).ge.1.D-5) then
+                     print*,'There is a problem in the LO width h->AA.'
+                  endif
+                  HLAAEW(1) = HLAALORESC(1)*(1.D0+
+     .                 (HLAANLO(1)-HLAALOR(1))/HLAALOR(1))
                   endif
                endif
-c end MMM changed 10/7/18                         
+c end MMM changed 19/1/19                         
             endif
          endif
       endif
@@ -9432,11 +11128,13 @@ c MMM changed 10/7/18
             if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
                HLCHCHLORESC=0.D0
                if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     HLHPHMEW(i) = HLCHCHLORESC
+                  do i=1,17,1
+                     HLCHCHLORESC(i)=0.D0
+                     HLHPHMEW(i) = HLCHCHLORESC(i)
                   end do
                elseif(irenscheme.ne.0) then
-                  HLHPHMEW(1) = HLCHCHLORESC                  
+                  HLCHCHLORESC(1)=0.D0
+                  HLHPHMEW(1) = HLCHCHLORESC(1)                 
                endif
             endif
 c end MMM changed 10/7/18   
@@ -9444,24 +11142,31 @@ c end MMM changed 10/7/18
             hlchch=gf/8d0/dsqrt(2d0)/pi*amz**4/aml*
      .           beta_hdec(amch**2/aml**2)*glpm**2
 
-c MMM changed 10/7/18         
+c MMM changed 19/1/19         
             if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-               HLCHCHLORESC=Hlchch*GFCALC/GF
-               check = (HLCHCHLORESC-HLHPHMLO)/HLCHCHLORESC
-               if(dabs(check).ge.1.D-5) then
-                  print*,'There is a problem in the LO width h->H+H-.'
-               endif
                if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     HLHPHMEW(i) = HLCHCHLORESC*(1.D0+
-     .                    (HLHPHMNLO(i)-HLHPHMLO)/HLHPHMLO)
+                  do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+                  HLCHCHLORESC(i)=Hlchch*glpmr**2/glpm**2*GFCALC/GF
+                  check = (HLCHCHLORESC(i)-HLHPHMLOR(i))/HLCHCHLORESC(i)
+                  if(dabs(check).ge.1.D-5) then
+                   print*,'There is a problem in the LO width h->H+H-.'
+                  endif
+                  HLHPHMEW(i) = HLCHCHLORESC(i)*(1.D0+
+     .                 (HLHPHMNLO(i)-HLHPHMLOR(i))/HLHPHMLOR(i))
                   end do
                elseif(irenscheme.ne.0) then
-                  HLHPHMEW(1) = HLCHCHLORESC*(1.D0+
-     .                 (HLHPHMNLO(1)-HLHPHMLO)/HLHPHMLO)                 
+                  call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+                  HLCHCHLORESC(1)=Hlchch*glpmr**2/glpm**2*GFCALC/GF
+                  check = (HLCHCHLORESC(1)-HLHPHMLOR(1))/HLCHCHLORESC(1)
+                  if(dabs(check).ge.1.D-5) then
+                   print*,'There is a problem in the LO width h->H+H-.'
+                  endif
+                  HLHPHMEW(1) = HLCHCHLORESC(1)*(1.D0+
+     .                 (HLHPHMNLO(1)-HLHPHMLOR(1))/HLHPHMLOR(1))
                endif
             endif
-c end MMM changed 10/7/18            
+c end MMM changed 19/1/19            
             
          endif
       elseif(i2hdm.eq.0) then
@@ -9470,7 +11175,7 @@ c end MMM changed 10/7/18
 
 c     print*,'h -> H+H-',hlchch
 
-C  H ---> A Z
+C  h ---> A Z
       IF (AML.LE.AMZ+AMA) THEN
       HAZ=0
       ELSE
@@ -9490,13 +11195,14 @@ c MMM changed 22/8/2013
                haz=0
 c MMM changed 10/7/18         
             if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-               HLAZLORESC=0.D0
                if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     HLAZEW(i) = HLAZLORESC
+                  do i=1,17,1
+                     HLAZLORESC(i)=0.D0
+                     HLAZEW(i) = HLAZLORESC(i)
                   end do
                elseif(irenscheme.ne.0) then
-                  HLAZEW(1) = HLAZLORESC                  
+                  HLAZLORESC(1)=0.D0
+                  HLAZEW(1) = HLAZLORESC(1)                 
                endif
             endif
 c end MMM changed 10/7/18                  
@@ -9505,13 +11211,14 @@ c end MMM changed 10/7/18
                   haz=0
 c MMM changed 10/7/18         
             if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-               HLAZLORESC=0.D0
                if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     HLAZEW(i) = HLAZLORESC
+                  do i=1,17,1
+                     HLAZLORESC(i)=0.D0
+                     HLAZEW(i) = HLAZLORESC(i)
                   end do
                elseif(irenscheme.ne.0) then
-                  HLAZEW(1) = HLAZLORESC                  
+                  HLAZLORESC(1)=0.D0                  
+                  HLAZEW(1) = HLAZLORESC(1)              
                endif
             endif
 c end MMM changed 10/7/18                     
@@ -9519,18 +11226,23 @@ c end MMM changed 10/7/18
                   haz=9.d0*gf**2/8.d0/pi**3*amz**4*aml*gzal**2*
      .                 (7.d0/12.d0-10.d0/9.d0*ss+40.d0/27.d0*ss**2)
      .                 *hvh((ama/aml)**2,(amz/aml)**2)
-c MMM changed 10/7/2018       
+c MMM changed 19/1/2019       
+c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
                   if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
                      HLAZLORESC = HAZ*GFCALC/GF
                      if(irenscheme.eq.0) then
-                        do i=1,14,1
-                           HLAZEW(i) = HLAZLORESC
+                        do i=1,17,1
+                   call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+                   HLAZLORESC(i) = HAZ*gzalr**2/gzal**2*GFCALC**2/GF**2
+                   HLAZEW(i) = HLAZLORESC(i)
                         end do
                      elseif(irenscheme.ne.0) then
-                        HLAZEW(1) = HLAZLORESC                  
+                   call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+                   HLAZLORESC(1) = HAZ*gzalr**2/gzal**2*GFCALC**2/GF**2
+                   HLAZEW(1) = HLAZLORESC(1)
                      endif                     
                   endif
-c end MMM changed 10/7/2018                  
+c end MMM changed 19/1/2019                  
                endif
             elseif (aml.lt.xm2) then
                xx(1) = xm1-1d0
@@ -9550,41 +11262,86 @@ c end MMM changed 10/7/2018
      .              *lamb_hdec(xx(4)**2/amz**2,ama**2/amz**2)**2
                yy(4)=gf/8.d0/dsqrt(2d0)/pi*amz**4/xx(4)*caz
                haz = fint_hdec(aml,xx,yy)*gzal**2
-c MMM changed 10/7/2018       
+c MMM changed 19/1/2019       
+c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
                   if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-                     HLAZLORESC = HAZ*GFCALC/GF
                      if(irenscheme.eq.0) then
-                        do i=1,14,1
-                           HLAZEW(i) = HLAZLORESC
+                        do i=1,17,1
+                   call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+               xx(1) = xm1-1d0
+               xx(2) = xm1
+               xx(3) = xm2
+               xx(4) = xm2+1d0
+               yy(1)=9.d0*GFCALC**2/8.d0/pi**3*amz**4*xx(1)*
+     .              (7.d0/12.d0-10.d0/9.d0*ss+40.d0/27.d0*ss**2)
+     .              *hvh((ama/xx(1))**2,(amz/xx(1))**2)
+               yy(2)=9.d0*GFCALC**2/8.d0/pi**3*amz**4*xx(2)*
+     .              (7.d0/12.d0-10.d0/9.d0*ss+40.d0/27.d0*ss**2)
+     .              *hvh((ama/xx(2))**2,(amz/xx(2))**2)
+               caz=lamb_hdec(ama**2/xx(3)**2,amz**2/xx(3)**2)
+     .              *lamb_hdec(xx(3)**2/amz**2,ama**2/amz**2)**2
+               yy(3)=GFCALC/8.d0/dsqrt(2d0)/pi*amz**4/xx(3)*caz
+               caz=lamb_hdec(ama**2/xx(4)**2,amz**2/xx(4)**2)
+     .              *lamb_hdec(xx(4)**2/amz**2,ama**2/amz**2)**2
+               yy(4)=GFCALC/8.d0/dsqrt(2d0)/pi*amz**4/xx(4)*caz
+               haz = fint_hdec(aml,xx,yy)*gzal**2                           
+                   HLAZLORESC(i) = HAZ*gzalr**2/gzal**2
+                   HLAZEW(i) = HLAZLORESC(i)
                         end do
                      elseif(irenscheme.ne.0) then
-                        HLAZEW(1) = HLAZLORESC                  
+                   call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+               xx(1) = xm1-1d0
+               xx(2) = xm1
+               xx(3) = xm2
+               xx(4) = xm2+1d0
+               yy(1)=9.d0*GFCALC**2/8.d0/pi**3*amz**4*xx(1)*
+     .              (7.d0/12.d0-10.d0/9.d0*ss+40.d0/27.d0*ss**2)
+     .              *hvh((ama/xx(1))**2,(amz/xx(1))**2)
+               yy(2)=9.d0*GFCALC**2/8.d0/pi**3*amz**4*xx(2)*
+     .              (7.d0/12.d0-10.d0/9.d0*ss+40.d0/27.d0*ss**2)
+     .              *hvh((ama/xx(2))**2,(amz/xx(2))**2)
+               caz=lamb_hdec(ama**2/xx(3)**2,amz**2/xx(3)**2)
+     .              *lamb_hdec(xx(3)**2/amz**2,ama**2/amz**2)**2
+               yy(3)=GFCALC/8.d0/dsqrt(2d0)/pi*amz**4/xx(3)*caz
+               caz=lamb_hdec(ama**2/xx(4)**2,amz**2/xx(4)**2)
+     .              *lamb_hdec(xx(4)**2/amz**2,ama**2/amz**2)**2
+               yy(4)=GFCALC/8.d0/dsqrt(2d0)/pi*amz**4/xx(4)*caz
+               haz = fint_hdec(aml,xx,yy)*gzal**2                           
+                   HLAZLORESC(1) = HAZ*gzalr**2/gzal**2
+                   HLAZEW(1) = HLAZLORESC(1)
                      endif
                   endif
-c end MMM changed 10/7/2018               
+c end MMM changed 19/1/2019               
             else
                caz=lamb_hdec(ama**2/aml**2,amz**2/aml**2)
      .              *lamb_hdec(aml**2/amz**2,ama**2/amz**2)**2
                haz=gf/8.d0/dsqrt(2d0)/pi*amz**4/aml*caz*gzal**2
 
-c MMM changed 10/7/18         
+c MMM changed 19/1/19         
             if(ielw2hdm.eq.0) then
-               HLAZLORESC=haz*GFCALC/GF
-               check = (HLAZLORESC-HLZALO)/HLAZLORESC
-               if(dabs(check).ge.1.D-5) then
-                  print*,'There is a problem in the LO width h->AZ.'
-               endif
                if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     HLAZEW(i) = HLAZLORESC*(1.D0+
-     .                    (HLZANLO(i)-HLZALO)/HLZALO)
+                  do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+                 HLAZLORESC(i)=haz*gzalr**2/gzal**2*GFCALC/GF
+                 check = (HLAZLORESC(i)-HLZALOR(i))/HLAZLORESC(i)
+                 if(dabs(check).ge.1.D-5) then
+                    print*,'There is a problem in the LO width h->AZ.'
+                 endif
+                 HLAZEW(i) = HLAZLORESC(i)*(1.D0+
+     .                (HLZANLO(i)-HLZALOR(i))/HLZALOR(i))
                   end do
                elseif(irenscheme.ne.0) then
-                  HLAZEW(1) = HLAZLORESC*(1.D0+
-     .                 (HLZANLO(1)-HLZALO)/HLZALO)                  
+                 call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+                 HLAZLORESC(1)=haz*gzalr**2/gzal**2*GFCALC/GF
+                 check = (HLAZLORESC(1)-HLZALOR(1))/HLAZLORESC(1)
+                 if(dabs(check).ge.1.D-5) then
+                    print*,'There is a problem in the LO width h->AZ.'
+                 endif
+                 HLAZEW(1) = HLAZLORESC(1)*(1.D0+
+     .                (HLZANLO(1)-HLZALOR(1))/HLZALOR(1))
                endif
             endif
-c end MMM changed 10/7/18     
+c end MMM changed 19/1/19     
                
             endif
          else
@@ -9592,13 +11349,14 @@ c end MMM changed 10/7/18
                haz=0
 c MMM changed 10/7/18         
             if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-               HLAZLORESC=0.D0
                if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     HLAZEW(i) = HLAZLORESC
+                  do i=1,17,1
+                     HLAZLORESC(i)=0.D0
+                     HLAZEW(i) = HLAZLORESC(i)
                   end do
                elseif(irenscheme.ne.0) then
-                  HLAZEW(1) = HLAZLORESC                  
+                  HLAZLORESC(1)=0.D0
+                  HLAZEW(1) = HLAZLORESC(1)                  
                endif
             endif
 c end MMM changed 10/7/18               
@@ -9607,24 +11365,31 @@ c end MMM changed 10/7/18
      .              *lamb_hdec(aml**2/amz**2,ama**2/amz**2)**2
                haz=gf/8.d0/dsqrt(2d0)/pi*amz**4/aml*caz*gzal**2
 
-c MMM changed 10/7/18         
+c MMM changed 19/1/19         
             if(ielw2hdm.eq.0) then
-               HLAZLORESC=haz*GFCALC/GF
-               check = (HLAZLORESC-HLZALO)/HLAZLORESC
-               if(dabs(check).ge.1.D-5) then
-                  print*,'There is a problem in the LO width h->AZ.'
-               endif
                if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     HLAZEW(i) = HLAZLORESC*(1.D0+
-     .                    (HLZANLO(i)-HLZALO)/HLZALO)
+                  do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+                 HLAZLORESC(i)=haz*gzalr**2/gzal**2*GFCALC/GF
+                 check = (HLAZLORESC(i)-HLZALOR(i))/HLAZLORESC(i)
+                 if(dabs(check).ge.1.D-5) then
+                    print*,'There is a problem in the LO width h->AZ.'
+                 endif
+                 HLAZEW(i) = HLAZLORESC(i)*(1.D0+
+     .                (HLZANLO(i)-HLZALOR(i))/HLZALOR(i))
                   end do
                elseif(irenscheme.ne.0) then
-                  HLAZEW(1) = HLAZLORESC*(1.D0+
-     .                 (HLZANLO(1)-HLZALO)/HLZALO)                  
+                 call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+                 HLAZLORESC(1)=haz*gzalr**2/gzal**2*GFCALC/GF
+                 check = (HLAZLORESC(1)-HLZALOR(1))/HLAZLORESC(1)
+                 if(dabs(check).ge.1.D-5) then
+                    print*,'There is a problem in the LO width h->AZ.'
+                 endif
+                 HLAZEW(1) = HLAZLORESC(1)*(1.D0+
+     .                (HLZANLO(1)-HLZALOR(1))/HLZALOR(1))
                endif
             endif
-c end MMM changed 10/7/18   
+c end MMM changed 19/1/19   
                
             endif
          endif
@@ -9633,7 +11398,7 @@ c end MMM changed 22/8/2013
 
 c     print*,'h -> AZ',haz
 
-C  H ---> H+ W+
+C  h ---> H+ W+
 
       IF (AML.LE.AMW+AMCH) THEN
       HHW=0
@@ -9654,13 +11419,14 @@ c MMM changed 22/8/2013
                hhw=0.d0
 c MMM changed 10/7/18         
             if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-               HLHPWMLORESC=0.D0
                if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     HLHPWMEW(i) = HLHPWMLORESC
+                  do i=1,17,1
+                     HLHPWMLORESC(i)=0.D0
+                     HLHPWMEW(i) = HLHPWMLORESC(i)
                   end do
                elseif(irenscheme.ne.0) then
-                  HLHPWMEW(1) = HLHPWMLORESC
+                  HLHPWMLORESC(1)=0.D0
+                  HLHPWMEW(1) = HLHPWMLORESC(1)
                endif
             endif
 c end MMM changed 10/7/18               
@@ -9669,13 +11435,14 @@ c end MMM changed 10/7/18
                   hhw=0
 c MMM changed 10/7/18         
             if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-               HLHPWMLORESC=0.D0
                if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     HLHPWMEW(i) = HLHPWMLORESC
+                  do i=1,17,1
+                     HLHPWMLORESC(i)=0.D0
+                     HLHPWMEW(i) = HLHPWMLORESC(i)
                   end do
                elseif(irenscheme.ne.0) then
-                  HLHPWMEW(1) = HLHPWMLORESC
+                  HLHPWMLORESC(1)=0.D0
+                  HLHPWMEW(1) = HLHPWMLORESC(1)
                endif
             endif
 c end MMM changed 10/7/18                      
@@ -9706,18 +11473,22 @@ c ---- end numeric check
 
                   hhw=9.d0*gf**2/16.d0/pi**3*amw**4*aml*ghvv**2*2
      .                 *hvh((amch/aml)**2,(amw/aml)**2)
-c MMM changed 10/7/18                           
+c MMM changed 19/1/19                           
+c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
                   if(ielw2hdm.eq.0) then
-                     HLHPWMLORESC = hhw*GFCALC/GF
                      if(irenscheme.eq.0) then
-                        do i=1,14,1
-                           HLHPWMEW(i) = HLHPWMLORESC
+                        do i=1,17,1
+            call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+            HLHPWMLORESC(i) = hhw*ghvvr**2/ghvv**2*GFCALC**2/GF**2
+            HLHPWMEW(i) = HLHPWMLORESC(i)
                         end do
                      elseif(irenscheme.ne.0) then
-                        HLHPWMEW(1) = HLHPWMLORESC
+            call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+            HLHPWMLORESC(1) = hhw*ghvvr**2/ghvv**2*GFCALC**2/GF**2
+            HLHPWMEW(1) = HLHPWMLORESC(1)
                      endif                     
                   endif
-c end MMM changed 10/7/18                           
+c end MMM changed 19/1/19                           
                endif
             elseif (aml.lt.xm2) then
                xx(1) = xm1-1d0
@@ -9735,41 +11506,82 @@ c end MMM changed 10/7/18
      .              *lamb_hdec(xx(4)**2/amw**2,amch**2/amw**2)**2
                yy(4)=2*gf/8.d0/dsqrt(2d0)/pi*amw**4/xx(4)*chw
                hhw=fint_hdec(aml,xx,yy)*ghvv**2
-c MMM changed 10/7/18                                          
+c MMM changed 19/1/19                                          
+c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
                if(ielw2hdm.eq.0) then
-                  HLHPWMLORESC = hhw*GFCALC/GF
                   if(irenscheme.eq.0) then
-                     do i=1,14,1
-                        HLHPWMEW(i) = HLHPWMLORESC
+                     do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+               xx(1) = xm1-1d0
+               xx(2) = xm1
+               xx(3) = xm2
+               xx(4) = xm2+1d0
+               yy(1)=9.d0*GFCALC**2/16.d0/pi**3*amw**4*xx(1)*2
+     .              *hvh((amch/xx(1))**2,(amw/xx(1))**2)
+               yy(2)=9.d0*GFCALC**2/16.d0/pi**3*amw**4*xx(2)*2
+     .              *hvh((amch/xx(2))**2,(amw/xx(2))**2)
+               chw=lamb_hdec(amch**2/xx(3)**2,amw**2/xx(3)**2)
+     .              *lamb_hdec(xx(3)**2/amw**2,amch**2/amw**2)**2
+               yy(3)=2*GFCALC/8.d0/dsqrt(2d0)/pi*amw**4/xx(3)*chw
+               chw=lamb_hdec(amch**2/xx(4)**2,amw**2/xx(4)**2)
+     .              *lamb_hdec(xx(4)**2/amw**2,amch**2/amw**2)**2
+               yy(4)=2*GFCALC/8.d0/dsqrt(2d0)/pi*amw**4/xx(4)*chw
+               hhw=fint_hdec(aml,xx,yy)*ghvv**2
+               HLHPWMLORESC(i) = hhw*ghvvr**2/ghvv**2
+               HLHPWMEW(i) = HLHPWMLORESC(i)
                      end do
                   elseif(irenscheme.ne.0) then
-                     HLHPWMEW(1) = HLHPWMLORESC
+               call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+               xx(1) = xm1-1d0
+               xx(2) = xm1
+               xx(3) = xm2
+               xx(4) = xm2+1d0
+               yy(1)=9.d0*GFCALC**2/16.d0/pi**3*amw**4*xx(1)*2
+     .              *hvh((amch/xx(1))**2,(amw/xx(1))**2)
+               yy(2)=9.d0*GFCALC**2/16.d0/pi**3*amw**4*xx(2)*2
+     .              *hvh((amch/xx(2))**2,(amw/xx(2))**2)
+               chw=lamb_hdec(amch**2/xx(3)**2,amw**2/xx(3)**2)
+     .              *lamb_hdec(xx(3)**2/amw**2,amch**2/amw**2)**2
+               yy(3)=2*GFCALC/8.d0/dsqrt(2d0)/pi*amw**4/xx(3)*chw
+               chw=lamb_hdec(amch**2/xx(4)**2,amw**2/xx(4)**2)
+     .              *lamb_hdec(xx(4)**2/amw**2,amch**2/amw**2)**2
+               yy(4)=2*GFCALC/8.d0/dsqrt(2d0)/pi*amw**4/xx(4)*chw
+               hhw=fint_hdec(aml,xx,yy)*ghvv**2
+               HLHPWMLORESC(1) = hhw*ghvvr**2/ghvv**2
+               HLHPWMEW(1) = HLHPWMLORESC(1)
                   endif                   
                endif
-c end MMM changed 10/7/18                                          
+c end MMM changed 19/1/19                                          
             else
                chw=lamb_hdec(amch**2/aml**2,amw**2/aml**2)
      .              *lamb_hdec(aml**2/amw**2,amch**2/amw**2)**2
                hhw=2*gf/8.d0/dsqrt(2d0)/pi*amw**4/aml*chw*ghvv**2
 
-c MMM changed 10/7/18         
+c MMM changed 19/1/19         
             if(ielw2hdm.eq.0) then
-               HLHPWMLORESC=hhw*GFCALC/GF
-               check = (HLHPWMLORESC-HLHPWMLO)/HLHPWMLORESC
+               if(irenscheme.eq.0) then
+                  do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+               HLHPWMLORESC(i)=hhw*GFCALC/GF*ghvvr*2/ghvv**2
+               check = (HLHPWMLORESC(i)-HLHPWMLOR(i))/HLHPWMLORESC(i)
                if(dabs(check).ge.1.D-5) then
                   print*,'There is a problem in the LO width h->H+W-.'
                endif
-               if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     HLHPWMEW(i) = HLHPWMLORESC*(1.D0+
-     .                    (HLHPWMNLO(i)-HLHPWMLO)/HLHPWMLO)
+               HLHPWMEW(i) = HLHPWMLORESC(i)*(1.D0+
+     .              (HLHPWMNLO(i)-HLHPWMLOR(i))/HLHPWMLOR(i))
                   end do
                elseif(irenscheme.ne.0) then
-                  HLHPWMEW(1) = HLHPWMLORESC*(1.D0+
-     .                 (HLHPWMNLO(1)-HLHPWMLO)/HLHPWMLO)
+               call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+               HLHPWMLORESC(1)=hhw*GFCALC/GF*ghvvr**2/ghvv**2
+               check = (HLHPWMLORESC(1)-HLHPWMLOR(1))/HLHPWMLORESC(1)
+               if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width h->H+W-.'
+               endif
+               HLHPWMEW(1) = HLHPWMLORESC(1)*(1.D0+
+     .              (HLHPWMNLO(1)-HLHPWMLOR(1))/HLHPWMLOR(1))
                endif
             endif
-c end MMM changed 10/7/18   
+c end MMM changed 19/1/19   
                
             endif
          else
@@ -9777,13 +11589,14 @@ c end MMM changed 10/7/18
                hhw=0.d0
 c MMM changed 10/7/18         
             if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-               HLHPWMLORESC=0.D0
                if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     HLHPWMEW(i) = HLHPWMLORESC
+                  do i=1,17,1
+                     HLHPWMLORESC(i)=0.D0
+                     HLHPWMEW(i) = HLHPWMLORESC(i)
                   end do
                elseif(irenscheme.ne.0) then
-                  HLHPWMEW(1) = HLHPWMLORESC
+                  HLHPWMLORESC(1)=0.D0
+                  HLHPWMEW(1) = HLHPWMLORESC(1)
                endif
             endif
 c end MMM changed 10/7/18                
@@ -9792,21 +11605,28 @@ c end MMM changed 10/7/18
      .              *lamb_hdec(aml**2/amw**2,amch**2/amw**2)**2
                hhw=2*gf/8.d0/dsqrt(2d0)/pi*amw**4/aml*chw*ghvv**2
 
-c MMM changed 10/7/18         
+c MMM changed 19/1/19         
             if(ielw2hdm.eq.0) then
-               HLHPWMLORESC=hhw*GFCALC/GF
-               check = (HLHPWMLORESC-HLHPWMLO)/HLHPWMLORESC
+               if(irenscheme.eq.0) then
+                  do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+               HLHPWMLORESC(i)=hhw*GFCALC/GF*ghvvr**2/ghvv**2
+               check = (HLHPWMLORESC(i)-HLHPWMLOR(i))/HLHPWMLORESC(i)
                if(dabs(check).ge.1.D-5) then
                   print*,'There is a problem in the LO width h->H+W-.'
                endif
-               if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     HLHPWMEW(i) = HLHPWMLORESC*(1.D0+
-     .                    (HLHPWMNLO(i)-HLHPWMLO)/HLHPWMLO)
+               HLHPWMEW(i) = HLHPWMLORESC(i)*(1.D0+
+     .              (HLHPWMNLO(i)-HLHPWMLOR(i))/HLHPWMLOR(i))
                   end do
                elseif(irenscheme.ne.0) then
-                  HLHPWMEW(1) = HLHPWMLORESC*(1.D0+
-     .                 (HLHPWMNLO(1)-HLHPWMLO)/HLHPWMLO)
+               call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+               HLHPWMLORESC(i)=hhw*GFCALC/GF*ghvvr**2/ghvv**2
+               check = (HLHPWMLORESC(1)-HLHPWMLOR(1))/HLHPWMLORESC(1)
+               if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width h->H+W-.'
+               endif
+               HLHPWMEW(1) = HLHPWMLORESC(1)*(1.D0+
+     .              (HLHPWMNLO(1)-HLHPWMLOR(1))/HLHPWMLOR(1))
                endif
             endif
 c end MMM changed 10/7/18                 
@@ -10028,39 +11848,98 @@ c If OMIT ELW2 = 0, then the following decay widths include the usual
 c QCD corrections (where applicable) and off-shell decays, without elw
 c corrections, but rescaled by GFCALC/GF
 
-      WTOT1=HLGGRESC+HLMMLORESC+HLLLLORESC+HLSSQCD+HLCCQCD+HLBBQCD
-     .     +HLTTQCD+HLGARESC+HLZGARESC+HLWWLORESC+HLZZLORESC
-     .        +HLAALORESC+HLCHCHLORESC+HLAZLORESC+HLHPWMLORESC
+      if(irenscheme.eq.0) then
+      do i=1,17,1
+         
+      WTOT1(i)=HLGGRESCR(i)+HLMMLORESC(i)+HLLLLORESC(i)+HLSSQCD(i)
+     .        +HLCCQCD(i)+HLBBQCD(i)+HLTTQCD(i)+HLGARESC(i)+HLZGARESC(i)
+     .        +HLWWLORESC(i)+HLZZLORESC(i)+HLAALORESC(i)+HLCHCHLORESC(i)
+     .        +HLAZLORESC(i)+HLHPWMLORESC(i)
 
-      hlwdth1 = wtot1
+      hlwdth1(i) = wtot1(i)
+
+c      print*,''
+c      print*,'h decays'
+c      print*,''      
+c      if(i.eq.7) then
+c         print*,''
+c         print*,'h decays'
+c         print*,'wtot1(i)',wtot1(i)
+c      endif
+      
+      HLBRG1(i)=HLGGRESCR(i)/WTOT1(i)
+      HLBRM1(i)=HLMMLORESC(i)/WTOT1(i)
+      HLBRL1(i)=HLLLLORESC(i)/WTOT1(i)
+      HLBRS1(i)=HLSSQCD(i)/WTOT1(i)
+      HLBRC1(i)=HLCCQCD(i)/WTOT1(i)
+      HLBRB1(i)=HLBBQCD(i)/WTOT1(i)
+      HLBRT1(i)=HLTTQCD(i)/WTOT1(i)
+      HLBRGA1(i)=HLGARESC(i)/WTOT1(i)
+      HLBRZGA1(i)=HLZGARESC(i)/WTOT1(i)
+      HLBRW1(i)=HLWWLORESC(i)/WTOT1(i)
+      HLBRZ1(i)=HLZZLORESC(i)/WTOT1(i)
+      HLBRA1(i)=HLAALORESC(i)/WTOT1(i)
+      HLBRCHCH1(i)=HLCHCHLORESC(i)/WTOT1(i)
+      HLBRAZ1(i)=HLAZLORESC(i)/WTOT1(i)
+      HLBRHW1(i)=HLHPWMLORESC(i)/WTOT1(i)
+
+c      if(i.eq.7) then
+c      print*,'hlbrg1',hlggrescr(i),hlbrg1(i)
+c      print*,'hlbrm1',hlmmloresc(i),hlbrm1(i)
+c      print*,'hlbrl1',hlllloresc(i),hlbrl1(i)
+c      print*,'hlbrs1',hlssqcd(i),hlbrs1(i)
+c      print*,'hlbrc1',hlccqcd(i),hlbrc1(i)
+c      print*,'hlbrb1',hlbbqcd(i),hlbrb1(i)
+c      print*,'hlbrt1',hlttqcd(i),hlbrt1(i)
+c      print*,'hlbrga1',hlgaresc(i),hlbrga1(i)
+c      print*,'hlbrzga1',hlzgaresc(i),hlbrzga1(i)
+c      print*,'hlbrw1',hlwwloresc(i),hlbrw1(i)
+c      print*,'hlbrz1',hlzzloresc(i),hlbrz1(i)
+c      print*,'hlbra1',hlaaloresc(i),hlbra1(i)
+c      print*,'hlbrchch1',hlchchloresc(i),hlbrchch1(i)
+c      print*,'hlbraz1',hlazloresc(i),hlbraz1(i)
+c      print*,'hlbrhw1',hlhpwmloresc(i),hlbrhw1(i)
+c      print*,'rescal',gfcalc/gf
+c      endif
+
+      end do
+
+      elseif(irenscheme.ne.0) then
+
+      WTOT1(1)=HLGGRESCR(1)+HLMMLORESC(1)+HLLLLORESC(1)+HLSSQCD(1)
+     .        +HLCCQCD(1)+HLBBQCD(1)+HLTTQCD(1)+HLGARESC(1)+HLZGARESC(1)
+     .        +HLWWLORESC(1)+HLZZLORESC(1)+HLAALORESC(1)+HLCHCHLORESC(1)
+     .        +HLAZLORESC(1)+HLHPWMLORESC(1)
+
+      hlwdth1 = wtot1(1)
 
 c      print*,''
 c      print*,'h decays'
 c      print*,''      
 c      print*,'wtot1',wtot1
       
-      HLBRG1=HLGGRESC/WTOT1
-      HLBRM1=HLMMLORESC/WTOT1
-      HLBRL1=HLLLLORESC/WTOT1
-      HLBRS1=HLSSQCD/WTOT1
-      HLBRC1=HLCCQCD/WTOT1
-      HLBRB1=HLBBQCD/WTOT1
-      HLBRT1=HLTTQCD/WTOT1
-      HLBRGA1=HLGARESC/WTOT1
-      HLBRZGA1=HLZGARESC/WTOT1
-      HLBRW1=HLWWLORESC/WTOT1
-      HLBRZ1=HLZZLORESC/WTOT1
-      HLBRA1=HLAALORESC/WTOT1
-      HLBRCHCH1=HLCHCHLORESC/WTOT1
-      HLBRAZ1=HLAZLORESC/WTOT1
-      HLBRHW1=HLHPWMLORESC/WTOT1
+      HLBRG1(1)=HLGGRESCR(1)/WTOT1(1)
+      HLBRM1(1)=HLMMLORESC(1)/WTOT1(1)
+      HLBRL1(1)=HLLLLORESC(1)/WTOT1(1)
+      HLBRS1(1)=HLSSQCD(1)/WTOT1(1)
+      HLBRC1(1)=HLCCQCD(1)/WTOT1(1)
+      HLBRB1(1)=HLBBQCD(1)/WTOT1(1)
+      HLBRT1(1)=HLTTQCD(1)/WTOT1(1)
+      HLBRGA1(1)=HLGARESC(1)/WTOT1(1)
+      HLBRZGA1(1)=HLZGARESC(1)/WTOT1(1)
+      HLBRW1(1)=HLWWLORESC(1)/WTOT1(1)
+      HLBRZ1(1)=HLZZLORESC(1)/WTOT1(1)
+      HLBRA1(1)=HLAALORESC(1)/WTOT1(1)
+      HLBRCHCH1(1)=HLCHCHLORESC(1)/WTOT1(1)
+      HLBRAZ1(1)=HLAZLORESC(1)/WTOT1(1)
+      HLBRHW1(1)=HLHPWMLORESC(1)/WTOT1(1)
 
 c      print*,'hlbrg',hlggresc,hlbrg1
 c      print*,'hlbrm',hlmmloresc,hlbrm1
 c      print*,'hlbrl',hlllloresc,hlbrl1
 c      print*,'hlbrs',hlssqcd,hlbrs1
 c      print*,'hlbrc',hlccqcd,hlbrc1
-c      print*,'hlbrb',hlbbqcd,hlbrb1
+c      print*,'hlbrb',hlbbqcd(1),hlbrb1(1)
 c      print*,'hlbrt',hlttqcd,hlbrt1
 c      print*,'hlbrga1',hlgaresc,hlbrga1
 c      print*,'hlbrzga',hlzgaresc,hlbrzga1
@@ -10070,30 +11949,34 @@ c      print*,'hlbra',hlaaloresc,hlbra1
 c      print*,'hlbrchch',hlchchloresc,hlbrchch1
 c      print*,'hlbraz',hlazloresc,hlbraz1
 c      print*,'hlbrhw1',hlhpwmloresc,hlbrhw1
-c      print*,'rescal',gfcalc/gf
+c     print*,'rescal',gfcalc/gf
 
+
+      endif
+
+      
 c If OMIT ELW2 = 0, then the following decay widths include the usual
 c QCD corrections and the EW corrections. The latter are only included for
 c on-shell decays and non-loop induced decays
 
       if(irenscheme.eq.0) then
-      do i=1,14,1
-         WTOT2(i)=HLGGRESC+HLMMEW(i)+HLLLEW(i)+HLSSQCDEW(i)+HLCCQCDEW(i)
-     .           +HLBBQCDEW(i)+HLTTQCDEW(i)+HLGARESC+HLZGARESC
-     .           +HLWWEW(i)+HLZZEW(i)+HLAAEW(i)+HLHPHMEW(i)+HLAZEW(i)
-     .        +HLHPWMEW(i)
+      do i=1,17,1
+         WTOT2(i)=HLGGRESCR(i)+HLMMEW(i)+HLLLEW(i)+HLSSQCDEW(i)
+     .        +HLCCQCDEW(i)+HLBBQCDEW(i)+HLTTQCDEW(i)+HLGARESC(i)
+     .        +HLZGARESC(i)+HLWWEW(i)+HLZZEW(i)+HLAAEW(i)+HLHPHMEW(i)
+     .        +HLAZEW(i)+HLHPWMEW(i)
 
          hlwdth2(i) = wtot2(i)
       
-      HLBRG2(i)=HLGGRESC/WTOT2(i)
+      HLBRG2(i)=HLGGRESCR(i)/WTOT2(i)
       HLBRM2(i)=HLMMEW(i)/WTOT2(i)      
       HLBRL2(i)=HLLLEW(i)/WTOT2(i)
       HLBRS2(i)=HLSSQCDEW(i)/WTOT2(i)
       HLBRC2(i)=HLCCQCDEW(i)/WTOT2(i)      
       HLBRB2(i)=HLBBQCDEW(i)/WTOT2(i)
       HLBRT2(i)=HLTTQCDEW(i)/WTOT2(i)
-      HLBRGA2(i)=HLGARESC/WTOT2(i)
-      HLBRZGA2(i)=HLZGARESC/WTOT2(i)
+      HLBRGA2(i)=HLGARESC(i)/WTOT2(i)
+      HLBRZGA2(i)=HLZGARESC(i)/WTOT2(i)
       HLBRW2(i)=HLWWEW(i)/WTOT2(i)
       HLBRZ2(i)=HLZZEW(i)/WTOT2(i)
       HLBRA2(i)=HLAAEW(i)/WTOT2(i)
@@ -10101,7 +11984,7 @@ c on-shell decays and non-loop induced decays
       HLBRAZ2(i)=HLAZEW(i)/WTOT2(i)
       HLBRHW2(i)=HLHPWMEW(i)/WTOT2(i)
 
-c      if(i.eq.2) then
+c      if(i.eq.7) then
 c      print*,''
 c      print*,'wtot2',wtot2(i),i
 c      print*,''
@@ -10112,8 +11995,8 @@ c      print*,'hlbrs2(i)',hlssqcdew(i),hlbrs2(i)
 c      print*,'hlbrc2(i)',hlccqcdew(i),hlbrc2(i)
 c      print*,'hlbrb2(i)',hlbbqcdew(i),hlbrb2(i)
 c      print*,'hlbrt2(i)',hlttqcdew(i),hlbrt2(i)
-c      print*,'hlbrga2',hlgaresc,hlbrga2(i)
-c      print*,'hlbrzga2',hlzgaresc,hlbrzga2(i)
+c      print*,'hlbrga2',hlgaresc(i),hlbrga2(i)
+c      print*,'hlbrzga2',hlzgaresc(i),hlbrzga2(i)
 c      print*,'hlbrw2(i)',hlwwew(i),hlbrw2(i)
 c      print*,'hlbrz2(i)',hlzzew(i),hlbrz2(i)
 c      print*,'hlbra2(i)',hlaaew(i),hlbra2(i)
@@ -10127,22 +12010,22 @@ c      endif
 
       elseif(irenscheme.ne.0) then
 
-         WTOT2(1)=HLGGRESC+HLMMEW(1)+HLLLEW(1)+HLSSQCDEW(1)+HLCCQCDEW(1)
-     .           +HLBBQCDEW(1)+HLTTQCDEW(1)+HLGARESC+HLZGARESC
-     .           +HLWWEW(1)+HLZZEW(1)+HLAAEW(1)+HLHPHMEW(1)+HLAZEW(1)
-     .           +HLHPWMEW(1)
+         WTOT2(1)=HLGGRESCR(1)+HLMMEW(1)+HLLLEW(1)+HLSSQCDEW(1)
+     .        +HLCCQCDEW(1)+HLBBQCDEW(1)+HLTTQCDEW(1)+HLGARESC(1)
+     .        +HLZGARESC(1)+HLWWEW(1)+HLZZEW(1)+HLAAEW(1)+HLHPHMEW(1)
+     .        +HLAZEW(1)+HLHPWMEW(1)
 
          hlwdth2(1) = wtot2(1)
          
-      HLBRG2=HLGGRESC/WTOT2(1)
+      HLBRG2(1)=HLGGRESCR(1)/WTOT2(1)
       HLBRM2(1)=HLMMEW(1)/WTOT2(1)      
       HLBRL2(1)=HLLLEW(1)/WTOT2(1)
       HLBRS2(1)=HLSSQCDEW(1)/WTOT2(1)
       HLBRC2(1)=HLCCQCDEW(1)/WTOT2(1)      
       HLBRB2(1)=HLBBQCDEW(1)/WTOT2(1)
       HLBRT2(1)=HLTTQCDEW(1)/WTOT2(1)
-      HLBRGA2=HLGARESC/WTOT2(1)
-      HLBRZGA2=HLZGARESC/WTOT2(1)
+      HLBRGA2=HLGARESC(1)/WTOT2(1)
+      HLBRZGA2=HLZGARESC(1)/WTOT2(1)
       HLBRW2(1)=HLWWEW(1)/WTOT2(1)
       HLBRZ2(1)=HLZZEW(1)/WTOT2(1)
       HLBRA2(1)=HLAAEW(1)/WTOT2(1)
@@ -10248,36 +12131,46 @@ C  H+ ---> MU NMU
          HMN = 0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HMNLORESC = 0.D0
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HMNEW(i) = HMNLORESC
+               do i=1,17,1
+                  HMNLORESC(i) = 0.D0
+                  HMNEW(i) = HMNLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HMNEW(1) = HMNLORESC
+               HMNLORESC(1) = 0.D0               
+               HMNEW(1) = HMNLORESC(1)
             endif
          endif
 c end MMM changed 10/7/18            
       ELSE
          HMN=CFF(AMCH,XGAM,(AMMUON/AMCH)**2,0.D0)
-c MMM changed 10/7/18
+c MMM changed 19/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HMNLORESC = HMN*GFCALC/GF
-            check = (HMNLORESC-HPMUNULO)/HMNLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width H+->mu nmu.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HMNEW(i) = HMNLORESC*(1.D0+
-     .                 (HPMUNUNLO(i)-HPMUNULO)/HPMUNULO)
+               do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+               HMNLORESC(i) = CFF(AMCH,GABR,(AMMUON/AMCH)**2,0.D0)
+     .              *GFCALC/GF
+               check = (HMNLORESC(i)-HPMUNULOR(i))/HMNLORESC(i)
+               if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width H+->mu nmu.'
+               endif
+               HMNEW(i) = HMNLORESC(i)*(1.D0+
+     .              (HPMUNUNLO(i)-HPMUNULOR(i))/HPMUNULOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               HMNEW(1) = HMNLORESC*(1.D0+
-     .              (HPMUNUNLO(1)-HPMUNULO)/HPMUNULO)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               HMNLORESC(1) = CFF(AMCH,GABR,(AMMUON/AMCH)**2,0.D0)
+     .              *GFCALC/GF
+               check = (HMNLORESC(1)-HPMUNULOR(1))/HMNLORESC(1)
+               if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width H+->mu nmu.'
+               endif
+               HMNEW(1) = HMNLORESC(1)*(1.D0+
+     .              (HPMUNUNLO(1)-HPMUNULOR(1))/HPMUNULOR(1))
             endif
          endif
-c end MMM changed 10/7/18          
+c end MMM changed 19/1/19          
       ENDIF
 
 c     print*,''
@@ -10296,36 +12189,46 @@ C  H+ ---> TAU NTAU
          HLN = 0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HLNLORESC = 0.D0
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HLNEW(i) = HLNLORESC
+               do i=1,17,1
+                  HLNLORESC(i) = 0.D0
+                  HLNEW(i) = HLNLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HLNEW(1) = HLNLORESC
+               HLNLORESC(1) = 0.D0               
+               HLNEW(1) = HLNLORESC(1)
             endif
          endif
 c end MMM changed 10/7/18          
       ELSE
          HLN=CFF(AMCH,XGAT,(AMTAU/AMCH)**2,0.D0)
-c MMM changed 10/7/18
+c MMM changed 19/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HLNLORESC = HLN*GFCALC/GF
-            check = (HLNLORESC-HPTAUNULO)/HLNLORESC
+            if(irenscheme.eq.0) then
+               do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+               HLNLORESC(i) = CFF(AMCH,GABR,(AMTAU/AMCH)**2,0.D0)*
+     .              GFCALC/GF
+            check = (HLNLORESC(i)-HPTAUNULOR(i))/HLNLORESC(i)
             if(dabs(check).ge.1.D-5) then
                print*,'There is a problem in the LO width H+->tau ntau.'
             endif
-            if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HLNEW(i) = HLNLORESC*(1.D0+
-     .                 (HPTAUNUNLO(i)-HPTAUNULO)/HPTAUNULO)
+            HLNEW(i) = HLNLORESC(i)*(1.D0+
+     .           (HPTAUNUNLO(i)-HPTAUNULOR(i))/HPTAUNULOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               HLNEW(1) = HLNLORESC*(1.D0+
-     .              (HPTAUNUNLO(1)-HPTAUNULO)/HPTAUNULO)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               HLNLORESC(1) = CFF(AMCH,GABR,(AMTAU/AMCH)**2,0.D0)*
+     .              GFCALC/GF
+            check = (HLNLORESC(1)-HPTAUNULOR(1))/HLNLORESC(1)
+            if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width H+->tau ntau.'
+            endif
+            HLNEW(1) = HLNLORESC(1)*(1.D0+
+     .           (HPTAUNUNLO(1)-HPTAUNULOR(1))/HPTAUNULOR(1))
             endif
          endif
-c end MMM changed 10/7/18               
+c end MMM changed 19/1/19               
       ENDIF
 
 c     print*,'H+ -> tau ntau',hln
@@ -10345,16 +12248,18 @@ c end MMM changed 10/7/18
          HSU = 0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HSULORESC = 0.D0
-            HSUQCD = HSULORESC
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HSUEW(i) = HSULORESC
-                  HSUQCDEW(i) = HSULORESC
+               do i=1,17,1
+                  HSULORESC(i) = 0.D0
+                  HSUQCD(i) = HSULORESC(i)
+                  HSUEW(i) = HSULORESC(i)
+                  HSUQCDEW(i) = HSULORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HSUEW(1) = HSULORESC
-               HSUQCDEW(1) = HSULORESC
+               HSULORESC(1) = 0.D0
+               HSUQCD(1) = HSULORESC(1)
+               HSUEW(1) = HSULORESC(1)
+               HSUQCDEW(1) = HSULORESC(1)
             endif
          endif
 c end MMM changed 10/7/18          
@@ -10371,26 +12276,51 @@ c end MMM changed 21/8/13
        IF(HSU2.LT.0.D0) HSU2 = 0
        RAT = AMS/AMCH
        HSU = QQINT_HDEC(RAT,HSU1,HSU2)
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HSUQCD = HSU*GFCALC/GF
-            HSULORESC =3.d0*vus**2*gfcalc/gf*
-     .      cwoqcdm2hdm(amch,gab,gat,(ams/amch)**2,eps,ratx)
-            check = (HSULORESC-HPSULO)/HSULORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width H+ ->su.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HSUEW(i) = HPSUNLO(i)
-                  HSUQCDEW(i)=HSUQCD*(1.D0+(HPSUNLO(i)-HPSULO)/HPSULO)
+               do i=1,17,1
+                call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                hsu1=3.d0*vus**2*
+     .               cqcdm2hdm(amch,gabr,gatr,(ams/amch)**2,eps,ratx)
+                hsu2=3.d0*vus**2*
+     .               cqcd2hdm(amch,gabr,gatr,(rms/amch)**2,eps,ratx)
+                IF(HSU2.LT.0.D0) HSU2 = 0
+                RAT = AMS/AMCH
+                HSU = QQINT_HDEC(RAT,HSU1,HSU2)
+                HSUQCD(i) = HSU*GFCALC/GF
+                HSULORESC(i) =3.d0*vus**2*gfcalc/gf*
+     .               cwoqcdm2hdm(amch,gabr,gatr,(ams/amch)**2,eps,ratx)
+                check = (HSULORESC(i)-HPSULOR(i))/HSULORESC(i)
+                if(dabs(check).ge.1.D-5) then
+                   print*,'There is a problem in the LO width H+ ->su.'
+                endif
+                HSUEW(i) = HPSUNLO(i)
+                HSUQCDEW(i)=HSUQCD(i)*(1.D0+(HPSUNLO(i)-HPSULOR(i))
+     .               /HPSULOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  HSUEW(1) = HPSUNLO(1)
-                  HSUQCDEW(1)=HSUQCD*(1.D0+(HPSUNLO(1)-HPSULO)/HPSULO)
+                call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+                hsu1=3.d0*vus**2*
+     .               cqcdm2hdm(amch,gabr,gatr,(ams/amch)**2,eps,ratx)
+                hsu2=3.d0*vus**2*
+     .               cqcd2hdm(amch,gabr,gatr,(rms/amch)**2,eps,ratx)
+                IF(HSU2.LT.0.D0) HSU2 = 0
+                RAT = AMS/AMCH
+                HSU = QQINT_HDEC(RAT,HSU1,HSU2)
+                HSUQCD(1) = HSU*GFCALC/GF
+                HSULORESC(1) =3.d0*vus**2*gfcalc/gf*
+     .               cwoqcdm2hdm(amch,gabr,gatr,(ams/amch)**2,eps,ratx)
+                check = (HSULORESC(1)-HPSULOR(1))/HSULORESC(1)
+                if(dabs(check).ge.1.D-5) then
+                   print*,'There is a problem in the LO width H+ ->su.'
+                endif
+                HSUEW(1) = HPSUNLO(1)
+                HSUQCDEW(1)=HSUQCD(1)*(1.D0+(HPSUNLO(1)-HPSULOR(1))
+     .               /HPSULOR(1))
             endif
          endif
-c end MMM changed 10/7/18       
+c end MMM changed 19/1/19       
       ENDIF
 
 c     print*,'H+ -> su',hsu,3.d0*vus**2*
@@ -10413,16 +12343,18 @@ C  H+ --> CS
          HSC = 0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HSCLORESC = 0.D0
-            HSCQCD = HSCLORESC
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HSCEW(i) = HSCLORESC
-                  HSCQCDEW(i) = HSCLORESC
+               do i=1,17,1
+                  HSCLORESC(i) = 0.D0
+                  HSCQCD(i) = HSCLORESC(i)
+                  HSCEW(i) = HSCLORESC(i)
+                  HSCQCDEW(i) = HSCLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HSCEW(1) = HSCLORESC
-               HSCQCDEW(1) = HSCLORESC
+               HSCLORESC(1) = 0.D0
+               HSCQCD(1) = HSCLORESC(1)
+               HSCEW(1) = HSCLORESC(1)
+               HSCQCDEW(1) = HSCLORESC(1)
             endif
          endif
 c end MMM changed 10/7/18             
@@ -10441,40 +12373,58 @@ c end MMM changed 21/8/13
        IF(HSC2.LT.0.D0) HSC2 = 0
        RAT = (AMS+AMC)/AMCH
        HSC = QQINT_HDEC(RAT,HSC1,HSC2)
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            rat2hdm = 1.D0
-            HSCQCD = HSC*GFCALC/GF
-            HSCLORESC =3.d0*vcs**2*gfcalc/gf*
-     .    cwoqcdm2hdm(amch,gab,gat,(ams/amch)**2,(amc/amch)**2,rat2hdm)
-            check = (HSCLORESC-HPSCLO)/HSCLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width H+ ->sc.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
+               do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  hsc1=3.d0*VCS**2*
+     .       cqcdm2hdm(amch,gabr,gatr,(ams/amch)**2,(amc/amch)**2,ratx)
+                  hsc2=3.d0*VCS**2*
+     .       cqcd2hdm(amch,gabr,gatr,(rms/amch)**2,(rmc/amch)**2,raty)
+                  IF(HSC2.LT.0.D0) HSC2 = 0
+                  RAT = (AMS+AMC)/AMCH
+                  HSC = QQINT_HDEC(RAT,HSC1,HSC2)
+
+                  rat2hdm = 1.D0
+                  HSCQCD(i) = HSC*GFCALC/GF
+                  HSCLORESC(i) =3.d0*vcs**2*gfcalc/gf*
+     .  cwoqcdm2hdm(amch,gabr,gatr,(ams/amch)**2,(amc/amch)**2,rat2hdm)
+                  check = (HSCLORESC(i)-HPSCLOR(i))/HSCLORESC(i)
+                  if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width H+ ->sc.'
+                  endif
+                  
                   HSCEW(i) = HPSCNLO(i)
-                  HSCQCDEW(i)=HSCQCD*(1.D0+(HPSCNLO(i)-HPSCLO)/HPSCLO)
+                  HSCQCDEW(i)=HSCQCD(i)*
+     .                 (1.D0+(HPSCNLO(i)-HPSCLOR(i))/HPSCLOR(i))
                end do
             elseif(irenscheme.ne.0) then
+                  call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+                  hsc1=3.d0*VCS**2*
+     .       cqcdm2hdm(amch,gabr,gatr,(ams/amch)**2,(amc/amch)**2,ratx)
+                  hsc2=3.d0*VCS**2*
+     .       cqcd2hdm(amch,gabr,gatr,(rms/amch)**2,(rmc/amch)**2,raty)
+                  IF(HSC2.LT.0.D0) HSC2 = 0
+                  RAT = (AMS+AMC)/AMCH
+                  HSC = QQINT_HDEC(RAT,HSC1,HSC2)
+
+                  rat2hdm = 1.D0
+                  HSCQCD(1) = HSC*GFCALC/GF
+                  HSCLORESC(1) =3.d0*vcs**2*gfcalc/gf*
+     .  cwoqcdm2hdm(amch,gabr,gatr,(ams/amch)**2,(amc/amch)**2,rat2hdm)
+                  check = (HSCLORESC(1)-HPSCLOR(1))/HSCLORESC(1)
+                  if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width H+ ->sc.'
+                  endif
+                  
                   HSCEW(1) = HPSCNLO(1)
-                  HSCQCDEW(1)=HSCQCD*(1.D0+(HPSCNLO(1)-HPSCLO)/HPSCLO)
+                  HSCQCDEW(1)=HSCQCD(1)*
+     .                 (1.D0+(HPSCNLO(1)-HPSCLOR(1))/HPSCLOR(1))
             endif
          endif
-c end MMM changed 10/7/18         
-c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-c      HSC1=3.D0*CQCDM(AMCH,TB,(AMS/AMCH)**2,(AMC/AMCH)**2,1.D0)
-c      HSC2=3.D0*CQCD(AMCH,TB,(RMS/AMCH)**2,(RMC/AMCH)**2,1.D0)
-c      IF(HSC2.LT.0.D0) HSC2 = 0
-c      RAT = (AMS+AMC)/AMCH
-c      HSC0 = QQINT_HDEC(RAT,HSC1,HSC2)
-c      write(6,*)'H+- --> cs: ',AMCH,HSC,HSC0,HSC/HSC0,RATX**2
-c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+c end MMM changed 19/1/19         
       ENDIF
-c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-c     write(53,*)AMCH,HSC
-c     write(6,*)'H+ -> cs: ',AMCH,HSC,QSUSY1,LOOP
-c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 c     print*,'H+ -> cs',hsc
 
@@ -10489,16 +12439,18 @@ c end MMM changed 10/7/18
          HCD = 0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HCDLORESC = 0.D0
-            HCDQCD = HCDLORESC
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HCDEW(i) = HCDLORESC
-                  HCDQCDEW(i) = HCDLORESC
+               do i=1,17,1
+                  HCDLORESC(i) = 0.D0
+                  HCDQCD(i) = HCDLORESC(i)
+                  HCDEW(i) = HCDLORESC(i)
+                  HCDQCDEW(i) = HCDLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HCDEW(1) = HCDLORESC
-               HCDQCDEW(1) = HCDLORESC
+               HCDLORESC(1) = 0.D0
+               HCDQCD(1) = HCDLORESC(1)
+               HCDEW(1) = HCDLORESC(1)
+               HCDQCDEW(1) = HCDLORESC(1)
             endif
          endif
 c end MMM changed 10/7/18         
@@ -10514,26 +12466,51 @@ c end MMM changed 10/7/18
        IF(HCD2.LT.0.D0) HCD2 = 0
        RAT = (EPS+AMC)/AMCH
        HCD = QQINT_HDEC(RAT,HCD1,HCD2)
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HCDQCD = HCD*GFCALC/GF
-            HCDLORESC =3.d0*vcd**2*gfcalc/gf*
-     .    cwoqcdm2hdm(amch,gab,gat,eps,(amc/amch)**2,ratx)
-            check = (HCDLORESC-HPDCLO)/HCDLORESC
+            if(irenscheme.eq.0) then
+               do i=1,17,1
+            call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+            hCD1=3.d0*vcd**2*
+     .           cqcdm2hdm(amch,gabr,gatr,eps,(amc/amch)**2,ratx)
+            hCD2=3.d0*vcd**2*
+     .           cqcd2hdm(amch,gabr,gatr,eps,(rmc/amch)**2,ratx)
+            IF(HCD2.LT.0.D0) HCD2 = 0
+            RAT = (EPS+AMC)/AMCH
+            HCD = QQINT_HDEC(RAT,HCD1,HCD2)
+            HCDQCD(i) = HCD*GFCALC/GF
+            HCDLORESC(i) =3.d0*vcd**2*gfcalc/gf*
+     .    cwoqcdm2hdm(amch,gabr,gatr,eps,(amc/amch)**2,ratx)
+            check = (HCDLORESC(i)-HPDCLOR(i))/HCDLORESC(i)
             if(dabs(check).ge.1.D-5) then
                print*,'There is a problem in the LO width H+ ->cd.'
             endif
-            if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HCDEW(i) = HPDCNLO(i)
-                  HCDQCDEW(i)=HCDQCD*(1.D0+(HPDCNLO(i)-HPDCLO)/HPDCLO)
+            HCDEW(i) = HPDCNLO(i)
+            HCDQCDEW(i)=HCDQCD(i)*(1.D0+(HPDCNLO(i)-HPDCLOR(i))
+     .           /HPDCLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  HCDEW(1) = HPDCNLO(1)
-                  HCDQCDEW(1)=HCDQCD*(1.D0+(HPDCNLO(1)-HPDCLO)/HPDCLO)
+            call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+            hCD1=3.d0*vcd**2*
+     .           cqcdm2hdm(amch,gabr,gatr,eps,(amc/amch)**2,ratx)
+            hCD2=3.d0*vcd**2*
+     .           cqcd2hdm(amch,gabr,gatr,eps,(rmc/amch)**2,ratx)
+            IF(HCD2.LT.0.D0) HCD2 = 0
+            RAT = (EPS+AMC)/AMCH
+            HCD = QQINT_HDEC(RAT,HCD1,HCD2)
+            HCDQCD(1) = HCD*GFCALC/GF
+            HCDLORESC(1) =3.d0*vcd**2*gfcalc/gf*
+     .    cwoqcdm2hdm(amch,gabr,gatr,eps,(amc/amch)**2,ratx)
+            check = (HCDLORESC(1)-HPDCLOR(1))/HCDLORESC(1)
+            if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width H+ ->cd.'
+            endif
+            HCDEW(1) = HPDCNLO(1)
+            HCDQCDEW(1)=HCDQCD(1)*(1.D0+(HPDCNLO(1)-HPDCLOR(1))
+     .           /HPDCLOR(1))
             endif
          endif
-c end MMM changed 10/7/18        
+c end MMM changed 19/1/19        
       ENDIF
 
 c     print*,'H+ -> cd',hcd
@@ -10569,16 +12546,18 @@ c     write(6,*)'ratio = ',ratx
          HBC = 0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HBCLORESC = 0.D0
-            HBCQCD = HBCLORESC
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HBCEW(i) = HBCLORESC
-                  HBCQCDEW(i) = HBCLORESC
+               do i=1,17,1
+                  HBCLORESC(i) = 0.D0
+                  HBCQCD(i) = HBCLORESC(i)
+                  HBCEW(i) = HBCLORESC(i)
+                  HBCQCDEW(i) = HBCLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HBCEW(1) = HBCLORESC
-               HBCQCDEW(1) = HBCLORESC
+               HBCLORESC(1) = 0.D0
+               HBCQCD(1) = HBCLORESC(1)
+               HBCEW(1) = HBCLORESC(1)
+               HBCQCDEW(1) = HBCLORESC(1)
             endif
          endif
 c end MMM changed 10/7/18         
@@ -10596,27 +12575,51 @@ c end MMM changed 21/8/13
        IF(HBC2.LT.0.D0) HBC2 = 0
        RAT = (AMB+AMC)/AMCH
        HBC = QQINT_HDEC(RAT,HBC1,HBC2)
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            rat2hdm = 1.D0
-            HBCQCD = HBC*GFCALC/GF
-            HBCLORESC =3.d0*vcb**2*gfcalc/gf*
-     .    cwoqcdm2hdm(amch,gab,gat,(amb/amch)**2,(amc/amch)**2,rat2hdm)
-            check = (HBCLORESC-HPBCLO)/HBCLORESC
+            if(irenscheme.eq.0) then
+               do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+               hbc1=3.d0*vcb**2*
+     .       cqcdm2hdm(amch,gabr,gatr,(amb/amch)**2,(amc/amch)**2,ratx)
+               hbc2=3.d0*vcb**2*
+     .       cqcd2hdm(amch,gabr,gatr,(rmb/amch)**2,(rmc/amch)**2,ratx)
+               IF(HBC2.LT.0.D0) HBC2 = 0
+               RAT = (AMB+AMC)/AMCH
+               HBC = QQINT_HDEC(RAT,HBC1,HBC2)
+               rat2hdm = 1.D0
+               HBCQCD(i) = HBC*GFCALC/GF
+               HBCLORESC(i) =3.d0*vcb**2*gfcalc/gf*
+     .  cwoqcdm2hdm(amch,gabr,gatr,(amb/amch)**2,(amc/amch)**2,rat2hdm)
+            check = (HBCLORESC(i)-HPBCLOR(i))/HBCLORESC(i)
             if(dabs(check).ge.1.D-5) then
                print*,'There is a problem in the LO width H+ ->bc.'
             endif
-            if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HBCEW(i) = HPBCNLO(i)
-                  HBCQCDEW(i)=HBCQCD*(1.D0+(HPBCNLO(i)-HPBCLO)/HPBCLO)
+         HBCEW(i) = HPBCNLO(i)
+         HBCQCDEW(i)=HBCQCD(i)*(1.D0+(HPBCNLO(i)-HPBCLOR(i))/HPBCLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  HBCEW(1) = HPBCNLO(1)
-                  HBCQCDEW(1)=HBCQCD*(1.D0+(HPBCNLO(1)-HPBCLO)/HPBCLO)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               hbc1=3.d0*vcb**2*
+     .       cqcdm2hdm(amch,gabr,gatr,(amb/amch)**2,(amc/amch)**2,ratx)
+               hbc2=3.d0*vcb**2*
+     .       cqcd2hdm(amch,gabr,gatr,(rmb/amch)**2,(rmc/amch)**2,ratx)
+               IF(HBC2.LT.0.D0) HBC2 = 0
+               RAT = (AMB+AMC)/AMCH
+               HBC = QQINT_HDEC(RAT,HBC1,HBC2)
+               rat2hdm = 1.D0
+               HBCQCD(1) = HBC*GFCALC/GF
+               HBCLORESC(1) =3.d0*vcb**2*gfcalc/gf*
+     .  cwoqcdm2hdm(amch,gabr,gatr,(amb/amch)**2,(amc/amch)**2,rat2hdm)
+            check = (HBCLORESC(1)-HPBCLOR(1))/HBCLORESC(1)
+            if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width H+ ->bc.'
+            endif
+         HBCEW(1) = HPBCNLO(1)
+         HBCQCDEW(1)=HBCQCD(1)*(1.D0+(HPBCNLO(1)-HPBCLOR(1))/HPBCLOR(1))
             endif
          endif
-c end MMM changed 10/7/18         
+c end MMM changed 19/1/19         
       ENDIF
 
 c     print*,'H+ -> cb',hbc
@@ -10630,16 +12633,18 @@ c end MMM changed 10/7/18
          HBU = 0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HBULORESC = 0.D0
-            HBUQCD = HBULORESC
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HBUEW(i) = HBULORESC
-                  HBUQCDEW(i) = HBULORESC
+               do i=1,17,1
+                  HBULORESC(i) = 0.D0
+                  HBUQCD(i) = HBULORESC(i)
+                  HBUEW(i) = HBULORESC(i)
+                  HBUQCDEW(i) = HBULORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HBUEW(1) = HBULORESC
-               HBUQCDEW(1) = HBULORESC
+               HBULORESC(1) = 0.D0
+               HBUQCD(1) = HBULORESC(1)
+               HBUEW(1) = HBULORESC(1)
+               HBUQCDEW(1) = HBULORESC(1)
             endif
          endif
 c end MMM changed 10/7/18           
@@ -10657,27 +12662,53 @@ c end MMM changed 21/8/13
        IF(HBU2.LT.0.D0) HBU2 = 0
        RAT = AMB/AMCH
        HBU = QQINT_HDEC(RAT,HBU1,HBU2)
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            rat2hdm = 1.D0
-            HBUQCD = HBU*GFCALC/GF
-            HBULORESC =3.d0*vub**2*gfcalc/gf*
-     .    cwoqcdm2hdm(amch,gab,gat,(amb/amch)**2,eps,rat2hdm)
-            check = (HBULORESC-HPBULO)/HBULORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width H+ ->bu.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HBUEW(i) = HPBUNLO(i)
-                  HBUQCDEW(i)=HBUQCD*(1.D0+(HPBUNLO(i)-HPBULO)/HPBULO)
+               do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+          hbu1=3.d0*vub**2*
+     .         cqcdm2hdm(amch,gabr,gatr,(amb/amch)**2,eps,ratx)
+          hbu2=3.d0*vub**2*
+     .         cqcd2hdm(amch,gabr,gatr,(rmb/amch)**2,eps,ratx)
+          IF(HBU2.LT.0.D0) HBU2 = 0
+          RAT = AMB/AMCH
+          HBU = QQINT_HDEC(RAT,HBU1,HBU2)
+          rat2hdm = 1.D0
+          HBUQCD(i) = HBU*GFCALC/GF
+          HBULORESC(i) =3.d0*vub**2*gfcalc/gf*
+     .         cwoqcdm2hdm(amch,gabr,gatr,(amb/amch)**2,eps,rat2hdm)
+          check = (HBULORESC(i)-HPBULOR(i))/HBULORESC(i)
+          if(dabs(check).ge.1.D-5) then
+             print*,'There is a problem in the LO width H+ ->bu.'
+          endif
+          HBUEW(i) = HPBUNLO(i)
+          HBUQCDEW(i)=HBUQCD(i)*(1.D0+(HPBUNLO(i)-HPBULOR(i))
+     .         /HPBULOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  HBUEW(1) = HPBUNLO(1)
-                  HBUQCDEW(1)=HBUQCD*(1.D0+(HPBUNLO(1)-HPBULO)/HPBULO)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+          hbu1=3.d0*vub**2*
+     .         cqcdm2hdm(amch,gabr,gatr,(amb/amch)**2,eps,ratx)
+          hbu2=3.d0*vub**2*
+     .         cqcd2hdm(amch,gabr,gatr,(rmb/amch)**2,eps,ratx)
+          IF(HBU2.LT.0.D0) HBU2 = 0
+          RAT = AMB/AMCH
+          HBU = QQINT_HDEC(RAT,HBU1,HBU2)
+          rat2hdm = 1.D0
+          HBUQCD(1) = HBU*GFCALC/GF
+          HBULORESC(1) =3.d0*vub**2*gfcalc/gf*
+     .         cwoqcdm2hdm(amch,gabr,gatr,(amb/amch)**2,eps,rat2hdm)
+          check = (HBULORESC(1)-HPBULOR(1))/HBULORESC(1)
+          if(dabs(check).ge.1.D-5) then
+             print*,'There is a problem in the LO width H+ ->bu.'
+          endif
+          HBUEW(1) = HPBUNLO(1)
+          HBUQCDEW(1)=HBUQCD(1)*(1.D0+(HPBUNLO(1)-HPBULOR(1))
+     .         /HPBULOR(1))
             endif
          endif
-c end MMM changed 10/7/18          
+c end MMM changed 19/1/19          
       ENDIF
 
 c     print*,'H+ -> ub',hbu
@@ -10696,16 +12727,18 @@ c end MMM changed 10/7/18
           HDT=0.D0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HDTLORESC = 0.D0
-            HDTQCD = HDTLORESC
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HDTEW(i) = HDTLORESC
-                  HDTQCDEW(i) = HDTLORESC
+               do i=1,17,1
+                  HDTLORESC(i) = 0.D0
+                  HDTQCD(i) = HDTLORESC(i)
+                  HDTEW(i) = HDTLORESC(i)
+                  HDTQCDEW(i) = HDTLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HDTEW(1) = HDTLORESC
-               HDTQCDEW(1) = HDTLORESC
+               HDTLORESC(1) = 0.D0
+               HDTQCD(1) = HDTLORESC(1)
+               HDTEW(1) = HDTLORESC(1)
+               HDTQCDEW(1) = HDTLORESC(1)
             endif
          endif
 c end MMM changed 10/7/18            
@@ -10713,21 +12746,31 @@ c end MMM changed 10/7/18
         FACTB=3.D0*GF**2*AMCH*AMT**4/32.D0/PI**3*gat**2
         CALL CTOTT_HDEC(AMCH,AMT,EPS,AMW,i2hdm,gat,gab,CTT0)
         HDT=VTD**2*FACTB*CTT0
-c MMM changed 10/7/18
+c MMM changed 19/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HDTLORESC = HDT*gfcalc/gf
-            HDTQCD = HDTLORESC
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HDTEW(i) = HDTLORESC
-                  HDTQCDEW(i) = HDTLORESC
+               do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  FACTB=3.D0*GFCALC**2*AMCH*AMT**4/32.D0/PI**3*gatr**2
+                  CALL CTOTT_HDEC(AMCH,AMT,EPS,AMW,i2hdm,gatr,gabr,CTT0)
+                  HDT=VTD**2*FACTB*CTT0
+                  HDTLORESC(i) = HDT
+                  HDTQCD(i) = HDTLORESC(i)
+                  HDTEW(i) = HDTLORESC(i)
+                  HDTQCDEW(i) = HDTLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HDTEW(1) = HDTLORESC
-               HDTQCDEW(1) = HDTLORESC
+                  call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+                  FACTB=3.D0*GFCALC**2*AMCH*AMT**4/32.D0/PI**3*gatr**2
+                  CALL CTOTT_HDEC(AMCH,AMT,EPS,AMW,i2hdm,gatr,gabr,CTT0)
+                  HDT=VTD**2*FACTB*CTT0
+                  HDTLORESC(1) = HDT
+                  HDTQCD(1) = HDTLORESC(1)
+                  HDTEW(1) = HDTLORESC(1)
+                  HDTQCDEW(1) = HDTLORESC(1)
             endif
          endif
-c end MMM changed 10/7/18           
+c end MMM changed 19/1/19           
        ELSEIF (AMCH.LE.XM2) THEN
         XX(1) = XM1-1D0
         XX(2) = XM1
@@ -10778,21 +12821,83 @@ c end MMM changed 21/8/13
         RAT = (AMT)/XX(4)
         YY(4) = VTD**2*QQINT_HDEC(RAT,XYZ1,XYZ2)
         HDT = FINT_HDEC(AMCH,XX,YY)
-c MMM changed 10/7/18
+c MMM changed 19/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HDTLORESC = HDT*gfcalc/gf
-            HDTQCD = HDTLORESC
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HDTEW(i) = HDTLORESC
-                  HDTQCDEW(i) = HDTLORESC
+               do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+               XX(1) = XM1-1D0
+               XX(2) = XM1
+               XX(3) = XM2
+               XX(4) = XM2+1D0
+               FACTB=3.D0*GFCALC**2*XX(1)*AMT**4/32.D0/PI**3*gatr**2
+               CALL CTOTT_HDEC(XX(1),AMT,EPS,AMW,i2hdm,gatr,gabr,CTT0)
+               YY(1)=VTD**2*FACTB*CTT0
+               FACTB=3.D0*GFCALC**2*XX(2)*AMT**4/32.D0/PI**3*gatr**2
+               CALL CTOTT_HDEC(XX(2),AMT,EPS,AMW,i2hdm,gatr,gabr,CTT0)
+               YY(2)=VTD**2*FACTB*CTT0
+               XMB = RUNM_HDEC(XX(3),5)
+               XMT = RUNM_HDEC(XX(3),6)
+               XYZ2 = 3.D0*GFCALC/GF*
+     .    CQCD2HDM(XX(3),gabr,gatr,(EPS/XX(3))**2,(XMT/XX(3))**2,RATX)
+               IF(XYZ2.LT.0.D0) XYZ2 = 0
+               XYZ1 = 3.D0*GFCALC/GF*
+     .    CQCDM2HDM(XX(3),gabr,gatr,(EPS/XX(3))**2,(AMT/XX(3))**2,RATX)
+               RAT = (AMT)/XX(3)
+               YY(3) = VTD**2*QQINT_HDEC(RAT,XYZ1,XYZ2)
+               XMB = RUNM_HDEC(XX(4),5)
+               XMT = RUNM_HDEC(XX(4),6)
+           XYZ2 = 3.D0*GFCALC/GF*
+     .      CQCD2HDM(XX(4),gabr,gatr,(EPS/XX(4))**2,(XMT/XX(4))**2,RATX)
+           IF(XYZ2.LT.0.D0) XYZ2 = 0
+           XYZ1 = 3.D0*GFCALC/GF*
+     .    CQCDM2HDM(XX(4),gabr,gatr,(EPS/XX(4))**2,(AMT/XX(4))**2,RATX)
+           RAT = (AMT)/XX(4)
+           YY(4) = VTD**2*QQINT_HDEC(RAT,XYZ1,XYZ2)
+           HDT = FINT_HDEC(AMCH,XX,YY)
+           HDTLORESC(i) = HDT
+           HDTQCD(i) = HDTLORESC(i)
+           HDTEW(i) = HDTLORESC(i)
+           HDTQCDEW(i) = HDTLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HDTEW(1) = HDTLORESC
-               HDTQCDEW(1) = HDTLORESC
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               XX(1) = XM1-1D0
+               XX(2) = XM1
+               XX(3) = XM2
+               XX(4) = XM2+1D0
+               FACTB=3.D0*GFCALC**2*XX(1)*AMT**4/32.D0/PI**3*gatr**2
+               CALL CTOTT_HDEC(XX(1),AMT,EPS,AMW,i2hdm,gatr,gabr,CTT0)
+               YY(1)=VTD**2*FACTB*CTT0
+               FACTB=3.D0*GFCALC**2*XX(2)*AMT**4/32.D0/PI**3*gatr**2
+               CALL CTOTT_HDEC(XX(2),AMT,EPS,AMW,i2hdm,gatr,gabr,CTT0)
+               YY(2)=VTD**2*FACTB*CTT0
+               XMB = RUNM_HDEC(XX(3),5)
+               XMT = RUNM_HDEC(XX(3),6)
+               XYZ2 = 3.D0*GFCALC/GF*
+     .    CQCD2HDM(XX(3),gabr,gatr,(EPS/XX(3))**2,(XMT/XX(3))**2,RATX)
+               IF(XYZ2.LT.0.D0) XYZ2 = 0
+               XYZ1 = 3.D0*GFCALC/GF*
+     .    CQCDM2HDM(XX(3),gabr,gatr,(EPS/XX(3))**2,(AMT/XX(3))**2,RATX)
+               RAT = (AMT)/XX(3)
+               YY(3) = VTD**2*QQINT_HDEC(RAT,XYZ1,XYZ2)
+               XMB = RUNM_HDEC(XX(4),5)
+               XMT = RUNM_HDEC(XX(4),6)
+           XYZ2 = 3.D0*GFCALC/GF*
+     .      CQCD2HDM(XX(4),gabr,gatr,(EPS/XX(4))**2,(XMT/XX(4))**2,RATX)
+           IF(XYZ2.LT.0.D0) XYZ2 = 0
+           XYZ1 = 3.D0*GFCALC/GF*
+     .    CQCDM2HDM(XX(4),gabr,gatr,(EPS/XX(4))**2,(AMT/XX(4))**2,RATX)
+           RAT = (AMT)/XX(4)
+           YY(4) = VTD**2*QQINT_HDEC(RAT,XYZ1,XYZ2)
+           HDT = FINT_HDEC(AMCH,XX,YY)
+           HDTLORESC(1) = HDT
+           HDTQCD(1) = HDTLORESC(1)
+           HDTEW(1) = HDTLORESC(1)
+           HDTQCDEW(1) = HDTLORESC(1)
             endif
          endif
-c end MMM changed 10/7/18        
+c end MMM changed 19/1/19        
        ELSE
         HDT2=3.D0*VTD**2*CQCD(AMCH,TB,(EPS/AMCH)**2,(RMT/AMCH)**2,RATX)
 c MMM changed 21/8/13
@@ -10812,27 +12917,51 @@ c end MMM changed 21/8/13
         RAT = (AMT)/AMCH
         HDT = QQINT_HDEC(RAT,HDT1,HDT2)
 
-c MMM changed 10/7/18
+c MMM changed 19/71/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+            if(irenscheme.eq.0) then
+               do i=1,17,1
+            call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+            HDT2=3.D0*VTD**2*
+     .       CQCD2HDM(AMCH,gabr,gatr,(EPS/AMCH)**2,(RMT/AMCH)**2,RATX)
+            IF(HDT2.LT.0.D0) HDT2 = 0
+            HDT1=3.D0*VTD**2*
+     .       CQCDM2HDM(AMCH,gabr,gatr,(EPS/AMCH)**2,(AMT/AMCH)**2,RATX)
+            RAT = (AMT)/AMCH
+            HDT = QQINT_HDEC(RAT,HDT1,HDT2)
             rat2hdm = 1.D0
-            HDTQCD = HDT*GFCALC/GF
-            HDTLORESC =3.d0*vtd**2*gfcalc/gf*
-     .  cwoqcdm2hdm(amch,gab,gat,(eps/amch)**2,(amt/amch)**2,rat2hdm)
-            check = (HDTLORESC-HPTDLO)/HDTLORESC
+            HDTQCD(i) = HDT*GFCALC/GF
+            HDTLORESC(i) =3.d0*vtd**2*gfcalc/gf*
+     .  cwoqcdm2hdm(amch,gabr,gatr,(eps/amch)**2,(amt/amch)**2,rat2hdm)
+            check = (HDTLORESC(i)-HPTDLOR(i))/HDTLORESC(i)
             if(dabs(check).ge.1.D-5) then
                print*,'There is a problem in the LO width H+ ->td.'
             endif
-            if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HDTEW(i) = HPTDNLO(i)
-                  HDTQCDEW(i)=HDTQCD*(1.D0+(HPTDNLO(i)-HPTDLO)/HPTDLO)
+         HDTEW(i) = HPTDNLO(i)
+         HDTQCDEW(i)=HDTQCD(i)*(1.D0+(HPTDNLO(i)-HPTDLOR(i))/HPTDLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  HDTEW(1) = HPTDNLO(1)
-                  HDTQCDEW(1)=HDTQCD*(1.D0+(HPTDNLO(1)-HPTDLO)/HPTDLO)
+            call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+            HDT2=3.D0*VTD**2*
+     .       CQCD2HDM(AMCH,gabr,gatr,(EPS/AMCH)**2,(RMT/AMCH)**2,RATX)
+            IF(HDT2.LT.0.D0) HDT2 = 0
+            HDT1=3.D0*VTD**2*
+     .       CQCDM2HDM(AMCH,gabr,gatr,(EPS/AMCH)**2,(AMT/AMCH)**2,RATX)
+            RAT = (AMT)/AMCH
+            HDT = QQINT_HDEC(RAT,HDT1,HDT2)
+            rat2hdm = 1.D0
+            HDTQCD(1) = HDT*GFCALC/GF
+            HDTLORESC(1) =3.d0*vtd**2*gfcalc/gf*
+     .  cwoqcdm2hdm(amch,gabr,gatr,(eps/amch)**2,(amt/amch)**2,rat2hdm)
+            check = (HDTLORESC(1)-HPTDLOR(1))/HDTLORESC(1)
+            if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width H+ ->td.'
+            endif
+         HDTEW(1) = HPTDNLO(1)
+         HDTQCDEW(1)=HDTQCD(1)*(1.D0+(HPTDNLO(1)-HPTDLOR(1))/HPTDLOR(1))
             endif
          endif
-c end MMM changed 10/7/18  
+c end MMM changed 19/1/19  
         
        ENDIF
       ELSE
@@ -10840,16 +12969,18 @@ c end MMM changed 10/7/18
           HDT=0.D0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HDTLORESC = 0.D0
-            HDTQCD = HDTLORESC
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HDTEW(i) = HDTLORESC
-                  HDTQCDEW(i) = HDTLORESC
+               do i=1,17,1
+                  HDTLORESC(i) = 0.D0
+                  HDTQCD(i) = HDTLORESC(i)
+                  HDTEW(i) = HDTLORESC(i)
+                  HDTQCDEW(i) = HDTLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HDTEW(1) = HDTLORESC
-               HDTQCDEW(1) = HDTLORESC
+               HDTLORESC(1) = 0.D0
+               HDTQCD(1) = HDTLORESC(1)
+               HDTEW(1) = HDTLORESC(1)
+               HDTQCDEW(1) = HDTLORESC(1)
             endif
          endif
 c end MMM changed 10/7/18                
@@ -10872,27 +13003,51 @@ c end MMM changed 21/8/13
         RAT = (AMT)/AMCH
         HDT = QQINT_HDEC(RAT,HDT1,HDT2)
 
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            rat2hdm = 1.D0
-            HDTQCD = HDT*GFCALC/GF
-            HDTLORESC =3.d0*vtd**2*gfcalc/gf*
-     .  cwoqcdm2hdm(amch,gab,gat,(eps/amch)**2,(amt/amch)**2,rat2hdm)
-            check = (HDTLORESC-HPTDLO)/HDTLORESC
+            if(irenscheme.eq.0) then
+               do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+               HDT2=3.D0*VTD**2*
+     .              CQCD2HDM(AMCH,gabr,gatr,EPS,(RMT/AMCH)**2,RATX)
+               IF(HDT2.LT.0.D0) HDT2 = 0
+               HDT1=3.D0*VTD**2*
+     .              CQCDM2HDM(AMCH,gabr,gatr,EPS,(AMT/AMCH)**2,RATX)
+               RAT = (AMT)/AMCH
+               HDT = QQINT_HDEC(RAT,HDT1,HDT2)
+               rat2hdm = 1.D0
+               HDTQCD(i) = HDT*GFCALC/GF
+               HDTLORESC(i) =3.d0*vtd**2*gfcalc/gf*
+     .  cwoqcdm2hdm(amch,gabr,gatr,(eps/amch)**2,(amt/amch)**2,rat2hdm)
+            check = (HDTLORESC(i)-HPTDLOR(i))/HDTLORESC(i)
             if(dabs(check).ge.1.D-5) then
                print*,'There is a problem in the LO width H+ ->td.'
             endif
-            if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HDTEW(i) = HPTDNLO(i)
-                  HDTQCDEW(i)=HDTQCD*(1.D0+(HPTDNLO(i)-HPTDLO)/HPTDLO)
+         HDTEW(i) = HPTDNLO(i)
+         HDTQCDEW(i)=HDTQCD(i)*(1.D0+(HPTDNLO(i)-HPTDLOR(i))/HPTDLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  HDTEW(1) = HPTDNLO(1)
-                  HDTQCDEW(1)=HDTQCD*(1.D0+(HPTDNLO(1)-HPTDLO)/HPTDLO)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               HDT2=3.D0*VTD**2*
+     .              CQCD2HDM(AMCH,gabr,gatr,EPS,(RMT/AMCH)**2,RATX)
+               IF(HDT2.LT.0.D0) HDT2 = 0
+               HDT1=3.D0*VTD**2*
+     .              CQCDM2HDM(AMCH,gabr,gatr,EPS,(AMT/AMCH)**2,RATX)
+               RAT = (AMT)/AMCH
+               HDT = QQINT_HDEC(RAT,HDT1,HDT2)
+               rat2hdm = 1.D0
+               HDTQCD(1) = HDT*GFCALC/GF
+               HDTLORESC(1) =3.d0*vtd**2*gfcalc/gf*
+     .  cwoqcdm2hdm(amch,gabr,gatr,(eps/amch)**2,(amt/amch)**2,rat2hdm)
+            check = (HDTLORESC(1)-HPTDLOR(1))/HDTLORESC(1)
+            if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width H+ ->td.'
+            endif
+         HDTEW(1) = HPTDNLO(1)
+         HDTQCDEW(1)=HDTQCD(1)*(1.D0+(HPTDNLO(1)-HPTDLOR(1))/HPTDLOR(1))
             endif
          endif
-c end MMM changed 10/7/18  
+c end MMM changed 19/1/19  
         
        ENDIF
       ENDIF
@@ -10922,40 +13077,53 @@ c end MMM changed 10/7/18
           HST=0.D0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HSTLORESC = 0.D0
-            HSTQCD = HSTLORESC
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HSTEW(i) = HSTLORESC
-                  HSTQCDEW(i) = HSTLORESC
+               do i=1,17,1
+                  HSTLORESC(i) = 0.D0
+                  HSTQCD(i) = HSTLORESC(i)
+                  HSTEW(i) = HSTLORESC(i)
+                  HSTQCDEW(i) = HSTLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HSTEW(1) = HSTLORESC
-               HSTQCDEW(1) = HSTLORESC
+               HSTLORESC(1) = 0.D0
+               HSTQCD(1) = HSTLORESC(1)
+               HSTEW(1) = HSTLORESC(1)
+               HSTQCDEW(1) = HSTLORESC(1)
             endif
          endif
 c end MMM changed 10/7/18           
        ELSEIF (AMCH.LE.XM1) THEN
         FACTB=3.D0*GF**2*AMCH*AMT**4/32.D0/PI**3*gat**2
         CALL CTOTT_HDEC(AMCH,AMT,EPS,AMW,i2hdm,gat,xgas,CTT0)
-c       CALL CTOTT_HDEC(AMCH,AMT,EPS,AMW,i2hdm,gat,gab,CTT1)
-c       write(6,*)'H+ -> ts: ',amch,ctt0/ctt1
         HST=VTS**2*FACTB*CTT0
-c MMM changed 10/7/18
+c MMM changed 19/1/19
+c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF      
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HSTLORESC = HST*gfcalc/gf
-            HSTQCD = HSTLORESC
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HSTEW(i) = HSTLORESC
-                  HSTQCDEW(i) = HSTLORESC
+               do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  FACTB=3.D0*GFCALC**2/GF**2*
+     .                 AMCH*AMT**4/32.D0/PI**3*gat**2
+                  CALL CTOTT_HDEC(AMCH,AMT,EPS,AMW,i2hdm,gatr,gabr,CTT0)
+                  HST=VTS**2*FACTB*CTT0
+                  HSTLORESC(i) = HST
+                  HSTQCD(i) = HSTLORESC(i)
+                  HSTEW(i) = HSTLORESC(i)
+                  HSTQCDEW(i) = HSTLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HSTEW(1) = HSTLORESC
-               HSTQCDEW(1) = HSTLORESC
+                  call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+                  FACTB=3.D0*GFCALC**2/GF**2*
+     .                 AMCH*AMT**4/32.D0/PI**3*gat**2
+                  CALL CTOTT_HDEC(AMCH,AMT,EPS,AMW,i2hdm,gatr,gabr,CTT0)
+                  HST=VTS**2*FACTB*CTT0
+                  HSTLORESC(1) = HST
+                  HSTQCD(1) = HSTLORESC(1)
+                  HSTEW(1) = HSTLORESC(1)
+                  HSTQCDEW(1) = HSTLORESC(1)
             endif
          endif
-c end MMM changed 10/7/18        
+c end MMM changed 19/1/19        
        ELSEIF (AMCH.LE.XM2) THEN
         XX(1) = XM1-1D0
         XX(2) = XM1
@@ -11006,21 +13174,83 @@ c end MMM changed 21/8/13
         RAT = (AMS+AMT)/XX(4)
         YY(4) = VTS**2*QQINT_HDEC(RAT,XYZ1,XYZ2)
         HST = FINT_HDEC(AMCH,XX,YY)
-c MMM changed 10/7/18
+c MMM changed 19/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HSTLORESC = HST*gfcalc/gf
-            HSTQCD = HSTLORESC
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HSTEW(i) = HSTLORESC
-                  HSTQCDEW(i) = HSTLORESC
+               do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  XX(1) = XM1-1D0
+                  XX(2) = XM1
+                  XX(3) = XM2
+                  XX(4) = XM2+1D0
+                  FACTB=3.D0*gfcalc**2*XX(1)*AMT**4/32.D0/PI**3*gatr**2
+                CALL CTOTT_HDEC(XX(1),AMT,EPS,AMW,i2hdm,gatr,gabr,CTT0)
+                  YY(1)=VTS**2*FACTB*CTT0
+                  FACTB=3.D0*gfcalc**2*XX(2)*AMT**4/32.D0/PI**3*gatr**2
+                CALL CTOTT_HDEC(XX(2),AMT,EPS,AMW,i2hdm,gatr,gabr,CTT0)
+                  YY(2)=VTS**2*FACTB*CTT0
+                  XMS = RUNM_HDEC(XX(3),3)
+                  XMT = RUNM_HDEC(XX(3),6)
+                  XYZ2 = 3.D0*gfcalc/gf*
+     .     CQCD2HDM(XX(3),gabr,gatr,(XMS/XX(3))**2,(XMT/XX(3))**2,RATY)
+                  IF(XYZ2.LT.0.D0) XYZ2 = 0
+                  XYZ1 = 3.D0*gfcalc*gf*
+     .    CQCDM2HDM(XX(3),gabr,gatr,(AMS/XX(3))**2,(AMT/XX(3))**2,RATX)
+                  RAT = (AMS+AMT)/XX(3)
+                  YY(3) = VTS**2*QQINT_HDEC(RAT,XYZ1,XYZ2)
+                  XMS = RUNM_HDEC(XX(4),3)
+                  XMT = RUNM_HDEC(XX(4),6)
+           XYZ2 = 3.D0*gfcalc/gf*
+     .     CQCD2HDM(XX(4),gabr,gatr,(XMS/XX(4))**2,(XMT/XX(4))**2,RATY)
+           IF(XYZ2.LT.0.D0) XYZ2 = 0
+           XYZ1 = 3.D0*gfcalc/gf*
+     .    CQCDM2HDM(XX(4),gabr,gatr,(AMS/XX(4))**2,(AMT/XX(4))**2,RATX)
+           RAT = (AMS+AMT)/XX(4)
+           YY(4) = VTS**2*QQINT_HDEC(RAT,XYZ1,XYZ2)
+           HST = FINT_HDEC(AMCH,XX,YY)
+           HSTLORESC(i) = HST
+           HSTQCD(i) = HSTLORESC(i)
+           HSTEW(i) = HSTLORESC(i)
+           HSTQCDEW(i) = HSTLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HSTEW(1) = HSTLORESC
-               HSTQCDEW(1) = HSTLORESC
+                  call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+                  XX(1) = XM1-1D0
+                  XX(2) = XM1
+                  XX(3) = XM2
+                  XX(4) = XM2+1D0
+                  FACTB=3.D0*gfcalc**2*XX(1)*AMT**4/32.D0/PI**3*gatr**2
+                CALL CTOTT_HDEC(XX(1),AMT,EPS,AMW,i2hdm,gatr,gabr,CTT0)
+                  YY(1)=VTS**2*FACTB*CTT0
+                  FACTB=3.D0*gfcalc**2*XX(2)*AMT**4/32.D0/PI**3*gatr**2
+                CALL CTOTT_HDEC(XX(2),AMT,EPS,AMW,i2hdm,gatr,gabr,CTT0)
+                  YY(2)=VTS**2*FACTB*CTT0
+                  XMS = RUNM_HDEC(XX(3),3)
+                  XMT = RUNM_HDEC(XX(3),6)
+                  XYZ2 = 3.D0*gfcalc/gf*
+     .     CQCD2HDM(XX(3),gabr,gatr,(XMS/XX(3))**2,(XMT/XX(3))**2,RATY)
+                  IF(XYZ2.LT.0.D0) XYZ2 = 0
+                  XYZ1 = 3.D0*gfcalc*gf*
+     .    CQCDM2HDM(XX(3),gabr,gatr,(AMS/XX(3))**2,(AMT/XX(3))**2,RATX)
+                  RAT = (AMS+AMT)/XX(3)
+                  YY(3) = VTS**2*QQINT_HDEC(RAT,XYZ1,XYZ2)
+                  XMS = RUNM_HDEC(XX(4),3)
+                  XMT = RUNM_HDEC(XX(4),6)
+           XYZ2 = 3.D0*gfcalc/gf*
+     .     CQCD2HDM(XX(4),gabr,gatr,(XMS/XX(4))**2,(XMT/XX(4))**2,RATY)
+           IF(XYZ2.LT.0.D0) XYZ2 = 0
+           XYZ1 = 3.D0*gfcalc/gf*
+     .    CQCDM2HDM(XX(4),gabr,gatr,(AMS/XX(4))**2,(AMT/XX(4))**2,RATX)
+           RAT = (AMS+AMT)/XX(4)
+           YY(4) = VTS**2*QQINT_HDEC(RAT,XYZ1,XYZ2)
+           HST = FINT_HDEC(AMCH,XX,YY)
+           HSTLORESC(1) = HST
+           HSTQCD(1) = HSTLORESC(1)
+           HSTEW(1) = HSTLORESC(1)
+           HSTQCDEW(1) = HSTLORESC(1)
             endif
          endif
-c end MMM changed 10/7/18          
+c end MMM changed 19/1/19          
        ELSE
         HST2=3.D0*VTS**2*CQCD(AMCH,TB,(RMS/AMCH)**2,(RMT/AMCH)**2,RATY)
 c MMM changed 21/8/13
@@ -11041,27 +13271,53 @@ c end MMM changed 21/8/13
         RAT = (AMS+AMT)/AMCH
         HST = QQINT_HDEC(RAT,HST1,HST2)
         
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            rat2hdm = 1.D0
-            HSTQCD = HST*GFCALC/GF
-            HSTLORESC =3.d0*vts**2*gfcalc/gf*
-     .  cwoqcdm2hdm(amch,gab,gat,(ams/amch)**2,(amt/amch)**2,rat2hdm)
-            check = (HSTLORESC-HPTSLO)/HSTLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width H+ ->ts.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HSTEW(i) = HPTSNLO(i)
-                  HSTQCDEW(i)=HSTQCD*(1.D0+(HPTSNLO(i)-HPTSLO)/HPTSLO)
+               do i=1,17,1
+                call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                HST2=3.D0*VTS**2*gfcalc/gf*
+     .        CQCD2HDM(AMCH,gabr,gatr,(RMS/AMCH)**2,(RMT/AMCH)**2,RATY)
+                IF(HST2.LT.0.D0) HST2 = 0
+                HST1=3.D0*VTS**2*gfcalc/gf*
+     .        CQCDM2HDM(AMCH,gabr,gatr,(AMS/AMCH)**2,(AMT/AMCH)**2,RATX)
+                RAT = (AMS+AMT)/AMCH
+                HST = QQINT_HDEC(RAT,HST1,HST2)
+                rat2hdm = 1.D0
+                HSTQCD(i) = HST
+                HSTLORESC(i) =3.d0*vts**2*gfcalc/gf*
+     .  cwoqcdm2hdm(amch,gabr,gatr,(ams/amch)**2,(amt/amch)**2,rat2hdm)
+                check = (HSTLORESC(i)-HPTSLOR(i))/HSTLORESC(i)         
+                if(dabs(check).ge.1.D-5) then
+                   print*,'There is a problem in the LO width H+ ->ts.'
+                endif
+                HSTEW(i) = HPTSNLO(i)
+                HSTQCDEW(i)=HSTQCD(i)*(1.D0+(HPTSNLO(i)-HPTSLOR(i))
+     .               /HPTSLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  HSTEW(1) = HPTSNLO(1)
-                  HSTQCDEW(1)=HSTQCD*(1.D0+(HPTSNLO(1)-HPTSLO)/HPTSLO)
+                call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+                HST2=3.D0*VTS**2*gfcalc/gf*
+     .        CQCD2HDM(AMCH,gabr,gatr,(RMS/AMCH)**2,(RMT/AMCH)**2,RATY)
+                IF(HST2.LT.0.D0) HST2 = 0
+                HST1=3.D0*VTS**2*gfcalc/gf*
+     .        CQCDM2HDM(AMCH,gabr,gatr,(AMS/AMCH)**2,(AMT/AMCH)**2,RATX)
+                RAT = (AMS+AMT)/AMCH
+                HST = QQINT_HDEC(RAT,HST1,HST2)
+                rat2hdm = 1.D0
+                HSTQCD(1) = HST
+                HSTLORESC(1) =3.d0*vts**2*gfcalc/gf*
+     .  cwoqcdm2hdm(amch,gabr,gatr,(ams/amch)**2,(amt/amch)**2,rat2hdm)
+                check = (HSTLORESC(1)-HPTSLOR(1))/HSTLORESC(1)         
+                if(dabs(check).ge.1.D-5) then
+                   print*,'There is a problem in the LO width H+ ->ts.'
+                endif
+                HSTEW(1) = HPTSNLO(1)
+                HSTQCDEW(1)=HSTQCD(1)*(1.D0+(HPTSNLO(1)-HPTSLOR(1))
+     .               /HPTSLOR(1))
             endif
          endif
-c end MMM changed 10/7/18  
+c end MMM changed 19/1/19  
         
        ENDIF
       ELSE
@@ -11069,16 +13325,18 @@ c end MMM changed 10/7/18
           HST=0.D0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HSTLORESC = 0.D0
-            HSTQCD = HSTLORESC
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HSTEW(i) = HSTLORESC
-                  HSTQCDEW(i) = HSTLORESC
+               do i=1,17,1
+                  HSTLORESC(i) = 0.D0
+                  HSTQCD(i) = HSTLORESC(i)
+                  HSTEW(i) = HSTLORESC(i)
+                  HSTQCDEW(i) = HSTLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HSTEW(1) = HSTLORESC
-               HSTQCDEW(1) = HSTLORESC
+               HSTLORESC(1) = 0.D0
+               HSTQCD(1) = HSTLORESC(1)
+               HSTEW(1) = HSTLORESC(1)
+               HSTQCDEW(1) = HSTLORESC(1)
             endif
          endif
 c end MMM changed 10/7/18             
@@ -11100,27 +13358,53 @@ c MMM changed 21/8/13
 c end MMM changed 21/8/13
         RAT = (AMS+AMT)/AMCH
         HST = QQINT_HDEC(RAT,HST1,HST2)
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            rat2hdm = 1.D0
-            HSTQCD = HST*GFCALC/GF
-            HSTLORESC =3.d0*vts**2*gfcalc/gf*
-     .  cwoqcdm2hdm(amch,gab,gat,(ams/amch)**2,(amt/amch)**2,rat2hdm)
-            check = (HSTLORESC-HPTSLO)/HSTLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width H+ ->ts.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
+               do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  HST2=3.D0*VTS**2*
+     .        CQCD2HDM(AMCH,gabr,gatr,(RMS/AMCH)**2,(RMT/AMCH)**2,RATY)
+                  IF(HST2.LT.0.D0) HST2 = 0
+                  HST1=3.D0*VTS**2*
+     .       CQCDM2HDM(AMCH,gabr,gatr,(AMS/AMCH)**2,(AMT/AMCH)**2,RATX)
+                  RAT = (AMS+AMT)/AMCH
+                  HST = QQINT_HDEC(RAT,HST1,HST2)
+                  rat2hdm = 1.D0
+                  HSTQCD(i) = HST*GFCALC/GF
+                  HSTLORESC(i) =3.d0*vts**2*gfcalc/gf*
+     .  cwoqcdm2hdm(amch,gabr,gatr,(ams/amch)**2,(amt/amch)**2,rat2hdm)
+                  check = (HSTLORESC(i)-HPTSLOR(i))/HSTLORESC(i)
+                  if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width H+ ->ts.'
+                  endif
                   HSTEW(i) = HPTSNLO(i)
-                  HSTQCDEW(i)=HSTQCD*(1.D0+(HPTSNLO(i)-HPTSLO)/HPTSLO)
+                  HSTQCDEW(i)=HSTQCD(i)*(1.D0+(HPTSNLO(i)-HPTSLOR(i))
+     .                 /HPTSLOR(i))
                end do
             elseif(irenscheme.ne.0) then
+                  call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+                  HST2=3.D0*VTS**2*
+     .        CQCD2HDM(AMCH,gabr,gatr,(RMS/AMCH)**2,(RMT/AMCH)**2,RATY)
+                  IF(HST2.LT.0.D0) HST2 = 0
+                  HST1=3.D0*VTS**2*
+     .       CQCDM2HDM(AMCH,gabr,gatr,(AMS/AMCH)**2,(AMT/AMCH)**2,RATX)
+                  RAT = (AMS+AMT)/AMCH
+                  HST = QQINT_HDEC(RAT,HST1,HST2)
+                  rat2hdm = 1.D0
+                  HSTQCD(1) = HST*GFCALC/GF
+                  HSTLORESC(1) =3.d0*vts**2*gfcalc/gf*
+     .  cwoqcdm2hdm(amch,gabr,gatr,(ams/amch)**2,(amt/amch)**2,rat2hdm)
+                  check = (HSTLORESC(1)-HPTSLOR(1))/HSTLORESC(1)
+                  if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width H+ ->ts.'
+                  endif
                   HSTEW(1) = HPTSNLO(1)
-                  HSTQCDEW(1)=HSTQCD*(1.D0+(HPTSNLO(1)-HPTSLO)/HPTSLO)
+                  HSTQCDEW(1)=HSTQCD(1)*(1.D0+(HPTSNLO(1)-HPTSLOR(1))
+     .                 /HPTSLOR(1))
             endif
          endif
-c end MMM changed 10/7/18          
+c end MMM changed 19/1/19          
        ENDIF
       ENDIF
 
@@ -11145,37 +13429,47 @@ C  H+ --> TB :
           HBT=0.D0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HBTLORESC = 0.D0
-            HBTQCD = HBTLORESC
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HBTEW(i) = HBTLORESC
-                  HBTQCDEW(i) = HBTLORESC
+               do i=1,17,1
+                  HBTLORESC(i) = 0.D0
+                  HBTQCD(i) = HBTLORESC(i)
+                  HBTEW(i) = HBTLORESC(i)
+                  HBTQCDEW(i) = HBTLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HBTEW(1) = HBTLORESC
-               HBTQCDEW(1) = HBTLORESC
+               HBTLORESC(1) = 0.D0
+               HBTQCD(1) = HBTLORESC(1)
+               HBTEW(1) = HBTLORESC(1)
+               HBTQCDEW(1) = HBTLORESC(1)
             endif
          endif
 c end MMM changed 10/7/18           
        ELSEIF (AMCH.LE.XM1) THEN
         FACTB=3.D0*GF**2*AMCH*AMT**4/32.D0/PI**3*gat**2
         CALL CTOTT_HDEC(AMCH,AMT,AMB,AMW,i2hdm,gat,xgab,CTT0)
-c       CALL CTOTT_HDEC(AMCH,AMT,AMB,AMW,i2hdm,gat,gab,CTT1)
-c       write(6,*)'H+ -> tb: ',amch,ctt0/ctt1
         HBT=VTB**2*FACTB*CTT0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HBTLORESC = HBT*gfcalc/gf
-            HBTQCD = HBTLORESC
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HBTEW(i) = HBTLORESC
-                  HBTQCDEW(i) = HBTLORESC
+               do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  FACTB=3.D0*gfcalc**2*AMCH*AMT**4/32.D0/PI**3*gatr**2
+                  CALL CTOTT_HDEC(AMCH,AMT,AMB,AMW,i2hdm,gatr,gabr,CTT0)
+                  HBT=VTB**2*FACTB*CTT0
+                  HBTLORESC(i) = HBT
+                  HBTQCD(i) = HBTLORESC(i)
+                  HBTEW(i) = HBTLORESC(i)
+                  HBTQCDEW(i) = HBTLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HBTEW(1) = HBTLORESC
-               HBTQCDEW(1) = HBTLORESC
+                  call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+                  FACTB=3.D0*gfcalc**2*AMCH*AMT**4/32.D0/PI**3*gatr**2
+                  CALL CTOTT_HDEC(AMCH,AMT,AMB,AMW,i2hdm,gatr,gabr,CTT0)
+                  HBT=VTB**2*FACTB*CTT0
+                  HBTLORESC(1) = HBT
+                  HBTQCD(1) = HBTLORESC(1)
+                  HBTEW(1) = HBTLORESC(1)
+                  HBTQCDEW(1) = HBTLORESC(1)
             endif
          endif
 c end MMM changed 10/7/18          
@@ -11229,21 +13523,83 @@ c end MMM changed 21/8/13
         RAT = (AMB+AMT)/XX(4)
         YY(4) = VTB**2*QQINT_HDEC(RAT,XYZ1,XYZ2)
         HBT = FINT_HDEC(AMCH,XX,YY)
-c MMM changed 10/7/18
+c MMM changed 19/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HBTLORESC = HBT*gfcalc/gf
-            HBTQCD = HBTLORESC
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HBTEW(i) = HBTLORESC
-                  HBTQCDEW(i) = HBTLORESC
+               do i=1,17,1
+                call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                XX(1) = XM1-1D0
+                XX(2) = XM1
+                XX(3) = XM2
+                XX(4) = XM2+1D0
+                FACTB=3.D0*gfcalc**2*XX(1)*AMT**4/32.D0/PI**3*gatr**2
+                CALL CTOTT_HDEC(XX(1),AMT,AMB,AMW,i2hdm,gatr,gabr,CTT0)
+                YY(1)=VTB**2*FACTB*CTT0
+                FACTB=3.D0*gfcalc**2*XX(2)*AMT**4/32.D0/PI**3*gatr**2
+                CALL CTOTT_HDEC(XX(2),AMT,AMB,AMW,i2hdm,gatr,gabr,CTT0)
+                YY(2)=VTB**2*FACTB*CTT0
+                XMB = RUNM_HDEC(XX(3),5)
+                XMT = RUNM_HDEC(XX(3),6)
+                XYZ2 = 3.D0*gfcalc/gf*
+     .    CQCD2HDM(XX(3),gabr,gatr,(XMB/XX(3))**2,(XMT/XX(3))**2,RATY)
+                IF(XYZ2.LT.0.D0) XYZ2 = 0
+                XYZ1 = 3.D0*gfcalc/gf*
+     .   CQCDM2HDM(XX(3),gabr,gatr,(AMB/XX(3))**2,(AMT/XX(3))**2,RATX)
+                RAT = (AMB+AMT)/XX(3)
+                YY(3) = VTB**2*QQINT_HDEC(RAT,XYZ1,XYZ2)
+                XMB = RUNM_HDEC(XX(4),5)
+                XMT = RUNM_HDEC(XX(4),6)
+                XYZ2 = 3.D0*gfcalc/gf*
+     .    CQCD2HDM(XX(4),gabr,gatr,(XMB/XX(4))**2,(XMT/XX(4))**2,RATY)
+                IF(XYZ2.LT.0.D0) XYZ2 = 0
+                XYZ1 = 3.D0*gfcalc/gf*
+     .   CQCDM2HDM(XX(4),gabr,gatr,(AMB/XX(4))**2,(AMT/XX(4))**2,RATX)
+                RAT = (AMB+AMT)/XX(4)
+                YY(4) = VTB**2*QQINT_HDEC(RAT,XYZ1,XYZ2)
+                HBT = FINT_HDEC(AMCH,XX,YY)
+                HBTLORESC(i) = HBT
+                HBTQCD(i) = HBTLORESC(i)
+                HBTEW(i) = HBTLORESC(i)
+                HBTQCDEW(i) = HBTLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HBTEW(1) = HBTLORESC
-               HBTQCDEW(1) = HBTLORESC
+                call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+                XX(1) = XM1-1D0
+                XX(2) = XM1
+                XX(3) = XM2
+                XX(4) = XM2+1D0
+                FACTB=3.D0*gfcalc**2*XX(1)*AMT**4/32.D0/PI**3*gatr**2
+                CALL CTOTT_HDEC(XX(1),AMT,AMB,AMW,i2hdm,gatr,gabr,CTT0)
+                YY(1)=VTB**2*FACTB*CTT0
+                FACTB=3.D0*gfcalc**2*XX(2)*AMT**4/32.D0/PI**3*gatr**2
+                CALL CTOTT_HDEC(XX(2),AMT,AMB,AMW,i2hdm,gatr,gabr,CTT0)
+                YY(2)=VTB**2*FACTB*CTT0
+                XMB = RUNM_HDEC(XX(3),5)
+                XMT = RUNM_HDEC(XX(3),6)
+                XYZ2 = 3.D0*gfcalc/gf*
+     .    CQCD2HDM(XX(3),gabr,gatr,(XMB/XX(3))**2,(XMT/XX(3))**2,RATY)
+                IF(XYZ2.LT.0.D0) XYZ2 = 0
+                XYZ1 = 3.D0*gfcalc/gf*
+     .   CQCDM2HDM(XX(3),gabr,gatr,(AMB/XX(3))**2,(AMT/XX(3))**2,RATX)
+                RAT = (AMB+AMT)/XX(3)
+                YY(3) = VTB**2*QQINT_HDEC(RAT,XYZ1,XYZ2)
+                XMB = RUNM_HDEC(XX(4),5)
+                XMT = RUNM_HDEC(XX(4),6)
+                XYZ2 = 3.D0*gfcalc/gf*
+     .    CQCD2HDM(XX(4),gabr,gatr,(XMB/XX(4))**2,(XMT/XX(4))**2,RATY)
+                IF(XYZ2.LT.0.D0) XYZ2 = 0
+                XYZ1 = 3.D0*gfcalc/gf*
+     .   CQCDM2HDM(XX(4),gabr,gatr,(AMB/XX(4))**2,(AMT/XX(4))**2,RATX)
+                RAT = (AMB+AMT)/XX(4)
+                YY(4) = VTB**2*QQINT_HDEC(RAT,XYZ1,XYZ2)
+                HBT = FINT_HDEC(AMCH,XX,YY)
+                HBTLORESC(1) = HBT
+                HBTQCD(1) = HBTLORESC(1)
+                HBTEW(1) = HBTLORESC(1)
+                HBTQCDEW(1) = HBTLORESC(1)
             endif
          endif
-c end MMM changed 10/7/18         
+c end MMM changed 19/1/19         
        ELSE
         HBT2=3.D0*VTB**2*CQCD(AMCH,TB,(RMB/AMCH)**2,(RMT/AMCH)**2,RATY)
 c MMM changed 21/8/13
@@ -11264,27 +13620,53 @@ c end MMM changed 21/8/13
         RAT = (AMB+AMT)/AMCH
         HBT = QQINT_HDEC(RAT,HBT1,HBT2)
 
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            rat2hdm = 1.D0
-            HBTQCD = HBT*GFCALC/GF
-            HBTLORESC =3.d0*vtb**2*gfcalc/gf*
-     .  cwoqcdm2hdm(amch,gab,gat,(amb/amch)**2,(amt/amch)**2,rat2hdm)
-            check = (HBTLORESC-HPTBLO)/HBTLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width H+ ->tb.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HBTEW(i) = HPTBNLO(i)
-                  HBTQCDEW(i)=HBTQCD*(1.D0+(HPTBNLO(i)-HPTBLO)/HPTBLO)
+               do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+               HBT2=3.D0*VTB**2*
+     .       CQCD2HDM(AMCH,gabr,gatr,(RMB/AMCH)**2,(RMT/AMCH)**2,RATY)
+               IF(HBT2.LT.0.D0) HBT2 = 0
+               HBT1=3.D0*VTB**2*
+     .      CQCDM2HDM(AMCH,gabr,gatr,(AMB/AMCH)**2,(AMT/AMCH)**2,RATX)
+               RAT = (AMB+AMT)/AMCH
+               HBT = QQINT_HDEC(RAT,HBT1,HBT2)
+               rat2hdm = 1.D0
+               HBTQCD(i) = HBT*GFCALC/GF
+               HBTLORESC(i) =3.d0*vtb**2*gfcalc/gf*
+     .  cwoqcdm2hdm(amch,gabr,gatr,(amb/amch)**2,(amt/amch)**2,rat2hdm)
+               check = (HBTLORESC(i)-HPTBLOR(i))/HBTLORESC(i)
+               if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width H+ ->tb.'
+               endif
+               HBTEW(i) = HPTBNLO(i)
+               HBTQCDEW(i)=HBTQCD(i)*(1.D0+(HPTBNLO(i)-HPTBLOR(i))
+     .              /HPTBLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  HBTEW(1) = HPTBNLO(1)
-                  HBTQCDEW(1)=HBTQCD*(1.D0+(HPTBNLO(1)-HPTBLO)/HPTBLO)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               HBT2=3.D0*VTB**2*
+     .       CQCD2HDM(AMCH,gabr,gatr,(RMB/AMCH)**2,(RMT/AMCH)**2,RATY)
+               IF(HBT2.LT.0.D0) HBT2 = 0
+               HBT1=3.D0*VTB**2*
+     .      CQCDM2HDM(AMCH,gabr,gatr,(AMB/AMCH)**2,(AMT/AMCH)**2,RATX)
+               RAT = (AMB+AMT)/AMCH
+               HBT = QQINT_HDEC(RAT,HBT1,HBT2)
+               rat2hdm = 1.D0
+               HBTQCD(1) = HBT*GFCALC/GF
+               HBTLORESC(1) =3.d0*vtb**2*gfcalc/gf*
+     .  cwoqcdm2hdm(amch,gabr,gatr,(amb/amch)**2,(amt/amch)**2,rat2hdm)
+               check = (HBTLORESC(1)-HPTBLOR(1))/HBTLORESC(1)
+               if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width H+ ->tb.'
+               endif
+               HBTEW(1) = HPTBNLO(1)
+               HBTQCDEW(1)=HBTQCD(1)*(1.D0+(HPTBNLO(1)-HPTBLOR(1))
+     .              /HPTBLOR(1))
             endif
          endif
-c end MMM changed 10/7/18        
+c end MMM changed 19/1/19        
         
        ENDIF
       ELSE
@@ -11292,16 +13674,18 @@ c end MMM changed 10/7/18
           HBT=0.D0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HBTLORESC = 0.D0
-            HBTQCD = HBTLORESC
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HBTEW(i) = HBTLORESC
-                  HBTQCDEW(i) = HBTLORESC
+               do i=1,17,1
+                  HBTLORESC(i) = 0.D0
+                  HBTQCD(i) = HBTLORESC(i)
+                  HBTEW(i) = HBTLORESC(i)
+                  HBTQCDEW(i) = HBTLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HBTEW(1) = HBTLORESC
-               HBTQCDEW(1) = HBTLORESC
+               HBTLORESC(1) = 0.D0
+               HBTQCD(1) = HBTLORESC(1)
+               HBTEW(1) = HBTLORESC(1)
+               HBTQCDEW(1) = HBTLORESC(1)
             endif
          endif
 c end MMM changed 10/7/18          
@@ -11324,24 +13708,50 @@ c end MMM changed 21/8/13
         RAT = (AMB+AMT)/AMCH
         HBT = QQINT_HDEC(RAT,HBT1,HBT2)
 
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            rat2hdm = 1.D0
-            HBTQCD = HBT*GFCALC/GF
-            HBTLORESC =3.d0*vtb**2*gfcalc/gf*
-     .  cwoqcdm2hdm(amch,gab,gat,(amb/amch)**2,(amt/amch)**2,rat2hdm)
-            check = (HBTLORESC-HPTBLO)/HBTLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width H+ ->tb.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
+               do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  HBT2=3.D0*VTB**2*
+     .       CQCD2HDM(AMCH,gabr,gatr,(RMB/AMCH)**2,(RMT/AMCH)**2,RATY)
+                  IF(HBT2.LT.0.D0) HBT2 = 0
+                  HBT1=3.D0*VTB**2*
+     .      CQCDM2HDM(AMCH,gabr,gatr,(AMB/AMCH)**2,(AMT/AMCH)**2,RATX)
+                  RAT = (AMB+AMT)/AMCH
+                  HBT = QQINT_HDEC(RAT,HBT1,HBT2)
+                  rat2hdm = 1.D0
+                  HBTQCD(i) = HBT*GFCALC/GF
+                  HBTLORESC(i) =3.d0*vtb**2*gfcalc/gf*
+     .  cwoqcdm2hdm(amch,gabr,gatr,(amb/amch)**2,(amt/amch)**2,rat2hdm)
+                  check = (HBTLORESC(i)-HPTBLOR(i))/HBTLORESC(i)
+                  if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width H+ ->tb.'
+                  endif
                   HBTEW(i) = HPTBNLO(i)
-                  HBTQCDEW(i)=HBTQCD*(1.D0+(HPTBNLO(i)-HPTBLO)/HPTBLO)
+                  HBTQCDEW(i)=HBTQCD(i)*(1.D0+(HPTBNLO(i)-HPTBLOR(i))
+     .                 /HPTBLOR(i))
                end do
             elseif(irenscheme.ne.0) then
+                  call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+                  HBT2=3.D0*VTB**2*
+     .       CQCD2HDM(AMCH,gabr,gatr,(RMB/AMCH)**2,(RMT/AMCH)**2,RATY)
+                  IF(HBT2.LT.0.D0) HBT2 = 0
+                  HBT1=3.D0*VTB**2*
+     .      CQCDM2HDM(AMCH,gabr,gatr,(AMB/AMCH)**2,(AMT/AMCH)**2,RATX)
+                  RAT = (AMB+AMT)/AMCH
+                  HBT = QQINT_HDEC(RAT,HBT1,HBT2)
+                  rat2hdm = 1.D0
+                  HBTQCD(1) = HBT*GFCALC/GF
+                  HBTLORESC(1) =3.d0*vtb**2*gfcalc/gf*
+     .  cwoqcdm2hdm(amch,gabr,gatr,(amb/amch)**2,(amt/amch)**2,rat2hdm)
+                  check = (HBTLORESC(1)-HPTBLOR(1))/HBTLORESC(1)
+                  if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width H+ ->tb.'
+                  endif
                   HBTEW(1) = HPTBNLO(1)
-                  HBTQCDEW(1)=HBTQCD*(1.D0+(HPTBNLO(1)-HPTBLO)/HPTBLO)
+                  HBTQCDEW(1)=HBTQCD(1)*(1.D0+(HPTBNLO(1)-HPTBLOR(1))
+     .                 /HPTBLOR(1))
             endif
          endif
 c end MMM changed 10/7/18        
@@ -11361,13 +13771,14 @@ c  H+ ---> W h
           HWH=0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HWHLLORESC = 0.D0
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HPWHLEW(i) = HWHLLORESC
+               do i=1,17,1
+                  HWHLLORESC(i) = 0.D0
+                  HPWHLEW(i) = HWHLLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HPWHLEW(1) = HWHLLORESC
+               HWHLLORESC(1) = 0.D0
+               HPWHLEW(1) = HWHLLORESC(1)
             endif
          endif
 c end MMM changed 10/7/18           
@@ -11376,31 +13787,36 @@ c end MMM changed 10/7/18
            HWH=0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HWHLLORESC = 0.D0
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HPWHLEW(i) = HWHLLORESC
+               do i=1,17,1
+                  HWHLLORESC(i) = 0.D0
+                  HPWHLEW(i) = HWHLLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HPWHLEW(1) = HWHLLORESC
+               HWHLLORESC(1) = 0.D0
+               HPWHLEW(1) = HWHLLORESC(1)
             endif
          endif
 c end MMM changed 10/7/18             
         ELSE
          HWH=9.D0*GF**2/16.D0/PI**3*AMW**4*AMCH*GHVV**2
      .          *HVH((AML/AMCH)**2,(AMW/AMCH)**2)
-c MMM changed 10/7/18
+c MMM changed 19/1/19
+c Bug fix 19/1/19 GFCALC**2/GF**2 instead of GFCALC/GF
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HWHLLORESC = HWH*gfcalc/gf
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HPWHLEW(i) = HWHLLORESC
+               do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  HWHLLORESC(i) = HWH*gfcalc**2/gf**2*ghvvr**2/ghvv**2
+                  HPWHLEW(i) = HWHLLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HPWHLEW(1) = HWHLLORESC
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               HWHLLORESC(1) = HWH*gfcalc**2/gf**2*ghvvr**2/ghvv**2
+               HPWHLEW(1) = HWHLLORESC(1)
             endif
          endif
-c end MMM changed 10/7/18           
+c end MMM changed 19/1/19           
         ENDIF
        ELSEIF (AMCH.LT.XM2) THEN
         XX(1) = XM1-1D0
@@ -11418,53 +13834,94 @@ c end MMM changed 10/7/18
      .     *LAMB_HDEC(XX(4)**2/AMW**2,AML**2/AMW**2)**2
         YY(4)=GF/8.D0/DSQRT(2D0)/PI*AMW**4/XX(4)*CWH
         HWH = FINT_HDEC(AMCH,XX,YY)*GHVV**2
-c MMM changed 10/7/18
+c MMM changed 19/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HWHLLORESC = HWH*gfcalc/gf
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HPWHLEW(i) = HWHLLORESC
+               do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  XX(1) = XM1-1D0
+                  XX(2) = XM1
+                  XX(3) = XM2
+                  XX(4) = XM2+1D0
+                  YY(1) = 9.D0*gfcalc**2/16.D0/PI**3*AMW**4*XX(1)
+     .                 *HVH((AML/XX(1))**2,(AMW/XX(1))**2)
+                  YY(2) = 9.D0*gfcalc**2/16.D0/PI**3*AMW**4*XX(2)
+     .                 *HVH((AML/XX(2))**2,(AMW/XX(2))**2)
+                  CWH=LAMB_HDEC(AML**2/XX(3)**2,AMW**2/XX(3)**2)
+     .                 *LAMB_HDEC(XX(3)**2/AMW**2,AML**2/AMW**2)**2
+                  YY(3)=gfcalc/8.D0/DSQRT(2D0)/PI*AMW**4/XX(3)*CWH
+                  CWH=LAMB_HDEC(AML**2/XX(4)**2,AMW**2/XX(4)**2)
+     .                 *LAMB_HDEC(XX(4)**2/AMW**2,AML**2/AMW**2)**2
+                  YY(4)=gfcalc/8.D0/DSQRT(2D0)/PI*AMW**4/XX(4)*CWH
+                  HWH = FINT_HDEC(AMCH,XX,YY)*ghvvr**2
+                  HWHLLORESC(i) = HWH
+                  HPWHLEW(i) = HWHLLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HPWHLEW(1) = HWHLLORESC
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+                  XX(1) = XM1-1D0
+                  XX(2) = XM1
+                  XX(3) = XM2
+                  XX(4) = XM2+1D0
+                  YY(1) = 9.D0*gfcalc**2/16.D0/PI**3*AMW**4*XX(1)
+     .                 *HVH((AML/XX(1))**2,(AMW/XX(1))**2)
+                  YY(2) = 9.D0*gfcalc**2/16.D0/PI**3*AMW**4*XX(2)
+     .                 *HVH((AML/XX(2))**2,(AMW/XX(2))**2)
+                  CWH=LAMB_HDEC(AML**2/XX(3)**2,AMW**2/XX(3)**2)
+     .                 *LAMB_HDEC(XX(3)**2/AMW**2,AML**2/AMW**2)**2
+                  YY(3)=gfcalc/8.D0/DSQRT(2D0)/PI*AMW**4/XX(3)*CWH
+                  CWH=LAMB_HDEC(AML**2/XX(4)**2,AMW**2/XX(4)**2)
+     .                 *LAMB_HDEC(XX(4)**2/AMW**2,AML**2/AMW**2)**2
+                  YY(4)=gfcalc/8.D0/DSQRT(2D0)/PI*AMW**4/XX(4)*CWH
+                  HWH = FINT_HDEC(AMCH,XX,YY)*ghvvr**2
+                  HWHLLORESC(1) = HWH
+                  HPWHLEW(1) = HWHLLORESC(1)
             endif
          endif
-c end MMM changed 10/7/18          
+c end MMM changed 19/1/19          
        ELSE
         CWH=LAMB_HDEC(AML**2/AMCH**2,AMW**2/AMCH**2)
      .     *LAMB_HDEC(AMCH**2/AMW**2,AML**2/AMW**2)**2
         HWH=GF/8.D0/DSQRT(2D0)/PI*AMW**4/AMCH*GHVV**2*CWH
 c MMM changed 10/7/18
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HWHLLORESC = HWH*gfcalc/gf
-            check = (HWHLLORESC-HPWHLLO)/HWHLLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width H+ ->Wh.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HPWHLEW(i) = HWHLLORESC*(1.D0
-     .                 +(HPWHLNLO(i)-HPWHLLO)/HPWHLLO)
+               do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  HWHLLORESC(i) = HWH*gfcalc/gf*ghvvr**2/ghvv**2
+                  check = (HWHLLORESC(i)-HPWHLLOR(i))/HWHLLORESC(i)
+                  if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width H+ ->Wh.'
+                  endif
+                  HPWHLEW(i) = HWHLLORESC(i)*(1.D0
+     .                 +(HPWHLNLO(i)-HPWHLLOR(i))/HPWHLLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               HPWHLEW(1) = HWHLLORESC*(1.D0
-     .              +(HPWHLNLO(1)-HPWHLLO)/HPWHLLO)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+                  HWHLLORESC(1) = HWH*gfcalc/gf*ghvvr**2/ghvv**2
+                  check = (HWHLLORESC(1)-HPWHLLOR(1))/HWHLLORESC(1)
+                  if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width H+ ->Wh.'
+                  endif
+                  HPWHLEW(1) = HWHLLORESC(1)*(1.D0
+     .                 +(HPWHLNLO(1)-HPWHLLOR(1))/HPWHLLOR(1))
             endif
          endif
-c end MMM changed 10/7/18           
+c end MMM changed 19/1/19           
        ENDIF
       ELSE
        IF (AMCH.LT.AMW+AML) THEN
           HWH=0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HWHLLORESC = 0.D0
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HPWHLEW(i) = HWHLLORESC
+               do i=1,17,1
+                  HWHLLORESC(i) = 0.D0
+                  HPWHLEW(i) = HWHLLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HPWHLEW(1) = HWHLLORESC
+               HWHLLORESC(1) = 0.D0
+               HPWHLEW(1) = HWHLLORESC(1)
             endif
          endif
 c end MMM changed 10/7/18          
@@ -11472,24 +13929,31 @@ c end MMM changed 10/7/18
         CWH=LAMB_HDEC(AML**2/AMCH**2,AMW**2/AMCH**2)
      .     *LAMB_HDEC(AMCH**2/AMW**2,AML**2/AMW**2)**2
         HWH=GF/8.D0/DSQRT(2D0)/PI*AMW**4/AMCH*GHVV**2*CWH
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HWHLLORESC = HWH*gfcalc/gf
-            check = (HWHLLORESC-HPWHLLO)/HWHLLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width H+ ->Wh.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HPWHLEW(i) = HWHLLORESC*(1.D0+
-     .                 (HPWHLNLO(i)-HPWHLLO)/HPWHLLO)
+               do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+               HWHLLORESC(i) = HWH*gfcalc/gf*ghvvr**2/ghvv**2
+               check = (HWHLLORESC(i)-HPWHLLOR(i))/HWHLLORESC(i)
+               if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width H+ ->Wh.'
+               endif
+               HPWHLEW(i) = HWHLLORESC(i)*(1.D0+
+     .              (HPWHLNLO(i)-HPWHLLOR(i))/HPWHLLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               HPWHLEW(1) = HWHLLORESC*(1.D0+
-     .              (HPWHLNLO(1)-HPWHLLO)/HPWHLLO)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               HWHLLORESC(1) = HWH*gfcalc/gf*ghvvr**2/ghvv**2
+               check = (HWHLLORESC(1)-HPWHLLOR(1))/HWHLLORESC(1)
+               if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width H+ ->Wh.'
+               endif
+               HPWHLEW(1) = HWHLLORESC(1)*(1.D0+
+     .              (HPWHLNLO(1)-HPWHLLOR(1))/HPWHLLOR(1))
             endif
          endif
-c end MMM changed 10/7/18           
+c end MMM changed 19/1/19           
        ENDIF
       ENDIF
 
@@ -11507,13 +13971,14 @@ c  H+ ---> W H
           HWHH=0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HWHHLORESC = 0.D0
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HPWHHEW(i) = HWHHLORESC
+               do i=1,17,1
+                  HWHHLORESC(i) = 0.D0
+                  HPWHHEW(i) = HWHHLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HPWHHEW(1) = HWHHLORESC
+               HWHHLORESC(1) = 0.D0
+               HPWHHEW(1) = HWHHLORESC(1)
             endif
          endif
 c end MMM changed 10/7/18            
@@ -11522,31 +13987,36 @@ c end MMM changed 10/7/18
            HWHH=0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HWHHLORESC = 0.D0
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HPWHHEW(i) = HWHHLORESC
+               do i=1,17,1
+                  HWHHLORESC(i) = 0.D0
+                  HPWHHEW(i) = HWHHLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HPWHHEW(1) = HWHHLORESC
+               HWHHLORESC(1) = 0.D0
+               HPWHHEW(1) = HWHHLORESC(1)
             endif
          endif
-c end MMM changed 10/7/18           
+c end MMM changed 10/7/18
         ELSE
          HWHH=9.D0*GF**2/16.D0/PI**3*AMW**4*AMCH*GLVV**2
      .          *HVH((AMH/AMCH)**2,(AMW/AMCH)**2)
-c MMM changed 10/7/18
+c MMM changed 19/1/19
+c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF         
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HWHHLORESC = HWHH*gfcalc/gf
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HPWHHEW(i) = HWHHLORESC
+               do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+               HWHHLORESC(i) = HWHH*gfcalc**2/gf**2*glvvr**2/glvv**2
+               HPWHHEW(i) = HWHHLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HPWHHEW(1) = HWHHLORESC
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               HWHHLORESC(1) = HWHH*gfcalc**2/gf**2*glvvr**2/glvv**2
+               HPWHHEW(1) = HWHHLORESC(1)
             endif
          endif
-c end MMM changed 10/7/18         
+c end MMM changed 19/1/19         
         ENDIF
        ELSEIF (AMCH.LT.XM2) THEN
         XX(1) = XM1-1D0
@@ -11564,40 +14034,80 @@ c end MMM changed 10/7/18
      .     *LAMB_HDEC(XX(4)**2/AMW**2,AMH**2/AMW**2)**2
         YY(4)=GF/8.D0/DSQRT(2D0)/PI*AMW**4/XX(4)*CWH
         HWHH = FINT_HDEC(AMCH,XX,YY)*GLVV**2
-c MMM changed 10/7/18
+c MMM changed 13/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HWHHLORESC = HWHH*gfcalc/gf
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HPWHHEW(i) = HWHHLORESC
+               do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  XX(1) = XM1-1D0
+                  XX(2) = XM1
+                  XX(3) = XM2
+                  XX(4) = XM2+1D0
+                  YY(1) = 9.D0*gfcalc**2/16.D0/PI**3*AMW**4*XX(1)
+     .                 *HVH((AMH/XX(1))**2,(AMW/XX(1))**2)
+                  YY(2) = 9.D0*gfcalc**2/16.D0/PI**3*AMW**4*XX(2)
+     .                 *HVH((AMH/XX(2))**2,(AMW/XX(2))**2)
+                  CWH=LAMB_HDEC(AMH**2/XX(3)**2,AMW**2/XX(3)**2)
+     .                 *LAMB_HDEC(XX(3)**2/AMW**2,AMH**2/AMW**2)**2
+                  YY(3)=gfcalc/8.D0/DSQRT(2D0)/PI*AMW**4/XX(3)*CWH
+                  CWH=LAMB_HDEC(AMH**2/XX(4)**2,AMW**2/XX(4)**2)
+     .                 *LAMB_HDEC(XX(4)**2/AMW**2,AMH**2/AMW**2)**2
+                  YY(4)=gfcalc/8.D0/DSQRT(2D0)/PI*AMW**4/XX(4)*CWH
+                  HWHH = FINT_HDEC(AMCH,XX,YY)*glvvr**2
+                  HWHHLORESC(i) = HWHH
+                  HPWHHEW(i) = HWHHLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HPWHHEW(1) = HWHHLORESC
+                  call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+                  XX(1) = XM1-1D0
+                  XX(2) = XM1
+                  XX(3) = XM2
+                  XX(4) = XM2+1D0
+                  YY(1) = 9.D0*gfcalc**2/16.D0/PI**3*AMW**4*XX(1)
+     .                 *HVH((AMH/XX(1))**2,(AMW/XX(1))**2)
+                  YY(2) = 9.D0*gfcalc**2/16.D0/PI**3*AMW**4*XX(2)
+     .                 *HVH((AMH/XX(2))**2,(AMW/XX(2))**2)
+                  CWH=LAMB_HDEC(AMH**2/XX(3)**2,AMW**2/XX(3)**2)
+     .                 *LAMB_HDEC(XX(3)**2/AMW**2,AMH**2/AMW**2)**2
+                  YY(3)=gfcalc/8.D0/DSQRT(2D0)/PI*AMW**4/XX(3)*CWH
+                  CWH=LAMB_HDEC(AMH**2/XX(4)**2,AMW**2/XX(4)**2)
+     .                 *LAMB_HDEC(XX(4)**2/AMW**2,AMH**2/AMW**2)**2
+                  YY(4)=gfcalc/8.D0/DSQRT(2D0)/PI*AMW**4/XX(4)*CWH
+                  HWHH = FINT_HDEC(AMCH,XX,YY)*glvvr**2
+                  HWHHLORESC(1) = HWHH
+                  HPWHHEW(1) = HWHHLORESC(1)
             endif
          endif
-c end MMM changed 10/7/18        
+c end MMM changed 19/1/19        
        ELSE
         CWH=LAMB_HDEC(AMH**2/AMCH**2,AMW**2/AMCH**2)
      .     *LAMB_HDEC(AMCH**2/AMW**2,AMH**2/AMW**2)**2
         HWHH=GF/8.D0/DSQRT(2D0)/PI*AMW**4/AMCH*GLVV**2*CWH
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HWHHLORESC = HWHH*gfcalc/gf
-            check = (HWHHLORESC-HPWHHLO)/HWHHLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width H+ ->WH.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HPWHHEW(i) = HWHHLORESC*(1.D0+
-     .                 (HPWHHNLO(i)-HPWHHLO)/HPWHHLO)
+               do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  HWHHLORESC(i) = HWHH*gfcalc/gf*glvvr**2/glvv**2
+                  check = (HWHHLORESC(i)-HPWHHLOR(i))/HWHHLORESC(i)
+                  if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width H+ ->WH.'
+                  endif
+                  HPWHHEW(i) = HWHHLORESC(i)*(1.D0+
+     .                 (HPWHHNLO(i)-HPWHHLOR(i))/HPWHHLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  HPWHHEW(1) = HWHHLORESC*(1.D0+
-     .                 (HPWHHNLO(1)-HPWHHLO)/HPWHHLO)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+                  HWHHLORESC(1) = HWHH*gfcalc/gf*glvvr**2/glvv**2
+                  check = (HWHHLORESC(1)-HPWHHLOR(1))/HWHHLORESC(1)
+                  if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width H+ ->WH.'
+                  endif
+                  HPWHHEW(1) = HWHHLORESC(1)*(1.D0+
+     .                 (HPWHHNLO(1)-HPWHHLOR(1))/HPWHHLOR(1))
             endif
          endif
-c end MMM changed 10/7/18          
+c end MMM changed 19/1/19          
        ENDIF
       ELSE
        IF (AMCH.LT.AMW+AMH) THEN
@@ -11606,11 +14116,13 @@ c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             HWHHLORESC = 0.D0
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HPWHHEW(i) = HWHHLORESC
+               do i=1,17,1
+                  HWHHLORESC(i) = 0.D0
+                  HPWHHEW(i) = HWHHLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HPWHHEW(1) = HWHHORESC
+               HWHHLORESC(1) = 0.D0               
+               HPWHHEW(1) = HWHHLORESC(1)
             endif
          endif
 c end MMM changed 10/7/18          
@@ -11620,19 +14132,26 @@ c end MMM changed 10/7/18
         HWHH=GF/8.D0/DSQRT(2D0)/PI*AMW**4/AMCH*GLVV**2*CWH
 c MMM changed 10/7/18
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HWHHLORESC = HWHH*gfcalc/gf
-            check = (HWHHLORESC-HPWHHLO)/HWHHLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width H+ ->WH.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HPWHHEW(i) = HWHHLORESC*(1.D0+
-     .                 (HPWHHNLO(i)-HPWHHLO)/HPWHHLO)
+               do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  HWHHLORESC(i) = HWHH*gfcalc/gf*glvvr**2/glvv**2
+                  check = (HWHHLORESC(i)-HPWHHLOR(i))/HWHHLORESC(i)
+                  if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width H+ ->WH.'
+                  endif
+                  HPWHHEW(i) = HWHHLORESC(i)*(1.D0+
+     .                 (HPWHHNLO(i)-HPWHHLOR(i))/HPWHHLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  HPWHHEW(1) = HWHHLORESC*(1.D0+
-     .                 (HPWHHNLO(1)-HPWHHLO)/HPWHHLO)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+                  HWHHLORESC(1) = HWHH*gfcalc/gf*glvvr**2/glvv**2
+                  check = (HWHHLORESC(1)-HPWHHLOR(1))/HWHHLORESC(1)
+                  if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width H+ ->WH.'
+            endif
+                  HPWHHEW(1) = HWHHLORESC(1)*(1.D0+
+     .                 (HPWHHNLO(1)-HPWHHLOR(1))/HPWHHLOR(1))               
             endif
          endif
 c end MMM changed 10/7/18         
@@ -11680,13 +14199,14 @@ c MMM changed 22/8/2013
                hwa=0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HWALORESC = 0.D0
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HPWAEW(i) = HWALORESC
+               do i=1,17,1
+                  HWALORESC(i) = 0.D0
+                  HPWAEW(i) = HWALORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HPWAEW(1) = HWALORESC
+               HWALORESC(1) = 0.D0
+               HPWAEW(1) = HWALORESC(1)
             endif
          endif
 c end MMM changed 10/7/18                
@@ -11695,13 +14215,14 @@ c end MMM changed 10/7/18
                   hwa=0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HWALORESC = 0.D0
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HPWAEW(i) = HWALORESC
+               do i=1,17,1
+                  HWALORESC(i) = 0.D0
+                  HPWAEW(i) = HWALORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HPWAEW(1) = HWALORESC
+               HWALORESC(1) = 0.D0
+               HPWAEW(1) = HWALORESC(1)
             endif
          endif
 c end MMM changed 10/7/18 
@@ -11723,26 +14244,21 @@ c end MMM changed 10/7/18
                   gamtotj = 1.D0
                   gamtotk = gamw
 
-c MMM changed 10/7/18
-         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HWALORESC = HWA*gfcalc/gf
+c MMM changed 19/1/19
+c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF
+               if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HPWAEW(i) = HWALORESC
+               do i=1,17,1
+                  HWALORESC(i) = HWA*gfcalc**2/gf**2
+                  HPWAEW(i) = HWALORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HPWAEW(1) = HWALORESC
+               HWALORESC(1) = HWA*gfcalc**2/gf**2
+               HPWAEW(1) = HWALORESC(1)
             endif
          endif
-c end MMM changed 10/7/18                   
+c end MMM changed 19/1/19                   
 
-c ---- initialization of VEGAS ----
-
-c                  call RSTART(12,34,56,78)
-
-c                  call INTEG(hvhinteg,2,iprint,ivegas,result,relative)
-
-c                  hwa=9.d0*gf**2/16.d0/pi**3*amw**4*amch*result
                endif
             elseif (amch.lt.xm2) then
                xx(1) = xm1-1d0
@@ -11760,53 +14276,90 @@ c                  hwa=9.d0*gf**2/16.d0/pi**3*amw**4*amch*result
      .              *lamb_hdec(xx(4)**2/amw**2,ama**2/amw**2)**2
                yy(4)=gf/8.d0/dsqrt(2d0)/pi*amw**4/xx(4)*cwh
                hwa = fint_hdec(amch,xx,yy)
-c MMM changed 10/7/18
+c MMM changed 19/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HWALORESC = hwa*gfcalc/gf
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HPWAEW(i) = HWALORESC
+               do i=1,17,1
+               xx(1) = xm1-1d0
+               xx(2) = xm1
+               xx(3) = xm2
+               xx(4) = xm2+1d0
+               yy(1) = 9.d0*gfcalc**2/16.d0/pi**3*amw**4*xx(1)
+     .              *hvh((ama/xx(1))**2,(amw/xx(1))**2)
+               yy(2) = 9.d0*gfcalc**2/16.d0/pi**3*amw**4*xx(2)
+     .              *hvh((ama/xx(2))**2,(amw/xx(2))**2)
+               cwh=lamb_hdec(ama**2/xx(3)**2,amw**2/xx(3)**2)
+     .              *lamb_hdec(xx(3)**2/amw**2,ama**2/amw**2)**2
+               yy(3)=gfcalc/8.d0/dsqrt(2d0)/pi*amw**4/xx(3)*cwh
+               cwh=lamb_hdec(ama**2/xx(4)**2,amw**2/xx(4)**2)
+     .              *lamb_hdec(xx(4)**2/amw**2,ama**2/amw**2)**2
+               yy(4)=gfcalc/8.d0/dsqrt(2d0)/pi*amw**4/xx(4)*cwh
+               hwa = fint_hdec(amch,xx,yy)
+               HWALORESC(i) = hwa
+               HPWAEW(i) = HWALORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HPWAEW(1) = HWALORESC
+               xx(1) = xm1-1d0
+               xx(2) = xm1
+               xx(3) = xm2
+               xx(4) = xm2+1d0
+               yy(1) = 9.d0*gfcalc**2/16.d0/pi**3*amw**4*xx(1)
+     .              *hvh((ama/xx(1))**2,(amw/xx(1))**2)
+               yy(2) = 9.d0*gfcalc**2/16.d0/pi**3*amw**4*xx(2)
+     .              *hvh((ama/xx(2))**2,(amw/xx(2))**2)
+               cwh=lamb_hdec(ama**2/xx(3)**2,amw**2/xx(3)**2)
+     .              *lamb_hdec(xx(3)**2/amw**2,ama**2/amw**2)**2
+               yy(3)=gfcalc/8.d0/dsqrt(2d0)/pi*amw**4/xx(3)*cwh
+               cwh=lamb_hdec(ama**2/xx(4)**2,amw**2/xx(4)**2)
+     .              *lamb_hdec(xx(4)**2/amw**2,ama**2/amw**2)**2
+               yy(4)=gfcalc/8.d0/dsqrt(2d0)/pi*amw**4/xx(4)*cwh
+               hwa = fint_hdec(amch,xx,yy)
+               HWALORESC(1) = hwa
+               HPWAEW(1) = HWALORESC(1)
             endif
          endif
-c end MMM changed 10/7/18                
+c end MMM changed 19/1/19                
             else
                cwh=lamb_hdec(ama**2/amch**2,amw**2/amch**2)
      .              *lamb_hdec(amch**2/amw**2,ama**2/amw**2)**2
                hwa=gf/8.d0/dsqrt(2d0)/pi*amw**4/amch*cwh
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HWALORESC = HWA*gfcalc/gf
-            check = (HWALORESC-HPWALO)/HWALORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width H+ ->WA.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HPWAEW(i) = HWALORESC*(1.D0+
-     .                 (HPWANLO(i)-HPWALO)/HPWALO)
+               do i=1,17,1
+                  HWALORESC(i) = HWA*gfcalc/gf
+                  check = (HWALORESC(i)-HPWALOR(i))/HWALORESC(i)
+                  if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width H+ ->WA.'
+                  endif
+                  HPWAEW(i) = HWALORESC(i)*(1.D0+
+     .                 (HPWANLO(i)-HPWALOR(i))/HPWALOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  HPWAEW(1) = HWALORESC*(1.D0+
-     .                 (HPWANLO(1)-HPWALO)/HPWALO)
+                  HWALORESC(1) = HWA*gfcalc/gf
+                  check = (HWALORESC(1)-HPWALOR(1))/HWALORESC(1)
+                  if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width H+ ->WA.'
+                  endif
+                  HPWAEW(1) = HWALORESC(1)*(1.D0+
+     .                 (HPWANLO(1)-HPWALOR(1))/HPWALOR(1))
             endif
          endif
-c end MMM changed 10/7/18                  
+c end MMM changed 19/1/19                  
             endif
          else
             if (amch.lt.amw+ama) then
                hwa=0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HWALORESC = 0.D0
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HPWAEW(i) = HWALORESC
+               do i=1,17,1
+                  HWALORESC(i) = 0.D0
+                  HPWAEW(i) = HWALORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               HPWAEW(1) = HWALORESC
+               HWALORESC(1) = 0.D0
+               HPWAEW(1) = HWALORESC(1)
             endif
          endif
 c end MMM changed 10/7/18                
@@ -11814,21 +14367,26 @@ c end MMM changed 10/7/18
                cwh=lamb_hdec(ama**2/amch**2,amw**2/amch**2)
      .              *lamb_hdec(amch**2/amw**2,ama**2/amw**2)**2
                hwa=gf/8.d0/dsqrt(2d0)/pi*amw**4/amch*cwh
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HWALORESC = HWA*gfcalc/gf
-            check = (HWALORESC-HPWALO)/HWALORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width H+ ->WA.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HPWAEW(i) = HWALORESC*(1.D0+
-     .                 (HPWANLO(i)-HPWALO)/HPWALO)
+               do i=1,17,1
+                  HWALORESC(i) = HWA*gfcalc/gf
+                  check = (HWALORESC(i)-HPWALOR(i))/HWALORESC(i)
+                  if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width H+ ->WA.'
+                  endif
+                  HPWAEW(i) = HWALORESC(i)*(1.D0+
+     .                 (HPWANLO(i)-HPWALOR(i))/HPWALOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  HPWAEW(1) = HWALORESC*(1.D0+
-     .                 (HPWANLO(1)-HPWALO)/HPWALO)
+                  HWALORESC(1) = HWA*gfcalc/gf
+                  check = (HWALORESC(1)-HPWALOR(1))/HWALORESC(1)
+                  if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width H+ ->WA.'
+                  endif
+                  HPWAEW(1) = HWALORESC(1)*(1.D0+
+     .                 (HPWANLO(1)-HPWALOR(1))/HPWALOR(1))
             endif
          endif
 c end MMM changed 10/7/18               
@@ -11968,51 +14526,92 @@ c If OMIT ELW2 = 0, then the following decay widths include the usual
 c QCD corrections (where applicable) and off-shell decays, without elw
 c corrections, but rescaled by GFCALC/GF
 
-      WTOT1= HMNLORESC+HLNLORESC+HSUQCD+HSCQCD+HCDQCD+HBCQCD+HBUQCD
-     .      +HDTQCD+HSTQCD+HBTQCD+HWHLLORESC+HWHHLORESC+HWALORESC
+      if(irenscheme.eq.0) then
+      do i=1,17,1
          
-      hpwdth1 = wtot1
+      WTOT1(i)= HMNLORESC(i)+HLNLORESC(i)+HSUQCD(i)+HSCQCD(i)+HCDQCD(i)
+     .        +HBCQCD(i)+HBUQCD(i)+HDTQCD(i)+HSTQCD(i)+HBTQCD(i)
+     .        +HWHLLORESC(i)+HWHHLORESC(i)+HWALORESC(i)
+         
+      hpwdth1(i) = wtot1(i)
 
 c      print*,''
 c      print*,'H+ decays'
 c      print*,''      
-c      print*,'wtot1',wtot1
+c      print*,'wtot1',wtot1(i)
 
-      HBRMN1=HMNLORESC/WTOT1
-      HBRLN1=HLNLORESC/WTOT1
-      HBRSU1=HSUQCD/WTOT1
-      HBRSC1=HSCQCD/WTOT1
-      HBRCD1=HCDQCD/WTOT1
-      HBRBC1=HBCQCD/WTOT1
-      HBRBU1=HBUQCD/WTOT1
-      HBRDT1=HDTQCD/WTOT1
-      HBRST1=HSTQCD/WTOT1
-      HBRBT1=HBTQCD/WTOT1
-      HBRWHL1=HWHLLORESC/WTOT1
-      HBRWHH1=HWHHLORESC/WTOT1
-      HBRWA1=HWALORESC/WTOT1
-      
-c      print*,'hbrmn',hmnloresc,hbrmn1
-c      print*,'hbrln',hlnloresc,hbrln1
-c      print*,'hbrsu',hsuqcd,hbrsu1
-c      print*,'hbrsc',hscqcd,hbrsc1
-c      print*,'hbrcd',hcdqcd,hbrcd1
-c      print*,'hbrbc',hbcqcd,hbrbc1
-c      print*,'hbrbu',hbuqcd,hbrbu1
-c      print*,'hbrdt',hdtqcd,hbrdt1
-c      print*,'hbrst',hstqcd,hbrst1
-c      print*,'hbrbt',hbtqcd,hbrbt1
-c      print*,'hbrwhl',hwhlloresc,hbrwhl1
-c      print*,'hbrwhh',hwhhloresc,hbrwhh1
-c      print*,'hbrwa',hwaloresc,hbrwa1
+      HBRMN1(i)=HMNLORESC(i)/WTOT1(i)
+      HBRLN1(i)=HLNLORESC(i)/WTOT1(i)
+      HBRSU1(i)=HSUQCD(i)/WTOT1(i)
+      HBRSC1(i)=HSCQCD(i)/WTOT1(i)
+      HBRCD1(i)=HCDQCD(i)/WTOT1(i)
+      HBRBC1(i)=HBCQCD(i)/WTOT1(i)
+      HBRBU1(i)=HBUQCD(i)/WTOT1(i)
+      HBRDT1(i)=HDTQCD(i)/WTOT1(i)
+      HBRST1(i)=HSTQCD(i)/WTOT1(i)
+      HBRBT1(i)=HBTQCD(i)/WTOT1(i)
+      HBRWHL1(i)=HWHLLORESC(i)/WTOT1(i)
+      HBRWHH1(i)=HWHHLORESC(i)/WTOT1(i)
+      HBRWA1(i)=HWALORESC(i)/WTOT1(i)
+
+c      if(i.eq.7) then
+c      print*,''
+c      print*,'H+ decays'
+c      print*,''      
+c      print*,'wtot1',wtot1(i)         
+c      print*,'hbrmn',hmnloresc(i),hbrmn1(i)
+c      print*,'hbrln',hlnloresc(i),hbrln1(i)
+c      print*,'hbrsu',hsuqcd(i),hbrsu1(i)
+c      print*,'hbrsc',hscqcd(i),hbrsc1(i)
+c      print*,'hbrcd',hcdqcd(i),hbrcd1(i)
+c      print*,'hbrbc',hbcqcd(i),hbrbc1(i)
+c      print*,'hbrbu',hbuqcd(i),hbrbu1(i)
+c      print*,'hbrdt',hdtqcd(i),hbrdt1(i)
+c      print*,'hbrst',hstqcd(i),hbrst1(i)
+c      print*,'hbrbt',hbtqcd(i),hbrbt1(i)
+c      print*,'hbrwhl',hwhlloresc(i),hbrwhl1(i)
+c      print*,'hbrwhh',hwhhloresc(i),hbrwhh1(i)
+c      print*,'hbrwa',hwaloresc(i),hbrwa1(i)
 c      print*,'rescal',gfcalc/gf
+c      endif
+      
+      end do
 
+      elseif(irenscheme.ne.0) then
+
+      WTOT1(1)= HMNLORESC(1)+HLNLORESC(1)+HSUQCD(1)+HSCQCD(1)+HCDQCD(1)
+     .        +HBCQCD(1)+HBUQCD(1)+HDTQCD(1)+HSTQCD(1)+HBTQCD(1)
+     .        +HWHLLORESC(1)+HWHHLORESC(1)+HWALORESC(1)
+         
+      hpwdth1(1) = wtot1(1)
+
+c      print*,''
+c      print*,'H+ decays'
+c      print*,''      
+c      print*,'wtot1',wtot1(1)
+
+      HBRMN1(1)=HMNLORESC(1)/WTOT1(1)
+      HBRLN1(1)=HLNLORESC(1)/WTOT1(1)
+      HBRSU1(1)=HSUQCD(1)/WTOT1(1)
+      HBRSC1(1)=HSCQCD(1)/WTOT1(1)
+      HBRCD1(1)=HCDQCD(1)/WTOT1(1)
+      HBRBC1(1)=HBCQCD(1)/WTOT1(1)
+      HBRBU1(1)=HBUQCD(1)/WTOT1(1)
+      HBRDT1(1)=HDTQCD(1)/WTOT1(1)
+      HBRST1(1)=HSTQCD(1)/WTOT1(1)
+      HBRBT1(1)=HBTQCD(1)/WTOT1(1)
+      HBRWHL1(1)=HWHLLORESC(1)/WTOT1(1)
+      HBRWHH1(1)=HWHHLORESC(1)/WTOT1(1)
+      HBRWA1(1)=HWALORESC(1)/WTOT1(1)
+         
+      endif
+      
 c If OMIT ELW2 = 0, then the following decay widths include the usual
 c QCD corrections and the EW corrections. The latter are only included for
 c on-shell decays and non-loop induced decays
 
       if(irenscheme.eq.0) then
-       do i=1,14,1
+       do i=1,17,1
           WTOT2(i)= HMNEW(i)+HLNEW(i)+HSUQCDEW(i)+HSCQCDEW(i)
      .             +HCDQCDEW(i)+HBCQCDEW(i)+HBUQCDEW(i)
      .         +HDTQCDEW(i)+HSTQCDEW(i)+HBTQCDEW(i)
@@ -12034,7 +14633,7 @@ c on-shell decays and non-loop induced decays
       HBRWHH2(i)=HPWHHEW(i)/WTOT2(i)
       HBRWA2(i)=HPWAEW(i)/WTOT2(i)
          
-c      if(i.eq.2) then
+c      if(i.eq.7) then
 c      print*,''
 c      print*,'wtot2',wtot2(i),i
 c      print*,''
@@ -12174,7 +14773,24 @@ C  H ---> G G
        CAB = 2*CTB*(1+(1-CTB)*CF(CTB))*GHB
        CTC = 4*AMC**2/AMH**2*DCMPLX(1D0,-EPS)
        CAC = 2*CTC*(1+(1-CTC)*CF(CTC))*GHT
-C
+c MMM changed 19/1/19       
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+          if(irenscheme.eq.0) then
+             do i=1,17,1
+        call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+        catr(i) = 2*CTT*(1+(1-CTT)*CF(CTT))*GHTR
+        cabr(i) = 2*CTB*(1+(1-CTB)*CF(CTB))*GHBR
+        cacr(i) = 2*CTC*(1+(1-CTC)*CF(CTC))*GHTR
+             end do
+          elseif(irenscheme.ne.0) then
+        call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+        catr(1) = 2*CTT*(1+(1-CTT)*CF(CTT))*GHTR
+        cabr(1) = 2*CTB*(1+(1-CTB)*CF(CTB))*GHBR
+        cacr(1) = 2*CTC*(1+(1-CTC)*CF(CTC))*GHTR
+          endif
+       endif
+c end MMM changed 19/1/19
+C     
        IF(IOFSUSY.EQ.0) THEN 
        CSB1= 4*AMSB(1)**2/AMH**2*DCMPLX(1D0,-EPS)
        CSB2= 4*AMSB(2)**2/AMH**2*DCMPLX(1D0,-EPS)
@@ -12218,7 +14834,23 @@ C
      .             *(CXB1+CXB2+CXT1+CXT2+CXUL+CXUR+CXDL+CXDR))*SQCD
        HGG=HVV(AMH,0.D0)*(ASG/PI)**2*XFAC/8
 
-c      write(6,*)'ghb, ght: ',ghb,ght
+c MMM changed 19/1/19       
+c       print*,''
+c       print*,'H decay widths'                
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+          if(irenscheme.eq.0) then
+             do i=1,17,1
+                hggr(i)=HVV(AMH,0.D0)*(ASG/PI)**2*
+     .               CDABS(CATR(i)+CABR(i)+CACR(i))**2*FQCD/8
+c                print*,'hggr',hggr(i),i                
+             end do
+          elseif(irenscheme.ne.0) then
+                hggr(1)=HVV(AMH,0.D0)*(ASG/PI)**2*
+     .            CDABS(CATR(1)+CABR(1)+CACR(1))**2*FQCD/8
+c                print*,'hggr',hggr(1)
+          endif
+       endif
+c end MMM changed 19/1/19    
 
 c      print*,''
 c      print*,'H decay widths'
@@ -12236,6 +14868,25 @@ C  H ---> G G* ---> G CC   TO BE ADDED TO H ---> CC
      .             *(CXB1+CXB2+CXT1+CXT2+CXUL+CXUR+CXDL+CXDR))*SQCD
        DCC=HVV(AMH,0.D0)*(ASG/PI)**2*XFAC/8 - HGG
 
+c MMM changed 19/1/19       
+c       print*,''
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+          if(irenscheme.eq.0) then
+             do i=1,17,1
+                dccr(i)=HVV(AMH,0.D0)*(ASG/PI)**2*
+     .               CDABS(CATR(i)+CABR(i)+CACR(i))**2*FQCD/8
+     .               -hggr(i)
+c                print*,'dccr',dccr(i),dcc,i                
+             end do
+          elseif(irenscheme.ne.0) then
+                dccr(1)=HVV(AMH,0.D0)*(ASG/PI)**2*
+     .            CDABS(CATR(1)+CABR(1)+CACR(1))**2*FQCD/8
+     .            -hggr(1)
+c                print*,'dggr',dccr(1),dcc
+          endif
+       endif
+c end MMM changed 19/1/19           
+
 C  H ---> G G* ---> G BB   TO BE ADDED TO H ---> BB
        NFEXT = 5
        ASG = ASH
@@ -12248,6 +14899,30 @@ C  H ---> G G* ---> G BB   TO BE ADDED TO H ---> BB
      .             *(CXB1+CXB2+CXT1+CXT2+CXUL+CXUR+CXDL+CXDR))*SQCD
        DBB=HVV(AMH,0.D0)*(ASG/PI)**2*XFAC/8 - HGG - DCC
        HGG=HVV(AMH,0.D0)*(ASG/PI)**2*XFAC/8
+
+c MMM changed 19/1/19       
+c       print*,''
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+          if(irenscheme.eq.0) then
+             do i=1,17,1
+                dbbr(i)=HVV(AMH,0.D0)*(ASG/PI)**2*
+     .               CDABS(CATR(i)+CABR(i)+CACR(i))**2*FQCD/8
+     .               -hggr(i)-dccr(i)
+                hggr(i)=HVV(AMH,0.D0)*(ASG/PI)**2*
+     .               CDABS(CATR(i)+CABR(i)+CACR(i))**2*FQCD/8
+c                print*,'dbbr',dbbr(i),dbb,i
+c                print*,'hggr',hggr(i),hgg,i
+             end do
+          elseif(irenscheme.ne.0) then
+                dbbr(1)=HVV(AMH,0.D0)*(ASG/PI)**2*
+     .            CDABS(CATR(1)+CABR(1)+CACR(1))**2*FQCD/8
+     .            -hggr(1)-dccr(1)
+                hggr(1)=HVV(AMH,0.D0)*(ASG/PI)**2*
+     .               CDABS(CATR(1)+CABR(1)+CACR(1))**2*FQCD/8
+c                print*,'dbbr',dbbr(1),dbb
+          endif
+       endif
+c end MMM changed 19/1/19         
 
 C  H ---> G G: FULL NNNLO CORRECTIONS TO TOP LOOPS FOR NF=5
        FQCD0=HGGQCD(ASG,5)
@@ -12265,9 +14940,57 @@ C  H ---> G G: FULL NNNLO CORRECTIONS TO TOP LOOPS FOR NF=5
        DBB = 0
       ENDIF
 
+c MMM changed 19/1/19       
+c       print*,''
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+          if(irenscheme.eq.0) then
+             do i=1,17,1
+                hggr(i)=hggr(i)+
+     .               HVV(AMH,0.D0)*(ASG/PI)**2*
+     .               CDABS(CATR(i)+CABR(i)+CACR(i))**2*(FQCD-FQCD0)/8
+                IF(NFGG.EQ.3)THEN
+                   HGGR(i) = HGGR(i) - DBBR(i) - DCCR(i)
+                ELSEIF(NFGG.EQ.4)THEN
+                   HGGR(i) = HGGR(i) - DBBR(i)
+                   DCCR(i) = 0
+                ELSE
+                   DCCR(i) = 0
+                   DBBR(i) = 0
+                ENDIF
+c                print*,'hggr',hggr(i),hgg,i
+             end do
+          elseif(irenscheme.ne.0) then
+                hggr(1)=hggr(1)+
+     .               HVV(AMH,0.D0)*(ASG/PI)**2*
+     .              CDABS(CATR(1)+CABR(1)+CACR(1))**2*(FQCD-FQCD0)/8
+                IF(NFGG.EQ.3)THEN
+                   HGGR(1) = HGGR(1) - DBBR(1) - DCCR(1)
+                ELSEIF(NFGG.EQ.4)THEN
+                   HGGR(1) = HGGR(1) - DBBR(1)
+                   DCCR(1) = 0
+                ELSE
+                   DCCR(1) = 0
+                   DBBR(1) = 0
+                ENDIF                
+c                print*,'hggr',hggr(1),hgg
+          endif
+       endif
+c end MMM changed 19/1/19 
+      
 c MMM changed 10/7/18
-      if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+c       print*,''
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
          HHGGRESC = HGG*GFCALC/GF
+c MMM changed 19/1/19         
+         if(irenscheme.eq.0) then
+            do i=1,17,1
+               HHGGRESCR(i) = HGGR(i)*GFCALC/GF
+c               print*,'hgg_NNLO',hhggrescr(i),hhggresc,hgg,i
+            enddo
+         elseif(irenscheme.ne.0) then
+            HHGGRESCR(1) = HGGR(1)*GFCALC/GF
+         endif
+c end MMM changed 19/1/19         
       endif
 c end MMM changed 10/7/18
       
@@ -12287,36 +15010,44 @@ C  H ---> MU MU
          HMM = 0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HHMMLORESC = 0.D0
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HHMMEW(i) = HHMMLORESC
+               do i=1,17,1
+                  HHMMLORESC(i) = 0.D0
+                  HHMMEW(i) = 0.D0
                end do
             elseif(irenscheme.ne.0) then
-               HHMMEW(1) = HHMMLORESC
+               HHMMLORESC(1) = 0.D0
+               HHMMEW(1) = 0.D0
             endif
          endif
 c end MMM changed 10/7/18            
       ELSE
          HMM=HFF(AMH,(AMMUON/AMH)**2)*XGHM**2
-c MMM changed 10/7/18
+c MMM changed 19/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HHMMLORESC = HMM*GFCALC/GF
-            check = (HHMMLORESC-HHMMLO)/HHMMLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width H->mumu.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HHMMEW(i) = HHMMLORESC*(1.D0+
-     .                 (HHMMNLO(i)-HHMMLO)/HHMMLO)
-               end do
-            elseif(irenscheme.ne.0) then
-               HHMMEW(1) = HHMMLORESC*(1.D0+
-     .              (HHMMNLO(1)-HHMMLO)/HHMMLO)
+               do i=1,17,1
+         call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+              HHMMLORESC(i) = HMM*ghlepr**2/xghm**2*GFCALC/GF
+              HHMMEW(i) = HHMMLORESC(i)*(1.D0+
+     .             (HHMMNLO(i)-HHMMLOR(i))/HHMMLOR(i))
+              check = (HHMMLORESC(i)-HHMMLOR(i))/HHMMLORESC(i)
+              if(dabs(check).ge.1.D-5) then
+                 print*,'There is a problem in the LO width H->mumu.',i
+              endif
+              end do
+           elseif(irenscheme.ne.0) then
+         call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+              HHMMLORESC(1) = HMM*ghlepr**2/xghm**2*GFCALC/GF
+              HHMMEW(1) = HHMMLORESC(1)*(1.D0+
+     .             (HHMMNLO(1)-HHMMLOR(1))/HHMMLOR(1))
+              check = (HHMMLORESC(1)-HHMMLOR(1))/HHMMLORESC(1)
+              if(dabs(check).ge.1.D-5) then
+                 print*,'There is a problem in the LO width H->mumu.'
+              endif
             endif
          endif
-c end MMM changed 10/7/18                 
+c end MMM changed 19/1/19                 
       ENDIF
 
 c      print*,'H -> mumu',hmm
@@ -12334,40 +15065,46 @@ C  H ---> LL
          HLL = 0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HHLLLORESC = 0.D0
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HHLLEW(i) = HHLLLORESC
+               do i=1,17,1
+                  HHLLLORESC(i) = 0.D0
+                  HHLLEW(i) = 0.D0
                end do
             elseif(irenscheme.ne.0) then
-               HHLLEW(1) = HHLLLORESC
+               HHLLLORESC(1) = 0.D0
+               HHLLEW(1) = 0.D0
             endif
          endif
 c end MMM changed 10/7/18                   
       ELSE
          HLL=HFF(AMH,(AMTAU/AMH)**2)*XGHT**2
-c MMM changed 10/7/18
+c MMM changed 19/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HHLLLORESC = HLL*GFCALC/GF
-            check = (HHLLLORESC-HHLLLO)/HHLLLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width H->tau tau.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HHLLEW(i) = HHLLLORESC*(1.D0+
-     .                 (HHLLNLO(i)-HHLLLO)/HHLLLO)
+               do i=1,17,1
+          call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+               HHLLLORESC(i) = HLL*ghlepr**2/xght**2*GFCALC/GF
+               HHLLEW(i) = HHLLLORESC(i)*(1.D0+
+     .              (HHLLNLO(i)-HHLLLOR(i))/HHLLLOR(i))
+               check = (HHLLLORESC(i)-HHLLLOR(i))/HHLLLORESC(i)
+               if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width H->tau tau.'
+               endif               
                end do
             elseif(irenscheme.ne.0) then
-               HHLLEW(1) = HHLLLORESC*(1.D0+
-     .              (HHLLNLO(1)-HHLLLO)/HHLLLO)
+          call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+               HHLLLORESC(1) = HLL*ghlepr**2/xght**2*GFCALC/GF
+               HHLLEW(1) = HHLLLORESC(1)*(1.D0+
+     .              (HHLLNLO(1)-HHLLLOR(1))/HHLLLOR(1))
+               check = (HHLLLORESC(1)-HHLLLOR(1))/HHLLLORESC(1)
+               if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width H->tau tau.'
+               endif               
             endif
          endif
-c end MMM changed 10/7/18         
+c end MMM changed 19/1/19         
       ENDIF
 
-c     write(6,*)'H: tau/mu: ',HLL/HMM*AMMUON**2/AMTAU**2,XGHT**2/XGHM**2
-c       print*,'H -> tautau',hll
 C H --> SS
       XGLS = GLB
       XGHS = GHB
@@ -12378,18 +15115,20 @@ C H --> SS
       ENDIF
       IF(AMH.LE.2*AMS) THEN
          HSS = 0
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-          HHSSLORESC = 0.D0
-          HHSSQCD = HHSSLORESC
           if(irenscheme.eq.0) then
-             do i=1,14,1
-                HHSSEW(i) = HHSSLORESC
-                HHSSQCDEW(i) = HHSSLORESC
+             do i=1,17,1
+                HHSSLORESC(i) = 0.D0
+                HHSSQCD(i) = 0.D0
+                HHSSEW(i) = 0.D0
+                HHSSQCDEW(i) = 0.D0
              end do
           elseif(irenscheme.ne.0) then
-                HHSSEW(1) = HHSSLORESC
-                HHSSQCDEW(1) = HHSSLORESC
+                HHSSLORESC(1) = 0.D0
+                HHSSQCD(1) = 0.D0
+                HHSSEW(1) = 0.D0
+                HHSSQCDEW(1) = 0.D0
           endif
        endif
 c end MMM changed 10/7/18         
@@ -12402,27 +15141,35 @@ c end MMM changed 10/7/18
        IF(HS2.LT.0.D0) HS2 = 0
        RAT = 2*AMS/AMH
        HSS = QQINT_HDEC(RAT,HS1,HS2)
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HHSSQCD = HSS*GFCALC/GF
-            HHSSLORESC = 3.D0*HFF(AMH,(AMS/AMH)**2)*XGHS**2*GFCALC/GF
-            check = (HHSSLORESC-HHSSLO)/HHSSLORESC
+            if(irenscheme.eq.0) then
+               do i=1,17,1
+            call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+            HHSSQCD(i) = HSS*GHBR**2/XGHS**2*GFCALC/GF
+            HHSSLORESC(i) = 3.D0*HFF(AMH,(AMS/AMH)**2)*GHBR**2*GFCALC/GF
+            check = (HHSSLORESC(i)-HHSSLOR(i))/HHSSLORESC(i)
             if(dabs(check).ge.1.D-5) then
                print*,'There is a problem in the LO width H->ss.'
             endif
-            if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HHSSEW(i) = HHSSNLO(i)
-                  HHSSQCDEW(i) = HHSSQCD*(1.D0+
-     .                 (HHSSNLO(i)-HHSSLO)/HHSSLO)
+            HHSSEW(i) = HHSSNLO(i)
+            HHSSQCDEW(i) = HHSSQCD(i)*(1.D0+
+     .           (HHSSNLO(i)-HHSSLOR(i))/HHSSLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  HHSSEW(1) = HHSSNLO(1)
-                  HHSSQCDEW(1) = HHSSQCD*(1.D0+
-     .                 (HHSSNLO(1)-HHSSLO)/HHSSLO)
+            call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+            HHSSQCD(1) = HSS*GHBR**2/XGHS**2*GFCALC/GF
+            HHSSLORESC(1) = 3.D0*HFF(AMH,(AMS/AMH)**2)*GHBR**2*GFCALC/GF
+            check = (HHSSLORESC(1)-HHSSLOR(1))/HHSSLORESC(1)
+            if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width H->ss.'
+            endif               
+            HHSSEW(1) = HHSSNLO(1)
+            HHSSQCDEW(1) = HHSSQCD(1)*(1.D0+
+     .           (HHSSNLO(1)-HHSSLOR(1))/HHSSLOR(1))
             endif
          endif
-c end MMM changed 10/7/18        
+c end MMM changed 19/1/19        
       ENDIF
 
 c      print*,'H -> ss',hss
@@ -12432,16 +15179,18 @@ C  H --> CC
          HCC = 0
 c MMM changed 10/7/18
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-          HHCCLORESC = 0.D0
-          HHCCQCD = HHCCLORESC
           if(irenscheme.eq.0) then
-             do i=1,14,1
-                HHCCEW(i) = HHCCLORESC
-                HHCCQCDEW(i) = HHCCLORESC
+             do i=1,17,1
+                HHCCLORESC(i) = 0.D0
+                HHCCQCD(i) = 0.D0
+                HHCCEW(i) = 0.D0
+                HHCCQCDEW(i) = 0.D0
              end do
           elseif(irenscheme.ne.0) then
-                HHCCEW(1) = HHCCLORESC
-                HHCCQCDEW(1) = HHCCLORESC
+                HHCCLORESC(1) = 0.D0
+                HHCCQCD(1) = 0.D0
+                HHCCEW(1) = 0.D0
+                HHCCQCDEW(1) = 0.D0
           endif
        endif
 c end MMM changed 10/7/18          
@@ -12455,29 +15204,53 @@ c end MMM changed 10/7/18
        IF(HC2.LT.0.D0) HC2 = 0
        RAT = 2*AMC/AMH
        HCC = QQINT_HDEC(RAT,HC1,HC2)
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            HHCCQCD = HCC*GFCALC/GF
-            HHCCLORESC = 3.D0*HFF(AMH,(AMC/AMH)**2)*GHT**2*GFCALC/GF
-            check = (HHCCLORESC-HHCCLO)/HHCCLORESC
+          if(irenscheme.eq.0) then
+             do i=1,17,1
+          call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+          HC1=3.D0*HFF(AMH,(AMC/AMH)**2)
+     .         *GHTR**2
+     .         *TQCDH(AMC**2/AMH**2)
+          HC2=3.D0*HFF(AMH,(RMC/AMH)**2)*GHTR**2
+     .         *QCDH(RMC**2/AMH**2)
+     .         + DCCR(i)
+          IF(HC2.LT.0.D0) HC2 = 0
+          RAT = 2*AMC/AMH
+          HCC = QQINT_HDEC(RAT,HC1,HC2)
+            HHCCQCD(i) = HCC*GFCALC/GF
+            HHCCLORESC(i) = 3.D0*HFF(AMH,(AMC/AMH)**2)*GHTR**2*GFCALC/GF
+            check = (HHCCLORESC(i)-HHCCLOR(i))/HHCCLORESC(i)
             if(dabs(check).ge.1.D-5) then
                print*,'There is a problem in the LO width H->cc.'
             endif
-            if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HHCCEW(i) = HHCCNLO(i)
-                  HHCCQCDEW(i) = HHCCQCD*(1.D0
-     .                 + (HHCCNLO(i)-HHCCLO)/HHCCLO)
-c                  print*,'values',hlccqcd,hlccnlo(i),hlcclo,
-c     .                 HLCCNLO(i)-HLCCLO
-               end do
-            elseif(irenscheme.ne.0) then
-                  HHCCEW(1) = HHCCNLO(1)
-                  HHCCQCDEW(1) = HHCCQCD*(1.D0
-     .                 + (HHCCNLO(1)-HHCCLO)/HHCCLO)
+            HHCCEW(i) = HHCCNLO(i)
+            HHCCQCDEW(i) = HHCCQCD(i)*(1.D0
+     .                 + (HHCCNLO(i)-HHCCLOR(i))/HHCCLOR(i))
+         end do
+      elseif(irenscheme.ne.0) then
+          call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+          HC1=3.D0*HFF(AMH,(AMC/AMH)**2)
+     .         *GHTR**2
+     .         *TQCDH(AMC**2/AMH**2)
+          HC2=3.D0*HFF(AMH,(RMC/AMH)**2)*GHTR**2
+     .         *QCDH(RMC**2/AMH**2)
+     .         + DCCR(1)
+          IF(HC2.LT.0.D0) HC2 = 0
+          RAT = 2*AMC/AMH
+          HCC = QQINT_HDEC(RAT,HC1,HC2)
+            HHCCQCD(1) = HCC*GFCALC/GF
+            HHCCLORESC(1) = 3.D0*HFF(AMH,(AMC/AMH)**2)*GHTR**2*GFCALC/GF
+            check = (HHCCLORESC(1)-HHCCLOR(1))/HHCCLORESC(1)
+            if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width H->cc.'
             endif
-         endif
-c end MMM changed 10/7/18             
+            HHCCEW(1) = HHCCNLO(1)
+            HHCCQCDEW(1) = HHCCQCD(1)*(1.D0
+     .                 + (HHCCNLO(1)-HHCCLOR(1))/HHCCLOR(1))
+      endif
+      endif
+c end MMM changed 19/1/19             
       ENDIF
 
 c      print*,'H -> cc',hcc
@@ -12503,16 +15276,18 @@ c      XMB = AMB
          HBB = 0
 c MMM changed 10/7/18
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-          HHBBLORESC = 0.D0
-          HHBBQCD = HHBBLORESC
           if(irenscheme.eq.0) then
-             do i=1,14,1
-                HHBBEW(i) = HHBBLORESC
-                HHBBQCDEW(i) = HHBBLORESC
+             do i=1,17,1
+                HHBBLORESC(i) = 0.D0
+                HHBBQCD(i) = 0.D0
+                HHBBEW(i) = 0.D0
+                HHBBQCDEW(i) = 0.D0
              end do
           elseif(irenscheme.ne.0) then
-                HHBBEW(1) = HHBBLORESC
-                HHBBQCDEW(1) = HHBBLORESC
+                HHBBLORESC(1) = 0.D0
+                HHBBQCD(1) = 0.D0
+                HHBBEW(1) = 0.D0
+                HHBBQCDEW(1) = 0.D0
           endif
        endif
 c end MMM changed 10/7/18            
@@ -12528,52 +15303,58 @@ c end MMM changed 10/7/18
        RAT = 2*AMB/AMH
        HBB = QQINT_HDEC(RAT,HB1,HB2)
 
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-          HHBBQCD = HBB*GFCALC/GF
-c          value = hbb
-            HHBBLORESC = 3.D0*HFF(AMH,(AMB/AMH)**2)*GHB**2*GFCALC/GF
-c            print*,'hhbbqcd',hhbbqcd,value,hhbbloresc,ghb
-c            print*,'hhbbqcd',TQCDH(AMB**2/AMH**2),susy,xghb
-            check = (HHBBLORESC-HHBBLO)/HHBBLORESC
-c            print*,'check',check
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width H->bb.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HHBBEW(i) = HHBBNLO(i)
-                  HHBBQCDEW(i) = HHBBQCD*(1.D0
-     .                 + (HHBBNLO(i)-HHBBLO)/HHBBLO)
+               do i=1,17,1
+           call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+           HB1=3.D0*HFF(AMH,(AMB/AMH)**2)
+     .          *GHBR**2
+     .          *TQCDH(AMB**2/AMH**2)
+           HB2=3.D0*HFF(AMH,(RMB/AMH)**2)
+     .          *GHBR**2
+     .          *QCDH(RMB**2/AMH**2)
+     .          + DBBR(i)
+           IF(HB2.LT.0.D0) HB2 = 0
+           RAT = 2*AMB/AMH
+           HBB = QQINT_HDEC(RAT,HB1,HB2)
+           HHBBQCD(i) = HBB*GFCALC/GF
+           HHBBLORESC(i) = 3.D0*HFF(AMH,(AMB/AMH)**2)*GHBR**2*GFCALC/GF
+           check = (HHBBLORESC(i)-HHBBLOR(i))/HHBBLORESC(i)
+           if(dabs(check).ge.1.D-5) then
+              print*,'There is a problem in the LO width H->bb.'
+           endif                  
+           HHBBEW(i) = HHBBNLO(i)
+           HHBBQCDEW(i) = HHBBQCD(i)*(1.D0
+     .          + (HHBBNLO(i)-HHBBLOR(i))/HHBBLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  HHBBEW(1) = HHBBNLO(1)
-                  HHBBQCDEW(1) = HHBBQCD*(1.D0
-     .                 + (HHBBNLO(1)-HHBBLO)/HHBBLO)
-c                  print*,'values',hhbbqcd,hhbbnlo(1),hhbblo,
-c     .                 hhbbqcdew(1)
+            call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+            HB1=3.D0*HFF(AMH,(AMB/AMH)**2)
+     .           *GHBR**2
+     .           *TQCDH(AMB**2/AMH**2)
+            HB2=3.D0*HFF(AMH,(RMB/AMH)**2)
+     .           *GHBR**2
+     .           *QCDH(RMB**2/AMH**2)
+     .           + DBBR(1)
+            IF(HB2.LT.0.D0) HB2 = 0
+            RAT = 2*AMB/AMH
+            HBB = QQINT_HDEC(RAT,HB1,HB2)
+           HHBBQCD(1) = HBB*GFCALC/GF
+           HHBBLORESC(1) = 3.D0*HFF(AMH,(AMB/AMH)**2)*GHBR**2*GFCALC/GF
+           check = (HHBBLORESC(1)-HHBBLOR(1))/HHBBLORESC(1)
+           if(dabs(check).ge.1.D-5) then
+              print*,'There is a problem in the LO width H->bb.'
+           endif                  
+           HHBBEW(1) = HHBBNLO(1)
+           HHBBQCDEW(1) = HHBBQCD(1)*(1.D0
+     .          + (HHBBNLO(1)-HHBBLOR(1))/HHBBLOR(1))
             endif
          endif
-c end MMM changed 10/7/18       
-
-c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-c      write(6,('A3,4(1X,G15.8)'))'H: ',AMA,AMH,SUSY+2*DGHB,
-c    .                             SUSY/(SUSY+2*DGHB)
-c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+c end MMM changed 19/1/19       
 
       ENDIF
-c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-c     write(51,*)AMH,HBB
-c     write(51,*)GHB,XGHB
-c     write(51,*)SUSY,COFSUSY_HDEC(I0,AMB,XMB,QQ)*AS0/PI,-2*DGHB
-c     write(51,*)SSUSY,AS0,QSUSY,(AMSB(1)+AMSB(2)+AMGLU)/3
-c     write(6,*)'H -> bb: ',AMH,HBB,QSUSY1,LOOP
-c     write(6,*)GHB,XGHB,XGHB**2+XGHB*GHB*SUSY
-c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-c      print*,'H -> bb',hbb
-c      print*
-c      print*,'H -> bb:',hbb,ghb,xghb,ghb*susy,2*dghb,susy,2*dghb+susy
 C  H ---> TT
       RATCOUP = 0
       CALL TOPSUSY_HDEC(GLT,GHT,GAT,XGLTOP,XGHTOP,XGATOP,SCALE,1)
@@ -12663,14 +15444,16 @@ c MMM changed 21/8/2013
                htt=0.d0
 c MMM changed 10/7/2018
                if(ielw2hdm.eq.0) then
-                  HHTTLORESC = 0.D0
-                  HHTTQCD = HHTTLORESC
                   if(irenscheme.eq.0) then
-                     do i=1,14,1
-                        HHTTQCDEW(i) = HHTTLORESC
+                     do i=1,17,1
+                        HHTTLORESC(i) = 0.D0
+                        HHTTQCD(i) = 0.D0
+                        HHTTQCDEW(i) = 0.D0
                      end do
                   elseif(irenscheme.ne.0) then
-                     HHTTQCDEW(1) = HHTTLORESC
+                     HHTTLORESC(1) = 0.D0
+                     HHTTQCD(1) = 0.D0
+                     HHTTQCDEW(1) = 0.D0
                   endif                  
                endif
 c end MMM changed 10/7/2018                   
@@ -12679,19 +15462,28 @@ c end MMM changed 10/7/2018
                call HTOTT_hdec(amh,amt,amb,amw,amch,ght,ghb,gat,gab,
      .              ghvv,gzal,htt0)
                htt=factt*htt0
-c MMM changed 10/7/2018
+c MMM changed 19/1/2019
+c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF               
                if(ielw2hdm.eq.0) then
-                  HHTTLORESC = htt*GFCALC/GF
-                  HHTTQCD = HHTTLORESC
-                  if(irenscheme.eq.0) then
-                     do i=1,14,1
-                        HHTTQCDEW(i) = HHTTLORESC
+                  if(irenscheme.eq.0) then                    
+                     do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+               call HTOTT_hdec(amh,amt,amb,amw,amch,ghtr,ghbr,gatr,gabr,
+     .              ghvvr,gzalr,htt0)
+               HHTTLORESC(i) = factt*htt0*GFCALC**2/GF**2
+               HHTTQCD(i) = HHTTLORESC(i)
+               HHTTQCDEW(i) = HHTTLORESC(i)                        
                      end do
                   elseif(irenscheme.ne.0) then
-                     HHTTQCDEW(1) = HHTTLORESC
+               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+               call HTOTT_hdec(amh,amt,amb,amw,amch,ghtr,ghbr,gatr,gabr,
+     .              ghvvr,gzalr,htt0)
+               HHTTLORESC(1) = factt*htt0*GFCALC**2/GF**2
+               HHTTQCD(1) = HHTTLORESC(1)
+               HHTTQCDEW(1) = HHTTLORESC(1)  
                   endif                  
                endif
-c end MMM changed 10/7/2018               
+c end MMM changed 19/1/2019               
             elseif (amh.le.xm2) then
                XX(1) = XM1-1D0
                XX(2) = XM1
@@ -12727,19 +15519,94 @@ c end MMM changed 10/7/2018
                yy(4) = qqint_hdec(rat,ht1,ht2)
 
                htt=fint_hdec(amh,xx,yy)
-c MMM changed 10/7/2018               
+c MMM changed 19/1/2019               
+c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
                if(ielw2hdm.eq.0) then
-                  HHTTLORESC = htt*GFCALC/GF
-                  HHTTQCD = HHTTLORESC
                   if(irenscheme.eq.0) then
-                     do i=1,14,1
-                        HHTTQCDEW(i) = HHTTLORESC
+                     do i=1,17,1
+             call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+             XX(1) = XM1-1D0
+             XX(2) = XM1
+             XX(3) = XM2
+             XX(4) = XM2+1D0
+             
+             factt=6.d0*GFCALC**2*xx(1)**3*amt**2/2.d0/128.d0/pi**3
+             call HTOTT_hdec(xx(1),amt,amb,amw,amch,ghtr,ghbr,gatr,gabr,
+     .            ghvvr,gzalr,htt0)
+             yy(1)=factt*htt0
+
+             factt=6.d0*GFCALC**2*xx(2)**3*amt**2/2.d0/128.d0/pi**3
+             call HTOTT_hdec(xx(2),amt,amb,amw,amch,ghtr,ghbr,gatr,gabr,
+     .              ghvvr,gzalr,htt0)
+             yy(2)=factt*htt0
+               
+             xmt = runm_hdec(xx(3),6)
+             ht1=3.d0*hff(xx(3),(amt/xx(3))**2)*ghtr**2
+     .            *tqcdh(amt**2/xx(3)**2)*GFCALC/GF
+             ht2=3.d0*hff(xx(3),(xmt/xx(3))**2)*ghtr**2
+     .            *qcdh(xmt**2/xx(3)**2)*GFCALC/GF
+             if(ht2.lt.0.d0) ht2 = 0
+             rat = 2*amt/xx(3)
+             yy(3) = qqint_hdec(rat,ht1,ht2)
+
+             xmt = runm_hdec(xx(4),6)
+             ht1=3.d0*hff(xx(4),(amt/xx(4))**2)*ghtr**2
+     .            *tqcdh(amt**2/xx(4)**2)*GFCALC/GF
+             ht2=3.d0*hff(xx(4),(xmt/xx(4))**2)*ghtr**2
+     .            *qcdh(xmt**2/xx(4)**2)*GFCALC/GF
+             if(ht2.lt.0.d0) ht2 = 0
+             rat = 2*amt/xx(4)
+             yy(4) = qqint_hdec(rat,ht1,ht2)
+
+             htt=fint_hdec(amh,xx,yy)           
+
+             HHTTLORESC(i) = htt
+             HHTTQCD(i) = HHTTLORESC(i)
+             HHTTQCDEW(i) = HHTTLORESC(i)
                      end do
                   elseif(irenscheme.ne.0) then
-                     HHTTQCDEW(1) = HHTTLORESC
+             call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+             XX(1) = XM1-1D0
+             XX(2) = XM1
+             XX(3) = XM2
+             XX(4) = XM2+1D0
+             
+             factt=6.d0*GFCCALC**2*xx(1)**3*amt**2/2.d0/128.d0/pi**3
+             call HTOTT_hdec(xx(1),amt,amb,amw,amch,ghtr,ghbr,gatr,gabr,
+     .            ghvvr,gzalr,htt0)
+             yy(1)=factt*htt0
+
+             factt=6.d0*GFCALC**2*xx(2)**3*amt**2/2.d0/128.d0/pi**3
+             call HTOTT_hdec(xx(2),amt,amb,amw,amch,ghtr,ghbr,gatr,gabr,
+     .              ghvvr,gzalr,htt0)
+             yy(2)=factt*htt0
+               
+             xmt = runm_hdec(xx(3),6)
+             ht1=3.d0*hff(xx(3),(amt/xx(3))**2)*ghtr**2
+     .            *tqcdh(amt**2/xx(3)**2)*GFCALC/GF
+             ht2=3.d0*hff(xx(3),(xmt/xx(3))**2)*ghtr**2
+     .            *qcdh(xmt**2/xx(3)**2)*GFCALC/GF
+             if(ht2.lt.0.d0) ht2 = 0
+             rat = 2*amt/xx(3)
+             yy(3) = qqint_hdec(rat,ht1,ht2)
+
+             xmt = runm_hdec(xx(4),6)
+             ht1=3.d0*hff(xx(4),(amt/xx(4))**2)*ghtr**2
+     .            *tqcdh(amt**2/xx(4)**2)*GFCALC/GF
+             ht2=3.d0*hff(xx(4),(xmt/xx(4))**2)*ghtr**2
+     .            *qcdh(xmt**2/xx(4)**2)*GFCALC/GF
+             if(ht2.lt.0.d0) ht2 = 0
+             rat = 2*amt/xx(4)
+             yy(4) = qqint_hdec(rat,ht1,ht2)
+
+             htt=fint_hdec(amh,xx,yy)           
+
+             HHTTLORESC(1) = htt
+             HHTTQCD(1) = HHTTLORESC(1)
+             HHTTQCDEW(1) = HHTTLORESC(1)
                   endif     
                endif
-c end MMM changed 10/7/2018               
+c end MMM changed 19/1/2019               
             else
                ht1=3.d0*hff(amh,(amt/amh)**2)*ght**2
      .              *tqcdh(amt**2/amh**2)
@@ -12749,27 +15616,37 @@ c end MMM changed 10/7/2018
                rat = 2.D0*amt/amh
                htt = qqint_hdec(rat,ht1,ht2)
 
-c MMM changed 10/7/18
+c MMM changed 19/1/19
           if(ielw2hdm.eq.0) then
-            HHTTQCD = HTT*GFCALC/GF
-            HHTTLORESC = 3.D0*HFF(AMH,(AMT/AMH)**2)*GHT**2*GFCALC/GF
-            check = (HHTTLORESC-HHTTLO)/HHTTLORESC
+           if(irenscheme.eq.0) then
+              do i=1,17,1
+            call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+            HHTTQCD(i) = HTT*ghtr**2/ght**2*GFCALC/GF
+            HHTTLORESC(i) = 3.D0*HFF(AMH,(AMT/AMH)**2)*GHTR**2*GFCALC/GF
+            check = (HHTTLORESC(i)-HHTTLOR(i))/HHTTLORESC(i)
             if(dabs(check).ge.1.D-5) then
                print*,'There is a problem in the LO width H->tt.'
             endif
-            if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HHTTEW(i) = HHTTNLO(i)
-                  HHTTQCDEW(i) = HHTTQCD*(1.D0
-     .                 + (HHTTNLO(i)-HHTTLO)/HHTTLO)
+            HHTTEW(i) = HHTTNLO(i)
+            HHTTQCDEW(i) = HHTTQCD(i)*(1.D0
+     .           + (HHTTNLO(i)-HHTTLOR(i))/HHTTLOR(i))
                end do
+          
             elseif(irenscheme.ne.0) then
-                  HHTTEW(1) = HHTTNLO(1)
-                  HHTTQCDEW(1) = HHTTQCD*(1.D0
-     .                 + (HHTTNLO(1)-HHTTLO)/HHTTLO)
+            call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+            HHTTQCD(1) = HTT*ghtr**2/ght**2*GFCALC/GF
+            HHTTLORESC(1) = 3.D0*HFF(AMH,(AMT/AMH)**2)*GHTR**2*GFCALC/GF
+            check = (HHTTLORESC(1)-HHTTLOR(1))/HHTTLORESC(1)
+            if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width H->tt.'
             endif
+            HHTTEW(1) = HHTTNLO(1)
+            HHTTQCDEW(1) = HHTTQCD(1)*(1.D0
+     .           + (HHTTNLO(1)-HHTTLOR(1))/HHTTLOR(1))               
          endif
-c end MMM changed 10/7/18               
+
+         endif
+c end MMM changed 19/1/19               
                
             endif
          else
@@ -12777,14 +15654,16 @@ c end MMM changed 10/7/18
                htt=0.d0
 c MMM changed 10/7/2018
                if(ielw2hdm.eq.0) then
-                  HHTTLORESC = 0.D0
-                  HHTTQCD = HHTTLORESC
                   if(irenscheme.eq.0) then
-                     do i=1,14,1
-                        HHTTQCDEW(i) = HHTTLORESC
+                     do i=1,17,1
+                        HHTTLORESC(i) = 0.D0
+                        HHTTQCD(i) = 0.D0
+                        HHTTQCDEW(i) = 0.D0
                      end do
                   elseif(irenscheme.ne.0) then
-                     HHTTQCDEW(1) = HHTTLORESC
+                     HHTTLORESC(1) = 0.D0
+                     HHTTQCD(1) = 0.D0
+                     HHTTQCDEW(1) = 0.D0
                   endif                  
                endif
 c end MMM changed 10/7/2018                   
@@ -12797,27 +15676,35 @@ c end MMM changed 10/7/2018
                rat = 2.D0*amt/amh
                htt = qqint_hdec(rat,ht1,ht2)
 
-c MMM changed 10/7/18
+c MMM changed 19/1/19
          if(ielw2hdm.eq.0) then
-            HHTTQCD = HHT*GFCALC/GF
-            HHTTLORESC = 3.D0*HFF(AMH,(AMT/AMH)**2)*GHT**2*GFCALC/GF
-            check = (HHTTLORESC-HHTTLO)/HHTTLORESC
+            if(irenscheme.eq.0) then
+               do i=1,17,1
+            call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+            HHTTQCD(i) = HHT*ghtr**2/ght**2*GFCALC/GF
+            HHTTLORESC(i) = 3.D0*HFF(AMH,(AMT/AMH)**2)*GHTR**2*GFCALC/GF
+            check = (HHTTLORESC(i)-HHTTLOR(i))/HHTTLORESC(i)
             if(dabs(check).ge.1.D-5) then
                print*,'There is a problem in the LO width H->tt.'
             endif
-            if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HHTTEW(i) = HHTTNLO(i)
-                  HHTTQCDEW(i) = HHTTQCD*(1.D0
-     .                 + (HHTTNLO(i)-HHTTLO)/HHTTLO)
+            HHTTEW(i) = HHTTNLO(i)
+            HHTTQCDEW(i) = HHTTQCD(i)*(1.D0
+     .           + (HHTTNLO(i)-HHTTLOR(i))/HHTTLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  HHTTEW(1) = HHTTNLO(1)
-                  HHTTQCDEW(1) = HHTTQCD*(1.D0
-     .                 + (HHTTNLO(1)-HHTTLO)/HHTTLO)
+            call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+            HHTTQCD(1) = HHT*ghtr**2/ght**2*GFCALC/GF
+            HHTTLORESC(1) = 3.D0*HFF(AMH,(AMT/AMH)**2)*GHTR**2*GFCALC/GF
+            check = (HHTTLORESC(1)-HHTTLOR(1))/HHTTLORESC(1)
+            if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width H->tt.'
+            endif
+            HHTTEW(1) = HHTTNLO(1)
+            HHTTQCDEW(1) = HHTTQCD(1)*(1.D0
+     .           + (HHTTNLO(1)-HHTTLOR(1))/HHTTLOR(1))
             endif
          endif
-c end MMM changed 10/7/18  
+c end MMM changed 19/1/19  
                
             endif
          endif
@@ -12849,6 +15736,37 @@ C  H ---> GAMMA GAMMA
        endif
        CAW = -(2+3*CTW+3*CTW*(2-CTW)*CF(CTW))*GHVV
        CAH = -AMZ**2/2/AMCH**2*CTH*(1-CTH*CF(CTH))*GHPM
+
+c MMM changed 19/1/19       
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+          if(irenscheme.eq.0) then
+             do i=1,17,1
+        call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+        catr(i) = 4/3D0 * 2*CTT*(1+(1-CTT)*CF(CTT))*GHTR
+     .     * CFACQ_HDEC(0,AMH,XRMT)
+        cabr(i) = 1/3D0 * 2*CTB*(1+(1-CTB)*CF(CTB))*GHBR
+     .     * CFACQ_HDEC(0,AMH,XRMB)
+        cacr(i) = 4/3D0 * 2*CTC*(1+(1-CTC)*CF(CTC))*GHTR
+     .     * CFACQ_HDEC(0,AMH,XRMC)
+        calr(i) = 1.D0  * 2*CTL*(1+(1-CTL)*CF(CTL))*ghlepr
+        cawr(i) = -(2+3*CTW+3*CTW*(2-CTW)*CF(CTW))*GHVVR
+        cahr(i) = -AMZ**2/2/AMCH**2*CTH*(1-CTH*CF(CTH))*GHPMR
+             end do
+          elseif(irenscheme.ne.0) then
+        call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+        catr(1) = 4/3D0 * 2*CTT*(1+(1-CTT)*CF(CTT))*GHTR
+     .     * CFACQ_HDEC(0,AMH,XRMT)
+        cabr(1) = 1/3D0 * 2*CTB*(1+(1-CTB)*CF(CTB))*GHBR
+     .     * CFACQ_HDEC(0,AMH,XRMB)
+        cacr(1) = 4/3D0 * 2*CTC*(1+(1-CTC)*CF(CTC))*GHTR
+     .     * CFACQ_HDEC(0,AMH,XRMC)
+        calr(1) = 1.D0  * 2*CTL*(1+(1-CTL)*CF(CTL))*gHlepr
+        cawr(1) = -(2+3*CTW+3*CTW*(2-CTW)*CF(CTW))*GHVVR
+        cahr(1) = -AMZ**2/2/AMCH**2*CTH*(1-CTH*CF(CTH))*GHPMR
+          endif
+       endif
+c end MMM changed 19/1/19       
+       
        IF(IOFSUSY.EQ.0) THEN 
         RMSU1 = RUNMS_HDEC(AMH/2,AMSU(1))
         RMSU2 = RUNMS_HDEC(AMH/2,AMSU(2))
@@ -12910,11 +15828,21 @@ C  H ---> GAMMA GAMMA
        ENDIF
        HGA=HVV(AMH,0.D0)*(ALPH/PI)**2/16.D0*XFAC
 
-c MMM changed 10/7/2018       
+c MMM changed 19/1/2019       
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-          HHGARESC = HGA*GFCALC/GF
+          if(irenscheme.eq.0) then
+             do i=1,17,1
+                hhgaresc(i) = HVV(AMH,0.D0)*(ALPH/PI)**2/16.D0*
+     .    GFCALC/GF*
+     .    CDABS(CATR(i)+CABR(i)+CACR(i)+CALR(i)+CAWR(i)+CAHR(i))**2
+             end do
+          elseif(irenscheme.ne.0) then
+             hhgaresc(1) = HVV(AMH,0.D0)*(ALPH/PI)**2/16.D0*
+     .    GFCALC/GF*
+     .    CDABS(CATR(1)+CABR(1)+CACR(1)+CALR(1)+CAWR(1)+CAHR(1))**2
+          endif
        endif
-c end MMM changed 10/7/2018       
+c end MMM changed 19/1/2019       
 
 c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
        CAT0 = CAT/GHT
@@ -12966,10 +15894,16 @@ C  H ---> Z GAMMA
 c     print*,'xrmc,xrmb,xrmt ',xrmc,xrmb,xrmt
       IF(AMH.LE.AMZ)THEN
          HZGA=0
-c MMM changed 10/7/2018       
-       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-          HHZGARESC = 0.D0
-       endif
+c MMM changed 10/7/2018
+         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+            if(irenscheme.eq.0) then
+               do i=1,17,1            
+                  HHZGARESC(i) = 0.D0
+               end do
+            elseif(irenscheme.ne.0) then
+               HHZGARESC(1) = 0.D0
+            endif
+         endif         
 c end MMM changed 10/7/2018            
       ELSE
        TS = SS/CS
@@ -12981,18 +15915,12 @@ c end MMM changed 10/7/2018
           FL = (-1+4*SS)/DSQRT(SS*CS)*ghlep
        endif
        EPS=1.D-8
-c      CTT = 4*XRMT**2/AMH**2*DCMPLX(1D0,-EPS)
-c      CTB = 4*XRMB**2/AMH**2*DCMPLX(1D0,-EPS)
-c      CTC = 4*XRMC**2/AMH**2*DCMPLX(1D0,-EPS)
        CTT = 4*AMT**2/AMH**2*DCMPLX(1D0,-EPS)
        CTB = 4*AMB**2/AMH**2*DCMPLX(1D0,-EPS)
        CTC = 4*AMC**2/AMH**2*DCMPLX(1D0,-EPS)
        CTL = 4*AMTAU**2/AMH**2*DCMPLX(1D0,-EPS)
        CTW = 4*AMW**2/AMH**2*DCMPLX(1D0,-EPS)
        CTH = 4*AMCH**2/AMH**2*DCMPLX(1D0,-EPS)
-c      CLT = 4*XRMT**2/AMZ**2*DCMPLX(1D0,-EPS)
-c      CLB = 4*XRMB**2/AMZ**2*DCMPLX(1D0,-EPS)
-c      CLC = 4*XRMC**2/AMZ**2*DCMPLX(1D0,-EPS)
        CLT = 4*AMT**2/AMZ**2*DCMPLX(1D0,-EPS)
        CLB = 4*AMB**2/AMZ**2*DCMPLX(1D0,-EPS)
        CLC = 4*AMC**2/AMZ**2*DCMPLX(1D0,-EPS)
@@ -13006,53 +15934,114 @@ c      CLC = 4*XRMC**2/AMZ**2*DCMPLX(1D0,-EPS)
        CAW = -1/DSQRT(TS)*(4*(3-TS)*CI2(CTW,CLW)
      .     + ((1+2/CTW)*TS - (5+2/CTW))*CI1(CTW,CLW))*GHVV
        CAH = (1-2*SS)/DSQRT(SS*CS)*AMZ**2/2/AMCH**2*CI1(CTH,CLH)*GHPM
+
+c MMM changed 19/1/19       
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+          if(irenscheme.eq.0) then
+             do i=1,17,1
+        call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+        FT = -3*2D0/3*(1-4*2D0/3*SS)/DSQRT(SS*CS)*GHTR
+        FB = 3*1D0/3*(-1+4*1D0/3*SS)/DSQRT(SS*CS)*GHBR
+        FC = -3*2D0/3*(1-4*2D0/3*SS)/DSQRT(SS*CS)*GHTR
+        FL = (-1+4*SS)/DSQRT(SS*CS)*GHLEPR
+        CATR(i) = FT*(CI1(CTT,CLT) - CI2(CTT,CLT))
+        CABR(i) = FB*(CI1(CTB,CLB) - CI2(CTB,CLB))
+        CACR(i) = FC*(CI1(CTC,CLC) - CI2(CTC,CLC))
+        CALR(i) = FL*(CI1(CTL,CLE) - CI2(CTL,CLE))
+        CAWR(i) = -1/DSQRT(TS)*(4*(3-TS)*CI2(CTW,CLW)
+     .       + ((1+2/CTW)*TS - (5+2/CTW))*CI1(CTW,CLW))*GHVVR
+        CAHR(i) = (1-2*SS)/DSQRT(SS*CS)*AMZ**2/2/AMCH**2*CI1(CTH,CLH)*
+     .       GHPMR
+             end do
+          elseif(irenscheme.ne.0) then
+        call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+        FT = -3*2D0/3*(1-4*2D0/3*SS)/DSQRT(SS*CS)*GHTR
+        FB = 3*1D0/3*(-1+4*1D0/3*SS)/DSQRT(SS*CS)*GHBR
+        FC = -3*2D0/3*(1-4*2D0/3*SS)/DSQRT(SS*CS)*GHTR
+        FL = (-1+4*SS)/DSQRT(SS*CS)*GHLEPR
+        CATR(1) = FT*(CI1(CTT,CLT) - CI2(CTT,CLT))
+        CABR(1) = FB*(CI1(CTB,CLB) - CI2(CTB,CLB))
+        CACR(1) = FC*(CI1(CTC,CLC) - CI2(CTC,CLC))
+        CALR(1) = FL*(CI1(CTL,CLE) - CI2(CTL,CLE))
+        CAWR(1) = -1/DSQRT(TS)*(4*(3-TS)*CI2(CTW,CLW)
+     .       + ((1+2/CTW)*TS - (5+2/CTW))*CI1(CTW,CLW))*GHVVR
+        CAHR(1) = (1-2*SS)/DSQRT(SS*CS)*AMZ**2/2/AMCH**2*CI1(CTH,CLH)*
+     .       GHPMR
+      endif
+      endif
+c end MMM changed 19/1/19
+      
        XFAC = CDABS(CAT+CAB+CAC+CAL+CAW+CAH)**2
        ACOUP = DSQRT(2D0)*GF*AMZ**2*SS*CS/PI**2
        HZGA = GF/(4.D0*PI*DSQRT(2.D0))*AMH**3*(ALPH/PI)*ACOUP/16.D0
-     .        *XFAC*(1-AMZ**2/AMH**2)**3
-      ENDIF
+     .      *XFAC*(1-AMZ**2/AMH**2)**3
 
-c MMM changed 10/7/2018       
-       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-          HHZGARESC = HZGA*GFCALC/GF
-       endif
-c end MMM changed 10/7/2018
-      
+c MMM changed 19/1/2019       
+      if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+         if(irenscheme.eq.0) then
+            do i=1,17,1
+               ACOUP = DSQRT(2D0)*GFCALC*AMZ**2*SS*CS/PI**2
+               HHZGARESC(i) = GFCALC/(4.D0*PI*DSQRT(2.D0))*AMH**3*
+     .    (ALPH/PI)*ACOUP/16.D0*(1-AMZ**2/AMH**2)**3*
+     .    CDABS(CATR(i)+CABR(i)+CACR(i)+CALR(i)+CAWR(i)+CAHR(i))**2
+            end do
+         elseif(irenscheme.ne.0) then
+               ACOUP = DSQRT(2D0)*GFCALC*AMZ**2*SS*CS/PI**2
+               HHZGARESC(1) = GFCALC/(4.D0*PI*DSQRT(2.D0))*AMH**3*
+     .    (ALPH/PI)*ACOUP/16.D0*(1-AMZ**2/AMH**2)**3*
+     .    CDABS(CATR(1)+CABR(1)+CACR(1)+CALR(1)+CAWR(1)+CAHR(1))**2            
+         endif
+      endif      
+c end MMM changed 19/1/2019
+              
+      ENDIF
+       
 c      print*,'H -> Zgam',hzga
 C H ---> W W
       IF(IONWZ.EQ.0)THEN
        CALL HTOVV_HDEC(0,AMH,AMW,GAMW,HTWW)
        HWW = 3D0/2D0*GF*AMW**4/DSQRT(2D0)/PI/AMH**3*HTWW*GHVV**2
 
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
           if(amh.le.2.D0*amw) then
-             HHWWLORESC = HWW*GFCALC/GF
              if(irenscheme.eq.0) then
-                do i=1,14,1
-                   HHWWEW(i) = HHWWLORESC
+                do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+                 HHWWLORESC(i) = HWW*GHVVR**2/GHVV**2*GFCALC/GF  
+                 HHWWEW(i) = HHWWLORESC(i)
                 end do
              elseif(irenscheme.ne.0) then
-                HHWWEW(1) = HHWWLORESC                 
+                call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+                HHWWLORESC(1) = HWW*GHVVR**2/GHVV**2*GFCALC/GF                
+                HHWWEW(1) = HHWWLORESC(1)
              endif             
           elseif(amh.gt.2.D0*amw) then
-             HHWWLORESC=HVV(AMH,AMW**2/AMH**2)*GHVV**2*GFCALC/GF
-             check= (HHWWLORESC-HHWWLO)/HHWWLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width H->WW.'
-            endif
+
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HHWWEW(i) = HHWWLORESC*(1.D0+
-     .                 (HHWWNLO(i)-HHWWLO)/HHWWLO)
+               do i=1,17,1
+                call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+                HHWWLORESC(i)=HVV(AMH,AMW**2/AMH**2)*GHVVR**2*GFCALC/GF
+                check= (HHWWLORESC(i)-HHWWLOR(i))/HHWWLORESC(i)
+                if(dabs(check).ge.1.D-5) then
+                   print*,'There is a problem in the LO width H->WW.'
+                endif
+                HHWWEW(i) = HHWWLORESC(i)*(1.D0+
+     .               (HHWWNLO(i)-HHWWLOR(i))/HHWWLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               HHWWEW(1) = HHWWLORESC*(1.D0
-     .              +(HHWWNLO(1)-HHWWLO)/HHWWLO)
+                call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+                HHWWLORESC(1)=HVV(AMH,AMW**2/AMH**2)*GHVVR**2*GFCALC/GF
+                check= (HHWWLORESC(1)-HHWWLOR(1))/HHWWLORESC(1)
+                if(dabs(check).ge.1.D-5) then
+                   print*,'There is a problem in the LO width H->WW.'
+                endif
+                HHWWEW(1) = HHWWLORESC(1)*(1.D0+
+     .               (HHWWNLO(1)-HHWWLOR(1))/HHWWLOR(1))
             endif
          endif
       endif
-c end MMM changed 10/7/18 
+c end MMM changed 19/1/19 
        
       ELSEIF(IONWZ.EQ.-1)THEN
        DLD=2D0
@@ -13062,18 +16051,21 @@ c end MMM changed 10/7/18
        IF (AMH.LE.XM1) THEN
         CALL HTOVV_HDEC(0,AMH,AMW,GAMW,HTWW)
         HWW = 3D0/2D0*GF*AMW**4/DSQRT(2D0)/PI/AMH**3*HTWW*GHVV**2
-c MMM changed 10/7/2018
+c MMM changed 19/1/2019
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-           HHWWLORESC = HWW*GFCALC/GF
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 HHWWEW(i) = HHWWLORESC
+              do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+                 HHWWLORESC(i) = HWW*GHVVR**2/GHVV**2*GFCALC/GF
+                 HHWWEW(i) = HHWWLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              HHWWEW(1) = HHWWLORESC                 
+              call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+              HHWWLORESC(1) = HWW*GHVVR**2/GHVV**2*GFCALC/GF
+              HHWWEW(1) = HHWWLORESC(1)
            endif   
         endif
-c end MMM changed 10/7/2018                
+c end MMM changed 19/1/2019                
        ELSEIF (AMH.LE.XM2) THEN
         XX(1) = XM1-1D0
         XX(2) = XM1
@@ -13086,39 +16078,49 @@ c end MMM changed 10/7/2018
         YY(3)=HVV(XX(3),AMW**2/XX(3)**2)
         YY(4)=HVV(XX(4),AMW**2/XX(4)**2)
         HWW = FINT_HDEC(AMH,XX,YY)*GHVV**2
-c MMM changed 10/7/2018
+c MMM changed 19/1/2019
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-           HHWWLORESC = HWW*GFCALC/GF
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 HHWWEW(i) = HHWWLORESC
+              do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+                 HHWWLORESC(i) = HWW*GHVVR**2/GHVV**2*GFCALC/GF
+                 HHWWEW(i) = HHWWLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              HHWWEW(1) = HHWWLORESC                 
+              call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+              HHWWLORESC(1) = HWW*GHVVR**2/GHVV**2*GFCALC/GF              
+              HHWWEW(1) = HHWWLORESC(1)
            endif              
         endif
-c end MMM changed 10/7/2018           
+c end MMM changed 19/1/2019           
        ELSE
           HWW=HVV(AMH,AMW**2/AMH**2)*GHVV**2
 
-c MMM changed 10/7/18
+c MMM changed 19/1/19
           if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-             HHWWLORESC=HWW*GFCALC/GF
-             check = (HHWWLORESC-HHWWLO)/HHWWLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width H->WW.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HHWWEW(i) = HHWWLORESC*(1.D0+
-     .                 (HHWWNLO(i)-HHWWLO)/HHWWLO)
-               end do
-            elseif(irenscheme.ne.0) then
-               HHWWEW(1) = HHWWLORESC*(1.D0+
-     .              (HHWWNLO(1)-HHWWLO)/HHWWLO)
+               do i=1,17,1
+                call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+                HHWWLORESC(i)=HWW*GHVVR**2/GHVV**2*GFCALC/GF
+                check = (HHWWLORESC(i)-HHWWLOR(i))/HHWWLORESC(i)
+                if(dabs(check).ge.1.D-5) then
+                   print*,'There is a problem in the LO width H->WW.'
+                endif
+                HHWWEW(i) = HHWWLORESC(i)*(1.D0+
+     .               (HHWWNLO(i)-HHWWLOR(i))/HHWWLOR(i))
+              end do
+           elseif(irenscheme.ne.0) then
+              call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+              HHWWLORESC(1)=HWW*GHVVR**2/GHVV**2*GFCALC/GF
+              check = (HHWWLORESC(1)-HHWWLOR(1))/HHWWLORESC(1)
+              if(dabs(check).ge.1.D-5) then
+                 print*,'There is a problem in the LO width H->WW.'
+              endif
+              HHWWEW(1) = HHWWLORESC(1)*(1.D0+
+     .             (HHWWNLO(1)-HHWWLOR(1))/HHWWLOR(1))
             endif
          endif
-c end MMM changed 10/7/18     
+c end MMM changed 19/1/19     
           
        ENDIF
       ELSE
@@ -13130,31 +16132,36 @@ c end MMM changed 10/7/18
          HWW=0
 c MMM changed 10/7/18
           if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-             HHWWLORESC=0.D0
              if(irenscheme.eq.0) then
-                do i=1,14,1
-                   HHWWEW(i) = HHWWLORESC
+                do i=1,17,1
+                   HHWWLORESC(i)=0.D0
+                   HHWWEW(i) = 0.D0
                 end do
              elseif(irenscheme.ne.0) then
-                HHWWEW(1) = HHWWLORESC
+                HHWWLORESC(1)=0.D0
+                HHWWEW(1) = 0.D0
              endif
           endif
 c end MMM changed 10/7/18             
       ELSE IF (AMH.LE.XM1) THEN
        CWW=3.D0*GF**2*AMW**4/16.D0/PI**3
        HWW=HV(AMW**2/AMH**2)*CWW*AMH*GHVV**2
-c MMM changed 10/7/2018
-        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-           HHWWLORESC = HWW*GFCALC/GF
+c MMM changed 19/1/2019
+c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 HHWWEW(i) = HHWWLORESC
+              do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+                 HHWWLORESC(i) = HWW*GHVVR**2/GHVV**2*GFCALC**2/GF**2
+                 HHWWEW(i) = HHWWLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              HHWWEW(1) = HHWWLORESC                 
+              call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+              HHWWLORESC(1) = HWW*GHVVR**2/GHVV**2*GFCALC**2/GF**2
+              HHWWEW(1) = HHWWLORESC(1)              
            endif              
         endif
-c end MMM changed 10/7/2018        
+c end MMM changed 19/1/2019        
       ELSE IF (AMH.LT.XM2) THEN
        CWW=3.D0*GF**2*AMW**4/16.D0/PI**3
        XX(1) = XM1-1D0
@@ -13166,39 +16173,70 @@ c end MMM changed 10/7/2018
        YY(3)=HVV(XX(3),AMW**2/XX(3)**2)
        YY(4)=HVV(XX(4),AMW**2/XX(4)**2)
        HWW = FINT_HDEC(AMH,XX,YY)*GHVV**2
-c MMM changed 10/7/2018
-        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-           HHWWLORESC = HWW*GFCALC/GF
+c MMM changed 19/1/2019
+c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 HHWWEW(i) = HHWWLORESC
+              do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+       CWW=3.D0*GF**2*AMW**4/16.D0/PI**3
+       XX(1) = XM1-1D0
+       XX(2) = XM1
+       XX(3) = XM2
+       XX(4) = XM2+1D0
+       YY(1)=HV(AMW**2/XX(1)**2)*CWW*XX(1)*GFCALC**2/GF**2
+       YY(2)=HV(AMW**2/XX(2)**2)*CWW*XX(2)*GFCALC**2/GF**2
+       YY(3)=HVV(XX(3),AMW**2/XX(3)**2)*GFCALC/GF
+       YY(4)=HVV(XX(4),AMW**2/XX(4)**2)*GFCALC/GF
+       HWW = FINT_HDEC(AMH,XX,YY)*GHVV**2                 
+                 HHWWLORESC(i) = HWW*GHVVR**2/GHVV**2
+                 HHWWEW(i) = HHWWLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              HHWWEW(1) = HHWWLORESC                 
+              call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+       CWW=3.D0*GF**2*AMW**4/16.D0/PI**3
+       XX(1) = XM1-1D0
+       XX(2) = XM1
+       XX(3) = XM2
+       XX(4) = XM2+1D0
+       YY(1)=HV(AMW**2/XX(1)**2)*CWW*XX(1)*GFCALC**2/GF**2
+       YY(2)=HV(AMW**2/XX(2)**2)*CWW*XX(2)*GFCALC**2/GF**2
+       YY(3)=HVV(XX(3),AMW**2/XX(3)**2)*GFCALC/GF
+       YY(4)=HVV(XX(4),AMW**2/XX(4)**2)*GFCALC/GF
+       HWW = FINT_HDEC(AMH,XX,YY)*GHVV**2                               
+              HHWWLORESC(1) = HWW*GHVVR**2/GHVV**2
+              HHWWEW(1) = HHWWLORESC(1)              
            endif   
         endif
-c end MMM changed 10/7/2018         
+c end MMM changed 19/1/2019        
       ELSE
          HWW=HVV(AMH,AMW**2/AMH**2)*GHVV**2
 
-c MMM changed 10/7/18
+c MMM changed 19/1/19
           if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-             HHWWLORESC=HWW*GFCALC/GF
-             check = (HHWWLORESC-HHWWLO)/HHWWLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width H->WW.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HHWWEW(i) = HHWWLORESC*(1.D0+
-     .                 (HHWWNLO(i)-HHWWLO)/HHWWLO)
+               do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+                  HHWWLORESC(i)=HWW**GHVVR**2/GHVV**2*GFCALC/GF
+                  check = (HHWWLORESC(i)-HHWWLOR(i))/HHWWLORESC(i)
+                  if(dabs(check).ge.1.D-5) then
+                     print*,'There is a problem in the LO width H->WW.'
+                  endif
+                  HHWWEW(i) = HHWWLORESC(i)*(1.D0+
+     .                 (HHWWNLO(i)-HHWWLOR(i))/HHWWLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               HHWWEW(1) = HHWWLORESC*(1.D0+
-     .              (HHWWNLO(1)-HHWWLO)/HHWWLO)
+               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+               HHWWLORESC(1)=HWW**GHVVR**2/GHVV**2*GFCALC/GF
+               check = (HHWWLORESC(1)-HHWWLOR(1))/HHWWLORESC(1)
+               if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width H->WW.'
+               endif
+               HHWWEW(1) = HHWWLORESC(1)*(1.D0+
+     .              (HHWWNLO(1)-HHWWLOR(1))/HHWWLOR(1))
             endif
          endif
-c end MMM changed 10/7/18
+c end MMM changed 19/1/19
          
       ENDIF
       ENDIF
@@ -13212,35 +16250,47 @@ C  H ---> Z Z
        CALL HTOVV_HDEC(0,AMH,AMZ,GAMZ,HTZZ)
        HZZ = 3D0/4D0*GF*AMZ**4/DSQRT(2D0)/PI/AMH**3*HTZZ*GHVV**2
 
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
           if(amh.le.2.D0*amz) then
-             HHZZLORESC = HZZ*GFCALC/GF
              if(irenscheme.eq.0) then
-                do i=1,14,1
-                  HHZZEW(i) = HHZZLORESC
+                do i=1,17,1
+                   call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+                   HHZZLORESC(i) = HZZ*GHVVR**2/GHVV**2*GFCALC/GF
+                   HHZZEW(i) = HHZZLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-                  HHZZEW(1) = HHZZLORESC
+               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+               HHZZLORESC(1) = HZZ*GHVVR**2/GHVV**2*GFCALC/GF
+               HHZZEW(1) = HHZZLORESC(1)
             endif             
           elseif(amh.gt.2.D0*amz) then
-             HHZZLORESC=HVV(AMH,AMZ**2/AMH**2)/2.D0*GHVV**2*GFCALC/GF
-             check = (HHZZLORESC-HHZZLO)/HHZZLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width H->ZZ.'
-            endif
-            if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HHZZEW(i) = HHZZLORESC*(1.D0+
-     .                 (HHZZNLO(i)-HHZZLO)/HHZZLO)
+           if(irenscheme.eq.0) then
+               do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+                  HHZZLORESC(i)=HVV(AMH,AMZ**2/AMH**2)/2.D0*GHVVR**2*
+     .                 GFCALC/GF
+                  check = (HHZZLORESC(i)-HHZZLOR(i))/HHZZLORESC(i)
+                  if(dabs(check).ge.1.D-5) then
+                     print*,'There is a problem in the LO width H->ZZ.'
+                  endif
+                  HHZZEW(i) = HHZZLORESC(i)*(1.D0+
+     .                 (HHZZNLO(i)-HHZZLOR(i))/HHZZLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               HHZZEW(1) = HHZZLORESC*(1.D0+
-     .              (HHZZNLO(1)-HHZZLO)/HHZZLO)
+               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+               HHZZLORESC(1)=HVV(AMH,AMZ**2/AMH**2)/2.D0*GHVVR**2*
+     .              GFCALC/GF
+               check = (HHZZLORESC(1)-HHZZLOR(1))/HHZZLORESC(1)
+               if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width H->ZZ.'
+               endif
+               HHZZEW(1) = HHZZLORESC(1)*(1.D0+
+     .              (HHZZNLO(1)-HHZZLOR(1))/HHZZLOR(1))
             endif
          endif
       endif
-c end MMM changed 10/7/18        
+c end MMM changed 19/1/19        
        
       ELSEIF(IONWZ.EQ.-1)THEN
        DLD=2D0
@@ -13250,18 +16300,21 @@ c end MMM changed 10/7/18
        IF (AMH.LE.XM1) THEN
         CALL HTOVV_HDEC(0,AMH,AMZ,GAMZ,HTZZ)
         HZZ = 3D0/4D0*GF*AMZ**4/DSQRT(2D0)/PI/AMH**3*HTZZ*GHVV**2
-c MMM changed 10/7/2018
+c MMM changed 19/1/2019
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-           HHZZLORESC = HZZ*GFCALC/GF
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 HHZZEW(i) = HHZZLORESC
+              do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+                 HHZZLORESC(i) = HZZ*GHVVR**2/GHVV**2*GFCALC/GF
+                 HHZZEW(i) = HHZZLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              HHZZEW(1) = HHZZLORESC
+              call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+              HHZZLORESC(1) = HZZ*GHVVR**2/GHVV**2*GFCALC/GF
+              HHZZEW(1) = HHZZLORESC(1)
            endif            
         endif
-c end MMM changed 10/7/2018
+c end MMM changed 19/1/2019
       ELSEIF (AMH.LE.XM2) THEN
         XX(1) = XM1-1D0
         XX(2) = XM1
@@ -13274,39 +16327,49 @@ c end MMM changed 10/7/2018
         YY(3)=HVV(XX(3),AMZ**2/XX(3)**2)/2
         YY(4)=HVV(XX(4),AMZ**2/XX(4)**2)/2
         HZZ = FINT_HDEC(AMH,XX,YY)*GHVV**2
-c MMM changed 10/7/2018
+c MMM changed 19/1/2019
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-           HHZZLORESC = HZZ*GFCALC/GF
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 HHZZEW(i) = HHZZLORESC
+              do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+                 HHZZLORESC(i) = HZZ*GHVVR**2/GHVV**2*GFCALC/GF                 
+                 HHZZEW(i) = HHZZLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              HHZZEW(1) = HHZZLORESC
+              call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+              HHZZLORESC(1) = HZZ*GHVVR**2/GHVV**2*GFCALC/GF                 
+              HHZZEW(1) = HHZZLORESC(1)
            endif            
         endif
-c end MMM changed 10/7/2018         
+c end MMM changed 19/1/2019         
        ELSE
           HZZ=HVV(AMH,AMZ**2/AMH**2)/2.D0*GHVV**2
 
-c MMM changed 10/7/18          
+c MMM changed 19/1/19          
           if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-             HHZZLORESC=HZZ*GFCALC/GF
-             check = (HHZZLORESC-HHZZLO)/HHZZLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width H->ZZ.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HHZZEW(i) = HHZZLORESC*(1.D0+
-     .                 (HHZZNLO(i)-HHZZLO)/HHZZLO)
+               do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+                  HHZZLORESC(i)=HZZ*GHVVR**2/GHVV**2*GFCALC/GF
+                  check = (HHZZLORESC(i)-HHZZLOR(i))/HHZZLORESC(i)
+                  if(dabs(check).ge.1.D-5) then
+                     print*,'There is a problem in the LO width H->ZZ.'
+                  endif
+                  HHZZEW(i) = HHZZLORESC(i)*(1.D0+
+     .                 (HHZZNLO(i)-HHZZLOR(i))/HHZZLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               HHZZEW(1) = HHZZLORESC*(1.D0+
-     .              (HHZZNLO(1)-HHZZLO)/HHZZLO)
+               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+               HHZZLORESC(1)=HZZ*GHVVR**2/GHVV**2*GFCALC/GF
+               check = (HHZZLORESC(1)-HHZZLOR(1))/HHZZLORESC(1)
+               if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width H->ZZ.'
+               endif
+               HHZZEW(1) = HHZZLORESC(1)*(1.D0+
+     .              (HHZZNLO(1)-HHZZLOR(1))/HHZZLOR(1))
             endif
          endif          
-c end MMM changed 10/7/18
+c end MMM changed 19/1/19
           
        ENDIF
       ELSE
@@ -13316,33 +16379,38 @@ c end MMM changed 10/7/18
       XM2 = 2D0*AMZ+DLU
       IF (AMH.LE.AMZ) THEN
          HZZ=0
-c MMM changed 10/7/18
+c MMM changed 19/1/19
           if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-             HHZZLORESC=0.D0
              if(irenscheme.eq.0) then
-                do i=1,14,1
-                   HHZZEW(i) = HHZZLORESC
+                do i=1,17,1
+                   HHZZLORESC(i) = 0.D0
+                   HHZZEW(i) = HHZZLORESC(i)
                 end do
              elseif(irenscheme.ne.0) then
-                HHZZEW(1) = HHZZLORESC
+                HHZZLORESC(1) = 0.D0
+                HHZZEW(1) = HHZZLORESC(1)
              endif
           endif
-c end MMM changed 10/7/18         
+c end MMM changed 19/1/19         
       ELSE IF (AMH.LE.XM1) THEN
        CZZ=3.D0*GF**2*AMZ**4/192.D0/PI**3*(7-40/3.D0*SS+160/9.D0*SS**2)
        HZZ=HV(AMZ**2/AMH**2)*CZZ*AMH*GHVV**2
-c MMM changed 10/7/2018
-        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-           HHZZLORESC = HZZ*GFCALC/GF
+c MMM changed 19/1/2019
+c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 HHZZEW(i) = HHZZLORESC
+              do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+                 HHZZLORESC(i) = HZZ*GHVVR**2/GHVV**2*GFCALC**2/GF**2
+                 HHZZEW(i) = HHZZLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              HHZZEW(1) = HHZZLORESC
+              call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+              HHZZLORESC(1) = HZZ*GHVVR**2/GHVV**2*GFCALC**2/GF**2
+              HHZZEW(1) = HHZZLORESC(1)
            endif 
         endif
-c end MMM changed 10/7/2018              
+c end MMM changed 19/1/2019              
       ELSE IF (AMH.LT.XM2) THEN
        CZZ=3.D0*GF**2*AMZ**4/192.D0/PI**3*(7-40/3.D0*SS+160/9.D0*SS**2)
        XX(1) = XM1-1D0
@@ -13354,39 +16422,70 @@ c end MMM changed 10/7/2018
        YY(3)=HVV(XX(3),AMZ**2/XX(3)**2)/2D0
        YY(4)=HVV(XX(4),AMZ**2/XX(4)**2)/2D0
        HZZ = FINT_HDEC(AMH,XX,YY)*GHVV**2
-c MMM changed 10/7/2018
+c MMM changed 19/1/2019
+c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF       
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-           HHZZLORESC = HZZ*GFCALC/GF
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 HHZZEW(i) = HHZZLORESC
+              do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+       CZZ=3.D0*GF**2*AMZ**4/192.D0/PI**3*(7-40/3.D0*SS+160/9.D0*SS**2)
+       XX(1) = XM1-1D0
+       XX(2) = XM1
+       XX(3) = XM2
+       XX(4) = XM2+1D0
+       YY(1)=HV(AMZ**2/XX(1)**2)*CZZ*XX(1)*GFCALC**2/GF**2
+       YY(2)=HV(AMZ**2/XX(2)**2)*CZZ*XX(2)*GFCALC**2/GF**2
+       YY(3)=HVV(XX(3),AMZ**2/XX(3)**2)/2D0*GFCALC/GF
+       YY(4)=HVV(XX(4),AMZ**2/XX(4)**2)/2D0*GFCALC/GF
+       HZZ = FINT_HDEC(AMH,XX,YY)*GHVV**2                 
+                 HHZZLORESC(i) = HZZ*GHVVR**2/GHVV*2
+                 HHZZEW(i) = HHZZLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              HHZZEW(1) = HHZZLORESC
+              call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+       CZZ=3.D0*GF**2*AMZ**4/192.D0/PI**3*(7-40/3.D0*SS+160/9.D0*SS**2)
+       XX(1) = XM1-1D0
+       XX(2) = XM1
+       XX(3) = XM2
+       XX(4) = XM2+1D0
+       YY(1)=HV(AMZ**2/XX(1)**2)*CZZ*XX(1)*GFCALC**2/GF**2
+       YY(2)=HV(AMZ**2/XX(2)**2)*CZZ*XX(2)*GFCALC**2/GF**2
+       YY(3)=HVV(XX(3),AMZ**2/XX(3)**2)/2D0*GFCALC/GF
+       YY(4)=HVV(XX(4),AMZ**2/XX(4)**2)/2D0*GFCALC/GF
+       HZZ = FINT_HDEC(AMH,XX,YY)*GHVV**2                               
+              HHZZLORESC(1) = HZZ*GHVVR**2/GHVV*2
+              HHZZEW(1) = HHZZLORESC(1)
            endif 
         endif
-c end MMM changed 10/7/2018        
+c end MMM changed 19/1/2019        
       ELSE
          HZZ=HVV(AMH,AMZ**2/AMH**2)/2.D0*GHVV**2
 
-c MMM changed 10/7/18         
+c MMM changed 19/1/19         
           if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-             HHZZLORESC=HZZ*GFCALC/GF
-             check = (HHZZLORESC-HHZZLO)/HHZZLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width H->ZZ.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  HHZZEW(i) = HHZZLORESC*(1.D0+
-     .                 (HHZZNLO(i)-HHZZLO)/HHZZLO)
+               do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+                  HHZZLORESC(i)=HZZ*GHVVR**2/GHVV**2*GFCALC/GF
+                  check = (HHZZLORESC(i)-HHZZLOR(i))/HHZZLORESC(i)
+                  if(dabs(check).ge.1.D-5) then
+                     print*,'There is a problem in the LO width H->ZZ.'
+                  endif
+                  HHZZEW(i) = HHZZLORESC(i)*(1.D0+
+     .                 (HHZZNLO(i)-HHZZLOR(i))/HHZZLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  HHZZEW(1) = HHZZLORESC*(1.D0+
-     .                 (HHZZNLO(1)-HHZZLO)/HHZZLO)
+               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+               HHZZLORESC(1)=HZZ*GHVVR**2/GHVV**2*GFCALC/GF
+               check = (HHZZLORESC(1)-HHZZLOR(1))/HHZZLORESC(1)
+               if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width H->ZZ.'
+               endif
+               HHZZEW(1) = HHZZLORESC(1)*(1.D0+
+     .              (HHZZNLO(1)-HHZZLOR(1))/HHZZLOR(1))
             endif
          endif
-c end MMM changed 10/7/18         
+c end MMM changed 19/1/19         
          
       ENDIF
       ENDIF
@@ -13623,7 +16722,8 @@ C  H ---> h h
         XH1=(XH-1.D0)*(2.D0-.5D0*DLOG(XH))+(1.D0-5.D0*XH)
      .  *(DATAN((2.D0*XH-1.D0)/DSQRT(4.D0*XH-1.D0))
      .   -DATAN(1.D0/DSQRT(4.D0*XH-1.D0)))/DSQRT(4.D0*XH-1.D0)
-        XH2=3*GF**2/32.D0/PI**3*AMZ**4/AMH*GLB**2*AMB**2
+ccccc BUG 19/1/19 GHLL**2 missing
+        XH2=3*GF**2/32.D0/PI**3*AMZ**4/AMH*GHLL**2*GLB**2*AMB**2
         HHH=XH1*XH2
        ELSEIF (AMH.LE.XM2) THEN
         XX(1) = XM1-1D0
@@ -13673,13 +16773,14 @@ c MMM changed 22/8/2013
                hhh = 0d0
 c MMM changed 10/7/18
           if(ielw2hdm.eq.0) then
-             HHHLORESC=0.D0
              if(irenscheme.eq.0) then
-                do i=1,14,1
-                   HHHEW(i) = HHHLORESC
+                do i=1,17,1
+                   HHHLORESC(i) = 0.D0
+                   HHHEW(i) = HHHLORESC(i)
                 end do
              elseif(irenscheme.ne.0) then
-                HHHEW(1) = HHHLORESC
+                HHHLORESC(1) = 0.D0
+                HHHEW(1) = HHHLORESC(1)
              endif
           endif
 c end MMM changed 10/7/18                  
@@ -13689,20 +16790,28 @@ c end MMM changed 10/7/18
      .              *(datan((2.d0*xh-1.d0)/dsqrt(4.d0*xh-1.d0))
      .              -datan(1.d0/dsqrt(4.d0*xh-1.d0)))
      .              /dsqrt(4.d0*xh-1.d0)
-               xh2=3*gf**2/32.d0/pi**3*amz**4/amh*glb**2*amb**2
+ccccc BUG 19/1/19 GHLL**2 missing               
+               xh2=3*gf**2/32.d0/pi**3*amz**4/amh*ghll**2*glb**2*amb**2
                hhh=xh1*xh2
-c MMM changed 10/7/18
-          if(ielw2hdm.eq.0) then
-             HHHLORESC=HHH*GFCALC/GF
+c MMM changed 19/1/19
+c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
+               if(ielw2hdm.eq.0) then
              if(irenscheme.eq.0) then
-                do i=1,14,1
-                   HHHEW(i) = HHHLORESC
+                do i=1,17,1
+                   call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+                   HHHLORESC(i) = HHH*GHLLR**2/GHLL**2*GLBR**2/GLB**2*
+     .                  GFCALC**2/GF**2
+                   HHHEW(i) = HHHLORESC(i)
                 end do
              elseif(irenscheme.ne.0) then
-                HHHEW(1) = HHHLORESC
+                call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+                HHHLORESC(1) = HHH*GHLLR**2/GHLL**2*GLBR**2/GLB**2*
+     .               GFCALC**2/GF**2
+                HHHEW(1) = HHHLORESC(1)
+                
              endif
           endif
-c end MMM changed 10/7/18                 
+c end MMM changed 19/1/19                 
             elseif (amh.le.xm2) then
                xx(1) = xm1-1d0
                xx(2) = xm1
@@ -13727,39 +16836,98 @@ c end MMM changed 10/7/18
                yy(4)=gf/16d0/dsqrt(2d0)/pi*amz**4/xx(4)
      .              *beta_hdec(aml**2/xx(4)**2)
                hhh = fint_hdec(amh,xx,yy)*ghll**2
-c MMM changed 10/7/18
-          if(ielw2hdm.eq.0) then
-             HHHLORESC=HHH*GFCALC/GF
+c MMM changed 19/1/19
+c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF
+               if(ielw2hdm.eq.0) then
              if(irenscheme.eq.0) then
-                do i=1,14,1
-                   HHHEW(i) = HHHLORESC
+                do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+               xx(1) = xm1-1d0
+               xx(2) = xm1
+               xx(3) = xm2
+               xx(4) = xm2+1d0
+               xh=aml**2/xx(1)**2
+               xh1=(xh-1.d0)*(2.d0-.5d0*dlog(xh))+(1.d0-5.d0*xh)
+     .              *(datan((2.d0*xh-1.d0)/dsqrt(4.d0*xh-1.d0))
+     .              -datan(1.d0/dsqrt(4.d0*xh-1.d0)))
+     .              /dsqrt(4.d0*xh-1.d0)
+               xh2=3*GFCALC**2/32.d0/pi**3*amz**4/xx(1)*glbr**2*amb**2
+               yy(1)=xh1*xh2
+               xh=aml**2/xx(2)**2
+               xh1=(xh-1.d0)*(2.d0-.5d0*dlog(xh))+(1.d0-5.d0*xh)
+     .              *(datan((2.d0*xh-1.d0)/dsqrt(4.d0*xh-1.d0))
+     .              -datan(1.d0/dsqrt(4.d0*xh-1.d0)))
+     .              /dsqrt(4.d0*xh-1.d0)
+               xh2=3*GFCALC**2/32.d0/pi**3*amz**4/xx(2)*glbr**2*amb**2
+               yy(2)=xh1*xh2
+               yy(3)=GFCALC/16d0/dsqrt(2d0)/pi*amz**4/xx(3)
+     .              *beta_hdec(aml**2/xx(3)**2)
+               yy(4)=GFCALC/16d0/dsqrt(2d0)/pi*amz**4/xx(4)
+     .              *beta_hdec(aml**2/xx(4)**2)
+               hhh = fint_hdec(amh,xx,yy)*ghllr**2                   
+                   
+               HHHLORESC(i)=HHH
+               HHHEW(i) = HHHLORESC(i)
                 end do
              elseif(irenscheme.ne.0) then
-                HHHEW(1) = HHHLORESC
+               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+               xx(1) = xm1-1d0
+               xx(2) = xm1
+               xx(3) = xm2
+               xx(4) = xm2+1d0
+               xh=aml**2/xx(1)**2
+               xh1=(xh-1.d0)*(2.d0-.5d0*dlog(xh))+(1.d0-5.d0*xh)
+     .              *(datan((2.d0*xh-1.d0)/dsqrt(4.d0*xh-1.d0))
+     .              -datan(1.d0/dsqrt(4.d0*xh-1.d0)))
+     .              /dsqrt(4.d0*xh-1.d0)
+               xh2=3*GFCALC**2/32.d0/pi**3*amz**4/xx(1)*glbr**2*amb**2
+               yy(1)=xh1*xh2
+               xh=aml**2/xx(2)**2
+               xh1=(xh-1.d0)*(2.d0-.5d0*dlog(xh))+(1.d0-5.d0*xh)
+     .              *(datan((2.d0*xh-1.d0)/dsqrt(4.d0*xh-1.d0))
+     .              -datan(1.d0/dsqrt(4.d0*xh-1.d0)))
+     .              /dsqrt(4.d0*xh-1.d0)
+               xh2=3*GFCALC**2/32.d0/pi**3*amz**4/xx(2)*glbr**2*amb**2
+               yy(2)=xh1*xh2
+               yy(3)=GFCALC/16d0/dsqrt(2d0)/pi*amz**4/xx(3)
+     .              *beta_hdec(aml**2/xx(3)**2)
+               yy(4)=GFCALC/16d0/dsqrt(2d0)/pi*amz**4/xx(4)
+     .              *beta_hdec(aml**2/xx(4)**2)
+               hhh = fint_hdec(amh,xx,yy)*ghllr**2                   
+                   
+               HHHLORESC(1)=HHH
+               HHHEW(1) = HHHLORESC(1)
              endif
           endif
-c end MMM changed 10/7/18                      
+c end MMM changed 19/1/19                      
             else
                hhh=gf/16d0/dsqrt(2d0)/pi*amz**4/amh*
      .              beta_hdec(aml**2/amh**2)*ghll**2
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(ielw2hdm.eq.0) then
-          HHHLORESC=HHH*GFCALC/GF
-          check = (HHHLORESC-HHHLHLLO)/HHHLORESC
-          if(dabs(check).ge.1.D-5) then
-             print*,'There is a problem in the LO width H->hh.'
-          endif
           if(irenscheme.eq.0) then
-             do i=1,14,1
-                HHHEW(i) = HHHLORESC*(1.D0+
-     .               (HHHLHLNLO(i)-HHHLHLLO)/HHHLHLLO)
+             do i=1,17,1
+                call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+                HHHLORESC(i)=HHH*ghllr**2/ghll**2*GFCALC/GF
+                check = (HHHLORESC(i)-HHHLHLLOR(i))/HHHLORESC(i)
+                if(dabs(check).ge.1.D-5) then
+                   print*,'There is a problem in the LO width H->hh.'
+                endif
+                HHHEW(i) = HHHLORESC(i)*(1.D0+
+     .               (HHHLHLNLO(i)-HHHLHLLOR(i))/HHHLHLLOR(i))
              end do
           elseif(irenscheme.ne.0) then
-             HHHEW(1) = HHHLORESC*(1.D0+
-     .               (HHHLHLNLO(1)-HHHLHLLO)/HHHLHLLO)
+             call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+             HHHLORESC(1)=HHH*ghllr**2/ghll**2*GFCALC/GF
+             check = (HHHLORESC(1)-HHHLHLLOR(1))/HHHLORESC(1)
+             if(dabs(check).ge.1.D-5) then
+                print*,'There is a problem in the LO width H->hh.'
+             endif
+             HHHEW(1) = HHHLORESC(1)*(1.D0+
+     .            (HHHLHLNLO(1)-HHHLHLLOR(1))/HHHLHLLOR(1))
           endif
       endif
-c end MMM changed 10/7/18        
+c end MMM changed 19/1/19        
       
             endif
          else
@@ -13767,13 +16935,14 @@ c end MMM changed 10/7/18
                hhh=0
 c MMM changed 10/7/18
           if(ielw2hdm.eq.0) then
-             HHHLORESC=0.D0
              if(irenscheme.eq.0) then
-                do i=1,14,1
-                   HHHEW(i) = HHHLORESC
+                do i=1,17,1
+                   HHHLORESC(i) = 0.D0
+                   HHHEW(i) = HHHLORESC(i)
                 end do
              elseif(irenscheme.ne.0) then
-                HHHEW(1) = HHHLORESC
+                HHHLORESC(1) = 0.D0
+                HHHEW(1) = HHHLORESC(1)
              endif
           endif
 c end MMM changed 10/7/18                
@@ -13781,24 +16950,31 @@ c end MMM changed 10/7/18
                hhh=gf/16d0/dsqrt(2d0)/pi*amz**4/amh*
      .              beta_hdec(aml**2/amh**2)*ghll**2
 
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(ielw2hdm.eq.0) then
-          HHHLORESC=HHH*GFCALC/GF
-          check = (HHHLORESC-HHHLHLLO)/HHHLORESC
-          if(dabs(check).ge.1.D-5) then
-             print*,'There is a problem in the LO width H->hh.'
-          endif
           if(irenscheme.eq.0) then
-             do i=1,14,1
-                HHHEW(i) = HHHLORESC*(1.D0+
-     .               (HHHLHLNLO(i)-HHHLHLLO)/HHHLHLLO)
+             do i=1,17,1
+                call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+                HHHLORESC(i)=HHH*ghllr**2/ghll**2*GFCALC/GF
+                check = (HHHLORESC(i)-HHHLHLLOR(i))/HHHLORESC(i)
+                if(dabs(check).ge.1.D-5) then
+                   print*,'There is a problem in the LO width H->hh.'
+                endif
+                HHHEW(i) = HHHLORESC(i)*(1.D0+
+     .               (HHHLHLNLO(i)-HHHLHLLOR(i))/HHHLHLLOR(i))
              end do
           elseif(irenscheme.ne.0) then
-             HHHEW(1) = HHHLORESC*(1.D0+
-     .               (HHHLHLNLO(1)-HHHLHLLO)/HHHLHLLO)
+             call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+             HHHLORESC(1)=HHH*ghllr**2/ghll**2*GFCALC/GF
+             check = (HHHLORESC(1)-HHHLHLLOR(1))/HHHLORESC(1)
+             if(dabs(check).ge.1.D-5) then
+                print*,'There is a problem in the LO width H->hh.'
+             endif
+             HHHEW(1) = HHHLORESC(1)*(1.D0+
+     .            (HHHLHLNLO(1)-HHHLHLLOR(1))/HHHLHLLOR(1))
           endif
       endif
-c end MMM changed 10/7/18
+c end MMM changed 19/1/19
       
             endif
          endif
@@ -13975,13 +17151,14 @@ c MMM changed 22/8/2013
                haa = 0d0
 c MMM changed 10/7/2018
                if(ielw2hdm.eq.0) then
-                  HHAALORESC = 0.D0
                   if(irenscheme.eq.0) then
-                     do i=1,14,1
-                        HHAAEW(i) = HHAALORESC
+                     do i=1,17,1
+                        HHAALORESC(i) = 0.D0
+                        HHAAEW(i) = HHAALORESC(i)
                      end do
                   elseif(irenscheme.ne.0) then
-                     HHAAEW(1) = HHAALORESC
+                     HHAALORESC(1) = 0.D0
+                     HHAAEW(1) = HHAALORESC(1)
                   endif
                endif
 c end MMM changed 10/7/2018               
@@ -13993,19 +17170,26 @@ c end MMM changed 10/7/2018
      .              /dsqrt(4.d0*xa-1.d0)
                xa2=3*gf**2/32.d0/pi**3*amz**4/amh*ghaa**2*gab**2*amb**2
                haa=xa1*xa2
-c MMM changed 10/7/2018
-        if(ielw2hdm.eq.0) then
-           HHAALORESC = HAA*GFCALC/GF
+c MMM changed 19/1/2019
+c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
+               if(ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 HHAAEW(i) = HHAALORESC
+              do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+                 HHAALORESC(i) = HAA*ghaar**2/ghaa**2*gabr**2/gab**2*
+     .                GFCALC**2/GF**2
+                 HHAAEW(i) = HHAALORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              HHAAEW(1) = HHAALORESC
+              call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+              HHAALORESC(1) = HAA*ghaar**2/ghaa**2*gabr**2/gab**2*
+     .             GFCALC**2/GF**2
+              HHAAEW(1) = HHAALORESC(1)              
            endif
         endif
-c end MMM changed 10/7/2018                      
-            elseif (amh.le.xm2) then
+c end MMM changed 19/1/2019                      
+c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
+      elseif (amh.le.xm2) then
                xx(1) = xm1-1d0
                xx(2) = xm1
                xx(3) = xm2
@@ -14029,40 +17213,98 @@ c end MMM changed 10/7/2018
                yy(4)=gf/16d0/dsqrt(2d0)/pi*amz**4/xx(4)
      .              *beta_hdec(ama**2/xx(4)**2)
                haa = fint_hdec(amh,xx,yy)*ghaa**2
-c MMM changed 10/7/2018
+c MMM changed 19/1/2019
         if(ielw2hdm.eq.0) then
-           HHAALORESC = HAA*GFCALC/GF
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 HHAAEW(i) = HHAALORESC
+              do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+               xx(1) = xm1-1d0
+               xx(2) = xm1
+               xx(3) = xm2
+               xx(4) = xm2+1d0
+               xa=ama**2/xx(1)**2
+               xa1=(xa-1.d0)*(2.d0-.5d0*dlog(xa))+(1.d0-5.d0*xa)
+     .              *(datan((2.d0*xa-1.d0)/dsqrt(4.d0*xa-1.d0))
+     .              -datan(1.d0/dsqrt(4.d0*xa-1.d0)))
+     .              /dsqrt(4.d0*xa-1.d0)
+               xa2=3*GFCALC**2/32.d0/pi**3*amz**4/xx(1)*gabr**2*amb**2
+               yy(1)=xa1*xa2
+               xa=ama**2/xx(2)**2
+               xa1=(xa-1.d0)*(2.d0-.5d0*dlog(xa))+(1.d0-5.d0*xa)
+     .              *(datan((2.d0*xa-1.d0)/dsqrt(4.d0*xa-1.d0))
+     .              -datan(1.d0/dsqrt(4.d0*xa-1.d0)))
+     .              /dsqrt(4.d0*xa-1.d0)
+               xa2=3*GFCALC**2/32.d0/pi**3*amz**4/xx(2)*gabr**2*amb**2
+               yy(2)=xa1*xa2
+               yy(3)=GFCALC/16d0/dsqrt(2d0)/pi*amz**4/xx(3)
+     .              *beta_hdec(ama**2/xx(3)**2)
+               yy(4)=GFCALC/16d0/dsqrt(2d0)/pi*amz**4/xx(4)
+     .              *beta_hdec(ama**2/xx(4)**2)
+               haa = fint_hdec(amh,xx,yy)*ghaar**2
+
+               HHAALORESC(i) = HAA
+               HHAAEW(i) = HHAALORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              HHAAEW(1) = HHAALORESC
+               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+               xx(1) = xm1-1d0
+               xx(2) = xm1
+               xx(3) = xm2
+               xx(4) = xm2+1d0
+               xa=ama**2/xx(1)**2
+               xa1=(xa-1.d0)*(2.d0-.5d0*dlog(xa))+(1.d0-5.d0*xa)
+     .              *(datan((2.d0*xa-1.d0)/dsqrt(4.d0*xa-1.d0))
+     .              -datan(1.d0/dsqrt(4.d0*xa-1.d0)))
+     .              /dsqrt(4.d0*xa-1.d0)
+               xa2=3*GFCALC**2/32.d0/pi**3*amz**4/xx(1)*gabr**2*amb**2
+               yy(1)=xa1*xa2
+               xa=ama**2/xx(2)**2
+               xa1=(xa-1.d0)*(2.d0-.5d0*dlog(xa))+(1.d0-5.d0*xa)
+     .              *(datan((2.d0*xa-1.d0)/dsqrt(4.d0*xa-1.d0))
+     .              -datan(1.d0/dsqrt(4.d0*xa-1.d0)))
+     .              /dsqrt(4.d0*xa-1.d0)
+               xa2=3*GFCALC**2/32.d0/pi**3*amz**4/xx(2)*gabr**2*amb**2
+               yy(2)=xa1*xa2
+               yy(3)=GFCALC/16d0/dsqrt(2d0)/pi*amz**4/xx(3)
+     .              *beta_hdec(ama**2/xx(3)**2)
+               yy(4)=GFCALC/16d0/dsqrt(2d0)/pi*amz**4/xx(4)
+     .              *beta_hdec(ama**2/xx(4)**2)
+               haa = fint_hdec(amh,xx,yy)*ghaar**2
+
+               HHAALORESC(1) = HAA
+               HHAAEW(1) = HHAALORESC(1)
            endif
         endif
-c end MMM changed 10/7/2018                 
+c end MMM changed 19/1/2019                 
             else
                haa=gf/16d0/dsqrt(2d0)/pi*amz**4/amh*
      .              beta_hdec(ama**2/amh**2)*ghaa**2
 
-c MMM changed 10/7/18         
+c MMM changed 19/1/19         
       if(ielw2hdm.eq.0) then
-         HHAALORESC=HAA*GFCALC/GF
-         check = (HHAALORESC-HHAALO)/HHAALORESC
-         if(dabs(check).ge.1.D-5) then
-            print*,'There is a problem in the LO width H->AA.'
-         endif
          if(irenscheme.eq.0) then
-            do i=1,14,1
-               HHAAEW(i) = HHAALORESC*(1.D0+
-     .              (HHAANLO(i)-HHAALO)/HHAALO)
+            do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+               HHAALORESC(i)=HAA*ghaar**2/ghaa**2*GFCALC/GF
+               check = (HHAALORESC(i)-HHAALOR(i))/HHAALORESC(i)
+               if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width H->AA.'
+               endif
+               HHAAEW(i) = HHAALORESC(i)*(1.D0+
+     .              (HHAANLO(i)-HHAALOR(i))/HHAALOR(i))
             end do
          elseif(irenscheme.ne.0) then
-               HHAAEW(1) = HHAALORESC*(1.D0+
-     .              (HHAANLO(1)-HHAALO)/HHAALO)
+            call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+            HHAALORESC(1)=HAA*ghaar**2/ghaa**2*GFCALC/GF
+            check = (HHAALORESC(1)-HHAALOR(1))/HHAALORESC(1)
+            if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width H->AA.'
+            endif
+            HHAAEW(1) = HHAALORESC(1)*(1.D0+
+     .           (HHAANLO(1)-HHAALOR(1))/HHAALOR(1))
          endif
       endif
-c end MMM changed 10/7/18                
+c end MMM changed 19/1/19                
                
             endif
          else
@@ -14070,13 +17312,14 @@ c end MMM changed 10/7/18
                haa=0
 c MMM changed 10/7/2018
                if(ielw2hdm.eq.0) then
-                  HHAALORESC = 0.D0
                   if(irenscheme.eq.0) then
-                     do i=1,14,1
-                        HHAAEW(i) = HHAALORESC
+                     do i=1,17,1
+                        HHAALORESC(i) = 0.D0
+                        HHAAEW(i) = HHAALORESC(i)
                      end do
                   elseif(irenscheme.ne.0) then
-                     HHAAEW(1) = HHAALORESC
+                     HHAALORESC(1) = 0.D0
+                     HHAAEW(1) = HHAALORESC(1)
                   endif
                endif
 c end MMM changed 10/7/2018                
@@ -14084,24 +17327,31 @@ c end MMM changed 10/7/2018
                haa=gf/16d0/dsqrt(2d0)/pi*amz**4/amh*
      .              beta_hdec(ama**2/amh**2)*ghaa**2
 
-c MMM changed 10/7/18         
+c MMM changed 19/1/19         
       if(ielw2hdm.eq.0) then
-         HHAALORESC=HAA*GFCALC/GF
-         check = (HHAALORESC-HHAALO)/HHAALORESC
-         if(dabs(check).ge.1.D-5) then
-            print*,'There is a problem in the LO width H->AA.'
-         endif
          if(irenscheme.eq.0) then
-            do i=1,14,1
-               HHAAEW(i) = HHAALORESC*(1.D0+
-     .              (HHAANLO(i)-HHAALO)/HHAALO)
+            do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+               HHAALORESC(i)=HAA*ghaar**2/ghaa**2*GFCALC/GF
+               check = (HHAALORESC(i)-HHAALOR(i))/HHAALORESC(i)
+               if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width H->AA.'
+               endif
+               HHAAEW(i) = HHAALORESC(i)*(1.D0+
+     .              (HHAANLO(i)-HHAALOR(i))/HHAALOR(i))
             end do
          elseif(irenscheme.ne.0) then
-               HHAAEW(1) = HHAALORESC*(1.D0+
-     .              (HHAANLO(1)-HHAALO)/HHAALO)
+            call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+            HHAALORESC(1)=HAA*ghaar**2/ghaa**2*GFCALC/GF
+            check = (HHAALORESC(1)-HHAALOR(1))/HHAALORESC(1)
+            if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width H->AA.'
+            endif
+            HHAAEW(1) = HHAALORESC(1)*(1.D0+
+     .           (HHAANLO(1)-HHAALOR(1))/HHAALOR(1))
          endif
       endif
-c end MMM changed 10/7/18                
+c end MMM changed 19/1/19                
             endif
          endif
       endif
@@ -14116,13 +17366,14 @@ C  H ---> H+ H-
             hchch=0.D0
 c MMM changed 10/7/18         
             if(ielw2hdm.eq.0) then
-               HHCHCHLORESC=0.D0
                if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     HHHPHMEW(i) = HHCHCHLORESC
+                  do i=1,17,1
+                     HHCHCHLORESC(i)=0.D0
+                     HHHPHMEW(i) = HHCHCHLORESC(i)
                   end do
                elseif(irenscheme.ne.0) then
-                  HHHPHMEW(1) = HHCHCHLORESC                  
+                  HHCHCHLORESC(1)=0.D0
+                  HHHPHMEW(1) = HHCHCHLORESC(1)                  
                endif
             endif
 c end MMM changed 10/7/18               
@@ -14130,24 +17381,31 @@ c end MMM changed 10/7/18
             hchch=gf/8d0/dsqrt(2d0)/pi*amz**4/amh*
      .           beta_hdec(amch**2/amh**2)*ghpm**2
 
-c MMM changed 10/7/18         
+c MMM changed 19/1/19         
             if(ielw2hdm.eq.0) then
-               HHCHCHLORESC=hchch*GFCALC/GF
-               check = (HHCHCHLORESC-HHHPHMLO)/HHCHCHLORESC
+               if(irenscheme.eq.0) then
+                  do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+               HHCHCHLORESC(i)=hchch*ghpmr**2/ghpm**2*GFCALC/GF
+               check = (HHCHCHLORESC(i)-HHHPHMLOR(i))/HHCHCHLORESC(i)
                if(dabs(check).ge.1.D-5) then
                   print*,'There is a problem in the LO width H->H+H-.'
                endif
-               if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     HHHPHMEW(i) = HHCHCHLORESC*(1.D0+
-     .                    (HHHPHMNLO(i)-HHHPHMLO)/HHHPHMLO)
+               HHHPHMEW(i) = HHCHCHLORESC(i)*(1.D0+
+     .                    (HHHPHMNLO(i)-HHHPHMLOR(i))/HHHPHMLOR(i))
                   end do
                elseif(irenscheme.ne.0) then
-                     HHHPHMEW(1) = HHCHCHLORESC*(1.D0+
-     .                    (HHHPHMNLO(1)-HHHPHMLO)/HHHPHMLO)                 
+               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+               HHCHCHLORESC(1)=hchch*ghpmr**2/ghpm**2*GFCALC/GF
+               check = (HHCHCHLORESC(1)-HHHPHMLOR(1))/HHCHCHLORESC(1)
+               if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width H->H+H-.'
+               endif
+               HHHPHMEW(i) = HHCHCHLORESC(1)*(1.D0+
+     .                    (HHHPHMNLO(1)-HHHPHMLOR(1))/HHHPHMLOR(1))
                endif
             endif
-c end MMM changed 10/7/18      
+c end MMM changed 19/1/19      
             
          endif
       elseif(i2hdm.eq.0) then
@@ -14271,13 +17529,14 @@ c MMM changed 22/8/2013
                haz=0
 c MMM changed 10/7/18         
             if(ielw2hdm.eq.0) then
-               HHAZLORESC=0.D0
                if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     HHAZEW(i) = HHAZLORESC
+                  do i=1,17,1
+                     HHAZLORESC(i)=0.D0
+                     HHAZEW(i) = HHAZLORESC(i)
                   end do
                elseif(irenscheme.ne.0) then
-                  HHAZEW(1) = HHAZLORESC                  
+                  HHAZLORESC(1)=0.D0
+                  HHAZEW(1) = HHAZLORESC(1)                  
                endif
             endif
 c end MMM changed 10/7/18                 
@@ -14286,13 +17545,14 @@ c end MMM changed 10/7/18
                   haz=0
 c MMM changed 10/7/18         
             if(ielw2hdm.eq.0) then
-               HHAZLORESC=0.D0
                if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     HHAZEW(i) = HHAZLORESC
+                  do i=1,17,1
+                     HHAZLORESC(i)=0.D0
+                     HHAZEW(i) = HHAZLORESC(i)
                   end do
                elseif(irenscheme.ne.0) then
-                  HHAZEW(1) = HHAZLORESC                  
+                  HHAZLORESC(1)=0.D0
+                  HHAZEW(1) = HHAZLORESC(1)                  
                endif
             endif
 c end MMM changed 10/7/18                   
@@ -14300,18 +17560,22 @@ c end MMM changed 10/7/18
                   haz=9.d0*gf**2/8.d0/pi**3*amz**4*amh*gzah**2*
      .                 (7.d0/12.d0-10.d0/9.d0*ss+40.d0/27.d0*ss**2)
      .                 *hvh((ama/amh)**2,(amz/amh)**2)
-c MMM changed 10/7/2018       
+c MMM changed 19/1/2019
+c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF                  
                   if(ielw2hdm.eq.0) then
-                     HHAZLORESC = HAZ*GFCALC/GF
                      if(irenscheme.eq.0) then
-                        do i=1,14,1
-                           HHAZEW(i) = HHAZLORESC
+                        do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+                  HHAZLORESC(i) = HAZ*gzahr**2/gzah**2*GFCALC**2/GF**2
+                  HHAZEW(i) = HHAZLORESC(i)
                         end do
                      elseif(irenscheme.ne.0) then
-                        HHAZEW(1) = HHAZLORESC                  
+                  call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+                  HHAZLORESC(1) = HAZ*gzahr**2/gzah**2*GFCALC**2/GF**2
+                  HHAZEW(1) = HHAZLORESC(1)
                      endif                     
                   endif
-c end MMM changed 10/7/2018                   
+c end MMM changed 19/1/2019                   
                endif
             elseif (amh.lt.xm2) then
                xx(1) = xm1-1d0
@@ -14331,41 +17595,88 @@ c end MMM changed 10/7/2018
      .              *lamb_hdec(xx(4)**2/amz**2,ama**2/amz**2)**2
                yy(4)=gf/8.d0/dsqrt(2d0)/pi*amz**4/xx(4)*caz
                haz = fint_hdec(amh,xx,yy)*gzah**2
-c MMM changed 10/7/2018       
-                  if(ielw2hdm.eq.0) then
-                     HHAZLORESC = HAZ*GFCALC/GF
+c MMM changed 19/1/2019
+c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
+               if(ielw2hdm.eq.0) then
                      if(irenscheme.eq.0) then
-                        do i=1,14,1
-                           HHAZEW(i) = HHAZLORESC
+                        do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+               xx(1) = xm1-1d0
+               xx(2) = xm1
+               xx(3) = xm2
+               xx(4) = xm2+1d0
+               yy(1)=9.d0*GFCALC**2/8.d0/pi**3*amz**4*xx(1)*
+     .              (7.d0/12.d0-10.d0/9.d0*ss+40.d0/27.d0*ss**2)
+     .              *hvh((ama/xx(1))**2,(amz/xx(1))**2)
+               yy(2)=9.d0*GFCALC**2/8.d0/pi**3*amz**4*xx(2)*
+     .              (7.d0/12.d0-10.d0/9.d0*ss+40.d0/27.d0*ss**2)
+     .              *hvh((ama/xx(2))**2,(amz/xx(2))**2)
+               caz=lamb_hdec(ama**2/xx(3)**2,amz**2/xx(3)**2)
+     .              *lamb_hdec(xx(3)**2/amz**2,ama**2/amz**2)**2
+               yy(3)=GFCALC/8.d0/dsqrt(2d0)/pi*amz**4/xx(3)*caz
+               caz=lamb_hdec(ama**2/xx(4)**2,amz**2/xx(4)**2)
+     .              *lamb_hdec(xx(4)**2/amz**2,ama**2/amz**2)**2
+               yy(4)=GFCALC/8.d0/dsqrt(2d0)/pi*amz**4/xx(4)*caz
+               haz = fint_hdec(amh,xx,yy)*gzahr**2
+
+               HHAZLORESC(i) = HAZ
+               HHAZEW(i) = HHAZLORESC(i)
                         end do
                      elseif(irenscheme.ne.0) then
-                        HHAZEW(1) = HHAZLORESC                  
+               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+               xx(1) = xm1-1d0
+               xx(2) = xm1
+               xx(3) = xm2
+               xx(4) = xm2+1d0
+               yy(1)=9.d0*GFCALC**2/8.d0/pi**3*amz**4*xx(1)*
+     .              (7.d0/12.d0-10.d0/9.d0*ss+40.d0/27.d0*ss**2)
+     .              *hvh((ama/xx(1))**2,(amz/xx(1))**2)
+               yy(2)=9.d0*GFCALC**2/8.d0/pi**3*amz**4*xx(2)*
+     .              (7.d0/12.d0-10.d0/9.d0*ss+40.d0/27.d0*ss**2)
+     .              *hvh((ama/xx(2))**2,(amz/xx(2))**2)
+               caz=lamb_hdec(ama**2/xx(3)**2,amz**2/xx(3)**2)
+     .              *lamb_hdec(xx(3)**2/amz**2,ama**2/amz**2)**2
+               yy(3)=GFCALC/8.d0/dsqrt(2d0)/pi*amz**4/xx(3)*caz
+               caz=lamb_hdec(ama**2/xx(4)**2,amz**2/xx(4)**2)
+     .              *lamb_hdec(xx(4)**2/amz**2,ama**2/amz**2)**2
+               yy(4)=GFCALC/8.d0/dsqrt(2d0)/pi*amz**4/xx(4)*caz
+               haz = fint_hdec(amh,xx,yy)*gzahr**2
+
+               HHAZLORESC(1) = HAZ
+               HHAZEW(i) = HHAZLORESC(1)
                      endif                     
                   endif
-c end MMM changed 10/7/2018                  
+c end MMM changed 19/1/2019                  
             else
                caz=lamb_hdec(ama**2/amh**2,amz**2/amh**2)
      .              *lamb_hdec(amh**2/amz**2,ama**2/amz**2)**2
                haz=gf/8.d0/dsqrt(2d0)/pi*amz**4/amh*caz*gzah**2
 
-c MMM changed 10/7/18         
+c MMM changed 19/1/19         
             if(ielw2hdm.eq.0) then
-               HHAZLORESC=haz*GFCALC/GF
-               check = (HHAZLORESC-HHZALO)/HHAZLORESC
+               if(irenscheme.eq.0) then
+                  do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+               HHAZLORESC(i)=haz*GZAHR**2/GZAH**2*GFCALC/GF
+               check = (HHAZLORESC(i)-HHZALOR(i))/HHAZLORESC(i)
                if(dabs(check).ge.1.D-5) then
                   print*,'There is a problem in the LO width H->AZ.'
                endif
-               if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     HHAZEW(i) = HHAZLORESC*(1.D0+
-     .                    (HHZANLO(i)-HHZALO)/HHZALO)
+               HHAZEW(i) = HHAZLORESC(i)*(1.D0+
+     .                    (HHZANLO(i)-HHZALOR(i))/HHZALOR(i))
                   end do
                elseif(irenscheme.ne.0) then
-                     HHAZEW(1) = HHAZLORESC*(1.D0+
-     .                    (HHZANLO(1)-HHZALO)/HHZALO)                 
+               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+               HHAZLORESC(1)=haz*GZAHR**2/GZAH**2*GFCALC/GF
+               check = (HHAZLORESC(1)-HHZALOR(1))/HHAZLORESC(1)
+               if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width H->AZ.'
+               endif
+               HHAZEW(1) = HHAZLORESC(1)*(1.D0+
+     .                    (HHZANLO(1)-HHZALOR(1))/HHZALOR(1))
                endif
             endif
-c end MMM changed 10/7/18     
+c end MMM changed 19/1/19     
                
             endif
          else
@@ -14373,13 +17684,14 @@ c end MMM changed 10/7/18
                haz=0
 c MMM changed 10/7/18         
             if(ielw2hdm.eq.0) then
-               HHAZLORESC=0.D0
                if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     HHAZEW(i) = HHAZLORESC
+                  do i=1,17,1
+                     HHAZLORESC(i)=0.D0
+                     HHAZEW(i) = HHAZLORESC(i)
                   end do
                elseif(irenscheme.ne.0) then
-                  HHAZEW(1) = HHAZLORESC                  
+                  HHAZLORESC(1)=0.D0
+                  HHAZEW(1) = HHAZLORESC(1)                  
                endif
             endif
 c end MMM changed 10/7/18                 
@@ -14388,24 +17700,31 @@ c end MMM changed 10/7/18
      .              *lamb_hdec(amh**2/amz**2,ama**2/amz**2)**2
                haz=gf/8.d0/dsqrt(2d0)/pi*amz**4/amh*caz*gzah**2
 
-c MMM changed 10/7/18         
+c MMM changed 19/1/19
             if(ielw2hdm.eq.0) then
-               HHAZLORESC=haz*GFCALC/GF
-               check = (HHAZLORESC-HHZALO)/HHAZLORESC
+               if(irenscheme.eq.0) then
+                  do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+               HHAZLORESC(i)=haz*GZAHR**2/GZAH**2*GFCALC/GF
+               check = (HHAZLORESC(i)-HHZALOR(i))/HHAZLORESC(i)
                if(dabs(check).ge.1.D-5) then
                   print*,'There is a problem in the LO width H->AZ.'
                endif
-               if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     HHAZEW(i) = HHAZLORESC*(1.D0+
-     .                    (HHZANLO(i)-HHZALO)/HHZALO)
+               HHAZEW(i) = HHAZLORESC(i)*(1.D0+
+     .                    (HHZANLO(i)-HHZALOR(i))/HHZALOR(i))
                   end do
                elseif(irenscheme.ne.0) then
-                     HHAZEW(1) = HHAZLORESC*(1.D0+
-     .                    (HHZANLO(1)-HHZALO)/HHZALO)                  
+               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+               HHAZLORESC(1)=haz*GZAHR**2/GZAH**2*GFCALC/GF
+               check = (HHAZLORESC(1)-HHZALOR(1))/HHAZLORESC(1)
+               if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width H->AZ.'
+               endif
+               HHAZEW(1) = HHAZLORESC(1)*(1.D0+
+     .                    (HHZANLO(1)-HHZALOR(1))/HHZALOR(1))
                endif
             endif
-c end MMM changed 10/7/18
+c end MMM changed 19/1/19
                
             endif
          endif
@@ -14533,13 +17852,14 @@ c MMM changed 22/8/2013
                hhw=0.d0
 c MMM changed 10/7/18         
             if(ielw2hdm.eq.0) then
-               HHHPWMLORESC=0.D0
                if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     HHHPWMEW(i) = HHHPWMLORESC
+                  do i=1,17,1
+                     HHHPWMLORESC(i)=0.D0
+                     HHHPWMEW(i) = HHHPWMLORESC(i)
                   end do
                elseif(irenscheme.ne.0) then
-                  HHHPWMEW(1) = HHHPWMLORESC
+                  HHHPWMLORESC(1)=0.D0
+                  HHHPWMEW(1) = HHHPWMLORESC(1)
                endif
             endif
 c end MMM changed 10/7/18                  
@@ -14548,33 +17868,36 @@ c end MMM changed 10/7/18
                   hhw=0
 c MMM changed 10/7/18         
             if(ielw2hdm.eq.0) then
-               HHHPWMLORESC=0.D0
                if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     HHHPWMEW(i) = HHHPWMLORESC
+                  do i=1,17,1
+                     HHHPWMLORESC(i)=0.D0
+                     HHHPWMEW(i) = HHHPWMLORESC(i)
                   end do
                elseif(irenscheme.ne.0) then
-                  HHHPWMEW(1) = HHHPWMLORESC
+                  HHHPWMLORESC(1)=0.D0
+                  HHHPWMEW(1) = HHHPWMLORESC(1)
                endif
             endif
 c end MMM changed 10/7/18                     
                else
                   hhw=9.d0*gf**2/16.d0/pi**3*amw**4*amh*glvv**2*2
      .                 *hvh((amch/amh)**2,(amw/amh)**2)
-c                  tmp = hhw
-c                  print*,'hallo',tmp
-c MMM changed 10/7/18                           
+c MMM changed 19/1/19                           
+c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
                   if(ielw2hdm.eq.0) then
-                     HHHPWMLORESC = hhw*GFCALC/GF
                      if(irenscheme.eq.0) then
-                        do i=1,14,1
-                           HHHPWMEW(i) = HHHPWMLORESC
+                        do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+               HHHPWMLORESC(i) = hhw*GFCALC**2/GF**2*glvvr**2/glvv**2
+               HHHPWMEW(i) = HHHPWMLORESC(i)
                         end do
                      elseif(irenscheme.ne.0) then
-                        HHHPWMEW(1) = HHHPWMLORESC
+               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+               HHHPWMLORESC(1) = hhw*GFCALC**2/GF**2*glvvr**2/glvv**2
+               HHHPWMEW(1) = HHHPWMLORESC(1)
                      endif                     
                   endif
-c end MMM changed 10/7/18                      
+c end MMM changed 19/1/19                      
                endif
             elseif (amh.lt.xm2) then
                xx(1) = xm1-1d0
@@ -14592,41 +17915,84 @@ c end MMM changed 10/7/18
      .              *lamb_hdec(xx(4)**2/amw**2,amch**2/amw**2)**2
                yy(4)=2*gf/8.d0/dsqrt(2d0)/pi*amw**4/xx(4)*chw
                hhw=fint_hdec(amh,xx,yy)*glvv**2
-c MMM changed 10/7/18                           
-                  if(ielw2hdm.eq.0) then
-                     HHHPWMLORESC = hhw*GFCALC/GF
+c MMM changed 19/1/19                           
+c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
+               if(ielw2hdm.eq.0) then
                      if(irenscheme.eq.0) then
-                        do i=1,14,1
-                           HHHPWMEW(i) = HHHPWMLORESC
+                        do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+               xx(1) = xm1-1d0
+               xx(2) = xm1
+               xx(3) = xm2
+               xx(4) = xm2+1d0
+               yy(1)=9.d0*GFCALC**2/16.d0/pi**3*amw**4*xx(1)*2
+     .              *hvh((amch/xx(1))**2,(amw/xx(1))**2)
+               yy(2)=9.d0*GFCALC**2/16.d0/pi**3*amw**4*xx(2)*2
+     .              *hvh((amch/xx(2))**2,(amw/xx(2))**2)
+               chw=lamb_hdec(amch**2/xx(3)**2,amw**2/xx(3)**2)
+     .              *lamb_hdec(xx(3)**2/amw**2,amch**2/amw**2)**2
+               yy(3)=2*GFCALC/8.d0/dsqrt(2d0)/pi*amw**4/xx(3)*chw
+               chw=lamb_hdec(amch**2/xx(4)**2,amw**2/xx(4)**2)
+     .              *lamb_hdec(xx(4)**2/amw**2,amch**2/amw**2)**2
+               yy(4)=2*gf/8.d0/dsqrt(2d0)/pi*amw**4/xx(4)*chw
+               hhw=fint_hdec(amh,xx,yy)*glvvr**2
+                           
+               HHHPWMLORESC(i) = hhw
+               HHHPWMEW(i) = HHHPWMLORESC(i)
                         end do
                      elseif(irenscheme.ne.0) then
-                        HHHPWMEW(1) = HHHPWMLORESC
+                  call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+               xx(1) = xm1-1d0
+               xx(2) = xm1
+               xx(3) = xm2
+               xx(4) = xm2+1d0
+               yy(1)=9.d0*GFCALC**2/16.d0/pi**3*amw**4*xx(1)*2
+     .              *hvh((amch/xx(1))**2,(amw/xx(1))**2)
+               yy(2)=9.d0*GFCALC**2/16.d0/pi**3*amw**4*xx(2)*2
+     .              *hvh((amch/xx(2))**2,(amw/xx(2))**2)
+               chw=lamb_hdec(amch**2/xx(3)**2,amw**2/xx(3)**2)
+     .              *lamb_hdec(xx(3)**2/amw**2,amch**2/amw**2)**2
+               yy(3)=2*GFCALC/8.d0/dsqrt(2d0)/pi*amw**4/xx(3)*chw
+               chw=lamb_hdec(amch**2/xx(4)**2,amw**2/xx(4)**2)
+     .              *lamb_hdec(xx(4)**2/amw**2,amch**2/amw**2)**2
+               yy(4)=2*gf/8.d0/dsqrt(2d0)/pi*amw**4/xx(4)*chw
+               hhw=fint_hdec(amh,xx,yy)*glvvr**2
+                           
+               HHHPWMLORESC(1) = hhw
+               HHHPWMEW(1) = HHHPWMLORESC(1)
                      endif                     
                   endif
-c end MMM changed 10/7/18                      
+c end MMM changed 19/1/19                      
             else
                chw=lamb_hdec(amch**2/amh**2,amw**2/amh**2)
      .              *lamb_hdec(amh**2/amw**2,amch**2/amw**2)**2
                hhw=2*gf/8.d0/dsqrt(2d0)/pi*amw**4/amh*chw*glvv**2
 
-c MMM changed 10/7/18         
+c MMM changed 19/1/19         
             if(ielw2hdm.eq.0) then
-               HHHPWMLORESC=hhw*GFCALC/GF
-               check = (HHHPWMLORESC-HHHPWMLO)/HHHPWMLORESC
+               if(irenscheme.eq.0) then
+                  do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)      
+               HHHPWMLORESC(i)=hhw*GFCALC/GF*glvvr**2/glvv**2
+               check = (HHHPWMLORESC(i)-HHHPWMLOR(i))/HHHPWMLORESC(i)
                if(dabs(check).ge.1.D-5) then
                   print*,'There is a problem in the LO width H->H+W-.'
                endif
-               if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     HHHPWMEW(i) = HHHPWMLORESC*(1.D0+
-     .                    (HHHPWMNLO(i)-HHHPWMLO)/HHHPWMLO)
+               HHHPWMEW(i) = HHHPWMLORESC(i)*(1.D0+
+     .              (HHHPWMNLO(i)-HHHPWMLOR(i))/HHHPWMLOR(i))
                   end do
                elseif(irenscheme.ne.0) then
-                     HHHPWMEW(1) = HHHPWMLORESC*(1.D0+
-     .                    (HHHPWMNLO(1)-HHHPWMLO)/HHHPWMLO)
+               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)      
+               HHHPWMLORESC(1)=hhw*GFCALC/GF*glvvr**2/glvv**2
+               check = (HHHPWMLORESC(1)-HHHPWMLOR(1))/HHHPWMLORESC(1)
+               if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width H->H+W-.'
+               endif
+               HHHPWMEW(1) = HHHPWMLORESC(1)*(1.D0+
+     .              (HHHPWMNLO(1)-HHHPWMLOR(1))/HHHPWMLOR(1))
                endif
             endif
-c end MMM changed 10/7/18  
+c end MMM changed 19/1/19  
                
             endif
          else
@@ -14634,13 +18000,14 @@ c end MMM changed 10/7/18
                hhw=0.d0
 c MMM changed 10/7/18         
             if(ielw2hdm.eq.0) then
-               HHHPWMLORESC=0.D0
                if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     HHHPWMEW(i) = HHHPWMLORESC
+                  do i=1,17,1
+                     HHHPWMLORESC(i)=0.D0
+                     HHHPWMEW(i) = HHHPWMLORESC(i)
                   end do
                elseif(irenscheme.ne.0) then
-                  HHHPWMEW(1) = HHHPWMLORESC
+                  HHHPWMLORESC(1)=0.D0                  
+                  HHHPWMEW(1) = HHHPWMLORESC(1)
                endif
             endif
 c end MMM changed 10/7/18                   
@@ -14649,24 +18016,31 @@ c end MMM changed 10/7/18
      .              *lamb_hdec(amh**2/amw**2,amch**2/amw**2)**2
                hhw=2*gf/8.d0/dsqrt(2d0)/pi*amw**4/amh*chw*glvv**2
 
-c MMM changed 10/7/18         
+c MMM changed 19/1/19         
             if(ielw2hdm.eq.0) then
-               HHHPWMLORESC=hhw*GFCALC/GF
-               check = (HHHPWMLORESC-HHHPWMLO)/HHHPWMLORESC
+               if(irenscheme.eq.0) then
+                  do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)      
+               HHHPWMLORESC(i)=hhw*GFCALC/GF*glvvr**2/glvv**2
+               check = (HHHPWMLORESC(i)-HHHPWMLOR(i))/HHHPWMLORESC(i)
                if(dabs(check).ge.1.D-5) then
                   print*,'There is a problem in the LO width H->H+W-.'
                endif
-               if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     HHHPWMEW(i) = HHHPWMLORESC*(1.D0+
-     .                    (HHHPWMNLO(i)-HHHPWMLO)/HHHPWMLO)
+               HHHPWMEW(i) = HHHPWMLORESC(i)*(1.D0+
+     .              (HHHPWMNLO(i)-HHHPWMLOR(i))/HHHPWMLOR(i))
                   end do
                elseif(irenscheme.ne.0) then
-                     HHHPWMEW(1) = HHHPWMLORESC*(1.D0+
-     .                    (HHHPWMNLO(1)-HHHPWMLO)/HHHPWMLO)
+               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)      
+               HHHPWMLORESC(1)=hhw*GFCALC/GF*glvvr**2/glvv**2
+               check = (HHHPWMLORESC(1)-HHHPWMLOR(1))/HHHPWMLORESC(1)
+               if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width H->H+W-.'
+               endif
+               HHHPWMEW(1) = HHHPWMLORESC(1)*(1.D0+
+     .              (HHHPWMNLO(1)-HHHPWMLOR(1))/HHHPWMLOR(1))
                endif
             endif
-c end MMM changed 10/7/18 
+c end MMM changed 19/1/19 
                
             endif
          endif
@@ -14958,74 +18332,138 @@ c If OMIT ELW2 = 0, then the following decay widths include the usual
 c QCD corrections (where applicable) and off-shell decays, without elw
 c corrections, but rescaled by GFCALC/GF
 
-      WTOT1=HHGGRESC+HHMMLORESC+HHLLLORESC+HHSSQCD+HHCCQCD+HHBBQCD
-     .     +HHTTQCD+HHGARESC+HHZGARESC+HHWWLORESC+HHZZLORESC
-     .     +HHHLORESC+HHAALORESC+HHCHCHLORESC+HHAZLORESC+HHHPWMLORESC
+       if(irenscheme.eq.0) then
+          do i=1,17,1
+         
+         WTOT1(i)=HHGGRESCR(i)+HHMMLORESC(i)+HHLLLORESC(i)+HHSSQCD(i)
+     .        +HHCCQCD(i)+HHBBQCD(i)+HHTTQCD(i)
+     .        +HHGARESC(i)+HHZGARESC(i)+HHWWLORESC(i)+HHZZLORESC(i)
+     .        +HHHLORESC(i)+HHAALORESC(i)+HHCHCHLORESC(i)+HHAZLORESC(i)
+     .        +HHHPWMLORESC(i)
 
-      hhwdth1 = wtot1
+      hhwdth1(i) = wtot1(i)
 
 c      print*,''
 c      print*,'H decays'
 c      print*,''
 c      print*,'wtot1',wtot1
       
-      HHBRG1=HHGGRESC/WTOT1
-      HHBRM1=HHMMLORESC/WTOT1
-      HHBRL1=HHLLLORESC/WTOT1
-      HHBRS1=HHSSQCD/WTOT1
-      HHBRC1=HHCCQCD/WTOT1
-      HHBRB1=HHBBQCD/WTOT1
-      HHBRT1=HHTTQCD/WTOT1
-      HHBRGA1=HHGARESC/WTOT1
-      HHBRZGA1=HHZGARESC/WTOT1
-      HHBRW1=HHWWLORESC/WTOT1
-      HHBRZ1=HHZZLORESC/WTOT1
-      HHBRHL1=HHHLORESC/WTOT1      
-      HHBRA1=HHAALORESC/WTOT1
-      HHBRCHCH1=HHCHCHLORESC/WTOT1
-      HHBRAZ1=HHAZLORESC/WTOT1
-      HHBRHW1=HHHPWMLORESC/WTOT1
+      HHBRG1(i)=HHGGRESCR(i)/WTOT1(i)
+      HHBRM1(i)=HHMMLORESC(i)/WTOT1(i)
+      HHBRL1(i)=HHLLLORESC(i)/WTOT1(i)
+      HHBRS1(i)=HHSSQCD(i)/WTOT1(i)
+      HHBRC1(i)=HHCCQCD(i)/WTOT1(i)
+      HHBRB1(i)=HHBBQCD(i)/WTOT1(i)
+      HHBRT1(i)=HHTTQCD(i)/WTOT1(i)
+      HHBRGA1(i)=HHGARESC(i)/WTOT1(i)
+      HHBRZGA1(i)=HHZGARESC(i)/WTOT1(i)
+      HHBRW1(i)=HHWWLORESC(i)/WTOT1(i)
+      HHBRZ1(i)=HHZZLORESC(i)/WTOT1(i)
+      HHBRHL1(i)=HHHLORESC(i)/WTOT1(i)      
+      HHBRA1(i)=HHAALORESC(i)/WTOT1(i)
+      HHBRCHCH1(i)=HHCHCHLORESC(i)/WTOT1(i)
+      HHBRAZ1(i)=HHAZLORESC(i)/WTOT1(i)
+      HHBRHW1(i)=HHHPWMLORESC(i)/WTOT1(i)
 
-c      print*,'hhbrg',hhggresc,hhbrg1
-c      print*,'hhbrm',hhmmloresc,hhbrm1
-c      print*,'hhbrl',hhllloresc,hhbrl1
-c      print*,'hhbrs',hhssqcd,hhbrs1
-c      print*,'hhbrc',hhccqcd,hhbrc1
-c      print*,'hhbrb',hhbbqcd,hhbrb1
-c      print*,'hhbrt',hhttqcd,hhbrt1
-c      print*,'hhbrga1',hhgaresc,hhbrga1
-c      print*,'hhbrzga',hhzgaresc,hhbrzga1
-c      print*,'hhbrw',hhwwloresc,hhbrw1
-c      print*,'hhbrz',hhzzloresc,hhbrz1
-c      print*,'hhbrhl',hhhloresc,hhbrhl1
-c      print*,'hhbra',hhaaloresc,hhbra1
-c      print*,'hhbrchch',hhchchloresc,hhbrchch1
-c      print*,'hhbraz',hhazloresc,hhbraz1
-c      print*,'hhbrhw1',hhhpwmloresc,hhbrhw1
-c      print*,'rescal',gfcalc/gf
+c      if(i.eq.7) then
+c         print*,''
+c         print*,'H decays'
+c         print*,''
+c         print*,'wtot1',wtot1(i)
+c         print*,'hhbrg',hhggrescr(i),hhbrg1(i)
+c         print*,'hhbrm',hhmmloresc(i),hhbrm1(i)
+c         print*,'hhbrl',hhllloresc(i),hhbrl1(i)
+c         print*,'hhbrs',hhssqcd(i),hhbrs1(i)
+c         print*,'hhbrc',hhccqcd(i),hhbrc1(i)
+c         print*,'hhbrb',hhbbqcd(i),hhbrb1(i)
+c         print*,'hhbrt',hhttqcd(i),hhbrt1(i)
+c         print*,'hhbrga',hhgaresc(i),hhbrga1(i)
+c         print*,'hhbrzga',hhzgaresc(i),hhbrzga1(i)
+c         print*,'hhbrw',hhwwloresc(i),hhbrw1(i)
+c         print*,'hhbrz',hhzzloresc(i),hhbrz1(i)
+c         print*,'hhbrhl',hhhloresc(i),hhbrhl1(i)
+c         print*,'hhbra',hhaaloresc(i),hhbra1(i)
+c         print*,'hhbrchch',hhchchloresc(i),hhbrchch1(i)
+c         print*,'hhbraz',hhazloresc(i),hhbraz1(i)
+c         print*,'hhbrhw',hhhpwmloresc(i),hhbrhw1(i)
+c         print*,'rescal',gfcalc/gf
+c      endif
+      
+      end do
 
+      elseif(irenscheme.ne.0) then
+
+         WTOT1(1)=HHGGRESCR(1)+HHMMLORESC(1)+HHLLLORESC(1)+HHSSQCD(1)
+     .        +HHCCQCD(1)+HHBBQCD(1)+HHTTQCD(1)
+     .        +HHGARESC(1)+HHZGARESC(1)+HHWWLORESC(1)+HHZZLORESC(1)
+     .        +HHHLORESC(1)+HHAALORESC(1)+HHCHCHLORESC(1)+HHAZLORESC(1)
+     .        +HHHPWMLORESC(1)
+
+      hhwdth1(1) = wtot1(1)
+
+      HHBRG1(1)=HHGGRESCR(1)/WTOT1(1)
+      HHBRM1(1)=HHMMLORESC(1)/WTOT1(1)
+      HHBRL1(1)=HHLLLORESC(1)/WTOT1(1)
+      HHBRS1(1)=HHSSQCD(1)/WTOT1(1)
+      HHBRC1(1)=HHCCQCD(1)/WTOT1(1)
+      HHBRB1(1)=HHBBQCD(1)/WTOT1(1)
+      HHBRT1(1)=HHTTQCD(1)/WTOT1(1)
+      HHBRGA1(1)=HHGARESC(1)/WTOT1(1)
+      HHBRZGA1(1)=HHZGARESC(1)/WTOT1(1)
+      HHBRW1(1)=HHWWLORESC(1)/WTOT1(1)
+      HHBRZ1(1)=HHZZLORESC(1)/WTOT1(1)
+      HHBRHL1(1)=HHHLORESC(1)/WTOT1(1)      
+      HHBRA1(1)=HHAALORESC(1)/WTOT1(1)
+      HHBRCHCH1(1)=HHCHCHLORESC(1)/WTOT1(1)
+      HHBRAZ1(1)=HHAZLORESC(1)/WTOT1(1)
+      HHBRHW1(1)=HHHPWMLORESC(1)/WTOT1(1)
+
+c      print*,''
+c      print*,'H decays'
+c      print*,''
+c      print*,'wtot1',wtot1(1)
+c      print*,'hhbrg',hhggrescr(1),hhbrg1(1)
+c      print*,'hhbrm',hhmmloresc(1),hhbrm1(1)
+c      print*,'hhbrl',hhllloresc(1),hhbrl1(1)
+c      print*,'hhbrs',hhssqcd(1),hhbrs1(1)
+c      print*,'hhbrc',hhccqcd(1),hhbrc1(1)
+c      print*,'hhbrb',hhbbqcd(1),hhbrb1(1)
+c      print*,'hhbrt',hhttqcd(1),hhbrt1(1)
+c      print*,'hhbrga',hhgaresc(1),hhbrga1(1)
+c      print*,'hhbrzga',hhzgaresc(1),hhbrzga1(1)
+c      print*,'hhbrw',hhwwloresc(1),hhbrw1(1)
+c      print*,'hhbrz',hhzzloresc(1),hhbrz1(1)
+c      print*,'hhbrhl',hhhloresc(1),hhbrhl1(1)
+c      print*,'hhbra',hhaaloresc(1),hhbra1(1)
+c      print*,'hhbrchch',hhchchloresc(1),hhbrchch1(1)
+c      print*,'hhbraz',hhazloresc(1),hhbraz1(1)
+c      print*,'hhbrhw',hhhpwmloresc(1),hhbrhw1(1)
+         
+      endif
+      
 c If OMIT ELW2 = 0, then the following decay widths include the usual
 c QCD corrections and the EW corrections. The latter are only included for
 c on-shell decays and non-loop induced decays
 
       if(irenscheme.eq.0) then
-      do i=1,14,1
-         WTOT2(i)=HHGGRESC+HHMMEW(i)+HHLLEW(i)+HHSSQCDEW(i)+HHCCQCDEW(i)
-     .           +HHBBQCDEW(i)+HHTTQCDEW(i)+HHGARESC+HHZGARESC
+      do i=1,17,1
+         WTOT2(i)=HHGGRESCR(i)+HHMMEW(i)+HHLLEW(i)+HHSSQCDEW(i)
+     .        +HHCCQCDEW(i)
+     .           +HHBBQCDEW(i)+HHTTQCDEW(i)+HHGARESC(i)+HHZGARESC(i)
      .           +HHWWEW(i)+HHZZEW(i)+HHAAEW(i)+HHHPHMEW(i)+HHAZEW(i)
      .        +HHHPWMEW(i)+HHHEW(i)
 
          hhwdth2(i) = wtot2(i)
       
-      HHBRG2(i)=HHGGRESC/WTOT2(i)
+      HHBRG2(i)=HHGGRESCR(i)/WTOT2(i)
       HHBRM2(i)=HHMMEW(i)/WTOT2(i)      
       HHBRL2(i)=HHLLEW(i)/WTOT2(i)
       HHBRS2(i)=HHSSQCDEW(i)/WTOT2(i)
       HHBRC2(i)=HHCCQCDEW(i)/WTOT2(i)      
       HHBRB2(i)=HHBBQCDEW(i)/WTOT2(i)
       HHBRT2(i)=HHTTQCDEW(i)/WTOT2(i)
-      HHBRGA2(i)=HHGARESC/WTOT2(i)
-      HHBRZGA2(i)=HHZGARESC/WTOT2(i)
+      HHBRGA2(i)=HHGARESC(i)/WTOT2(i)
+      HHBRZGA2(i)=HHZGARESC(i)/WTOT2(i)
       HHBRW2(i)=HHWWEW(i)/WTOT2(i)
       HHBRZ2(i)=HHZZEW(i)/WTOT2(i)
       HHBRHL2(i)=HHHEW(i)/WTOT2(i)
@@ -15034,19 +18472,19 @@ c on-shell decays and non-loop induced decays
       HHBRAZ2(i)=HHAZEW(i)/WTOT2(i)
       HHBRHW2(i)=HHHPWMEW(i)/WTOT2(i)
 
-c      if(i.eq.2) then
+c      if(i.eq.7) then
 c      print*,''
 c      print*,'wtot2',wtot2(i),i
 c      print*,''
-c      print*,'hhbrg2',hhggresc,hhbrg2(i)
+c      print*,'hhbrg2(i)',hhggrescr(i),hhbrg2(i)
 c      print*,'hhbrm2(i)',hhmmew(i),hhbrm2(i)
 c      print*,'hhbrl2(i)',hhllew(i),hhbrl2(i)
 c      print*,'hhbrs2(i)',hhssqcdew(i),hhbrs2(i)
 c      print*,'hhbrc2(i)',hhccqcdew(i),hhbrc2(i)
 c      print*,'hhbrb2(i)',hhbbqcdew(i),hhbrb2(i)
 c      print*,'hhbrt2(i)',hhttqcdew(i),hhbrt2(i)
-c      print*,'hhbrga2',hhgaresc,hhbrga2(i)
-c      print*,'hhbrzga2',hhzgaresc,hhbrzga2(i)
+c      print*,'hhbrga2',hhgaresc(i),hhbrga2(i)
+c      print*,'hhbrzga2',hhzgaresc(i),hhbrzga2(i)
 c      print*,'hhbrw2(i)',hhwwew(i),hhbrw2(i)
 c      print*,'hhbrz2(i)',hhzzew(i),hhbrz2(i)
 c      print*,'hhbrhl2(i)',hhhew(i),hhbrhl2(i)      
@@ -15061,22 +18499,23 @@ c      endif
 
       elseif(irenscheme.ne.0) then
 
-         WTOT2(1)=HHGGRESC+HHMMEW(1)+HHLLEW(1)+HHSSQCDEW(1)+HHCCQCDEW(1)
-     .           +HHBBQCDEW(1)+HHTTQCDEW(1)+HHGARESC+HHZGARESC
+         WTOT2(1)=HHGGRESCR(1)+HHMMEW(1)+HHLLEW(1)+HHSSQCDEW(1)
+     .        +HHCCQCDEW(1)
+     .           +HHBBQCDEW(1)+HHTTQCDEW(1)+HHGARESC(1)+HHZGARESC(1)
      .           +HHWWEW(1)+HHZZEW(1)+HHAAEW(1)+HHHPHMEW(1)+HHAZEW(1)
      .           +HHHPWMEW(1)+HHHEW(1)
 
          hhwdth2(1) = wtot2(1)
          
-      HHBRG2=HHGGRESC/WTOT2(1)
+      HHBRG2=HHGGRESCR(1)/WTOT2(1)
       HHBRM2(1)=HHMMEW(1)/WTOT2(1)      
       HHBRL2(1)=HHLLEW(1)/WTOT2(1)
       HHBRS2(1)=HHSSQCDEW(1)/WTOT2(1)
       HHBRC2(1)=HHCCQCDEW(1)/WTOT2(1)      
       HHBRB2(1)=HHBBQCDEW(1)/WTOT2(1)
       HHBRT2(1)=HHTTQCDEW(1)/WTOT2(1)
-      HHBRGA2=HHGARESC/WTOT2(1)
-      HHBRZGA2=HHZGARESC/WTOT2(1)
+      HHBRGA2=HHGARESC(1)/WTOT2(1)
+      HHBRZGA2=HHZGARESC(1)/WTOT2(1)
       HHBRW2(1)=HHWWEW(1)/WTOT2(1)
       HHBRZ2(1)=HHZZEW(1)/WTOT2(1)
       HHBRHL2(1)=HHHEW(1)/WTOT2(1)      
@@ -15088,15 +18527,15 @@ c      endif
 c      print*,''
 c      print*,'wtot2',wtot2(1),irenscheme
 c      print*,''
-c      print*,'hhbrg2',hhggresc,hhbrg2(1)
+c      print*,'hhbrg2',hhggrescr(1),hhbrg2(1)
 c      print*,'hhbrm2(1)',hhmmew(1),hhbrm2(1)
 c      print*,'hhbrl2(1)',hhllew(1),hhbrl2(1)
 c      print*,'hhbrs2(1)',hhssqcdew(1),hhbrs2(1)
 c      print*,'hhbrc2(1)',hhccqcdew(1),hhbrc2(1)
 c      print*,'hhbrb2(1)',hhbbqcdew(1),hhbrb2(1)
 c      print*,'hhbrt2(1)',hhttqcdew(1),hhbrt2(1)
-c      print*,'hhbrga2',hhgaresc,hhbrga2(1)
-c      print*,'hhbrzga2',hhzgaresc,hhbrzga2(1)
+c      print*,'hhbrga2',hhgaresc(1),hhbrga2(1)
+c      print*,'hhbrzga2',hhzgaresc(1),hhbrzga2(1)
 c      print*,'hhbrw2(1)',hhwwew(1),hhbrw2(1)
 c      print*,'hhbrz2(1)',hhzzew(1),hhbrz2(1)
 c      print*,'hhbrhl2(1)',hhhew(1),hhbrhl2(1)      
@@ -15105,6 +18544,7 @@ c      print*,'hhbrchch2(1)',hhhphmew(1),hhbrchch2(1)
 c      print*,'brbraz2(1)',hhazew(1),hhbraz2(1)
 c      print*,'hhbrhw2(1)',hhhpwmew(1),hhbrhw2(1)
 c      print*,''      
+
       endif
       
       endif
@@ -15200,13 +18640,45 @@ C  A ---> G G
        CAB = CTB*CF(CTB)*GAB
        CTC = 4*AMC**2/AMA**2*DCMPLX(1D0,-EPS)
        CAC = CTC*CF(CTC)*GAT
+c MMM changed 19/1/19       
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+          if(irenscheme.eq.0) then
+             do i=1,17,1
+        call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+        catr(i) = CTT*CF(CTT)*GATR
+        cabr(i) = CTB*CF(CTB)*GABR
+        cacr(i) = CTC*CF(CTC)*GATR
+             end do
+          elseif(irenscheme.ne.0) then
+        call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+        catr(1) = CTT*CF(CTT)*GATR
+        cabr(1) = CTB*CF(CTB)*GABR
+        cacr(1) = CTC*CF(CTC)*GATR
+          endif
+       endif
+c end MMM changed 19/1/19
+       
        FQCD=AGGQCD(ASG,NFEXT)
        XFAC = CDABS(CAT+CAB+CAC)**2*FQCD
        HGG=GF/(16.D0*PI*DSQRT(2.D0))*AMA**3*(ASG/PI)**2*XFAC
 
+c MMM changed 19/1/19       
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+          if(irenscheme.eq.0) then
+             do i=1,17,1
+            hggr(i)=gf/(16.D0*PI*DSQRT(2.D0))*AMA**3*(ASG/PI)**2*
+     .      CDABS(CATR(i)+CABR(i)+CACR(i))**2*FQCD
+             end do
+          elseif(irenscheme.ne.0) then
+            hggr(1)=gf/(16.D0*PI*DSQRT(2.D0))*AMA**3*(ASG/PI)**2*
+     .      CDABS(CATR(1)+CABR(1)+CACR(1))**2*FQCD
+          endif
+       endif
+c end MMM changed 19/1/19          
+
 c      print*
 c      print*,'A decay widths'
-c      print*,'hgg_NLO',hgg
+c     print*,'hgg_NLO',hgg
 
 C  A ---> G G* ---> G CC   TO BE ADDED TO A ---> CC
        NFEXT = 4
@@ -15216,6 +18688,20 @@ C  A ---> G G* ---> G CC   TO BE ADDED TO A ---> CC
        DCC=GF/(16.D0*PI*DSQRT(2.D0))*AMA**3*(ASG/PI)**2*XFAC
      .     - HGG
 
+c MMM changed 19/1/19
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+          if(irenscheme.eq.0) then
+             do i=1,17,1
+             dccr(i)=gf/(16.D0*PI*DSQRT(2.D0))*AMA**3*(ASG/PI)**2*
+     .               CDABS(CATR(i)+CABR(i)+CACR(i))**2*FQCD-hggr(i)
+             end do
+          elseif(irenscheme.ne.0) then
+             dccr(1)=gf/(16.D0*PI*DSQRT(2.D0))*AMA**3*(ASG/PI)**2*
+     .               CDABS(CATR(1)+CABR(1)+CACR(1))**2*FQCD-hggr(1)
+          endif
+       endif
+c end MMM changed 19/1/19 
+
 C  A ---> G G* ---> G BB   TO BE ADDED TO A ---> BB
        NFEXT = 5
        ASG = ASH
@@ -15224,6 +18710,26 @@ C  A ---> G G* ---> G BB   TO BE ADDED TO A ---> BB
        DBB=GF/(16.D0*PI*DSQRT(2.D0))*AMA**3*(ASG/PI)**2*XFAC
      .     - HGG - DCC
        HGG=GF/(16.D0*PI*DSQRT(2.D0))*AMA**3*(ASG/PI)**2*XFAC
+
+c MMM changed 19/1/19
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+          if(irenscheme.eq.0) then
+             do i=1,17,1
+             dbbr(i)=gf/(16.D0*PI*DSQRT(2.D0))*AMA**3*(ASG/PI)**2*
+     .               CDABS(CATR(i)+CABR(i)+CACR(i))**2*FQCD  
+     .               - hggr(i) - dccr(i)
+             HGGR(i)=gf/(16.D0*PI*DSQRT(2.D0))*AMA**3*(ASG/PI)**2*
+     .            CDABS(CATR(i)+CABR(i)+CACR(i))**2*FQCD  
+             end do
+          elseif(irenscheme.ne.0) then
+             dbbr(1)=gf/(16.D0*PI*DSQRT(2.D0))*AMA**3*(ASG/PI)**2*
+     .               CDABS(CATR(1)+CABR(1)+CACR(1))**2*FQCD  
+     .               - hggr(1) - dccr(1)
+             HGGR(1)=gf/(16.D0*PI*DSQRT(2.D0))*AMA**3*(ASG/PI)**2*
+     .            CDABS(CATR(1)+CABR(1)+CACR(1))**2*FQCD  
+          endif
+       endif
+c end MMM changed 19/1/19        
 
 C  A ---> G G: FULL NNLO CORRECTIONS TO TOP LOOPS FOR NF=5
        FQCD0=AGGQCD(ASG,5)
@@ -15241,14 +18747,56 @@ C  A ---> G G: FULL NNLO CORRECTIONS TO TOP LOOPS FOR NF=5
        DBB = 0
       ENDIF
 
-c MMM changed 10/7/18
+c MMM changed 19/1/19       
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+          if(irenscheme.eq.0) then
+             do i=1,17,1
+                hggr(i)=hggr(i)+
+     .               gf/(16.D0*PI*DSQRT(2.D0))*AMA**3*(ASG/PI)**2*
+     .               CDABS(CATR(i)+CABR(i)+CACR(i))**2*(FQCD-FQCD0)
+                
+                IF(NFGG.EQ.3)THEN
+                   HGGR(i) = HGGR(i) - DBBR(i) - DCCR(i)
+                ELSEIF(NFGG.EQ.4)THEN
+                   HGGR(i) = HGGR(i) - DBBR(i)
+                   DCCR(i) = 0
+                ELSE
+                   DCCR(i) = 0
+                   DBBR(i) = 0
+                ENDIF
+             end do
+          elseif(irenscheme.ne.0) then
+                hggr(1)=hggr(1)+
+     .               gf/(16.D0*PI*DSQRT(2.D0))*AMA**3*(ASG/PI)**2*
+     .               CDABS(CATR(1)+CABR(1)+CACR(1))**2*(FQCD-FQCD0)
+                IF(NFGG.EQ.3)THEN
+                   HGGR(1) = HGGR(1) - DBBR(1) - DCCR(1)
+                ELSEIF(NFGG.EQ.4)THEN
+                   HGGR(1) = HGGR(1) - DBBR(1)
+                   DCCR(1) = 0
+                ELSE
+                   DCCR(1) = 0
+                   DBBR(1) = 0
+                ENDIF
+          endif
+       endif
+c end MMM changed 19/1/19 
+
+c MMM changed 19/1/19
       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
          AGGRESC = HGG*GFCALC/GF
+         if(irenscheme.eq.0) then
+            do i=1,17,1
+               AGGRESCR(i) = HGGR(i)*GFCALC/GF
+            enddo
+         elseif(irenscheme.ne.0) then
+            AGGRESCR(1) = HGGR(1)*GFCALC/GF
+         endif         
       endif
-c end MMM changed 10/7/18
+c end MMM changed 19/1/19
       
 c     write(6,*)AMA,FQCD0-1,FQCD-FQCD0
-c     print*,'hgg_NNLO',hgg
+c      print*,'hgg_NNLO',hggr(1),aggrescr(1)
 
 C  A ---> MU MU
       XGLM = GLB
@@ -15264,36 +18812,44 @@ C  A ---> MU MU
          HMM = 0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            AMMLORESC = 0.D0
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  AMMEW(i) = AMMLORESC
+               do i=1,17,1
+                  AMMLORESC(i) = 0.D0
+                  AMMEW(i) = AMMLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               AMMEW(1) = AMMLORESC
+               AMMLORESC(1) = 0.D0
+               AMMEW(1) = AMMLORESC(1)
             endif
          endif
 c end MMM changed 10/7/18           
       ELSE
          HMM=AFF(AMA,(AMMUON/AMA)**2)*XGAM**2
-c MMM changed 10/7/18
+c MMM changed 13/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            AMMLORESC = HMM*GFCALC/GF
-            check = (AMMLORESC-AMMLO)/AMMLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width A->mumu.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  AMMEW(i) = AMMLORESC*(1.D0+
-     .                 (AMMNLO(i)-AMMLO)/AMMLO)
+               do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+                  AMMLORESC(i) = HMM*GFCALC/GF*galepr**2/xgam**2
+                  check = (AMMLORESC(i)-AMMLOR(i))/AMMLORESC(i)
+                  if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width A->mumu.'
+                  endif
+                  AMMEW(i) = AMMLORESC(i)*(1.D0+
+     .                 (AMMNLO(i)-AMMLOR(i))/AMMLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               AMMEW(1) = AMMLORESC*(1.D0+
-     .                 (AMMNLO(1)-AMMLO)/AMMLO)
+                  call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+                  AMMLORESC(1) = HMM*GFCALC/GF*galepr**2/xgam**2
+                  check = (AMMLORESC(1)-AMMLOR(1))/AMMLORESC(1)
+                  if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width A->mumu.'
+                  endif
+                  AMMEW(1) = AMMLORESC(1)*(1.D0+
+     .                 (AMMNLO(1)-AMMLOR(1))/AMMLOR(1))
             endif
          endif
-c end MMM changed 10/7/18                
+c end MMM changed 13/1/19                
       ENDIF
       
 c     print*,'A -> mumu',hmm
@@ -15312,36 +18868,44 @@ C  A ---> LL
          HLL = 0
 c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            ALLLORESC = 0.D0
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  ALLEW(i) = ALLLORESC
+               do i=1,17,1
+                  ALLLORESC(i) = 0.D0
+                  ALLEW(i) = ALLLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               ALLEW(1) = ALLLORESC
+               ALLLORESC(1) = 0.D0
+               ALLEW(1) = ALLLORESC(1)
             endif
          endif
 c end MMM changed 10/7/18               
       ELSE
          HLL=AFF(AMA,(AMTAU/AMA)**2)*XGAT**2
-c MMM changed 10/7/18
+c MMM changed 19/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            ALLLORESC = HLL*GFCALC/GF
-            check = (ALLLORESC-ALLLO)/ALLLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width A->tau tau.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  ALLEW(i) = ALLLORESC*(1.D0
-     .                 +(ALLNLO(i)-ALLLO)/ALLLO)
+               do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+                  ALLLORESC(i) = HLL*GFCALC/GF*galepr**2/xgat**2
+                  check = (ALLLORESC(i)-ALLLOR(i))/ALLLORESC(i)
+                  if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width A->tau tau.'
+                  endif
+                  ALLEW(i) = ALLLORESC(i)*(1.D0
+     .                 +(ALLNLO(i)-ALLLOR(i))/ALLLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               ALLEW(1) = ALLLORESC*(1.D0
-     .                 +(ALLNLO(1)-ALLLO)/ALLLO)
+                  call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+                  ALLLORESC(1) = HLL*GFCALC/GF*galepr**2/xgat**2
+                  check = (ALLLORESC(1)-ALLLOR(1))/ALLLORESC(1)
+                  if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width A->tau tau.'
+                  endif
+                  ALLEW(1) = ALLLORESC(1)*(1.D0
+     .                 +(ALLNLO(1)-ALLLOR(1))/ALLLOR(1))
             endif
          endif
-c end MMM changed 10/7/18           
+c end MMM changed 19/1/19           
       ENDIF
 
 c     write(6,*)'A: tau/mu: ',HLL/HMM*AMMUON**2/AMTAU**2,XGAT**2/XGAM**2
@@ -15358,16 +18922,18 @@ C  A --> SS
          HSS = 0
 c MMM changed 10/7/18
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-          ASSLORESC = 0.D0
-          ASSQCD = ASSLORESC
           if(irenscheme.eq.0) then
-             do i=1,14,1
-                ASSEW(i) = ASSLORESC
-                ASSQCDEW(i) = ASSLORESC
+             do i=1,17,1
+                ASSLORESC(i) = 0.D0
+                ASSQCD(i) = ASSLORESC(i)
+                ASSEW(i) = ASSLORESC(i)
+                ASSQCDEW(i) = ASSLORESC(i)
              end do
           elseif(irenscheme.ne.0) then
-                ASSEW(1) = ASSLORESC
-                ASSQCDEW(1) = ASSLORESC
+                ASSLORESC(1) = 0.D0
+                ASSQCD(1) = ASSLORESC(1)
+                ASSEW(1) = ASSLORESC(1)
+                ASSQCDEW(1) = ASSLORESC(1)
           endif
        endif
 c end MMM changed 10/7/18          
@@ -15381,25 +18947,37 @@ c end MMM changed 10/7/18
        IF(HS2.LT.0.D0) HS2 = 0
        RAT = 2*AMS/AMA
        HSS = QQINT_HDEC(RAT,HS1,HS2)
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            ASSQCD = HSS*GFCALC/GF
-            ASSLORESC = 3.D0*AFF(AMA,(AMS/AMA)**2)*XGAS**2*GFCALC/GF
-            check = (ASSLORESC-ASSLO)/ASSLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width A->ss.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
+               do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+                  ASSQCD(i) = HSS*GFCALC/GF*gabr**2/xgas**2
+                  ASSLORESC(i) = 3.D0*AFF(AMA,(AMS/AMA)**2)*gabr**2*
+     .                 GFCALC/GF
+                  check = (ASSLORESC(i)-ASSLOR(i))/ASSLORESC(i)
+                  if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width A->ss.'
+                  endif
                   ASSEW(i) = ASSNLO(i)
-                  ASSQCDEW(i)=ASSQCD*(1.D0+(ASSNLO(i)-ASSLO)/ASSLO)
+                  ASSQCDEW(i)=ASSQCD(i)*(1.D0+(ASSNLO(i)-ASSLOR(i))
+     .                 /ASSLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  ASSEW(1) = ASSNLO(1)
-                  ASSQCDEW(1)=ASSQCD*(1.D0+(ASSNLO(1)-ASSLO)/ASSLO)
+               call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+               ASSQCD(1) = HSS*GFCALC/GF*gabr**2/xgas**2
+               ASSLORESC(1) = 3.D0*AFF(AMA,(AMS/AMA)**2)*gabr**2*
+     .              GFCALC/GF
+               check = (ASSLORESC(1)-ASSLOR(1))/ASSLORESC(1)
+               if(dabs(check).ge.1.D-5) then
+               print*,'There is a problem in the LO width A->ss.'
+               endif
+               ASSEW(1) = ASSNLO(1)
+               ASSQCDEW(1)=ASSQCD(1)*(1.D0+(ASSNLO(1)-ASSLOR(1))
+     .              /ASSLOR(1))
             endif
          endif
-c end MMM changed 10/7/18               
+c end MMM changed 19/1/19               
       ENDIF
 
 c     print*,'A -> ss',hs1,hs2
@@ -15409,16 +18987,18 @@ C  A --> CC
          HCC = 0
 c MMM changed 10/7/18
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-          ACCLORESC = 0.D0
-          ACCQCD = ACCLORESC
           if(irenscheme.eq.0) then
-             do i=1,14,1
-                ACCEW(i) = ACCLORESC
-                ACCQCDEW(i) = ACCLORESC
+             do i=1,17,1
+                ACCLORESC(i) = 0.D0
+                ACCQCD(i) = ACCLORESC(i)
+                ACCEW(i) = ACCLORESC(i)
+                ACCQCDEW(i) = ACCLORESC(i)
              end do
           elseif(irenscheme.ne.0) then
-                ACCEW(1) = ACCLORESC
-                ACCQCDEW(1) = ACCLORESC
+                ACCLORESC(1) = 0.D0
+                ACCQCD(1) = ACCLORESC(1)             
+                ACCEW(1) = ACCLORESC(1)
+                ACCQCDEW(1) = ACCLORESC(1)
           endif
        endif
 c end MMM changed 10/7/18              
@@ -15433,25 +19013,57 @@ c end MMM changed 10/7/18
        IF(HC2.LT.0.D0) HC2 = 0
        RAT = 2*AMC/AMA
        HCC = QQINT_HDEC(RAT,HC1,HC2)
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            ACCQCD = HCC*GFCALC/GF
-            ACCLORESC = 3.D0*AFF(AMA,(AMC/AMA)**2)*GAT**2*GFCALC/GF
-            check = (ACCLORESC-ACCLO)/ACCLORESC
-            if(dabs(check).ge.1.D-5) then
-               print*,'There is a problem in the LO width A->cc.'
-            endif
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  ACCEW(i) = ACCNLO(i)
-                  ACCQCDEW(i)=ACCQCD*(1.D0+(ACCNLO(i)-ACCLO)/ACCLO)
+               do i=1,17,1
+                call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+                HC1=3.D0*AFF(AMA,(AMC/AMA)**2)
+     .               *GATR**2
+     .               *TQCDA(AMC**2/AMA**2)
+                HC2=3.D0*AFF(AMA,(RMC/AMA)**2)
+     .               *GATR**2
+     .               *QCDA(RMC**2/AMA**2)
+     .               + DCCR(i)
+                IF(HC2.LT.0.D0) HC2 = 0
+                RAT = 2*AMC/AMA
+                HCC = QQINT_HDEC(RAT,HC1,HC2)
+                ACCQCD(i) = HCC*GFCALC/GF
+                ACCLORESC(i) = 3.D0*AFF(AMA,(AMC/AMA)**2)*GATR**2*
+     .               GFCALC/GF
+                check = (ACCLORESC(i)-ACCLOR(i))/ACCLORESC(i)
+                if(dabs(check).ge.1.D-5) then
+                   print*,'There is a problem in the LO width A->cc.'
+                endif
+                ACCEW(i) = ACCNLO(i)
+                ACCQCDEW(i)=ACCQCD(i)*(1.D0+(ACCNLO(i)-ACCLOR(i))
+     .               /ACCLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  ACCEW(1) = ACCNLO(1)
-                  ACCQCDEW(1)=ACCQCD*(1.D0+(ACCNLO(1)-ACCLO)/ACCLO)
+                call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+                HC1=3.D0*AFF(AMA,(AMC/AMA)**2)
+     .               *GATR**2
+     .               *TQCDA(AMC**2/AMA**2)
+                HC2=3.D0*AFF(AMA,(RMC/AMA)**2)
+     .               *GATR**2
+     .               *QCDA(RMC**2/AMA**2)
+     .               + DCCR(1)
+                IF(HC2.LT.0.D0) HC2 = 0
+                RAT = 2*AMC/AMA
+                HCC = QQINT_HDEC(RAT,HC1,HC2)
+                ACCQCD(1) = HCC*GFCALC/GF
+                ACCLORESC(1) = 3.D0*AFF(AMA,(AMC/AMA)**2)*GATR**2*
+     .               GFCALC/GF
+                check = (ACCLORESC(1)-ACCLOR(1))/ACCLORESC(1)
+                if(dabs(check).ge.1.D-5) then
+                   print*,'There is a problem in the LO width A->cc.'
+                endif
+                ACCEW(1) = ACCNLO(1)
+                ACCQCDEW(1)=ACCQCD(1)*(1.D0+(ACCNLO(1)-ACCLOR(1))
+     .               /ACCLOR(1))
             endif
          endif
-c end MMM changed 10/7/18              
+c end MMM changed 19/1/19              
       ENDIF
 
 c     print*,'A -> cc',hcc
@@ -15478,16 +19090,18 @@ c      XMB = AMB
          HBB = 0
 c MMM changed 10/7/18
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-          ABBLORESC = 0.D0
-          ABBQCD = ABBLORESC
           if(irenscheme.eq.0) then
-             do i=1,14,1
-                ABBEW(i) = ABBLORESC
-                ABBQCDEW(i) = ABBLORESC
+             do i=1,17,1
+                ABBLORESC(i) = 0.D0
+                ABBQCD(i) = ABBLORESC(i)
+                ABBEW(i) = ABBLORESC(i)
+                ABBQCDEW(i) = ABBLORESC(i)
              end do
           elseif(irenscheme.ne.0) then
-                ABBEW(1) = ABBLORESC
-                ABBQCDEW(1) = ABBLORESC
+                ABBLORESC(1) = 0.D0
+                ABBQCD(1) = ABBLORESC(1)
+                ABBEW(1) = ABBLORESC(1)
+                ABBQCDEW(1) = ABBLORESC(1)
           endif
        endif
 c end MMM changed 10/7/18          
@@ -15503,22 +19117,54 @@ c end MMM changed 10/7/18
        RAT = 2*AMB/AMA
        HBB = QQINT_HDEC(RAT,HB1,HB2)
 
-c MMM changed 10/7/18
+c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-          ABBQCD = HBB*GFCALC/GF
-          ABBLORESC = 3.D0*AFF(AMA,(AMB/AMA)**2)*GAB**2*GFCALC/GF
-          check = (ABBLORESC-ABBLO)/ABBLORESC
-          if(dabs(check).ge.1.D-5) then
-             print*,'There is a problem in the LO width A->bb.'
-          endif
           if(irenscheme.eq.0) then
-             do i=1,14,1
+             do i=1,17,1
+                call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+                HB1=3.D0*AFF(AMA,(AMB/AMA)**2)
+     .               *GABR**2
+     .               *TQCDA(AMB**2/AMA**2)
+                HB2=3.D0*AFF(AMA,(RMB/AMA)**2)
+     .               *GABR**2
+     .               *QCDA(RMB**2/AMA**2)
+     .               + DBBR(i)
+                IF(HB2.LT.0.D0) HB2 = 0
+                RAT = 2*AMB/AMA
+                HBB = QQINT_HDEC(RAT,HB1,HB2)
+                ABBQCD(i) = HBB*GFCALC/GF
+                ABBLORESC(i) = 3.D0*AFF(AMA,(AMB/AMA)**2)*GABR**2*
+     .               GFCALC/GF
+                check = (ABBLORESC(i)-ABBLOR(i))/ABBLORESC(i)
+                if(dabs(check).ge.1.D-5) then
+             print*,'There is a problem in the LO width A->bb.'
+                endif
                 ABBEW(i) = ABBNLO(i)
-                ABBQCDEW(i)=ABBQCD*(1.D0+(ABBNLO(i)-ABBLO)/ABBLO)
+                ABBQCDEW(i)=ABBQCD(i)*(1.D0+(ABBNLO(i)-ABBLOR(i))
+     .               /ABBLOR(i))
              end do
           elseif(irenscheme.ne.0) then
+             call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+             HB1=3.D0*AFF(AMA,(AMB/AMA)**2)
+     .            *GABR**2
+     .            *TQCDA(AMB**2/AMA**2)
+             HB2=3.D0*AFF(AMA,(RMB/AMA)**2)
+     .            *GABR**2
+     .            *QCDA(RMB**2/AMA**2)
+     .            + DBBR(1)
+             IF(HB2.LT.0.D0) HB2 = 0
+             RAT = 2*AMB/AMA
+             HBB = QQINT_HDEC(RAT,HB1,HB2)
+             ABBQCD(1) = HBB*GFCALC/GF
+             ABBLORESC(1) = 3.D0*AFF(AMA,(AMB/AMA)**2)*GABR**2*
+     .            GFCALC/GF
+             check = (ABBLORESC(1)-ABBLOR(1))/ABBLORESC(1)
+             if(dabs(check).ge.1.D-5) then
+                print*,'There is a problem in the LO width A->bb.'
+             endif
              ABBEW(1) = ABBNLO(1)
-             ABBQCDEW(1)=ABBQCD*(1.D0+(ABBNLO(1)-ABBLO)/ABBLO)
+             ABBQCDEW(1)=ABBQCD(1)*(1.D0+(ABBNLO(1)-ABBLOR(1))
+     .            /ABBLOR(1))
           endif
        endif
 c end MMM changed 10/7/18              
@@ -15550,14 +19196,16 @@ c     write(6,*)xgltop,xghtop,xgatop
           HTT=0.D0
 c MMM changed 10/7/2018
           if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-             ATTLORESC = 0.D0
-             ATTQCD = ATTLORESC
              if(irenscheme.eq.0) then
-                do i=1,14,1
-                   ATTQCDEW(i) = ATTLORESC
+                do i=1,17,1
+                   ATTLORESC(i) = 0.D0
+                   ATTQCD(i) = ATTLORESC(i)
+                   ATTQCDEW(i) = ATTLORESC(i)
                 end do
              elseif(irenscheme.ne.0) then
-                ATTQCDEW(1) = ATTLORESC
+                ATTLORESC(1) = 0.D0
+                ATTQCD(1) = ATTLORESC(1)
+                ATTQCDEW(1) = ATTLORESC(1)
              endif                  
           endif
 c end MMM changed 10/7/2018           
@@ -15565,19 +19213,31 @@ c end MMM changed 10/7/2018
         FACTT=6.D0*GF**2*AMA**3*AMT**2/2.D0/128.D0/PI**3*GAT**2
         call ATOTT_HDEC(ama,amt,amb,amw,amch,att0,gab,gat)
         HTT=FACTT*ATT0
-c MMM changed 10/7/2018
+c MMM changed 19/1/2019
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-           ATTLORESC = htt*GFCALC/GF
-           ATTQCD = ATTLORESC
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 ATTQCDEW(i) = ATTLORESC
+              do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+               FACTT=6.D0*gfcalc**2*AMA**3*AMT**2/2.D0/128.D0/PI**3*
+     .              GATR**2
+               call ATOTT_HDEC(ama,amt,amb,amw,amch,att0,gabr,gatr)
+               HTT=FACTT*ATT0
+               ATTLORESC(i) = htt
+               ATTQCD(i) = ATTLORESC(i)
+               ATTQCDEW(i) = ATTLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              ATTQCDEW(1) = ATTLORESC
+              call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+              FACTT=6.D0*gfcalc**2*AMA**3*AMT**2/2.D0/128.D0/PI**3*
+     .             GATR**2
+              call ATOTT_HDEC(ama,amt,amb,amw,amch,att0,gabr,gatr)
+              HTT=FACTT*ATT0
+              ATTLORESC(1) = htt
+              ATTQCD(1) = ATTLORESC(1)
+              ATTQCDEW(1) = ATTLORESC(1)
            endif                  
         endif
-c end MMM changed 10/7/2018           
+c end MMM changed 19/1/2019           
        ELSEIF (AMA.LE.XM2) THEN
         XX(1) = XM1-1D0
         XX(2) = XM1
@@ -15606,19 +19266,77 @@ c end MMM changed 10/7/2018
         RAT = 2*AMT/XX(4)
         YY(4) = QQINT_HDEC(RAT,XYZ1,XYZ2)
         HTT = FINT_HDEC(AMA,XX,YY)*GAT**2
-c MMM changed 10/7/2018               
+c MMM changed 19/1/2019               
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-           ATTLORESC = htt*GFCALC/GF
-           ATTQCD = ATTLORESC
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 ATTQCDEW(i) = ATTLORESC
+              do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+               XX(1) = XM1-1D0
+               XX(2) = XM1
+               XX(3) = XM2
+               XX(4) = XM2+1D0
+               FACTT=6.D0*gfcalc**2*XX(1)**3*AMT**2/2.D0/128.D0/PI**3
+               call ATOTT_HDEC(xx(1),amt,amb,amw,amch,att0,gabr,gatr)
+               YY(1)=FACTT*ATT0
+               FACTT=6.D0*gfcalc**2*XX(2)**3*AMT**2/2.D0/128.D0/PI**3
+               call ATOTT_HDEC(xx(2),amt,amb,amw,amch,att0,gabr,gatr)
+               YY(2)=FACTT*ATT0
+               XMT = RUNM_HDEC(XX(3),6)
+               XYZ1 =3.D0*AFF(XX(3),(AMT/XX(3))**2)
+     .              *TQCDA(AMT**2/XX(3)**2)*gfcalc/gf
+               XYZ2 =3.D0*AFF(XX(3),(XMT/XX(3))**2)
+     .              *QCDA(XMT**2/XX(3)**2)*gfcalc/gf
+               IF(XYZ2.LT.0.D0) XYZ2 = 0
+               RAT = 2*AMT/XX(3)
+               YY(3) = QQINT_HDEC(RAT,XYZ1,XYZ2)
+               XMT = RUNM_HDEC(XX(4),6)
+               XYZ1 =3.D0*AFF(XX(4),(AMT/XX(4))**2)
+     .              *TQCDA(AMT**2/XX(4)**2)*gfcalc/gf
+               XYZ2 =3.D0*AFF(XX(4),(XMT/XX(4))**2)
+     .              *QCDA(XMT**2/XX(4)**2)*gfcalc/gf
+               IF(XYZ2.LT.0.D0) XYZ2 = 0
+               RAT = 2*AMT/XX(4)
+               YY(4) = QQINT_HDEC(RAT,XYZ1,XYZ2)
+               HTT = FINT_HDEC(AMA,XX,YY)*GATR**2
+               ATTLORESC(i) = htt
+               ATTQCD(i) = ATTLORESC(i)
+               ATTQCDEW(i) = ATTLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              ATTQCDEW(1) = ATTLORESC
+              call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+              XX(1) = XM1-1D0
+              XX(2) = XM1
+              XX(3) = XM2
+              XX(4) = XM2+1D0
+              FACTT=6.D0*gfcalc**2*XX(1)**3*AMT**2/2.D0/128.D0/PI**3
+              call ATOTT_HDEC(xx(1),amt,amb,amw,amch,att0,gabr,gatr)
+              YY(1)=FACTT*ATT0
+              FACTT=6.D0*gfcalc**2*XX(2)**3*AMT**2/2.D0/128.D0/PI**3
+              call ATOTT_HDEC(xx(2),amt,amb,amw,amch,att0,gabr,gatr)
+              YY(2)=FACTT*ATT0
+              XMT = RUNM_HDEC(XX(3),6)
+              XYZ1 =3.D0*AFF(XX(3),(AMT/XX(3))**2)
+     .             *TQCDA(AMT**2/XX(3)**2)*gfcalc/gf
+              XYZ2 =3.D0*AFF(XX(3),(XMT/XX(3))**2)
+     .             *QCDA(XMT**2/XX(3)**2)*gfcalc/gf
+              IF(XYZ2.LT.0.D0) XYZ2 = 0
+              RAT = 2*AMT/XX(3)
+              YY(3) = QQINT_HDEC(RAT,XYZ1,XYZ2)
+              XMT = RUNM_HDEC(XX(4),6)
+              XYZ1 =3.D0*AFF(XX(4),(AMT/XX(4))**2)
+     .             *TQCDA(AMT**2/XX(4)**2)*gfcalc/gf
+              XYZ2 =3.D0*AFF(XX(4),(XMT/XX(4))**2)
+     .             *QCDA(XMT**2/XX(4)**2)*gfcalc/gf
+              IF(XYZ2.LT.0.D0) XYZ2 = 0
+              RAT = 2*AMT/XX(4)
+              YY(4) = QQINT_HDEC(RAT,XYZ1,XYZ2)
+              HTT = FINT_HDEC(AMA,XX,YY)*GATR**2
+              ATTLORESC(1) = htt
+              ATTQCD(1) = ATTLORESC(1)
+              ATTQCDEW(1) = ATTLORESC(1)
            endif     
         endif
-c end MMM changed 10/7/2018          
+c end MMM changed 19/1/2019          
        ELSE
         HT1=3.D0*AFF(AMA,(AMT/AMA)**2)*GAT**2
      .    *TQCDA(AMT**2/AMA**2)
@@ -15628,25 +19346,37 @@ c end MMM changed 10/7/2018
         RAT = 2*AMT/AMA
         HTT = QQINT_HDEC(RAT,HT1,HT2)
 
-c MMM changed 10/7/18
+c MMM changed 19/1/19
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then        
-           ATTQCD = HTT*GFCALC/GF
-           ATTLORESC = 3.D0*AFF(AMA,(AMT/AMA)**2)*GAT**2*GFCALC/GF
-           check = (ATTLORESC-ATTLO)/ATTLORESC
-           if(dabs(check).ge.1.D-5) then
-              print*,'There is a problem in the LO width A->tt.'
-           endif
            if(irenscheme.eq.0) then
-              do i=1,14,1
+              do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+                 ATTQCD(i) = HTT*GFCALC/GF*GATR**2/GAT**2
+                 ATTLORESC(i) = 3.D0*AFF(AMA,(AMT/AMA)**2)*GATR**2*
+     .                GFCALC/GF
+                 check = (ATTLORESC(i)-ATTLOR(i))/ATTLORESC(i)
+                 if(dabs(check).ge.1.D-5) then
+              print*,'There is a problem in the LO width A->tt.'
+                 endif
                  ATTEW(i) = ATTNLO(i)
-                 ATTQCDEW(i)=ATTQCD*(1.D0+(ATTNLO(i)-ATTLO)/ATTLO)
+                 ATTQCDEW(i)=ATTQCD(i)*(1.D0+(ATTNLO(i)-ATTLOR(i))
+     .                /ATTLOR(i))
               end do
            elseif(irenscheme.ne.0) then
-              ATTEW(1) = ATTNLO(1)
-              ATTQCDEW(1)=ATTQCD*(1.D0+(ATTNLO(1)-ATTLO)/ATTLO)
+                 call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+                 ATTQCD(1) = HTT*GFCALC/GF*GATR**2/GAT**2
+                 ATTLORESC(1) = 3.D0*AFF(AMA,(AMT/AMA)**2)*GATR**2*
+     .                GFCALC/GF
+                 check = (ATTLORESC(1)-ATTLOR(1))/ATTLORESC(1)
+                 if(dabs(check).ge.1.D-5) then
+              print*,'There is a problem in the LO width A->tt.'
+                 endif
+                 ATTEW(1) = ATTNLO(1)
+                 ATTQCDEW(1)=ATTQCD(1)*(1.D0+(ATTNLO(1)-ATTLOR(1))
+     .                /ATTLOR(1))
            endif
         endif
-c end MMM changed 10/7/18  
+c end MMM changed 19/1/19  
         
        ENDIF
       ELSE
@@ -15654,14 +19384,16 @@ c end MMM changed 10/7/18
           HTT=0.D0
 c MMM changed 10/7/2018
           if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-             ATTLORESC = 0.D0
-             ATTQCD = ATTLORESC
              if(irenscheme.eq.0) then
-                do i=1,14,1
-                   ATTQCDEW(i) = ATTLORESC
+                do i=1,17,1
+                   ATTLORESC(i) = 0.D0
+                   ATTQCD(i) = ATTLORESC(i)
+                   ATTQCDEW(i) = ATTLORESC(i)
                 end do
              elseif(irenscheme.ne.0) then
-                ATTQCDEW(1) = ATTLORESC
+                ATTLORESC(1) = 0.D0
+                ATTQCD(1) = ATTLORESC(1)
+                ATTQCDEW(1) = ATTLORESC(1)
              endif                  
           endif
 c end MMM changed 10/7/2018             
@@ -15674,22 +19406,34 @@ c end MMM changed 10/7/2018
         RAT = 2*AMT/AMA
         HTT = QQINT_HDEC(RAT,HT1,HT2)
 
-c MMM changed 10/7/18
+c MMM changed 19/1/19
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-           ATTQCD = HTT*GFCALC/GF
-           ATTLORESC = 3.D0*AFF(AMA,(AMT/AMA)**2)*GAT**2*GFCALC/GF
-           check = (ATTLORESC-ATTLO)/ATTLORESC
-           if(dabs(check).ge.1.D-5) then
-              print*,'There is a problem in the LO width A->tt.'
-           endif
            if(irenscheme.eq.0) then
-              do i=1,14,1
+              do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+                 ATTQCD(i) = HTT*GFCALC/GF*gatr**2/gat**2
+                 ATTLORESC(i) = 3.D0*AFF(AMA,(AMT/AMA)**2)*GATR**2*
+     .                GFCALC/GF
+                 check = (ATTLORESC(i)-ATTLOR(i))/ATTLORESC(i)
+                 if(dabs(check).ge.1.D-5) then
+                 print*,'There is a problem in the LO width A->tt.'
+                 endif
                  ATTEW(i) = ATTNLO(i)
-                 ATTQCDEW(i)=ATTQCD*(1.D0+(ATTNLO(i)-ATTLO)/ATTLO)
+                 ATTQCDEW(i)=ATTQCD(i)*(1.D0+(ATTNLO(i)-ATTLOR(i))
+     .                /ATTLOR(i))
               end do
            elseif(irenscheme.ne.0) then
+              call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+              ATTQCD(1) = HTT*GFCALC/GF*gatr**2/gat**2
+              ATTLORESC(1) = 3.D0*AFF(AMA,(AMT/AMA)**2)*GATR**2*
+     .             GFCALC/GF
+              check = (ATTLORESC(1)-ATTLOR(1))/ATTLORESC(1)
+              if(dabs(check).ge.1.D-5) then
+                 print*,'There is a problem in the LO width A->tt.'
+              endif
               ATTEW(1) = ATTNLO(1)
-              ATTQCDEW(1)=ATTQCD*(1.D0+(ATTNLO(1)-ATTLO)/ATTLO)
+              ATTQCDEW(1)=ATTQCD(1)*(1.D0+(ATTNLO(1)-ATTLOR(1))
+     .             /ATTLOR(1))
            endif
         endif
 c end MMM changed 10/7/18        
@@ -15718,6 +19462,33 @@ C  A ---> GAMMA GAMMA
        if(i2hdm.eq.1) then
           CAL = 1.D0  * CTL*CF(CTL)*galep
        endif
+
+c MMM changed 19/1/19
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+          if(irenscheme.eq.0) then
+             do i=1,17,1
+                call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+                CATR(i) = 4/3D0 * CTT*CF(CTT)*GATR
+     .               * CFACQ_HDEC(1,AMA,XRMT)
+                CABR(i) = 1/3D0 * CTB*CF(CTB)*GABR
+     .               * CFACQ_HDEC(1,AMA,XRMB)
+                CACR(i) = 4/3D0 * CTC*CF(CTC)*GATR
+     .               * CFACQ_HDEC(1,AMA,XRMC)
+                CALR(i) = 1.D0  * CTL*CF(CTL)*galepr                
+             end do
+          elseif(irenscheme.ne.0) then
+             call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+             CATR(1) = 4/3D0 * CTT*CF(CTT)*GATR
+     .            * CFACQ_HDEC(1,AMA,XRMT)
+             CABR(1) = 1/3D0 * CTB*CF(CTB)*GABR
+     .            * CFACQ_HDEC(1,AMA,XRMB)
+             CACR(1) = 4/3D0 * CTC*CF(CTC)*GATR
+     .            * CFACQ_HDEC(1,AMA,XRMC)
+             CALR(1) = 1.D0  * CTL*CF(CTL)*galepr                
+          endif
+       endif
+c end MMM changed 19/1/19
+          
        IF(IOFSUSY.EQ.0) THEN 
         CX1 = 4*AMCHAR(1)**2/AMA**2*DCMPLX(1D0,-EPS)
         CX2 = 4*AMCHAR(2)**2/AMA**2*DCMPLX(1D0,-EPS)
@@ -15729,11 +19500,19 @@ C  A ---> GAMMA GAMMA
        ENDIF
        HGA=GF/(32.D0*PI*DSQRT(2.D0))*AMA**3*(ALPH/PI)**2*XFAC
 
-c MMM changed 10/7/2018       
+c MMM changed 19/1/19       
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-          AGARESC = HGA*GFCALC/GF
+          if(irenscheme.eq.0) then
+             do i=1,17,1
+                AGARESC(i) = gfcalc/(32.D0*PI*DSQRT(2.D0))*AMA**3*
+     .          (ALPH/PI)**2*CDABS(CATR(i)+CABR(i)+CACR(i)+CALR(i))**2
+             end do
+          elseif(irenscheme.ne.0) then
+             AGARESC(1) = gfcalc/(32.D0*PI*DSQRT(2.D0))*AMA**3*
+     .            (ALPH/PI)**2*CDABS(CATR(1)+CABR(1)+CACR(1)+CALR(1))**2
+          endif
        endif
-c end MMM changed 10/7/2018      
+c end MMM changed 19/1/19       
        
 c      print*,'A -> gamgam',hga
 C  A ---> Z GAMMA
@@ -15743,11 +19522,17 @@ C  A ---> Z GAMMA
 c     print*,'xrmc,xrmb,xrmt ',xrmc,xrmb,xrmt
       IF(AMA.LE.AMZ)THEN
          HZGA=0
-c MMM changed 10/7/2018       
-       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-          AZGARESC = 0.D0
+c MMM changed 19/1/2019       
+         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+             if(irenscheme.eq.0) then
+                do i=1,17,1            
+                   AZGARESC(i) = 0.D0
+                end do
+             elseif(irenscheme.ne.0) then
+                AZGARESC(1) = 0.D0
+             endif
        endif
-c end MMM changed 10/7/2018          
+c end MMM changed 19/1/2019   
       ELSE
        TS = SS/CS
        FT = -3*2D0/3*(1-4*2D0/3*SS)/DSQRT(SS*CS)*GAT
@@ -15758,16 +19543,10 @@ c end MMM changed 10/7/2018
           FL = (-1+4*SS)/DSQRT(SS*CS)*galep
        endif
        EPS=1.D-8
-c      CTT = 4*XRMT**2/AMA**2*DCMPLX(1D0,-EPS)
-c      CTB = 4*XRMB**2/AMA**2*DCMPLX(1D0,-EPS)
-c      CTC = 4*XRMC**2/AMA**2*DCMPLX(1D0,-EPS)
        CTT = 4*AMT**2/AMA**2*DCMPLX(1D0,-EPS)
        CTB = 4*AMB**2/AMA**2*DCMPLX(1D0,-EPS)
        CTC = 4*AMC**2/AMA**2*DCMPLX(1D0,-EPS)
        CTL = 4*AMTAU**2/AMA**2*DCMPLX(1D0,-EPS)
-c      CLT = 4*XRMT**2/AMZ**2*DCMPLX(1D0,-EPS)
-c      CLB = 4*XRMB**2/AMZ**2*DCMPLX(1D0,-EPS)
-c      CLC = 4*XRMC**2/AMZ**2*DCMPLX(1D0,-EPS)
        CLT = 4*AMT**2/AMZ**2*DCMPLX(1D0,-EPS)
        CLB = 4*AMB**2/AMZ**2*DCMPLX(1D0,-EPS)
        CLC = 4*AMC**2/AMZ**2*DCMPLX(1D0,-EPS)
@@ -15776,22 +19555,63 @@ c      CLC = 4*XRMC**2/AMZ**2*DCMPLX(1D0,-EPS)
        CAB = FB*(- CI2(CTB,CLB))
        CAC = FC*(- CI2(CTC,CLC))
        CAL = FL*(- CI2(CTL,CLE))
-c
-c       CTC = 4*AMC**2/AMA**2*DCMPLX(1D0,-EPS)
-c       CLC = 4*AMC**2/AMZ**2*DCMPLX(1D0,-EPS)
-c       CAC = FT*(- CI2(CTC,CLC))
-c
+
+c MMM changed 19/1/19       
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+          if(irenscheme.eq.0) then
+             do i=1,17,1
+                call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+                TS = SS/CS
+                FT = -3*2D0/3*(1-4*2D0/3*SS)/DSQRT(SS*CS)*GATR
+                FB = 3*1D0/3*(-1+4*1D0/3*SS)/DSQRT(SS*CS)*GABR
+                FC = -3*2D0/3*(1-4*2D0/3*SS)/DSQRT(SS*CS)*GATR
+                FL = (-1+4*SS)/DSQRT(SS*CS)*GALEPR
+                CATR(i) = FT*(- CI2(CTT,CLT))
+                CABR(i) = FB*(- CI2(CTB,CLB))
+                CACR(i) = FC*(- CI2(CTC,CLC))
+                CALR(i) = FL*(- CI2(CTL,CLE))
+             end do
+          elseif(irenscheme.ne.0) then
+             call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+             TS = SS/CS
+             FT = -3*2D0/3*(1-4*2D0/3*SS)/DSQRT(SS*CS)*GATR
+             FB = 3*1D0/3*(-1+4*1D0/3*SS)/DSQRT(SS*CS)*GABR
+             FC = -3*2D0/3*(1-4*2D0/3*SS)/DSQRT(SS*CS)*GATR
+             FL = (-1+4*SS)/DSQRT(SS*CS)*GALEPR
+             CATR(1) = FT*(- CI2(CTT,CLT))
+             CABR(1) = FB*(- CI2(CTB,CLB))
+             CACR(1) = FC*(- CI2(CTC,CLC))
+             CALR(1) = FL*(- CI2(CTL,CLE))
+          endif
+       endif
+c end MMM changed 19/1/19             
+       
        XFAC = CDABS(CAT+CAB+CAC+CAL)**2
        ACOUP = DSQRT(2D0)*GF*AMZ**2*SS*CS/PI**2
        HZGA = GF/(4.D0*PI*DSQRT(2.D0))*AMA**3*(ALPH/PI)*ACOUP/16.D0
-     .        *XFAC*(1-AMZ**2/AMA**2)**3
-      ENDIF
+     .      *XFAC*(1-AMZ**2/AMA**2)**3
 
-c MMM changed 10/7/2018       
-       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-          AZGARESC = HZGA*GFCALC/GF
-       endif
-c end MMM changed 10/7/2018      
+c MMM changed 19/1/2019       
+      if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+         if(irenscheme.eq.0) then
+            do i=1,17,1
+               ACOUP = DSQRT(2D0)*gfcalc*AMZ**2*SS*CS/PI**2
+               AZGARESC(i) = gfcalc/(4.D0*PI*DSQRT(2.D0))*AMA**3*
+     .              (ALPH/PI)*ACOUP/16.D0
+     .              *CDABS(CATR(i)+CABR(i)+CACR(i)+CALR(i))**2*
+     .              (1-AMZ**2/AMA**2)**3
+            end do
+         elseif(irenscheme.ne.0) then
+            ACOUP = DSQRT(2D0)*gfcalc*AMZ**2*SS*CS/PI**2
+            AZGARESC(1) = gfcalc/(4.D0*PI*DSQRT(2.D0))*AMA**3*(ALPH/PI)*
+     .           ACOUP/16.D0
+     .           *CDABS(CATR(1)+CABR(1)+CACR(1)+CALR(1))**2*
+     .           (1-AMZ**2/AMA**2)**3
+         endif
+      endif      
+c end MMM changed 19/1/2019
+       
+      ENDIF
 
 c     print*,'A -> Zgam',hzga
 C  A ---> h Z* ---> HFF
@@ -15804,13 +19624,14 @@ C  A ---> h Z* ---> HFF
           HAZ=0
 c MMM changed 10/7/18         
           if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-             AHLZLORESC=0.D0
              if(irenscheme.eq.0) then
-                do i=1,14,1
-                   AHLZEW(i) = AHLZLORESC
+                do i=1,17,1
+                   AHLZLORESC(i)=0.D0
+                   AHLZEW(i) = AHLZLORESC(i)
                 end do
              elseif(irenscheme.ne.0) then
-                AHLZEW(1) = AHLZLORESC                  
+                AHLZLORESC(1)=0.D0
+                AHLZEW(1) = AHLZLORESC(1)                 
              endif
           endif
 c end MMM changed 10/7/18             
@@ -15819,13 +19640,14 @@ c end MMM changed 10/7/18
            HAZ=0
 c MMM changed 10/7/18         
            if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-              AHLZLORESC=0.D0
               if(irenscheme.eq.0) then
-                 do i=1,14,1
-                    AHLZEW(i) = AHLZLORESC
+                 do i=1,17,1
+                    AHLZLORESC(i)=0.D0
+                    AHLZEW(i) = AHLZLORESC(i)
                  end do
               elseif(irenscheme.ne.0) then
-                 AHLZEW(1) = AHLZLORESC                  
+                 AHLZLORESC(1)=0.D0
+                 AHLZEW(1) = AHLZLORESC(1)                  
               endif
            endif
 c end MMM changed 10/7/18                     
@@ -15833,18 +19655,21 @@ c end MMM changed 10/7/18
          HAZ=9.D0*GF**2/8.D0/PI**3*AMZ**4*AMA*GZAL**2*
      .      (7.D0/12.D0-10.D0/9.D0*SS+40.D0/27.D0*SS**2)
      .          *HVH((AML/AMA)**2,(AMZ/AMA)**2)
-c MMM changed 10/7/2018       
+c MMM changed 19/1/2019       
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            AHLZLORESC = HAZ*GFCALC/GF
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  AHLZEW(i) = AHLZLORESC
+               do i=1,17,1
+                call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+                AHLZLORESC(i) = HAZ*GFCALC**2/GF**2*gzalr**2/gzal**2
+                AHLZEW(i) = AHLZLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               AHLZEW(1) = AHLZLORESC                  
+               call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+               AHLZLORESC(1) = HAZ*GFCALC**2/GF**2*gzalr**2/gzal**2
+               AHLZEW(1) = AHLZLORESC(1)
             endif                     
          endif
-c end MMM changed 10/7/2018             
+c end MMM changed 19/1/2019             
         ENDIF
        ELSEIF (AMA.LE.XM2) THEN
         XX(1) = XM1-1D0
@@ -15864,41 +19689,85 @@ c end MMM changed 10/7/2018
      .     *LAMB_HDEC(XX(4)**2/AMZ**2,AML**2/AMZ**2)**2
         YY(4)=GF/8D0/DSQRT(2D0)/PI*AMZ**4/XX(4)*CAZ
         HAZ = FINT_HDEC(AMA,XX,YY)*GZAL**2
-c MMM changed 10/7/2018       
+c MMM changed 19/1/2019       
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-            AHLZLORESC = HAZ*GFCALC/GF
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  AHLZEW(i) = AHLZLORESC
+               do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+                  XX(1) = XM1-1D0
+                  XX(2) = XM1
+                  XX(3) = XM2
+                  XX(4) = XM2+1D0
+                  YY(1)=9.D0*gfcalc**2/8.D0/PI**3*AMZ**4*XX(1)*
+     .                 (7.D0/12.D0-10.D0/9.D0*SS+40.D0/27.D0*SS**2)
+     .                 *HVH((AML/XX(1))**2,(AMZ/XX(1))**2)
+                  YY(2)=9.D0*gfcalc**2/8.D0/PI**3*AMZ**4*XX(2)*
+     .                 (7.D0/12.D0-10.D0/9.D0*SS+40.D0/27.D0*SS**2)
+     .                 *HVH((AML/XX(2))**2,(AMZ/XX(2))**2)
+                  CAZ=LAMB_HDEC(AML**2/XX(3)**2,AMZ**2/XX(3)**2)
+     .                 *LAMB_HDEC(XX(3)**2/AMZ**2,AML**2/AMZ**2)**2
+                  YY(3)=gfcalc/8D0/DSQRT(2D0)/PI*AMZ**4/XX(3)*CAZ
+                  CAZ=LAMB_HDEC(AML**2/XX(4)**2,AMZ**2/XX(4)**2)
+     .                 *LAMB_HDEC(XX(4)**2/AMZ**2,AML**2/AMZ**2)**2
+                  YY(4)=gfcalc/8D0/DSQRT(2D0)/PI*AMZ**4/XX(4)*CAZ
+                  HAZ = FINT_HDEC(AMA,XX,YY)*gzalr**2
+                  AHLZLORESC(i) = HAZ
+                  AHLZEW(i) = AHLZLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               AHLZEW(1) = AHLZLORESC                  
+               call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+               XX(1) = XM1-1D0
+               XX(2) = XM1
+               XX(3) = XM2
+               XX(4) = XM2+1D0
+               YY(1)=9.D0*gfcalc**2/8.D0/PI**3*AMZ**4*XX(1)*
+     .              (7.D0/12.D0-10.D0/9.D0*SS+40.D0/27.D0*SS**2)
+     .              *HVH((AML/XX(1))**2,(AMZ/XX(1))**2)
+               YY(2)=9.D0*gfcalc**2/8.D0/PI**3*AMZ**4*XX(2)*
+     .              (7.D0/12.D0-10.D0/9.D0*SS+40.D0/27.D0*SS**2)
+     .              *HVH((AML/XX(2))**2,(AMZ/XX(2))**2)
+               CAZ=LAMB_HDEC(AML**2/XX(3)**2,AMZ**2/XX(3)**2)
+     .              *LAMB_HDEC(XX(3)**2/AMZ**2,AML**2/AMZ**2)**2
+               YY(3)=gfcalc/8D0/DSQRT(2D0)/PI*AMZ**4/XX(3)*CAZ
+               CAZ=LAMB_HDEC(AML**2/XX(4)**2,AMZ**2/XX(4)**2)
+     .              *LAMB_HDEC(XX(4)**2/AMZ**2,AML**2/AMZ**2)**2
+               YY(4)=gfcalc/8D0/DSQRT(2D0)/PI*AMZ**4/XX(4)*CAZ
+               HAZ = FINT_HDEC(AMA,XX,YY)*gzalr**2
+               AHLZLORESC(1) = HAZ
+               AHLZEW(1) = AHLZLORESC(1)
             endif                     
          endif
-c end MMM changed 10/7/2018         
+c end MMM changed 19/1/2019         
        ELSE
         CAZ=LAMB_HDEC(AML**2/AMA**2,AMZ**2/AMA**2)
      .     *LAMB_HDEC(AMA**2/AMZ**2,AML**2/AMZ**2)**2
         HAZ=GF/8D0/DSQRT(2D0)/PI*AMZ**4/AMA*GZAL**2*CAZ
 
-c MMM changed 10/7/18         
+c MMM changed 19/1/19         
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-           AHLZLORESC=haz*GFCALC/GF
-           check = (AHLZLORESC-AHLZLO)/AHLZLORESC
-           if(dabs(check).ge.1.D-5) then
-              print*,'There is a problem in the LO width A->hZ.'
-           endif
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 AHLZEW(i) = AHLZLORESC*(1.D0+
-     .                (AHLZNLO(i)-AHLZLO)/AHLZLO)
+              do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+                 AHLZLORESC(i)=haz*GFCALC/GF*gzalr**2/gzal**2
+                 check = (AHLZLORESC(i)-AHLZLOR(i))/AHLZLORESC(i)
+                 if(dabs(check).ge.1.D-5) then
+                    print*,'There is a problem in the LO width A->hZ.'
+                 endif
+                 AHLZEW(i) = AHLZLORESC(i)*(1.D0+
+     .                (AHLZNLO(i)-AHLZLOR(i))/AHLZLOR(i))
               end do
            elseif(irenscheme.ne.0) then
-              AHLZEW(1) = AHLZLORESC*(1.D0+
-     .                (AHLZNLO(1)-AHLZLO)/AHLZLO)                  
+              call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+              AHLZLORESC(1)=haz*GFCALC/GF*gzalr**2/gzal**2
+              check = (AHLZLORESC(1)-AHLZLOR(1))/AHLZLORESC(1)
+              if(dabs(check).ge.1.D-5) then
+                 print*,'There is a problem in the LO width A->hZ.'
+              endif
+              AHLZEW(1) = AHLZLORESC(1)*(1.D0+
+     .             (AHLZNLO(1)-AHLZLOR(1))/AHLZLOR(1))
            endif
         endif
-c end MMM changed 10/7/18        
+c end MMM changed 19/1/19        
         
        ENDIF
       ELSE
@@ -15906,13 +19775,14 @@ c end MMM changed 10/7/18
           HAZ=0
 c MMM changed 10/7/2018       
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-           AHLZLORESC = 0.D0
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 AHLZEW(i) = AHLZLORESC
+              do i=1,17,1
+                 AHLZLORESC(i) = 0.D0
+                 AHLZEW(i) = AHLZLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              AHLZEW(1) = AHLZLORESC                  
+              AHLZLORESC(1) = 0.D0
+              AHLZEW(1) = AHLZLORESC(1)                  
            endif                     
         endif
 c end MMM changed 10/7/2018            
@@ -15921,24 +19791,31 @@ c end MMM changed 10/7/2018
      .     *LAMB_HDEC(AMA**2/AMZ**2,AML**2/AMZ**2)**2
         HAZ=GF/8D0/DSQRT(2D0)/PI*AMZ**4/AMA*GZAL**2*CAZ
 
-c MMM changed 10/7/18         
+c MMM changed 19/1/19         
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
-           AHLZLORESC=haz*GFCALC/GF
-           check = (AHLZLORESC-AHLZLO)/AHLZLORESC
-           if(dabs(check).ge.1.D-5) then
-              print*,'There is a problem in the LO width A->hZ.'
-           endif
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 AHLZEW(i) = AHLZLORESC*(1.D0+
-     .                (AHLZNLO(i)-AHLZLO)/AHLZLO)
+              do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+                 AHLZLORESC(i)=haz*GFCALC/GF*gzalr**2/gzal**2
+                 check = (AHLZLORESC(i)-AHLZLOR(i))/AHLZLORESC(i)
+                 if(dabs(check).ge.1.D-5) then
+                    print*,'There is a problem in the LO width A->hZ.'
+                 endif
+                 AHLZEW(i) = AHLZLORESC(i)*(1.D0+
+     .                (AHLZNLO(i)-AHLZLOR(i))/AHLZLOR(i))
               end do
            elseif(irenscheme.ne.0) then
-              AHLZEW(1) = AHLZLORESC*(1.D0+
-     .                (AHLZNLO(1)-AHLZLO)/AHLZLO)                  
+                 call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+                 AHLZLORESC(1)=haz*GFCALC/GF*gzalr**2/gzal**2
+                 check = (AHLZLORESC(1)-AHLZLOR(1))/AHLZLORESC(1)
+                 if(dabs(check).ge.1.D-5) then
+                    print*,'There is a problem in the LO width A->hZ.'
+                 endif
+                 AHLZEW(1) = AHLZLORESC(1)*(1.D0+
+     .                (AHLZNLO(1)-AHLZLOR(1))/AHLZLOR(1))
            endif
         endif
-c end MMM changed 10/7/18               
+c end MMM changed 19/1/19               
         
        ENDIF
       ENDIF
@@ -15958,13 +19835,14 @@ C A ---> H Z* ---> HFF
           HHAZ=0
 c MMM changed 10/7/18         
           if(ielw2hdm.eq.0) then
-             AHHZLORESC=0.D0
              if(irenscheme.eq.0) then
-                do i=1,14,1
-                   AHHZEW(i) = AHHZLORESC
+                do i=1,17,1
+                   AHHZLORESC(i)=0.D0
+                   AHHZEW(i) = AHHZLORESC(i)
                 end do
              elseif(irenscheme.ne.0) then
-                AHHZEW(1) = AHHZLORESC                  
+                AHHZLORESC(1)=0.D0
+                AHHZEW(1) = AHHZLORESC(1)                  
              endif
           endif
 c end MMM changed 10/7/18           
@@ -15973,13 +19851,14 @@ c end MMM changed 10/7/18
            HHAZ=0
 c MMM changed 10/7/18         
           if(ielw2hdm.eq.0) then
-             AHHZLORESC=0.D0
              if(irenscheme.eq.0) then
-                do i=1,14,1
-                   AHHZEW(i) = AHHZLORESC
+                do i=1,17,1
+                   AHHZLORESC(i)=0.D0
+                   AHHZEW(i) = AHHZLORESC(i)
                 end do
              elseif(irenscheme.ne.0) then
-                AHHZEW(1) = AHHZLORESC                  
+                AHHZLORESC(1)=0.D0
+                AHHZEW(1) = AHHZLORESC(1)                 
              endif
           endif
 c end MMM changed 10/7/18                   
@@ -15987,18 +19866,22 @@ c end MMM changed 10/7/18
          HHAZ=9.D0*GF**2/8.D0/PI**3*AMZ**4*AMA*GZAH**2*
      .      (7.D0/12.D0-10.D0/9.D0*SS+40.D0/27.D0*SS**2)
      .          *HVH((AMH/AMA)**2,(AMZ/AMA)**2)
-c MMM changed 10/7/2018       
+c MMM changed 19/1/2019       
+c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF
          if(ielw2hdm.eq.0) then
-            AHHZLORESC = HHAZ*GFCALC/GF
             if(irenscheme.eq.0) then
-               do i=1,14,1
-                  AHHZEW(i) = AHHZLORESC
+               do i=1,17,1
+                  call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+                  AHHZLORESC(i) = HHAZ*GFCALC**2/GF**2*gzahr**2/gzah**2
+                  AHHZEW(i) = AHHZLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               AHHZEW(1) = AHHZLORESC                  
+                  call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+                  AHHZLORESC(1) = HHAZ*GFCALC**2/GF**2*gzahr**2/gzah**2
+                  AHHZEW(1) = AHHZLORESC(1)
             endif                     
          endif
-c end MMM changed 10/7/2018                 
+c end MMM changed 19/1/2019                 
         ENDIF
        ELSEIF (AMA.LE.XM2) THEN
         XX(1) = XM1-1D0
@@ -16018,41 +19901,85 @@ c end MMM changed 10/7/2018
      .     *LAMB_HDEC(XX(4)**2/AMZ**2,AMH**2/AMZ**2)**2
         YY(4)=GF/8D0/DSQRT(2D0)/PI*AMZ**4/XX(4)*CAZ
         HHAZ = FINT_HDEC(AMA,XX,YY)*GZAH**2
-c MMM changed 10/7/2018       
+c MMM changed 19/1/2019      
         if(ielw2hdm.eq.0) then
-           AHHZLORESC = HHAZ*GFCALC/GF
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 AHHZEW(i) = AHHZLORESC
+              do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+                 XX(1) = XM1-1D0
+                 XX(2) = XM1
+                 XX(3) = XM2
+                 XX(4) = XM2+1D0
+                 YY(1)=9.D0*gfcalc**2/8.D0/PI**3*AMZ**4*XX(1)*
+     .                (7.D0/12.D0-10.D0/9.D0*SS+40.D0/27.D0*SS**2)
+     .                *HVH((AMH/XX(1))**2,(AMZ/XX(1))**2)
+                 YY(2)=9.D0*gfcalc**2/8.D0/PI**3*AMZ**4*XX(2)*
+     .                (7.D0/12.D0-10.D0/9.D0*SS+40.D0/27.D0*SS**2)
+     .                *HVH((AMH/XX(2))**2,(AMZ/XX(2))**2)
+                 CAZ=LAMB_HDEC(AMH**2/XX(3)**2,AMZ**2/XX(3)**2)
+     .                *LAMB_HDEC(XX(3)**2/AMZ**2,AMH**2/AMZ**2)**2
+                 YY(3)=gfcalc/8D0/DSQRT(2D0)/PI*AMZ**4/XX(3)*CAZ
+                 CAZ=LAMB_HDEC(AMH**2/XX(4)**2,AMZ**2/XX(4)**2)
+     .                *LAMB_HDEC(XX(4)**2/AMZ**2,AMH**2/AMZ**2)**2
+                 YY(4)=gfcalc/8D0/DSQRT(2D0)/PI*AMZ**4/XX(4)*CAZ
+                 HHAZ = FINT_HDEC(AMA,XX,YY)*GZAHR**2
+                 AHHZLORESC(i) = HHAZ*GFCALC/GF
+                 AHHZEW(i) = AHHZLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              AHHZEW(1) = AHHZLORESC                  
+                 call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+                 XX(1) = XM1-1D0
+                 XX(2) = XM1
+                 XX(3) = XM2
+                 XX(4) = XM2+1D0
+                 YY(1)=9.D0*gfcalc**2/8.D0/PI**3*AMZ**4*XX(1)*
+     .                (7.D0/12.D0-10.D0/9.D0*SS+40.D0/27.D0*SS**2)
+     .                *HVH((AMH/XX(1))**2,(AMZ/XX(1))**2)
+                 YY(2)=9.D0*gfcalc**2/8.D0/PI**3*AMZ**4*XX(2)*
+     .                (7.D0/12.D0-10.D0/9.D0*SS+40.D0/27.D0*SS**2)
+     .                *HVH((AMH/XX(2))**2,(AMZ/XX(2))**2)
+                 CAZ=LAMB_HDEC(AMH**2/XX(3)**2,AMZ**2/XX(3)**2)
+     .                *LAMB_HDEC(XX(3)**2/AMZ**2,AMH**2/AMZ**2)**2
+                 YY(3)=gfcalc/8D0/DSQRT(2D0)/PI*AMZ**4/XX(3)*CAZ
+                 CAZ=LAMB_HDEC(AMH**2/XX(4)**2,AMZ**2/XX(4)**2)
+     .                *LAMB_HDEC(XX(4)**2/AMZ**2,AMH**2/AMZ**2)**2
+                 YY(4)=gfcalc/8D0/DSQRT(2D0)/PI*AMZ**4/XX(4)*CAZ
+                 HHAZ = FINT_HDEC(AMA,XX,YY)*GZAHR**2
+                 AHHZLORESC(1) = HHAZ*GFCALC/GF
+                 AHHZEW(1) = AHHZLORESC(1)
            endif                     
         endif
-c end MMM changed 10/7/2018          
+c end MMM changed 19/1/2019          
        ELSE
         CAZ=LAMB_HDEC(AMH**2/AMA**2,AMZ**2/AMA**2)
      .     *LAMB_HDEC(AMA**2/AMZ**2,AMH**2/AMZ**2)**2
         HHAZ=GF/8D0/DSQRT(2D0)/PI*AMZ**4/AMA*GZAH**2*CAZ
 
-c MMM changed 10/7/18         
+c MMM changed 19/1/19         
         if(ielw2hdm.eq.0) then
-           AHHZLORESC=hhaz*GFCALC/GF
-           check = (AHHZLORESC-AHHZLO)/AHHZLORESC
-           if(dabs(check).ge.1.D-5) then
-              print*,'There is a problem in the LO width A->HZ.'
-           endif
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 AHHZEW(i) = AHHZLORESC*(1.D0+
-     .                (AHHZNLO(i)-AHHZLO)/AHHZLO)
+              do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+                 AHHZLORESC(i)=hhaz*GFCALC/GF*gzahr**2/gzah**2
+                 check = (AHHZLORESC(i)-AHHZLOR(i))/AHHZLORESC(i)
+                 if(dabs(check).ge.1.D-5) then
+              print*,'There is a problem in the LO width A->HZ.'
+                 endif
+                 AHHZEW(i) = AHHZLORESC(i)*(1.D0+
+     .                (AHHZNLO(i)-AHHZLOR(i))/AHHZLOR(i))
               end do
            elseif(irenscheme.ne.0) then
-              AHHZEW(1) = AHHZLORESC*(1.D0+
-     .                (AHHZNLO(1)-AHHZLO)/AHHZLO)                
+                 call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+                 AHHZLORESC(1)=hhaz*GFCALC/GF*gzahr**2/gzah**2
+                 check = (AHHZLORESC(1)-AHHZLOR(1))/AHHZLORESC(1)
+                 if(dabs(check).ge.1.D-5) then
+              print*,'There is a problem in the LO width A->HZ.'
+                 endif
+                 AHHZEW(1) = AHHZLORESC(1)*(1.D0+
+     .                (AHHZNLO(1)-AHHZLOR(1))/AHHZLOR(1))
            endif
         endif
-c end MMM changed 10/7/18          
+c end MMM changed 19/1/19          
         
        ENDIF
       ELSE
@@ -16060,13 +19987,14 @@ c end MMM changed 10/7/18
           HHAZ=0
 c MMM changed 10/7/2018       
         if(ielw2hdm.eq.0) then
-           AHHZLORESC = 0.D0
            if(irenscheme.eq.0) then
-              do i=1,14,1
-                 AHHZEW(i) = AHHZLORESC
+              do i=1,17,1
+                 AHHZLORESC(i) = 0.D0
+                 AHHZEW(i) = AHHZLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              AHHZEW(1) = AHHZLORESC                  
+              AHHZLORESC(1) = 0.D0
+              AHHZEW(1) = AHHZLORESC(1)                 
            endif                     
         endif
 c end MMM changed 10/7/2018             
@@ -16075,24 +20003,31 @@ c end MMM changed 10/7/2018
      .     *LAMB_HDEC(AMA**2/AMZ**2,AMH**2/AMZ**2)**2
         HHAZ=GF/8D0/DSQRT(2D0)/PI*AMZ**4/AMA*GZAH**2*CAZ
 
-c MMM changed 10/7/18         
+c MMM changed 19/1/19         
         if(ielw2hdm.eq.0) then
-           AHHZLORESC=hhaz*GFCALC/GF
-           check = (AHHZLORESC-AHHZLO)/AHHZLORESC
+           if(irenscheme.eq.0) then
+              do i=1,17,1
+                 call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+                 AHHZLORESC(i)=hhaz*GFCALC/GF*gzahr**2/gzah**2
+                 check = (AHHZLORESC(i)-AHHZLOR(i))/AHHZLORESC(i)
            if(dabs(check).ge.1.D-5) then
               print*,'There is a problem in the LO width A->HZ.'
            endif
-           if(irenscheme.eq.0) then
-              do i=1,14,1
-                 AHHZEW(i) = AHHZLORESC*(1.D0+
-     .                (AHHZNLO(i)-AHHZLO)/AHHZLO)
+           AHHZEW(i) = AHHZLORESC(i)*(1.D0+
+     .          (AHHZNLO(i)-AHHZLOR(i))/AHHZLOR(i))
               end do
            elseif(irenscheme.ne.0) then
-              AHHZEW(1) = AHHZLORESC*(1.D0+
-     .                (AHHZNLO(1)-AHHZLO)/AHHZLO)                
+              call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+              AHHZLORESC(1)=hhaz*GFCALC/GF*gzahr**2/gzah**2
+              check = (AHHZLORESC(1)-AHHZLOR(1))/AHHZLORESC(1)
+              if(dabs(check).ge.1.D-5) then
+              print*,'There is a problem in the LO width A->HZ.'
+              endif
+              AHHZEW(1) = AHHZLORESC(1)*(1.D0+
+     .             (AHHZNLO(1)-AHHZLOR(1))/AHHZLOR(1))
            endif
         endif
-c end MMM changed 10/7/18  
+c end MMM changed 19/1/19  
         
        ENDIF
       ENDIF
@@ -16115,13 +20050,14 @@ C  A ---> W+ H-
                hawphm=0
 c MMM changed 10/7/18         
             if(ielw2hdm.eq.0) then
-               AHPWMLORESC=0.D0
                if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     AHPWMEW(i) = AHPWMLORESC
+                  do i=1,17,1
+                     AHPWMLORESC(i)=0.D0
+                     AHPWMEW(i) = AHPWMLORESC(i)
                   end do
                elseif(irenscheme.ne.0) then
-                  AHPWMEW(1) = AHPWMLORESC
+                  AHPWMLORESC(1)=0.D0
+                  AHPWMEW(1) = AHPWMLORESC(1)
                endif
             endif
 c end MMM changed 10/7/18                
@@ -16130,28 +20066,33 @@ c end MMM changed 10/7/18
                   hawphm=0
 c MMM changed 10/7/18         
             if(ielw2hdm.eq.0) then
-               AHPWMLORESC=0.D0
                if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     AHPWMEW(i) = AHPWMLORESC
+                  do i=1,17,1
+                     AHPWMLORESC(i)=0.D0
+                     AHPWMEW(i) = AHPWMLORESC(i)
                   end do
                elseif(irenscheme.ne.0) then
-                  AHPWMEW(1) = AHPWMLORESC
+                  AHPWMLORESC(1)=0.D0
+                  AHPWMEW(1) = AHPWMLORESC(1)
                endif
             endif
 c end MMM changed 10/7/18                    
                else
                   hawphm=9.d0*gf**2/16.d0/pi**3*amw**4*ama
      .                 *hvh((amch/ama)**2,(amw/ama)**2)
-c MMM changed 10/7/18                           
+c MMM changed 19/1/19                           
+c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF
                   if(ielw2hdm.eq.0) then
-                     AHPWMLORESC = hawphm*GFCALC/GF
                      if(irenscheme.eq.0) then
-                        do i=1,14,1
-                           AHPWMEW(i) = AHPWMLORESC
+                        do i=1,17,1
+                call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+                AHPWMLORESC(i) = hawphm*GFCALC**2/GF**2
+                AHPWMEW(i) = AHPWMLORESC(i)
                         end do
                      elseif(irenscheme.ne.0) then
-                        AHPWMEW(1) = AHPWMLORESC
+                call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+                AHPWMLORESC(1) = hawphm*GFCALC**2/GF**2
+                AHPWMEW(1) = AHPWMLORESC(1)
                      endif                     
                   endif
 c end MMM changed 10/7/18                         
@@ -16172,41 +20113,79 @@ c end MMM changed 10/7/18
      .              *lamb_hdec(xx(4)**2/amw**2,amch**2/amw**2)**2
                yy(4)=gf/8.d0/dsqrt(2d0)/pi*amw**4/xx(4)*cwh
                hawphm = fint_hdec(ama,xx,yy)
-c MMM changed 10/7/18                           
+c MMM changed 19/1/19                           
                   if(ielw2hdm.eq.0) then
-                     AHPWMLORESC = hawphm*GFCALC/GF
                      if(irenscheme.eq.0) then
-                        do i=1,14,1
-                           AHPWMEW(i) = AHPWMLORESC
+                        do i=1,17,1
+               call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+               xx(1) = xm1-1d0
+               xx(2) = xm1
+               xx(3) = xm2
+               xx(4) = xm2+1d0
+               yy(1) = 9.d0*gfcalc**2/16.d0/pi**3*amw**4*xx(1)
+     .              *hvh((amch/xx(1))**2,(amw/xx(1))**2)
+               yy(2) = 9.d0*gfcalc**2/16.d0/pi**3*amw**4*xx(2)
+     .              *hvh((amch/xx(2))**2,(amw/xx(2))**2)
+               cwh=lamb_hdec(amch**2/xx(3)**2,amw**2/xx(3)**2)
+     .              *lamb_hdec(xx(3)**2/amw**2,amch**2/amw**2)**2
+               yy(3)=gfcalc/8.d0/dsqrt(2d0)/pi*amw**4/xx(3)*cwh
+               cwh=lamb_hdec(amch**2/xx(4)**2,amw**2/xx(4)**2)
+     .              *lamb_hdec(xx(4)**2/amw**2,amch**2/amw**2)**2
+               yy(4)=gfcalc/8.d0/dsqrt(2d0)/pi*amw**4/xx(4)*cwh
+               hawphm = fint_hdec(ama,xx,yy)
+               AHPWMLORESC(i) = hawphm
+               AHPWMEW(i) = AHPWMLORESC(i)
                         end do
                      elseif(irenscheme.ne.0) then
-                        AHPWMEW(1) = AHPWMLORESC
+               call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+               xx(1) = xm1-1d0
+               xx(2) = xm1
+               xx(3) = xm2
+               xx(4) = xm2+1d0
+               yy(1) = 9.d0*gfcalc**2/16.d0/pi**3*amw**4*xx(1)
+     .              *hvh((amch/xx(1))**2,(amw/xx(1))**2)
+               yy(2) = 9.d0*gfcalc**2/16.d0/pi**3*amw**4*xx(2)
+     .              *hvh((amch/xx(2))**2,(amw/xx(2))**2)
+               cwh=lamb_hdec(amch**2/xx(3)**2,amw**2/xx(3)**2)
+     .              *lamb_hdec(xx(3)**2/amw**2,amch**2/amw**2)**2
+               yy(3)=gfcalc/8.d0/dsqrt(2d0)/pi*amw**4/xx(3)*cwh
+               cwh=lamb_hdec(amch**2/xx(4)**2,amw**2/xx(4)**2)
+     .              *lamb_hdec(xx(4)**2/amw**2,amch**2/amw**2)**2
+               yy(4)=gfcalc/8.d0/dsqrt(2d0)/pi*amw**4/xx(4)*cwh
+               hawphm = fint_hdec(ama,xx,yy)
+               AHPWMLORESC(1) = hawphm
+               AHPWMEW(1) = AHPWMLORESC(1)
                      endif                     
                   endif
-c end MMM changed 10/7/18                  
+c end MMM changed 19/1/19                  
             else
                cwh=lamb_hdec(amch**2/ama**2,amw**2/ama**2)
      .              *lamb_hdec(ama**2/amw**2,amch**2/amw**2)**2
                hawphm=gf/8.d0/dsqrt(2d0)/pi*amw**4/ama*cwh
 
-c MMM changed 10/7/18         
+c MMM changed 19/1/19         
             if(ielw2hdm.eq.0) then
-               AHPWMLORESC=hawphm*GFCALC/GF
-               check = (AHPWMLORESC-AHPWMLO)/AHPWMLORESC
-               if(dabs(check).ge.1.D-5) then
-                  print*,'There is a problem in the LO width A->H+W-.'
-               endif
                if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     AHPWMEW(i) = AHPWMLORESC*(1.D0+
-     .                    (AHPWMNLO(i)-AHPWMLO)/AHPWMLO)
+                  do i=1,17,1
+                     AHPWMLORESC(i)=hawphm*GFCALC/GF
+                     check = (AHPWMLORESC(i)-AHPWMLOR(i))/AHPWMLORESC(i)
+                     if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width A->H+W-.'
+                     endif
+                     AHPWMEW(i) = AHPWMLORESC(i)*(1.D0+
+     .                    (AHPWMNLO(i)-AHPWMLOR(i))/AHPWMLOR(i))
                   end do
                elseif(irenscheme.ne.0) then
-                     AHPWMEW(1) = AHPWMLORESC*(1.D0+
-     .                    (AHPWMNLO(1)-AHPWMLO)/AHPWMLO)
+                     AHPWMLORESC(1)=hawphm*GFCALC/GF
+                     check = (AHPWMLORESC(1)-AHPWMLOR(1))/AHPWMLORESC(1)
+                     if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width A->H+W-.'
+                     endif
+                     AHPWMEW(1) = AHPWMLORESC(1)*(1.D0+
+     .                    (AHPWMNLO(1)-AHPWMLOR(1))/AHPWMLOR(1))
                endif
             endif
-c end MMM changed 10/7/18                
+c end MMM changed 19/1/19                
                
             endif
          else
@@ -16214,13 +20193,14 @@ c end MMM changed 10/7/18
                hawphm=0
 c MMM changed 10/7/18         
             if(ielw2hdm.eq.0) then
-               AHPWMLORESC=0.D0
                if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     AHPWMEW(i) = AHPWMLORESC
+                  do i=1,17,1
+                     AHPWMLORESC(i)=0.D0
+                     AHPWMEW(i) = AHPWMLORESC(i)
                   end do
                elseif(irenscheme.ne.0) then
-                  AHPWMEW(1) = AHPWMLORESC
+                  AHPWMLORESC(1)=0.D0
+                  AHPWMEW(1) = AHPWMLORESC(1)
                endif
             endif
 c end MMM changed 10/7/18                  
@@ -16229,24 +20209,29 @@ c end MMM changed 10/7/18
      .              *lamb_hdec(ama**2/amw**2,amch**2/amw**2)**2
                hawphm=gf/8.d0/dsqrt(2d0)/pi*amw**4/ama*cwh
 
-c MMM changed 10/7/18         
+c MMM changed 19/1/19        
             if(ielw2hdm.eq.0) then
-               AHPWMLORESC=hawphm*GFCALC/GF
-               check = (AHPWMLORESC-AHPWMLO)/AHPWMLORESC
-               if(dabs(check).ge.1.D-5) then
-                  print*,'There is a problem in the LO width A->H+W-.'
-               endif
                if(irenscheme.eq.0) then
-                  do i=1,14,1
-                     AHPWMEW(i) = AHPWMLORESC*(1.D0+
-     .                    (AHPWMNLO(i)-AHPWMLO)/AHPWMLO)
+                  do i=1,17,1
+                     AHPWMLORESC(i)=hawphm*GFCALC/GF
+                     check = (AHPWMLORESC(i)-AHPWMLOR(i))/AHPWMLORESC(i)
+                     if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width A->H+W-.'
+                     endif
+                     AHPWMEW(i) = AHPWMLORESC(i)*(1.D0+
+     .                    (AHPWMNLO(i)-AHPWMLOR(i))/AHPWMLOR(i))
                   end do
                elseif(irenscheme.ne.0) then
-                     AHPWMEW(1) = AHPWMLORESC*(1.D0+
-     .                    (AHPWMNLO(1)-AHPWMLO)/AHPWMLO)
+                     AHPWMLORESC(1)=hawphm*GFCALC/GF
+                     check = (AHPWMLORESC(1)-AHPWMLOR(1))/AHPWMLORESC(1)
+                     if(dabs(check).ge.1.D-5) then
+                  print*,'There is a problem in the LO width A->H+W-.'
+                     endif
+                     AHPWMEW(1) = AHPWMLORESC(1)*(1.D0+
+     .                    (AHPWMNLO(1)-AHPWMLOR(1))/AHPWMLOR(1))
                endif
             endif
-c end MMM changed 10/7/18 
+c end MMM changed 19/1/19 
                
             endif
          endif
@@ -16454,81 +20439,121 @@ c If OMIT ELW2 = 0, then the following decay widths include the usual
 c QCD corrections (where applicable) and off-shell decays, without elw
 c corrections, but rescaled by GFCALC/GF
 
-      WTOT1=AGGRESC+AMMLORESC+ALLLORESC+ASSQCD+ACCQCD+ABBQCD
-     .     +ATTQCD+AGARESC+AZGARESC+AHLZLORESC+AHHZLORESC+AHPWMLORESC
+       if(irenscheme.eq.0) then
+          do i=1,17,1
+         
+      WTOT1(i)=AGGRESCR(i)+AMMLORESC(i)+ALLLORESC(i)+ASSQCD(i)+ACCQCD(i)
+     .        +ABBQCD(i)+ATTQCD(i)+AGARESC(i)+AZGARESC(i)+AHLZLORESC(i)
+     .        +AHHZLORESC(i)+AHPWMLORESC(i)
 
-      awdth1 = wtot1
+      awdth1(i) = wtot1(i)
+
+c      print*,''
+c      print*,'A decays'
+c      print*,''
+c      print*,'wtot1',wtot1(i)
+      
+      ABRG1(i)=AGGRESCR(i)/WTOT1(i)
+      ABRM1(i)=AMMLORESC(i)/WTOT1(i)
+      ABRL1(i)=ALLLORESC(i)/WTOT1(i)
+      ABRS1(i)=ASSQCD(i)/WTOT1(i)
+      ABRC1(i)=ACCQCD(i)/WTOT1(i)
+      ABRB1(i)=ABBQCD(i)/WTOT1(i)
+      ABRT1(i)=ATTQCD(i)/WTOT1(i)
+      ABRGA1(i)=AGARESC(i)/WTOT1(i)
+      ABRZGA1(i)=AZGARESC(i)/WTOT1(i)
+      ABRHLZ1(i)=AHLZLORESC(i)/WTOT1(i)
+      ABRHHZ1(i)=AHHZLORESC(i)/WTOT1(i)      
+      ABRHW1(i)=AHPWMLORESC(i)/WTOT1(i)
+
+c      if(i.eq.7) then
+c      print*,''
+c      print*,'A decays'
+c      print*,''
+c      print*,'wtot1',wtot1(i)
+c      print*,'abrg',aggrescr(i),abrg1(i)
+c      print*,'abrm',ammloresc(i),abrm1(i)
+c      print*,'abrl',allloresc(i),abrl1(i)
+c      print*,'abrs',assqcd(i),abrs1(i)
+c      print*,'abrc',accqcd(i),abrc1(i)
+c      print*,'abrb',abbqcd(i),abrb1(i)
+c      print*,'abrt',attqcd(i),abrt1(i)
+c      print*,'abrga',agaresc(i),abrga1(i)
+c      print*,'abrzga',azgaresc(i),abrzga1(i)
+c      print*,'abrhlz',ahlzloresc(i),abrhlz1(i)      
+c      print*,'abrhhz',ahhzloresc(i),abrhhz1(i)
+c      print*,'abrhw',ahpwmloresc(i),abrhw1(i)
+c      print*,'rescal',gfcalc/gf
+c      endif
+      
+      end do
+
+      elseif(irenscheme.ne.0) then
+
+      WTOT1(1)=AGGRESCR(1)+AMMLORESC(1)+ALLLORESC(1)+ASSQCD(1)+ACCQCD(1)
+     .        +ABBQCD(1)+ATTQCD(1)+AGARESC(1)+AZGARESC(1)+AHLZLORESC(1)
+     .        +AHHZLORESC(1)+AHPWMLORESC(1)
+
+      awdth1(1) = wtot1(1)
 
 c      print*,''
 c      print*,'A decays'
 c      print*,''
 c      print*,'wtot1',wtot1
       
-      ABRG1=AGGRESC/WTOT1
-      ABRM1=AMMLORESC/WTOT1
-      ABRL1=ALLLORESC/WTOT1
-      ABRS1=ASSQCD/WTOT1
-      ABRC1=ACCQCD/WTOT1
-      ABRB1=ABBQCD/WTOT1
-      ABRT1=ATTQCD/WTOT1
-      ABRGA1=AGARESC/WTOT1
-      ABRZGA1=AZGARESC/WTOT1
-      ABRHLZ1=AHLZLORESC/WTOT1
-      ABRHHZ1=AHHZLORESC/WTOT1      
-      ABRHW1=AHPWMLORESC/WTOT1
-
-c      print*,'abrg',aggresc,abrg1
-c      print*,'abrm',ammloresc,abrm1
-c      print*,'abrl',allloresc,abrl1
-c      print*,'abrs',assqcd,abrs1
-c      print*,'abrc',accqcd,abrc1
-c      print*,'abrb',abbqcd,abrb1
-c      print*,'abrt',attqcd,abrt1
-c      print*,'abrga',agaresc,abrga1
-c      print*,'abrzga',azgaresc,abrzga1
-c      print*,'abrhlz',ahlzloresc,abrhlz1      
-c      print*,'abrhhz',ahhzloresc,abrhhz1
-c      print*,'abrhw',ahpwmloresc,abrhw1
-c      print*,'rescal',gfcalc/gf
-
+      ABRG1(1)=AGGRESCR(1)/WTOT1(1)
+      ABRM1(1)=AMMLORESC(1)/WTOT1(1)
+      ABRL1(1)=ALLLORESC(1)/WTOT1(1)
+      ABRS1(1)=ASSQCD(1)/WTOT1(1)
+      ABRC1(1)=ACCQCD(1)/WTOT1(1)
+      ABRB1(1)=ABBQCD(1)/WTOT1(1)
+      ABRT1(1)=ATTQCD(1)/WTOT1(1)
+      ABRGA1(1)=AGARESC(1)/WTOT1(1)
+      ABRZGA1(1)=AZGARESC(1)/WTOT1(1)
+      ABRHLZ1(1)=AHLZLORESC(1)/WTOT1(1)
+      ABRHHZ1(1)=AHHZLORESC(1)/WTOT1(1)      
+      ABRHW1(1)=AHPWMLORESC(1)/WTOT1(1)
+         
+      endif
+      
 c If OMIT ELW2 = 0, then the following decay widths include the usual
 c QCD corrections and the EW corrections. The latter are only included for
 c on-shell decays and non-loop induced decays
 
       if(irenscheme.eq.0) then
-      do i=1,14,1
-         WTOT2(i)=AGGRESC+AMMEW(i)+ALLEW(i)+ASSQCDEW(i)+ACCQCDEW(i)
-     .           +ABBQCDEW(i)+ATTQCDEW(i)+AGARESC+AZGARESC
+      do i=1,17,1
+         WTOT2(i)=AGGRESCR(i)+AMMEW(i)+ALLEW(i)+ASSQCDEW(i)+ACCQCDEW(i)
+     .           +ABBQCDEW(i)+ATTQCDEW(i)+AGARESC(i)+AZGARESC(i)
      .           +AHLZEW(i)+AHHZEW(i)+AHPWMEW(i)
 
          awdth2(i) = wtot2(i)
       
-      ABRG2(i)=AGGRESC/WTOT2(i)
+      ABRG2(i)=AGGRESCR(i)/WTOT2(i)
       ABRM2(i)=AMMEW(i)/WTOT2(i)      
       ABRL2(i)=ALLEW(i)/WTOT2(i)
       ABRS2(i)=ASSQCDEW(i)/WTOT2(i)
       ABRC2(i)=ACCQCDEW(i)/WTOT2(i)      
       ABRB2(i)=ABBQCDEW(i)/WTOT2(i)
       ABRT2(i)=ATTQCDEW(i)/WTOT2(i)
-      ABRGA2(i)=AGARESC/WTOT2(i)
-      ABRZGA2(i)=AZGARESC/WTOT2(i)
+      ABRGA2(i)=AGARESC(i)/WTOT2(i)
+      ABRZGA2(i)=AZGARESC(i)/WTOT2(i)
       ABRHLZ2(i)=AHLZEW(i)/WTOT2(i)
       ABRHHZ2(i)=AHHZEW(i)/WTOT2(i)      
       ABRHW2(i)=AHPWMEW(i)/WTOT2(i)
       
-c      if(i.eq.2) then
+c      if(i.eq.7) then
 c      print*,''
 c      print*,'wtot2',wtot2(i),i
 c      print*,''
-c      print*,'abrg2(i)',aggresc,abrg2(i)
+c      print*,'abrg2(i)',aggrescr(i),abrg2(i)
 c      print*,'abrm2(i)',ammew(i),abrm2(i)
 c      print*,'abrl2(i)',allew(i),abrl2(i)
 c      print*,'abrs2(i)',assqcdew(i),abrs2(i)
 c      print*,'abrc2(i)',accqcdew(i),abrc2(i)
 c      print*,'abrb2(i)',abbqcdew(i),abrb2(i)
 c      print*,'abrt2(i)',attqcdew(i),abrt2(i)
-c      print*,'abrga2(i)',agaresc,abrga2(i)
-c      print*,'abrzga2(i)',azgaresc,abrzga2(i)
+c      print*,'abrga2(i)',agaresc(i),abrga2(i)
+c      print*,'abrzga2(i)',azgaresc(i),abrzga2(i)
 c      print*,'abrhlz2(i)',ahlzew(i),abrhlz2(i)
 c      print*,'abrhhz2(i)',ahhzew(i),abrhhz2(i)
 c      print*,'abrhw2(i)',ahpwmew(i),abrhw2(i)
@@ -16539,21 +20564,21 @@ c      endif
 
       elseif(irenscheme.ne.0) then
 
-         WTOT2(1)=AGGRESC+AMMEW(1)+ALLEW(1)+ASSQCDEW(1)+ACCQCDEW(1)
-     .           +ABBQCDEW(1)+ATTQCDEW(1)+AGARESC+AZGARESC
+         WTOT2(1)=AGGRESCR(1)+AMMEW(1)+ALLEW(1)+ASSQCDEW(1)+ACCQCDEW(1)
+     .           +ABBQCDEW(1)+ATTQCDEW(1)+AGARESC(1)+AZGARESC(1)
      .           +AHLZEW(1)+AHHZEW(1)+AHPWMEW(1)
 
          awdth2(1) = wtot2(1)
          
-      ABRG2(1)=AGGRESC/WTOT2(1)
+      ABRG2(1)=AGGRESCR(1)/WTOT2(1)
       ABRM2(1)=AMMEW(1)/WTOT2(1)      
       ABRL2(1)=ALLEW(1)/WTOT2(1)
       ABRS2(1)=ASSQCDEW(1)/WTOT2(1)
       ABRC2(1)=ACCQCDEW(1)/WTOT2(1)      
       ABRB2(1)=ABBQCDEW(1)/WTOT2(1)
       ABRT2(1)=ATTQCDEW(1)/WTOT2(1)
-      ABRGA2(1)=AGARESC/WTOT2(1)
-      ABRZGA2(1)=AZGARESC/WTOT2(1)
+      ABRGA2(1)=AGARESC(1)/WTOT2(1)
+      ABRZGA2(1)=AZGARESC(1)/WTOT2(1)
       ABRHLZ2(1)=AHLZEW(1)/WTOT2(1)
       ABRHHZ2(1)=AHHZEW(1)/WTOT2(1)      
       ABRHW2(1)=AHPWMEW(1)/WTOT2(1)
@@ -16908,7 +20933,10 @@ c MMM changed 21/8/13
 c end MMM changed 21/8/13
       COMMON/HMSSM_HDEC/AMHL10
 c MMM changed 10/7/2018
-      COMMON/PARS2HDMEW/IELW2HDM,IRENSCHEME,GFCALC,VALINSCALE
+c MMM changed 19/1/19
+      COMMON/PARS2HDMEW/GFCALC,VALINSCALE
+      COMMON/PARS2HDMEW1/IELW2HDM,IRENSCHEME,IREFSCHEME
+c end MMM changed 19/1/19
       COMMON/CALCLAMBDA/alamcalc1,alamcalc2,alamcalc3,alamcalc4,
      .     alamcalc5
 c end MMM changed 10/7/2018
@@ -16932,13 +20960,14 @@ c end MMM changed 10/7/2018
 
       PI=4*DATAN(1D0)
       V=1.D0/DSQRT(DSQRT(2.D0)*GF)
+c      print*,'v1',v
 c MMM changed 10/7/2018
             if(ielw2hdm.eq.0) then
                vtmp = v
                v = 1.D0/dsqrt(dsqrt(2.D0)*gfcalc)
 c               print*,'v',v
             endif
-c end MMM changed 10/7/2018             
+c end MMM changed 10/7/2018          
       BET=DATAN(TGBET)
       SB = DSIN(BET)
       CB = DCOS(BET)
@@ -17205,6 +21234,8 @@ c end MMM changed 10/7/2018
             LA7 = 0.D0
 c            print*,'lambdas',la1,la2,la3,la4,la5
 
+c            print*,'v2',v
+            
             am11h2 = (la1*cb**4+la2*sb**4+2.D0*(la3+la4+la5)*
      .           cb**2*sb**2)*V**2
             am12h2 = (-la1*cb**2+la2*sb**2+(la3+la4+la5)*
@@ -17437,7 +21468,7 @@ c --- this is for a check against hep-ph/0408364 ---
       xhll = -dcos(aa-bb)/2.D0/V/dsin(2.D0*bb)*(dsin(2.D0*aa)*(2.D0*
      .     amlr**2+amhr**2)-(3.D0*dsin(2.D0*aa)-dsin(2.D0*bb))*ammh2)
 
-      xhhh = 1.D0/4.D0/V/dsin(2.D0*b)*((dsin(3.D0*aa-bb)
+      xhhh = 1.D0/4.D0/V/dsin(2.D0*bb)*((dsin(3.D0*aa-bb)
      .     -3.D0*dsin(aa+bb))*amhr**2+4.D0*(dsin(aa-bb))**2*
      .     dsin(aa+bb)*ammh2)
 
@@ -17773,6 +21804,436 @@ c end MMM changed 10/7/2018
       RETURN
 111   STOP
       END
+
+c MMM changed 19/1/19
+C ************* SUBROUTINE FOR THE 2HDM REN COUPLINGS *****************
+c Only parametrization 1 is applied, as the lambda1...5 for the changed
+c alpha, beta that fit with the given input masses are not given.      
+      SUBROUTINE THDMCP_HDEC(TGBETA,ALPHA,IRENORMSCHEME)
+      IMPLICIT DOUBLE PRECISION (A-H,M,O-Z)
+      CHARACTER(50) valinscale      
+      DOUBLE PRECISION LA1,LA2,LA3,LA4,LA5,LA6,LA7,LA3T
+      dimension itest(30)
+      COMMON/PARAM_HDEC/GF,ALPH,AMTAU,AMMUON,AMZ,AMW
+      COMMON/THDMCOUPREN_HDEC/GATR,GABR,GLTR,GLBR,GHTR,GHBR,GZAHR,GZALR,
+     .            GHHHR,GLLLR,GHLLR,GLHHR,GHAAR,GLAAR,GLVVR,GHVVR,
+     .            GLPMR,GHPMR,BETAREN,ALPHAREN
+      COMMON/THDM_HDEC/TGBET2HDM,ALPH2HDM,AMHL2HDM,AMHH2HDM,
+     .     AMHA2HDM,AMHC2HDM,AM12SQ,A1LAM2HDM,A2LAM2HDM,A3LAM2HDM,
+     .     A4LAM2HDM,A5LAM2HDM,ITYPE2HDM,I2HDM,IPARAM2HDM
+      COMMON/THDM_COUPREN_HDEC/gllepr,ghlepr,galepr
+      COMMON/PARS2HDMEW/GFCALC,VALINSCALE
+      COMMON/PARS2HDMEW1/IELW2HDM,IRENSCHEME,IREFSCHEME
+      COMMON/THDM_TEST/itestcond
+
+      FTRIANG(X,Y)= (x**2+y**2)/2.D0-x**2*y**2/(x**2-y**2)*
+     .     dlog(x**2/y**2)
+      FPTRIANG(X,Y)=-1.D0/3.D0*(4.D0/3.D0-(x**2*dlog(x**2)
+     .     -y**2*dlog(y**2))/(x**2-y**2)-(x**2+y**2)/(x**2-y**2)**2*
+     .     ((x**2+y**2)/2.D0-x**2*y**2/(x**2-y**2)*
+     .     dlog(x**2/y**2)))
+      
+      PI=4*DATAN(1D0)
+      V=1.D0/DSQRT(DSQRT(2.D0)*GF)
+      if(ielw2hdm.eq.0) then
+         vtmp = v
+         v = 1.D0/dsqrt(dsqrt(2.D0)*gfcalc)
+      endif
+
+      bb = datan(tgbeta)
+      bet = bb
+      cb = dcos(bb)
+      sb = dsin(bb)
+      ammh2 = AM12SQ/sb/cb
+
+c This is parametrization 1
+      sa = dsin(alpha)
+      ca = dcos(alpha)
+      amar = AMHA2HDM
+      ama = amar
+      amlr= AMHL2HDM
+      amhr= AMHH2HDM
+      aml = AMHL2HDM
+      amh = AMHH2HDM
+      amch= AMHC2HDM
+      amar= AMHA2HDM
+c from hep-ph/0408364, Eqs. (26)-(30)
+      LA1 = 1.D0/v**2/cb**2*(-sb**2*ammh2+sa**2*amlr**2
+     .     +ca**2*amhr**2)
+      LA2 = 1.D0/v**2/sb**2*(-cb**2*ammh2+ca**2*amlr**2
+     .     +sa**2*amhr**2)
+      LA3 = -ammh2/v**2+2.D0*amch**2/v**2+1.D0/v**2*sa*ca/sb/cb*
+     .     (amhr**2-amlr**2)
+      LA4 = 1.D0/v**2*(ammh2+amar**2-2.D0*amch**2)
+      LA5 = 1.D0/v**2*(ammh2-amar**2)
+      LA6 = 0.D0
+      LA7 = 0.D0
+
+      alamcalcu1 = la1
+      alamcalcu2 = la2
+      alamcalcu3 = la3
+      alamcalcu4 = la4
+      alamcalcu5 = la5               
+
+      if(itestcond.eq.1) then
+c test of vacuum stability (S.Kanemura eal, Phys.Rev.D70(2004)115002)
+         do i=1,30,1
+            itest(i) = 0
+         end do
+         if(la1.gt.0.D0) then 
+            itest(1)=1
+         endif
+         if(la1.gt.0.D0) then 
+            itest(2)=1
+         endif
+         if(0.D0.le.la4+la5.and.0.D0.le.la4-la5) then
+            amin=0.D0
+         elseif(la4+la5.le.0.D0.and.la4+la5.le.la4-la5) then
+            amin=la4+la5
+         elseif(la4-la5.le.0.D0.and.la4-la5.le.la4+la5) then
+            amin=la4-la5
+         endif
+         valtest = dsqrt(la1*la2)+la3+amin
+         if(valtest.gt.0.D0) then
+            itest(3)=1
+         endif
+
+         iteststab=itest(1)*itest(2)*itest(3)
+         if(iteststab.eq.0) then
+            print*,'Attention: vacuum stability is not fulfilled for 
+     .irenscheme '
+            print*,'Renormalization scheme ',irenormscheme
+         endif
+         
+c test for perturbativity (arXiv:1106.0034, Eqs.(3.363)-(3.372))
+            pap = 1.5D0*(la1+la2)+dsqrt(9.D0/4.D0*(la1-la2)**2+
+     .           (2.D0*la3+la4)**2)
+            pam = 1.5D0*(la1+la2)-dsqrt(9.D0/4.D0*(la1-la2)**2+
+     .           (2.D0*la3+la4)**2)
+            pbp = 0.5D0*(la1+la2)+0.5D0*dsqrt((la1-la2)**2+4.D0*la4**2)
+            pbm = 0.5D0*(la1+la2)-0.5D0*dsqrt((la1-la2)**2+4.D0*la4**2)
+            pcp = 0.5D0*(la1+la2)+0.5D0*dsqrt((la1-la2)**2+4.D0*la5**2)
+            pcm = 0.5D0*(la1+la2)-0.5D0*dsqrt((la1-la2)**2+4.D0*la5**2)
+            pe1 = la3+2.D0*la4-3.D0*la5
+            pe2 = la3-la5
+            pfp = la3+2.D0*la4+3.D0*la5
+            pfm = la3+la5
+            pf1 = la3+la4
+            pp1 = la3-la4
+
+            pertval = 8.D0*Pi
+
+            if(dabs(pap).lt.pertval) then 
+               itest(4) = 1
+            endif
+            if(dabs(pam).lt.pertval) then 
+               itest(5) = 1
+            endif
+            if(dabs(pbp).lt.pertval) then 
+               itest(6) = 1
+            endif
+            if(dabs(pbm).lt.pertval) then 
+               itest(7) = 1
+            endif
+            if(dabs(pcp).lt.pertval) then 
+               itest(8) = 1
+            endif
+            if(dabs(pcm).lt.pertval) then 
+               itest(9) = 1
+            endif
+            if(dabs(pe1).lt.pertval) then 
+               itest(10) = 1
+            endif
+            if(dabs(pe2).lt.pertval) then 
+               itest(11) = 1
+            endif
+            if(dabs(pfp).lt.pertval) then 
+               itest(12) = 1
+            endif
+            if(dabs(pfm).lt.pertval) then 
+               itest(13) = 1
+            endif
+            if(dabs(pf1).lt.pertval) then 
+               itest(14) = 1
+            endif
+            if(dabs(pp1).lt.pertval) then 
+               itest(15) = 1
+            endif
+            itestpert = itest(4)*itest(5)*itest(6)*itest(7)*itest(8)*
+     .           itest(9)*itest(10)*itest(11)*itest(12)
+            if(itestpert.eq.0) then
+            print*,'Attention: perturbative unitarity is not fulfilled
+     .for irenscheme '
+            print*,'Renormalization scheme',irenormscheme
+c            print*,'test',itest(4),dabs(pap),8.D0*Pi
+            print*,''
+            endif
+
+c the S- and T-parameter in the 2HDM (1108.3297, Eqs. (12),(13))
+            params2hdm = -1.D0/(4.D0*Pi)*(1.D0/3.D0*dlog(amch**2)
+     .           -(dsin(bb-alpha))**2*fptriang(amh,amar)
+     .           -(dcos(bb-alpha))**2*fptriang(aml,amar))
+            paramt2hdm = -dsqrt(2.D0)*gf/16.D0/Pi**2/alph*(
+     .           -ftriang(amar,amch)+(dsin(bb-alpha))**2*(
+     .           ftriang(amh,amar)-ftriang(amh,amch))
+     .           +(dcos(bb-alpha))**2*(ftriang(aml,amar)
+     .           -ftriang(aml,amch)))
+c            print*,'par S,T',params2hdm,paramt2hdm
+
+c the S- and T-parameter limits are taken from 1209.2716, Eq.(9)
+
+            tparamlimp = 0.17D0
+            tparamlimm = -0.07D0
+
+            sparamlimp = 0.13D0
+            sparamlimm = -0.07D0
+
+          if(params2hdm.gt.sparamlimp.or.params2hdm.lt.sparamlimm) then
+             print*,'The limits on the S-parameter are not fulfilled for
+     .irenscheme '
+            print*,'Renormalization scheme ',irenormscheme             
+             print*,''
+          endif
+          if(paramt2hdm.gt.tparamlimp.or.paramt2hdm.lt.tparamlimm) then
+             print*,'The limits on the T-parameter are not fulfilled for
+     .irenscheme '
+            print*,'Renormalization scheme ',irenormscheme             
+             print*,''
+          endif
+
+c -- this is for a check --
+c         print*,'alphacheck',alphacheck-2.D0*datan(1.D0)
+c         print*,'alpha',datan(dsin(alph2hdm)/dcos(alph2hdm))
+c         print*,'alpha2hdm',alph2hdm
+c         print*,'check: aml,amh,ama,amch',amlc,amhc,amac,amcc
+c         print*,'m12h2',am12sq,am12sq/sb/cb,ammh2
+      endif
+c end MMM changed 21/8/13
+      LA3T=LA3+LA4+LA5
+      AMA2=AMAR**2
+      AML2=AMLR**2
+      AMH2=AMHR**2
+      AMP2=AMCH**2
+C ========== HIGGS COUPLINGS
+      SBMA = SB*CA-CB*SA
+      CBMA = CB*CA+SB*SA
+      SBPA = SB*CA+CB*SA
+      CBPA = CB*CA-SB*SA
+      S2A = 2*SA*CA
+      C2A = CA**2-SA**2
+      S2B = 2*SB*CB
+      C2B = CB**2-SB**2
+      
+      GLZZR = 1/V/2*AML2*SBMA
+      GHZZR = 1/V/2*AMH2*CBMA
+      GLWWR = 2*GLZZ
+      GHWWR = 2*GHZZ
+      GLAZR = 1/V*(AML2-AMA2)*CBMA
+      GHAZR = -1/V*(AMH2-AMA2)*SBMA
+      GLPWR = -1/V*(AMP2-AML2)*CBMA
+      GLMWR = GLPW
+      GHPWR = 1/V*(AMP2-AMH2)*SBMA
+      GHMWR = GHPW
+      GAPWR = 1/V*(AMP2-AMA2)
+      GAMWR = -GAPW
+      GHHHR = V/2*(LA1*CA**3*CB + LA2*SA**3*SB + LA3T*SA*CA*SBPA
+     .     + LA6*CA**2*(3*SA*CB+CA*SB) + LA7*SA**2*(3*CA*SB+SA*CB))
+      GLLLR = -V/2*(LA1*SA**3*CB - LA2*CA**3*SB + LA3T*SA*CA*CBPA
+     .     - LA6*SA**2*(3*CA*CB-SA*SB) + LA7*CA**2*(3*SA*SB-CA*CB))
+      GLHHR = -3*V/2*(LA1*CA**2*CB*SA - LA2*SA**2*SB*CA
+     .     + LA3T*(SA**3*CB-CA**3*SB+2*SBMA/3)
+     .     - LA6*CA*(CB*C2A-SA*SBPA) - LA7*SA*(C2A*SB+CA*SBPA))
+      GHLLR = 3*V/2*(LA1*SA**2*CB*CA + LA2*CA**2*SB*SA
+     .     + LA3T*(SA**3*SB+CA**3*CB-2*CBMA/3)
+     .     - LA6*SA*(CB*C2A+CA*CBPA) + LA7*CA*(C2A*SB+SA*CBPA))
+      GLAAR = -V/2*(LA1*SB**2*CB*SA - LA2*CB**2*SB*CA
+     .     - LA3T*(SB**3*CA-CB**3*SA) + 2*LA5*SBMA
+     .     - LA6*SB*(CB*SBPA+SA*C2B) - LA7*CB*(C2B*CA-SB*SBPA))
+      GHAAR = V/2*(LA1*SB**2*CB*CA + LA2*CB**2*SB*SA
+     .     + LA3T*(SB**3*SA+CB**3*CA) - 2*LA5*CBMA
+     .     - LA6*SB*(CB*CBPA+CA*C2B) + LA7*CB*(SB*CBPA+SA*C2B))
+      GLPMR = 2*GLAAR + V*(LA5 - LA4)*SBMA
+
+c --- this is for a check against hep-ph/0408364 ---
+
+      if(i2hdm.eq.1) then
+      aa = alpha
+
+      xlll = -1.D0/4.D0/V/(2.D0*cb*sb)*(
+     .     (dcos(3.D0*aa-bb)+3.D0*dcos(aa+bb))*amlr**2
+     .     -4.D0*(dcos(aa-bb))**2*dcos(aa+bb)*ammh2)
+
+      xlhh = -dsin(aa-bb)/2.D0/V/dsin(2.D0*bb)*(dsin(2.D0*aa)*
+     .     (amlr**2+2.D0*amhr**2)-(3.D0*dsin(2.D0*aa)+dsin(2.D0*bb))*
+     .     ammh2)
+
+      xhll = -dcos(aa-bb)/2.D0/V/dsin(2.D0*bb)*(dsin(2.D0*aa)*(2.D0*
+     .     amlr**2+amhr**2)-(3.D0*dsin(2.D0*aa)-dsin(2.D0*bb))*ammh2)
+
+      xhhh = 1.D0/4.D0/V/dsin(2.D0*bb)*((dsin(3.D0*aa-bb)
+     .     -3.D0*dsin(aa+bb))*amhr**2+4.D0*(dsin(aa-bb))**2*
+     .     dsin(aa+bb)*ammh2)
+
+      xlaa = -1.D0/4.D0/V/dsin(2.D0*bb)*((dcos(aa-3.D0*bb)+3.D0*
+     .     dcos(aa+bb))*
+     .     amlr**2-4.D0*dsin(2.D0*bb)*dsin(aa-bb)*amar**2-4.D0*
+     .     dcos(aa+bb)*ammh2)
+
+      xhaa = -1.D0/4.D0/V/dsin(2.D0*bb)*((dsin(aa-3.D0*bb)+3.D0*
+     .     dsin(aa+bb))*amhr**2+4.D0*dsin(2.D0*bb)*dcos(aa-bb)*amar**2
+     .     -4.D0*dsin(aa+bb)*ammh2)
+
+      xlpm = -1.D0/2.D0/V/dsin(2.D0*bb)*((dcos(aa-3.D0*bb)+3.D0*
+     .     dcos(aa+bb))*
+     .     amlr**2-4.D0*dsin(2.D0*bb)*dsin(aa-bb)*amch**2-4.D0*
+     .     dcos(aa+bb)*ammh2)
+
+      xhpm = -1.D0/2.D0/V/dsin(2.D0*bb)*((dsin(aa-3.D0*bb)+3.D0*
+     .     dsin(aa+bb))*amhr**2+4.D0*dsin(2.D0*bb)*dcos(aa-bb)*
+     .     amch**2-4.D0*dsin(aa+bb)*ammh2)
+
+c      print*,'lll',glllr,xlll
+c      print*,'lhh',glhhr,xlhh
+c      print*,'hll',ghllr,xhll
+c      print*,'hhh',ghhhr,xhhh
+c      print*,'laa',glaar,xlaa
+c      print*,'haa',ghaar,xhaa
+c      print*,'lH+H-',glpmr,xlpm
+c      print*,'MA',amar,amch
+c      print*,'Mh,MH,MA,MH+',amlr,amhr,amar,amch
+c      print*,'alpha,tan(beta)',aa,tgbeta
+
+c ---------------------------------------------------
+
+c      print*,'la1-la5',la1,la2,la3,la4,la5
+c      print*,'glaa',glaar
+c      print*,'sbma,sb,cb,sa,ca',sbma,sb,cb,sa,ca
+      endif
+
+      GHPMR = 2*GHAAR + V*(LA5 - LA4)*CBMA
+c      print*,'HH+H-',ghpmr,xhpm
+      GLZZR = 2*GLZZR
+      GHZZR = 2*GHZZR
+      GLLLR = 6*GLLLR
+      GHHHR = 6*GHHHR
+      GLHHR = 2*GLHHR
+      GHLLR = 2*GHLLR
+      GLAAR = 2*GLAAR
+      GHAAR = 2*GHAAR
+      XNORM = AMZ**2/V
+      GLLLR = GLLLR/XNORM
+      GHLLR = GHLLR/XNORM
+      GLHHR = GLHHR/XNORM
+      GHHHR = GHHHR/XNORM
+      GHAAR = GHAAR/XNORM
+      GLAAR = GLAAR/XNORM
+      GLPMR = GLPMR/XNORM
+
+c      print*,'glll',glllr
+      
+c      print*,'lll',glllr
+c      print*,'lhh',glhhr
+c      print*,'hll',ghllr
+c      print*,'hhh',ghhhr
+c      print*,'laa',glaar
+c      print*,'haa',ghaar
+c      print*,'lH+H-',glpmr
+c      print*,'hH+H-',ghpmr*v/amz**2
+c      print*,'norm = v/amz**2',v/amz**2
+
+c      print*,'glpm',glpmr
+
+      GHPMR = GHPMR/XNORM
+      GATR=1.D0/TGBETA
+      GABR=TGBETA
+
+      if(itype2hdm.eq.1) then
+         gltr   = ca/sb
+         glbr   = ca/sb
+         gllepr = glbr
+         ghtr   = sa/sb
+         ghbr   = sa/sb
+         ghlepr = ghbr
+         gatr   = 1.D0/tgbeta
+         gabr   =-1.D0/tgbeta
+         galepr = gabr
+      elseif(itype2hdm.eq.2) then
+         gltr   = ca/sb
+         glbr   =-sa/cb
+         gllepr = glbr
+         ghtr   = sa/sb
+         ghbr   = ca/cb
+         ghlepr = ghbr
+         gatr   = 1.D0/tgbeta
+         gabr   = tgbeta
+         galepr = gabr
+      elseif(itype2hdm.eq.3) then
+         gltr   = ca/sb
+         glbr   = ca/sb
+         gllepr =-sa/cb
+         ghtr   = sa/sb
+         ghbr   = sa/sb
+         ghlepr = ca/cb
+         gatr   = 1.D0/tgbeta
+         gabr   =-1.D0/tgbeta
+         galepr = tgbeta
+      elseif(itype2hdm.eq.4) then
+         gltr   = ca/sb
+         glbr   =-sa/cb
+         gllepr = ca/sb
+         ghtr   = sa/sb
+         ghbr   = ca/cb
+         ghlepr = sa/sb
+         gatr   = 1.D0/tgbeta
+         gabr   = tgbeta
+         galepr =-1.D0/tgbeta
+      endif
+
+      GZALR=-CBMA
+      GZAHR=SBMA
+      GLVVR=SBMA
+      GHVVR=CBMA
+
+      BETAREN=BET
+      IF(CA.EQ.0)THEN
+       A = PI/2
+      ELSE
+       A=DATAN(SA/CA)
+      ENDIF
+      IF(CA.LT.0D0)THEN
+       IF(SA.LT.0D0)THEN
+        A = A-PI
+       ELSE
+        A = A+PI
+       ENDIF
+      ENDIF
+      ALPHAREN = A
+
+c MMM changed 21/8/13
+c     if(I2HDM.eq.1) then
+c        ama = amar
+c        amlr= AMHL2HDM
+c        amhr= AMHH2HDM
+c        aml = AMHL2HDM
+c        amh = AMHH2HDM
+c        amch= AMHC2HDM
+c     endif
+c end MMM changed 21/8/13
+
+c      print*,'hallo',aml,amh,ama,amch
+c MMM changed 10/7/2018
+            if(ielw2hdm.eq.0) then
+               v = vtmp
+c               print*,'v',v
+            endif
+c end MMM changed 10/7/2018
+      
+      
+      RETURN
+111   STOP
+      END
+      
+c end MMM changed 19/1/19      
 
 C ===================== THE FUNCTION F0 ===============
       COMPLEX*16 FUNCTION F0_HDEC(M1,M2,QSQ)
@@ -20092,7 +24553,8 @@ c    .       * XKFAC
      .                      -DLOG(DLOG(X**2/XLB(NF)**2))-1)+B2(NF))
      .           /DLOG(X**2/XLB(NF)**2)**2)
       PI=4.D0*DATAN(1.D0)
-c     write(6,*)'ALS param: ',XLAMBDA,AMC,AMB,AMT,N0
+c      write(6,*)'ALS param: ',XLAMBDA,AMC
+c      print*,'vall1',AMB,AMT,N0
       IF(N.EQ.1)THEN
        DO 1 I=1,6
         XLB(I)=XLB1(I)
@@ -20120,7 +24582,8 @@ c     write(6,*)'ALS param: ',XLAMBDA,AMC,AMB,AMT,N0
       ELSEIF(N.EQ.2)THEN
         ALPHAS_HDEC=ALS2(NF,Q)
       ELSE
-        ALPHAS_HDEC=ALS3(NF,Q)
+         ALPHAS_HDEC=ALS3(NF,Q)
+c         print*,'vall',alphas_hdec
 c       ALPHAS_HDEC=ALS2(NF,Q)
       ENDIF
       RETURN

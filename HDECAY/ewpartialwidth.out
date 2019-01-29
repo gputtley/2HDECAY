@@ -1,23 +1,23 @@
 #
 BLOCK DCINFO  # Decay Program information
      1   2HDECAY     # decay calculator
-     2   1.0.0       # version number
+     2   1.1.0       # version number
 #
 BLOCK SMINPUTS  # Standard Model inputs
          2     1.19596488E-05   # G_F [GeV^-2]
          3     1.18000000E-01   # alpha_S(M_Z)^MSbar
-         4     9.11876000E+01   # M_Z pole mass
+         4     9.11876000E+01   # M_Z on-shell mass
          5     4.18000000E+00   # mb(mb)^MSbar
          6     1.73200000E+02   # mt pole mass
          7     1.77682000E+00   # mtau pole mass
          8     4.84141297E+00   # mb pole mass
          9     1.43141297E+00   # mc pole mass
         10     1.05658372E-01   # muon mass
-        11     8.03850000E+01   # M_W mass
+        11     8.03850000E+01   # M_W on-shell mass
         12     2.08500000E+00   # W boson total width
         13     2.49520000E+00   # Z boson total width
 #
-BLOCK 2HDMINPUTS  # 2HDM inputs
+BLOCK 2HDMINPUTS  # 2HDM inputs of reference scheme
          1                  1   # 2HDM parametrization
          2                  1   # 2HDM type
          3     4.23635000E+00   # tan(beta)
@@ -33,6 +33,7 @@ BLOCK 2HDMINPUTS  # 2HDM inputs
         13    -1.56495189E+00   # LAMBDA4 calc. from masses/alpha
         14     7.64848730E-02   # LAMBDA5 calc. from masses/alpha
         15                  7   # renormalization scheme EW corrs
+        15                  0   # reference ren. scheme EW corrs
         16     MIN              # input scale
 #
 BLOCK VCKMIN  # CKM mixing
@@ -47,17 +48,22 @@ BLOCK VCKMIN  # CKM mixing
          1     9.74270000E-01   # V_ud
 #
 #                 PDG
-LO DECAY WIDTH    25   # h non-zero LO decay widths of on-shell and non-loop induced decays
+NLO DECAY WIDTH    25   # h non-zero LO EW decay widths of on-shell and non-loop induced decays
+                    7   # Renormalization Scheme Number
+      -0.18934500E+00   # Corresponding mixing angle alpha
+       0.42363500E+01   # Corresponding tan(beta)
 #         WIDTH       NDA         ID1       ID2
-     5.97381239E-03    2           5        -5   # GAM(h -> b       bb    )
-     2.70309951E-04    2         -15        15   # GAM(h -> tau+    tau-  )
-     9.56989322E-07    2         -13        13   # GAM(h -> mu+     mu-   )
-     2.32096231E-06    2           3        -3   # GAM(h -> s       sb    )
-     5.26515301E-04    2           4        -4   # GAM(h -> c       cb    )
+     5.97381239E-03    2           5        -5   # GAM(h -> b       bb   )
+     2.70309951E-04    2         -15        15   # GAM(h -> tau+    tau- )
+     9.56989322E-07    2         -13        13   # GAM(h -> mu+     mu-  )
+     2.32096231E-06    2           3        -3   # GAM(h -> s       sb   )
+     5.26515301E-04    2           4        -4   # GAM(h -> c       cb   )
 #
 #                 PDG
 NLO DECAY WIDTH    25   # h non-zero NLO EW decay widths of on-shell and non-loop induced decays
                     7   # Renormalization Scheme Number
+      -0.18934500E+00   # Corresponding mixing angle alpha
+       0.42363500E+01   # Corresponding tan(beta)
 #         WIDTH       NDA         ID1       ID2
      5.71956373E-03    2           5        -5   # GAM(h -> b       bb    )
      2.59067704E-04    2         -15        15   # GAM(h -> tau+    tau-  )
@@ -66,21 +72,26 @@ NLO DECAY WIDTH    25   # h non-zero NLO EW decay widths of on-shell and non-loo
      5.11617771E-04    2           4        -4   # GAM(h -> c       cb    )
 #
 #                 PDG
-LO DECAY WIDTH    35   # H non-zero LO decay widths of on-shell and non-loop induced decays
+NLO DECAY WIDTH    25   # H non-zero LO EW decay widths of on-shell and non-loop induced decays
+                    7   # Renormalization Scheme Number
+      -0.18934500E+00   # Corresponding mixing angle alpha
+       0.42363500E+01   # Corresponding tan(beta)
 #         WIDTH       NDA         ID1       ID2
-     6.74992142E-04    2           5        -5   # GAM(H -> b       bb    )
-     3.03307270E-05    2         -15        15   # GAM(H -> tau+    tau-  )
-     1.07265491E-07    2         -13        13   # GAM(H -> mu+     mu-   )
-     2.60148127E-07    2           3        -3   # GAM(H -> s       sb    )
-     5.90563953E-05    2           4        -4   # GAM(H -> c       cb    )
-     6.42270681E-02    2           6        -6   # GAM(H -> t       tb    )
-     2.58966436E-02    2          24       -24   # GAM(H -> W+      W-    )
-     1.20170477E-02    2          23        23   # GAM(H -> Z       Z     )
-     5.30279324E-02    2          25        25   # GAM(H -> h       h     )
+     6.74992142E-04    2           5        -5   # GAM(H -> b       bb   )
+     3.03307270E-05    2         -15        15   # GAM(H -> tau+    tau- )
+     1.07265491E-07    2         -13        13   # GAM(H -> mu+     mu-  )
+     2.60148127E-07    2           3        -3   # GAM(H -> s       sb   )
+     5.90563953E-05    2           4        -4   # GAM(H -> c       cb   )
+     6.42270681E-02    2           6        -6   # GAM(H -> t       tb   )
+     2.58966436E-02    2          24       -24   # GAM(H -> W+      W-   )
+     1.20170477E-02    2          23        23   # GAM(H -> Z       Z    )
+     5.30279324E-02    2          25        25   # GAM(H -> h       h    )
 #
 #                 PDG
 NLO DECAY WIDTH    35   # H non-zero NLO EW decay widths of on-shell and non-loop induced decays
                     7   # Renormalization Scheme Number
+      -0.18934500E+00   # Corresponding mixing angle alpha
+       0.42363500E+01   # Corresponding tan(beta)
 #         WIDTH       NDA         ID1       ID2
      6.43633010E-04    2           5        -5   # GAM(H -> b       bb    )
      2.74752816E-05    2         -15        15   # GAM(H -> tau+    tau-  )
@@ -94,18 +105,23 @@ NLO DECAY WIDTH    35   # H non-zero NLO EW decay widths of on-shell and non-loo
 #
 #                 PDG
 LO DECAY WIDTH    36   # A non-zero LO decay widths of on-shell and non-loop induced decays
+                    7   # Renormalization Scheme Number
+      -0.18934500E+00   # Corresponding mixing angle alpha
+       0.42363500E+01   # Corresponding tan(beta)
 #         WIDTH       NDA         ID1       ID2
-     9.24277129E-04    2           5        -5   # GAM(A -> b       bb    )
-     4.15113526E-05    2         -15        15   # GAM(A -> tau+    tau-  )
-     1.46794595E-07    2         -13        13   # GAM(A -> mu+     mu-   )
-     3.56016986E-07    2           3        -3   # GAM(A -> s       sb    )
-     8.08237531E-05    2           4        -4   # GAM(A -> c       cb    )
-     1.84002229E-01    2           6        -6   # GAM(A -> t       tb    )
-     1.25739404E-02    2          23        25   # GAM(A -> Z       h     )
+     9.24277129E-04    2           5        -5   # GAM(A -> b       bb   )
+     4.15113526E-05    2         -15        15   # GAM(A -> tau+    tau- )
+     1.46794595E-07    2         -13        13   # GAM(A -> mu+     mu-  )
+     3.56016986E-07    2           3        -3   # GAM(A -> s       sb   )
+     8.08237531E-05    2           4        -4   # GAM(A -> c       cb   )
+     1.84002229E-01    2           6        -6   # GAM(A -> t       tb   )
+     1.25739404E-02    2          23        25   # GAM(A -> Z       h    )
 #
 #                 PDG
 NLO DECAY WIDTH    36   # A non-zero NLO EW decay widths of on-shell and non-loop induced decays
                     7   # Renormalization Scheme Number
+      -0.18934500E+00   # Corresponding mixing angle alpha
+       0.42363500E+01   # Corresponding tan(beta)
 #         WIDTH       NDA         ID1       ID2
      8.63659833E-04    2           5        -5   # GAM(A -> b       bb    )
      3.65916116E-05    2         -15        15   # GAM(A -> tau+    tau-  )
@@ -117,22 +133,27 @@ NLO DECAY WIDTH    36   # A non-zero NLO EW decay widths of on-shell and non-loo
 #
 #                 PDG
 LO DECAY WIDTH    37   # H+ non-zero LO decay widths of on-shell and no-loop induced decays
+                    7   # Renormalization Scheme Number
+      -0.18934500E+00   # Corresponding mixing angle alph
+       0.42363500E+01   # Corresponding tan(beta)
 #         WIDTH       NDA         ID1       ID2
-     2.01499994E-06    2           4        -5   # GAM(H+ -> c       bb     )
-     4.90230906E-05    2         -15        16   # GAM(H+ -> tau+    nu_tau )
-     1.73355482E-07    2         -13        14   # GAM(H+ -> mu+     nu_mu  )
-     1.34490261E-08    2           2        -5   # GAM(H+ -> u       bb     )
-     2.13488662E-08    2           2        -3   # GAM(H+ -> u       sb     )
-     4.84069114E-06    2           4        -1   # GAM(H+ -> c       db     )
-     9.08443168E-05    2           4        -3   # GAM(H+ -> c       sb     )
-     9.50609568E-01    2           6        -5   # GAM(H+ -> t       bb     )
-     1.55272618E-03    2           6        -3   # GAM(H+ -> t       sb     )
-     7.15105580E-05    2           6        -1   # GAM(H+ -> t       db     )
-     2.76920430E-02    2          24        25   # GAM(H+ -> W+      h      )
+     2.01499994E-06    2           4        -5   # GAM(H+ -> c       bb   )
+     4.90230906E-05    2         -15        16   # GAM(H+ -> tau+    nu_tau)
+     1.73355482E-07    2         -13        14   # GAM(H+ -> mu+     nu_mu)
+     1.34490261E-08    2           2        -5   # GAM(H+ -> u       bb   )
+     2.13488662E-08    2           2        -3   # GAM(H+ -> u       sb   )
+     4.84069114E-06    2           4        -1   # GAM(H+ -> c       db   )
+     9.08443168E-05    2           4        -3   # GAM(H+ -> c       sb   )
+     9.50609568E-01    2           6        -5   # GAM(H+ -> t       bb   )
+     1.55272618E-03    2           6        -3   # GAM(H+ -> t       sb   )
+     7.15105580E-05    2           6        -1   # GAM(H+ -> t       db   )
+     2.76920430E-02    2          24        25   # GAM(H+ -> W+      h    )
 #
 #                 PDG
 NLO DECAY WIDTH    37   # H+ non-zero NLO EW decay widths of on-shell an non-loop induced decays
                     7   # Renormalization Scheme Number
+      -0.18934500E+00   # Corresponding mixing angle alph
+       0.42363500E+01   # Corresponding tan(beta)
 #         WIDTH       NDA         ID1       ID2
      1.80635406E-06    2           4        -5   # GAM(H+ -> c       bb     )
      4.46346944E-05    2         -15        16   # GAM(H+ -> tau+    nu_tau )
