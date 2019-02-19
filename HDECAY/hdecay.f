@@ -21,7 +21,7 @@ C   JHEP 1609 (2016) 143
 C - M. Krause, M. Muhlleitner, R. Santos, H. Ziesche,
 C   Phys.Rev. D95 (2017) no.7, 075019
 C     
-C  EW2HDM_HDECAY: Last modification on Jan 28 2019 by M.M.
+C  EW2HDM_HDECAY: Last modification on Feb 18, 2019 by M.M.
 C ==================================================================
 C      
 C     HDECAY: Last modification on May 7 2018 by M.S.
@@ -325,7 +325,7 @@ c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
       SUBROUTINE READ_HDEC(TGBET,AMABEG,AMAEND,NMA)
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
-      CHARACTER(50) valinscale
+      CHARACTER(50) valinscale,valoutscale
       PARAMETER(K=6,NI=87,NSA=85,NSB=86,NLA=88,NLB=89,NHA=90,NHB=91,
      .          NHC=92,NAA=93,NAB=94,NCA=95,NCB=96,NCC=50,NRA=97,NRB=98,
      .          NSUSYL=81,NSUSYA=82,NSUSYH=83,NSUSYC=84,NPAR=80,
@@ -334,7 +334,7 @@ c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
      .          NSUSYHA=74,NSUSYHB=73,NSUSYHC=72,NSUSYHD=71,NSUSYHE=70,
      .          NSUSYAA=69,NSUSYAB=68,NSUSYAC=67,NSUSYAD=66,NSUSYAE=65,
      .          NSUSYCA=64,NSUSYCB=63,NSUSYCC=62,NSUSYCD=61,NSUSYCE=60,
-     .          ninlha=22,NFERM=222)
+     .          ninlha=22,NFERM=222,NTOPGAM=223)
       double precision minval(1:20),smval(1:30),massval(1:50),
      .                 nmixval(4,4),umixval(2,2),vmixval(2,2),
      .                 stopmixval(2,2),sbotmixval(2,2),staumixval(2,2),
@@ -353,7 +353,8 @@ c MMM changed 19/1/19
       double precision tmpal(1:17),ALPH2HDMRENL(1:17),
      .     TGBET2HDMRENL(1:17),tmptgbet(1:17),ALPH2HDMRENH(1:17),
      .     TGBET2HDMRENH(1:17),ALPH2HDMRENA(1:17),TGBET2HDMRENA(1:17),
-     .     ALPH2HDMRENHP(1:17),TGBET2HDMRENHP(1:17)
+     .     ALPH2HDMRENHP(1:17),TGBET2HDMRENHP(1:17),tmpm12(1:17),
+     .     AM12RENL(1:17),AM12RENH(1:17),AM12RENA(1:17),AM12RENHP(1:17)
       double precision HLBBLOR(1:17),HLLLLOR(1:17),HLMMLOR(1:17),
      .     HLSSLOR(1:17),HLCCLOR(1:17),HLTTLOR(1:17),HLWWLOR(1:17),
      .     HLZZLOR(1:17),HLAALOR(1:17),HLZALOR(1:17),HLHPWMLOR(1:17),
@@ -492,12 +493,16 @@ c MMM changed 21/8/13
 c end MMM changed 21/8/13
 c MMM changed 10/7/18
       COMMON/RUNVARIABLE/iminimal
+c MMM changed 12/2/19      
+      COMMON/DECAYSCALE/VALOUTSCALE
+c end MMM changed 12/2/19      
 c MMM changed 19/1/19      
       COMMON/PARS2HDMEW/GFCALC,VALINSCALE
       COMMON/PARS2HDMEW1/IELW2HDM,IRENSCHEME,IREFSCHEME
       COMMON/RENMIXANGLES/tgbet2hdmrenl,alph2hdmrenl,tgbet2hdmrenh,
      .     alph2hdmrenh,tgbet2hdmrena,alph2hdmrena,tgbet2hdmrenhp,
-     .     alph2hdmrenhp      
+     .     alph2hdmrenhp
+      COMMON/RENM12/am12renl,am12renh,am12rena,am12renhp
       COMMON/RENLOHLWIDTH_2HDM/HLBBLOR,HLLLLOR,HLMMLOR,HLSSLOR,HLCCLOR,
      .     HLTTLOR,HLWWLOR,HLZZLOR,HLAALOR,HLZALOR,HLHPWMLOR,HLHPHMLOR
       COMMON/RENLOHHWIDTH_2HDM/HHBBLOR,HHLLLOR,HHMMLOR,HHSSLOR,HHCCLOR,
@@ -528,7 +533,10 @@ c end MMM changed 19/1/19
 c end MMM changed 10/7/18      
       COMMON/HMSSM_HDEC/AMHL10
       COMMON/OMIT_ELW_HDEC/IOELW
-
+c MMM changed 18/2/2019      
+      COMMON/MSANGLES/alphams,betams
+c end MMM changed 18/2/2019
+      
       unlikely = -123456789D0
 c     unlikely = 0.D0
 
@@ -539,6 +547,9 @@ c     unlikely = 0.D0
 c MMM changed 10/7/2018      
       OPEN(NFERM,FILE='fermionmasses.dat')
 c end MMM changed 10/7/2018
+c MMM changed 18/2/2019
+      OPEN(NTOPGAM,FILE='alphaandbeta.dat')
+c MMM changed 18/2/2019
       
       read(ni,101)islhai
       read(ni,101)islhao
@@ -625,6 +636,7 @@ c end MMM changed 19/1/19
       READ(NI,100)AM12SQ
 C MMM changed 10/7/18
       READ(NI,333)VALINSCALE
+      READ(NI,333)VALOUTSCALE
 C end MMM changed 10/7/18           
       READ(NI,*)
       READ(NI,100)ALPH2HDM
@@ -638,7 +650,7 @@ C end MMM changed 10/7/18
       READ(NI,100)A3LAM2HDM
       READ(NI,100)A4LAM2HDM
       READ(NI,100)A5LAM2HDM
-c end MMM changed 2178/13
+c end MMM changed 21/8/13
       READ(NI,*)
       READ(NI,100)SUSYSCALE
       READ(NI,100)AMU
@@ -718,6 +730,20 @@ c MMM changed 19/1/19
             TGBET2HDMRENL(i) = 0.D0
          enddo
       ENDIF
+      IF(IRENSCHEME.EQ.0) then
+         do i=1,17,1
+            READ(NI,111)tmpm12(i)
+         enddo
+         do i=1,17,1
+            AM12RENL(i)=tmpm12(i)
+         enddo
+      ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)ttmpm12
+         AM12RENL(1)=ttmpm12
+         do i=2,17,1
+            AM12RENL(i) = 0.D0
+         enddo
+      ENDIF      
 c      call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),IRENSCHEME)
 c
 c
@@ -937,6 +963,20 @@ c
             TGBET2HDMRENH(i) = 0.D0
          enddo
       ENDIF
+      IF(IRENSCHEME.EQ.0) then
+         do i=1,17,1
+            READ(NI,111)tmpm12(i)
+         enddo
+         do i=1,17,1
+            AM12RENH(i)=tmpm12(i)
+         enddo
+      ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)ttmpm12
+         AM12RENH(1)=ttmpm12
+         do i=2,17,1
+            AM12RENH(i) = 0.D0
+         enddo
+      ENDIF            
 c
       READ(NI,*)
       IF(IRENSCHEME.EQ.0) then
@@ -1160,6 +1200,20 @@ c
             TGBET2HDMRENA(i) = 0.D0
          enddo
       ENDIF
+      IF(IRENSCHEME.EQ.0) then
+         do i=1,17,1
+            READ(NI,111)tmpm12(i)
+         enddo
+         do i=1,17,1
+            AM12RENA(i)=tmpm12(i)
+         enddo
+      ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)ttmpm12
+         AM12RENA(1)=ttmpm12
+         do i=2,17,1
+            AM12RENA(i) = 0.D0
+         enddo
+      ENDIF            
 c
       READ(NI,*)
       IF(IRENSCHEME.EQ.0) then
@@ -1322,7 +1376,21 @@ c
             TGBET2HDMRENHP(i) = 0.D0
          enddo
       ENDIF
-c
+      IF(IRENSCHEME.EQ.0) then
+         do i=1,17,1
+            READ(NI,111)tmpm12(i)
+         enddo
+         do i=1,17,1
+            AM12RENHP(i)=tmpm12(i)
+         enddo
+      ELSEIF(IRENSCHEME.NE.0) then
+         READ(NI,111)ttmpm12
+         AM12RENHP(1)=ttmpm12
+         do i=2,17,1
+            AM12RENHP(i) = 0.D0
+         enddo
+      ENDIF      
+c     
       READ(NI,*)
       IF(IRENSCHEME.EQ.0) then
          do i=1,17,1
@@ -1518,7 +1586,12 @@ c
          enddo
       ENDIF
       endif
-c end MMM changed 19/1/19      
+c end MMM changed 19/1/19
+
+c MMM changed 18/2/2019
+      read(NTOPGAM,1112)alphams
+      read(NTOPGAM,1112)betams
+c end MMM changed 18/2/2019 
 
       if(ielw2hdm.eq.0.and.i2hdm.eq.0) then
          print*,''
@@ -2146,8 +2219,8 @@ c MMM changed 11/7/2018
          write(nferm,77)'MB = ',amb
          STOP
       endif
-c end MMM changed 11/7/2018
-
+c end MMM changed 11/7/2018     
+      
 c     write(6,*)'Mb = ',amb
 c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 c     write(6,*)'alpha_s: ',DSQRT(4*PI*ALPHAS_HDEC(1.5D3,3))
@@ -2231,6 +2304,7 @@ c end MMM changed 10/7/2018
 100   FORMAT(10X,G30.20)
 101   FORMAT(10X,I30)
 111   FORMAT(21X,G30.20)
+1112  FORMAT(9X,G30.20)
       
 C--WRITE THE INPUT PARAMTERS TO A DATA-FILE
 
@@ -2364,7 +2438,9 @@ C     WRITE(NPAR,9)'LAMBDA_5 = ',XLAMBDA
 c MMM changed 10/7/2018      
       CLOSE(NFERM)
 c end MMM changed 10/7/2018
+      CLOSE(NTOPGAM)
 
+      
       RETURN
       END
 
@@ -2871,7 +2947,7 @@ c end MMM changed 23/8/2013
       DIMENSION GLTT(2,2),GLBB(2,2),GHTT(2,2),GHBB(2,2),GCTB(2,2),
      .          GLEE(2,2),GHEE(2,2),GCEN(2,2)
       DIMENSION AGDL(4),AGDA(4),AGDH(4),AGDC(2)
-      CHARACTER(50) valinscale
+      CHARACTER(50) valinscale,valoutscale
       dimension hlbrsn1(4,4),hhbrsn1(4,4),habrsn1(4,4)
       double precision minval(1:20),smval(1:30),massval(1:50),
      .                 nmixval(4,4),umixval(2,2),vmixval(2,2),
@@ -2945,7 +3021,8 @@ c MMM changed 19/1/19
       double precision tmpal(1:17),ALPH2HDMRENL(1:17),
      .     TGBET2HDMRENL(1:17),tmptgbet(1:17),ALPH2HDMRENH(1:17),
      .     TGBET2HDMRENH(1:17),ALPH2HDMRENA(1:17),TGBET2HDMRENA(1:17),
-     .     ALPH2HDMRENHP(1:17),TGBET2HDMRENHP(1:17)
+     .     ALPH2HDMRENHP(1:17),TGBET2HDMRENHP(1:17),
+     .     AM12RENL(1:17),AM12RENH(1:17),AM12RENA(1:17),AM12RENHP(1:17)
       double precision HLBBLOR(1:17),HLLLLOR(1:17),HLMMLOR(1:17),
      .     HLSSLOR(1:17),HLCCLOR(1:17),HLTTLOR(1:17),HLWWLOR(1:17),
      .     HLZZLOR(1:17),HLAALOR(1:17),HLZALOR(1:17),HLHPWMLOR(1:17),
@@ -3051,12 +3128,16 @@ c MMM changed 21/8/13
       COMMON/WIDTH_2HDM/hcbrwhh,hhbrchch,hlbrchch,abrhhaz,abrhawphm
 c end MMM changed 21/8/13
 c MMM changed 10/7/18      
+c MMM changed 12/2/19      
+      COMMON/DECAYSCALE/VALOUTSCALE
+c end MMM changed 12/2/19      
 c MMM changed 19/1/19
       COMMON/PARS2HDMEW/GFCALC,VALINSCALE
       COMMON/PARS2HDMEW1/IELW2HDM,IRENSCHEME,IREFSCHEME
       COMMON/RENMIXANGLES/tgbet2hdmrenl,alph2hdmrenl,tgbet2hdmrenh,
      .     alph2hdmrenh,tgbet2hdmrena,alph2hdmrena,tgbet2hdmrenhp,
-     .     alph2hdmrenhp            
+     .     alph2hdmrenhp
+      COMMON/RENM12/am12renl,am12renh,am12rena,am12renhp      
       COMMON/RENLOHLWIDTH_2HDM/HLBBLOR,HLLLLOR,HLMMLOR,HLSSLOR,HLCCLOR,
      .     HLTTLOR,HLWWLOR,HLZZLOR,HLAALOR,HLZALOR,HLHPWMLOR,HLHPHMLOR
       COMMON/RENLOHHWIDTH_2HDM/HHBBLOR,HHLLLOR,HHMMLOR,HHSSLOR,HHCCLOR,
@@ -3314,9 +3395,11 @@ c ------------------------- c
       endif
       write(nout,525) 15,IRENSCHEME,'renormalization scheme EW corrs'
 c MMM changed 19/1/19
-      write(nout,525) 15,IREFSCHEME,'reference ren. scheme EW corrs'
+      write(nout,525) 16,IREFSCHEME,'reference ren. scheme EW corrs'
 c end MMM changed 19/1/19
-      write(nout,5333) 16,VALINSCALE,'input scale'
+      write(nout,5333) 17,VALINSCALE,'ren. scale of MSbar parameters'
+      write(nout,5333) 18,VALOUTSCALE,'ren. scale at which decay is eval
+     .uated'
       endif
 c end MMM changed 10/7/18            
 
@@ -3533,14 +3616,14 @@ c MMM changed 10/7/18
          write(nout,105)
          write(nout,51) 'VCKMIN','CKM mixing'
          write(nout,52) 1,vtb,'V_tb'
-         write(nout,52) 1,vts,'V_ts'
-         write(nout,52) 1,vtd,'V_td'
-         write(nout,52) 1,vcb,'V_cb'
-         write(nout,52) 1,vcs,'V_cs'
-         write(nout,52) 1,vcd,'V_cd'
-         write(nout,52) 1,vub,'V_ub'
-         write(nout,52) 1,vus,'V_us'
-         write(nout,52) 1,vud,'V_ud'
+         write(nout,52) 2,vts,'V_ts'
+         write(nout,52) 3,vtd,'V_td'
+         write(nout,52) 4,vcb,'V_cb'
+         write(nout,52) 5,vcs,'V_cs'
+         write(nout,52) 6,vcd,'V_cd'
+         write(nout,52) 7,vub,'V_ub'
+         write(nout,52) 8,vus,'V_us'
+         write(nout,52) 9,vud,'V_ud'
       endif
 c end MMM changed 10/7/18      
          
@@ -3923,7 +4006,7 @@ c MMM changed 10/7/18
       write(nout,5257) alph2hdmrenl(i),'Corresponding mixing angle alpha
      .'
       write(nout,5257) tgbet2hdmrenl(i),'Corresponding tan(beta)'
-
+      write(nout,5257) am12renl(i),'Corresponding m_12^2'
 
       write(nout,101)
       if(hlbrb1(i).ne.0.D0) then
@@ -4009,6 +4092,7 @@ c MMM changed 10/7/18
       write(nout,5257) alph2hdmrenl(1),'Corresponding mixing angle alpha
      .'
       write(nout,5257) tgbet2hdmrenl(1),'Corresponding tan(beta)'
+      write(nout,5257) am12renl(1),'Corresponding m_12^2'
 
       write(nout,101)
       if(hlbrb1(1).ne.0.D0) then
@@ -4097,6 +4181,7 @@ c MMM changed 10/7/18
       write(nout,5257) alph2hdmrenl(i),'Corresponding mixing angle alpha
      .'
       write(nout,5257) tgbet2hdmrenl(i),'Corresponding tan(beta)'
+      write(nout,5257) am12renl(i),'Corresponding m_12^2'
 
       write(nout,101)
       if(hlbrb2(i).ne.0.D0) then
@@ -4173,7 +4258,7 @@ c MMM changed 10/7/18
       write(nout,5257) alph2hdmrenl(1),'Corresponding mixing angle alpha
      .'
       write(nout,5257) tgbet2hdmrenl(1),'Corresponding tan(beta)'
-
+      write(nout,5257) am12renl(1),'Corresponding m_12^2'
 
       write(nout,101)
       if(hlbrb2(1).ne.0.D0) then
@@ -4473,7 +4558,8 @@ c MMM changed 10/7/18
       write(nout,5257) alph2hdmrenh(i),'Corresponding mixing angle alpha
      .'
       write(nout,5257) tgbet2hdmrenh(i),'Corresponding tan(beta)'
-
+      write(nout,5257) am12renh(i),'Corresponding m_12^2'
+      
       write(nout,101)
       if(hhbrb1(i).ne.0.D0) then
       write(nout,102) hhbrb1(i),2,ib,ibb       ,'BR(H -> b       bb   
@@ -4562,7 +4648,8 @@ c MMM changed 10/7/18
       write(nout,5257) alph2hdmrenh(1),'Corresponding mixing angle alpha
      .'
       write(nout,5257) tgbet2hdmrenh(1),'Corresponding tan(beta)'
-
+      write(nout,5257) am12renh(1),'Corresponding m_12^2'
+      
       write(nout,101)
       if(hhbrb1(1).ne.0.D0) then
       write(nout,102) hhbrb1(1),2,ib,ibb       ,'BR(H -> b       bb   
@@ -4654,7 +4741,8 @@ c MMM changed 10/7/18
       write(nout,5257) alph2hdmrenh(i),'Corresponding mixing angle alpha
      .'
       write(nout,5257) tgbet2hdmrenh(i),'Corresponding tan(beta)'
-
+      write(nout,5257) am12renh(i),'Corresponding m_12^2'
+      
       write(nout,101)
       if(hhbrb2(i).ne.0.D0) then
       write(nout,102) hhbrb2(i),2,ib,ibb    ,'BR(H -> b       bb     )'
@@ -4733,7 +4821,8 @@ c MMM changed 10/7/18
       write(nout,5257) alph2hdmrenh(1),'Corresponding mixing angle alpha
      .'
       write(nout,5257) tgbet2hdmrenh(1),'Corresponding tan(beta)'
-
+      write(nout,5257) am12renh(1),'Corresponding m_12^2'
+      
       write(nout,101)
       if(hhbrb2(1).ne.0.D0) then
       write(nout,102) hhbrb2(1),2,ib,ibb    ,'BR(H -> b       bb     )'
@@ -4942,7 +5031,8 @@ c MMM changed 10/7/18
       write(nout,5257) alph2hdmrena(i),'Corresponding mixing angle alpha
      .'
       write(nout,5257) tgbet2hdmrena(i),'Corresponding tan(beta)'
-
+      write(nout,5257) am12rena(i),'Corresponding m_12^2'
+      
       write(nout,101)
       if(abrb1(i).ne.0.D0) then
       write(nout,102) abrb1(i),2,ib,ibb        ,'BR(A -> b       bb   
@@ -5015,7 +5105,8 @@ c MMM changed 10/7/18
       write(nout,5257) alph2hdmrena(1),'Corresponding mixing angle alpha
      .'
       write(nout,5257) tgbet2hdmrena(1),'Corresponding tan(beta)'
-
+      write(nout,5257) am12rena(1),'Corresponding m_12^2'
+      
       write(nout,101)
       if(abrb1(1).ne.0.D0) then
       write(nout,102) abrb1(1),2,ib,ibb        ,'BR(A -> b       bb   
@@ -5091,7 +5182,8 @@ c MMM changed 10/7/18
       write(nout,5257) alph2hdmrena(i),'Corresponding mixing angle alpha
      .'
       write(nout,5257) tgbet2hdmrena(i),'Corresponding tan(beta)'
-
+      write(nout,5257) am12rena(i),'Corresponding m_12^2'
+      
       write(nout,101)
       if(abrb2(i).ne.0.D0) then
       write(nout,102) abrb2(i),2,ib,ibb     ,'BR(A -> b       bb     )'
@@ -5157,7 +5249,8 @@ c MMM changed 10/7/18
       write(nout,5257) alph2hdmrena(1),'Corresponding mixing angle alpha
      .'
       write(nout,5257) tgbet2hdmrena(1),'Corresponding tan(beta)'
-
+      write(nout,5257) am12rena(1),'Corresponding m_12^2'
+      
       write(nout,101)
       if(abrb2(1).ne.0.D0) then
       write(nout,102) abrb2(1),2,ib,ibb     ,'BR(A -> b       bb     )'
@@ -5355,6 +5448,7 @@ c MMM changed 10/7/18
       write(nout,5257) alph2hdmrenhp(i),'Corresponding mixing angle alph
      .a'
       write(nout,5257) tgbet2hdmrenhp(i),'Corresponding tan(beta)'
+      write(nout,5257) am12renhp(i),'Corresponding m_12^2'
       
       write(nout,101)
       if(hbrbc1(i).ne.0.D0) then
@@ -5430,7 +5524,8 @@ c Bug fix hcwdth1 -> hpwdth1 19/1/19
       write(nout,5257) alph2hdmrenhp(1),'Corresponding mixing angle alph
      .a'
       write(nout,5257) tgbet2hdmrenhp(1),'Corresponding tan(beta)'
-
+      write(nout,5257) am12renhp(1),'Corresponding m_12^2'
+      
       write(nout,101)
       if(hbrbc1(1).ne.0.D0) then
       write(nout,102) hbrbc1(1),2,ic,ibb       ,'BR(H+ -> c       bb  
@@ -5501,13 +5596,14 @@ c Bug fix hcwdth1 -> hpwdth1 19/1/19
 
       write(nout,105)
       write(nout,9999)
-      write(nout,111) 37,hpwdth2(i),'H+ decays with QCD and EW correction
-     .s'
+      write(nout,111) 37,hpwdth2(i),'H+ decays with QCD and EW correctio
+     .ns'
       write(nout,5255) i,'Renormalization Scheme Number'
-      write(nout,5257) alph2hdmrenhp(i),'Corresponding mixing angle alpha
-     .'
+      write(nout,5257) alph2hdmrenhp(i),'Corresponding mixing angle alph
+     .a'
       write(nout,5257) tgbet2hdmrenhp(i),'Corresponding tan(beta)'
-
+      write(nout,5257) am12renhp(i),'Corresponding m_12^2'
+      
       write(nout,101)
       if(hbrbc2(i).ne.0.D0) then
       write(nout,102) hbrbc2(i),2,ic,ibb    ,'BR(H+ -> c       bb     )'
@@ -5566,13 +5662,14 @@ c Bug fix hcwdth1 -> hpwdth1 19/1/19
 
       write(nout,105)
       write(nout,9999)
-      write(nout,111) 37,hpwdth2(1),'H+ decays with QCD and EW correction
-     .s'
+      write(nout,111) 37,hpwdth2(1),'H+ decays with QCD and EW correctio
+     .ns'
       write(nout,5255) irenscheme,'Renormalization Scheme Number'
-      write(nout,5257) alph2hdmrenhp(1),'Corresponding mixing angle alpha
-     .'
+      write(nout,5257) alph2hdmrenhp(1),'Corresponding mixing angle alph
+     .a'
       write(nout,5257) tgbet2hdmrenhp(1),'Corresponding tan(beta)'
-
+      write(nout,5257) am12renhp(1),'Corresponding m_12^2'
+      
       write(nout,101)
       if(hbrbc2(1).ne.0.D0) then
       write(nout,102) hbrbc2(1),2,ic,ibb    ,'BR(H+ -> c       bb     )'
@@ -5724,10 +5821,12 @@ c ------------------------- c
       endif
       write(nou1,525) 15,IRENSCHEME,'renormalization scheme EW corrs'
 c MMM changed 19/1/19
-      write(nou1,525) 15,IREFSCHEME,'reference ren. scheme EW corrs'
+      write(nou1,525) 16,IREFSCHEME,'reference ren. scheme EW corrs'
 c end MMM changed 19/1/19
-      write(nou1,5333) 16,VALINSCALE,'input scale'
-                  
+      write(nou1,5333) 17,VALINSCALE,'input scale'
+      write(nou1,5333) 18,VALOUTSCALE,'ren. scale at which decay is eval
+     .uated'
+                        
 c --------------------- c
 c The CKM mixing matrix c
 c --------------------- c
@@ -5735,14 +5834,14 @@ c --------------------- c
       write(nou1,105)
       write(nou1,51) 'VCKMIN','CKM mixing'
       write(nou1,52) 1,vtb,'V_tb'
-      write(nou1,52) 1,vts,'V_ts'
-      write(nou1,52) 1,vtd,'V_td'
-      write(nou1,52) 1,vcb,'V_cb'
-      write(nou1,52) 1,vcs,'V_cs'
-      write(nou1,52) 1,vcd,'V_cd'
-      write(nou1,52) 1,vub,'V_ub'
-      write(nou1,52) 1,vus,'V_us'
-      write(nou1,52) 1,vud,'V_ud'
+      write(nou1,52) 2,vts,'V_ts'
+      write(nou1,52) 3,vtd,'V_td'
+      write(nou1,52) 4,vcb,'V_cb'
+      write(nou1,52) 5,vcs,'V_cs'
+      write(nou1,52) 6,vcd,'V_cd'
+      write(nou1,52) 7,vub,'V_ub'
+      write(nou1,52) 8,vus,'V_us'
+      write(nou1,52) 9,vud,'V_ud'
 
       if(ihiggs.eq.1.or.ihiggs.eq.5) then
 
@@ -5758,6 +5857,7 @@ c ============================================================================ c
       write(nou1,5257) alph2hdmrenl(i),'Corresponding mixing angle alpha
      .'
       write(nou1,5257) tgbet2hdmrenl(i),'Corresponding tan(beta)'
+      write(nou1,5257) am12renl(i),'Corresponding m_12^2'
       
       write(nou1,113)
       if(hlbblor(i).ne.0.D0) then
@@ -5825,7 +5925,8 @@ c ============================================================================ c
       write(nou1,5257) alph2hdmrenl(1),'Corresponding mixing angle alpha
      .'
       write(nou1,5257) tgbet2hdmrenl(1),'Corresponding tan(beta)'
-
+      write(nou1,5257) am12renl(1),'Corresponding m_12^2'
+      
       write(nou1,113)
       if(hlbblor(1).ne.0.D0) then
       write(nou1,102) hlbblor(1),2,ib,ibb       ,'GAM(h -> b       bb 
@@ -5892,6 +5993,7 @@ c ============================================================================ c
       write(nou1,5257) alph2hdmrenl(i),'Corresponding mixing angle alpha
      .'
       write(nou1,5257) tgbet2hdmrenl(i),'Corresponding tan(beta)'
+      write(nou1,5257) am12renl(i),'Corresponding m_12^2'
       
       write(nou1,113)
       if(hlbbnlo(i).ne.0.D0) then
@@ -5949,7 +6051,8 @@ c ============================================================================ c
       write(nou1,5257) alph2hdmrenl(1),'Corresponding mixing angle alpha
      .'
       write(nou1,5257) tgbet2hdmrenl(1),'Corresponding tan(beta)'
-
+      write(nou1,5257) am12renl(1),'Corresponding m_12^2'
+      
       write(nou1,113)
       if(hlbbnlo(1).ne.0.D0) then
       write(nou1,102) hlbbnlo(1),2,ib,ibb    ,'GAM(h -> b       bb    )'
@@ -6013,6 +6116,7 @@ c ============================================================================ c
       write(nou1,5257) alph2hdmrenh(i),'Corresponding mixing angle alpha
      .'
       write(nou1,5257) tgbet2hdmrenh(i),'Corresponding tan(beta)'
+      write(nou1,5257) am12renh(i),'Corresponding m_12^2'
       
       write(nou1,113)
       if(hhbblor(i).ne.0.D0) then
@@ -6083,7 +6187,8 @@ c ============================================================================ c
       write(nou1,5257) alph2hdmrenh(1),'Corresponding mixing angle alpha
      .'
       write(nou1,5257) tgbet2hdmrenh(1),'Corresponding tan(beta)'
-
+      write(nou1,5257) am12renh(1),'Corresponding m_12^2'
+      
       write(nou1,113)
       if(hhbblor(1).ne.0.D0) then
       write(nou1,102) hhbblor(1),2,ib,ibb       ,'GAM(H -> b       bb 
@@ -6154,7 +6259,8 @@ c ============================================================================ c
       write(nou1,5257) alph2hdmrenh(i),'Corresponding mixing angle alpha
      .'
       write(nou1,5257) tgbet2hdmrenh(i),'Corresponding tan(beta)'
-
+      write(nou1,5257) am12renh(i),'Corresponding m_12^2'
+      
       write(nou1,113)
       if(hhbbnlo(i).ne.0.D0) then
       write(nou1,102) hhbbnlo(i),2,ib,ibb    ,'GAM(H -> b       bb    )'
@@ -6214,7 +6320,8 @@ c ============================================================================ c
       write(nou1,5257) alph2hdmrenh(1),'Corresponding mixing angle alpha
      .'
       write(nou1,5257) tgbet2hdmrenh(1),'Corresponding tan(beta)'
-
+      write(nou1,5257) am12renh(1),'Corresponding m_12^2'
+      
       write(nou1,113)
       if(hhbbnlo(1).ne.0.D0) then
       write(nou1,102) hhbbnlo(1),2,ib,ibb    ,'GAM(H -> b       bb    )'
@@ -6280,6 +6387,7 @@ c ============================================================================ c
       write(nou1,5257) alph2hdmrena(i),'Corresponding mixing angle alpha
      .'
       write(nou1,5257) tgbet2hdmrena(i),'Corresponding tan(beta)'
+      write(nou1,5257) am12rena(i),'Corresponding m_12^2'
       
       write(nou1,113)
       if(abblor(i).ne.0.D0) then
@@ -6335,6 +6443,7 @@ c ============================================================================ c
       write(nou1,5257) alph2hdmrena(1),'Corresponding mixing angle alpha
      .'
       write(nou1,5257) tgbet2hdmrena(1),'Corresponding tan(beta)'
+      write(nou1,5257) am12rena(1),'Corresponding m_12^2'
       
       write(nou1,113)
       if(abblor(1).ne.0.D0) then
@@ -6390,7 +6499,8 @@ c ============================================================================ c
       write(nou1,5257) alph2hdmrena(i),'Corresponding mixing angle alpha
      .'
       write(nou1,5257) tgbet2hdmrena(i),'Corresponding tan(beta)'
-
+      write(nou1,5257) am12rena(i),'Corresponding m_12^2'
+      
       write(nou1,113)
       if(abbnlo(i).ne.0.D0) then
       write(nou1,102) abbnlo(i),2,ib,ibb     ,'GAM(A -> b       bb    )'
@@ -6437,7 +6547,8 @@ c ============================================================================ c
       write(nou1,5257) alph2hdmrena(1),'Corresponding mixing angle alpha
      .'
       write(nou1,5257) tgbet2hdmrena(1),'Corresponding tan(beta)'
-
+      write(nou1,5257) am12rena(1),'Corresponding m_12^2'
+      
       write(nou1,113)
       if(abbnlo(1).ne.0.D0) then
       write(nou1,102) abbnlo(1),2,ib,ibb     ,'GAM(A -> b       bb    )'
@@ -6484,12 +6595,13 @@ c ============================================================================ c
       do i=1,17,1
       write(nou1,105)
       write(nou1,888)
-      write(nou1,112) 37,'H+ non-zero LO decay widths of on-shell and non
-     .-loop induced decays'
+      write(nou1,112) 37,'H+ non-zero LO decay widths of on-shell and no
+     .n-loop induced decays'
       write(nou1,5256) i,'Renormalization Scheme Number'
-      write(nou1,5257) alph2hdmrenhp(i),'Corresponding mixing angle alpha
-     .'
+      write(nou1,5257) alph2hdmrenhp(i),'Corresponding mixing angle alph
+     .a'
       write(nou1,5257) tgbet2hdmrenhp(i),'Corresponding tan(beta)'
+      write(nou1,5257) am12renhp(i),'Corresponding m_12^2'
       
       write(nou1,113)
       if(HPBCLOR(i).ne.0.D0) then
@@ -6551,12 +6663,13 @@ c ============================================================================ c
 
       write(nou1,105)
       write(nou1,888)
-      write(nou1,112) 37,'H+ non-zero LO decay widths of on-shell and non
-     .-loop induced decays'
+      write(nou1,112) 37,'H+ non-zero LO decay widths of on-shell and no
+     .n-loop induced decays'
       write(nou1,5256) irenscheme,'Renormalization Scheme Number'
-      write(nou1,5257) alph2hdmrenhp(1),'Corresponding mixing angle alpha
-     .'
+      write(nou1,5257) alph2hdmrenhp(1),'Corresponding mixing angle alph
+     .a'
       write(nou1,5257) tgbet2hdmrenhp(1),'Corresponding tan(beta)'
+      write(nou1,5257) am12renhp(1),'Corresponding m_12^2'
       
       write(nou1,113)
       if(HPBCLOR(1).ne.0.D0) then
@@ -6618,13 +6731,14 @@ c ============================================================================ c
       do i=1,17,1
       write(nou1,105)
       write(nou1,888)
-      write(nou1,114) 37,'H+ non-zero NLO EW decay widths of on-shell and
-     . non-loop induced decays'
+      write(nou1,114) 37,'H+ non-zero NLO EW decay widths of on-shell an
+     .d non-loop induced decays'
       write(nou1,5256) i,'Renormalization Scheme Number'      
-      write(nou1,5257) alph2hdmrenhp(i),'Corresponding mixing angle alpha
-     .'
+      write(nou1,5257) alph2hdmrenhp(i),'Corresponding mixing angle alph
+     .a'
       write(nou1,5257) tgbet2hdmrenhp(i),'Corresponding tan(beta)'
-
+      write(nou1,5257) am12renhp(i),'Corresponding m_12^2'
+      
       write(nou1,113)
       if(HPBCNLO(i).ne.0.D0) then
       write(nou1,102) hpbcnlo(i),2,ic,ibb  ,'GAM(H+ -> c       bb     )'
@@ -6674,13 +6788,14 @@ c ============================================================================ c
 
       write(nou1,105)
       write(nou1,888)
-      write(nou1,114) 37,'H+ non-zero NLO EW decay widths of on-shell and
-     . non-loop induced decays'
+      write(nou1,114) 37,'H+ non-zero NLO EW decay widths of on-shell an
+     .d non-loop induced decays'
       write(nou1,5256) irenscheme,'Renormalization Scheme Number'      
-      write(nou1,5257) alph2hdmrenhp(1),'Corresponding mixing angle alpha
-     .'
+      write(nou1,5257) alph2hdmrenhp(1),'Corresponding mixing angle alph
+     .a'
       write(nou1,5257) tgbet2hdmrenhp(1),'Corresponding tan(beta)'
-
+      write(nou1,5257) am12renhp(1),'Corresponding m_12^2'
+      
       write(nou1,113)
       if(HPBCNLO(1).ne.0.D0) then
       write(nou1,102) hpbcnlo(1),2,ic,ibb  ,'GAM(H+ -> c       bb     )'
@@ -7147,7 +7262,8 @@ c MMM changed 19/1/19
       double precision ALPH2HDMRENL(1:17),
      .     TGBET2HDMRENL(1:17),ALPH2HDMRENH(1:17),
      .     TGBET2HDMRENH(1:17),ALPH2HDMRENA(1:17),TGBET2HDMRENA(1:17),
-     .     ALPH2HDMRENHP(1:17),TGBET2HDMRENHP(1:17)      
+     .     ALPH2HDMRENHP(1:17),TGBET2HDMRENHP(1:17),
+     .     AM12RENL(1:17),AM12RENH(1:17),AM12RENA(1:17),AM12RENHP(1:17)      
       double precision hggr(1:17),dccr(1:17),dbbr(1:17),hlggrescr(1:17),
      .     hhggrescr(1:17),aggrescr(1:17)
       double precision hlllloresc(1:17),hlmmloresc(1:17),
@@ -7308,7 +7424,8 @@ c MMM changed 19/1/19
       COMMON/PARS2HDMEW1/IELW2HDM,IRENSCHEME,IREFSCHEME
       COMMON/RENMIXANGLES/tgbet2hdmrenl,alph2hdmrenl,tgbet2hdmrenh,
      .     alph2hdmrenh,tgbet2hdmrena,alph2hdmrena,tgbet2hdmrenhp,
-     .     alph2hdmrenhp      
+     .     alph2hdmrenhp
+      COMMON/RENM12/am12renl,am12renh,am12rena,am12renhp      
       COMMON/THDMCOUPREN_HDEC/GATR,GABR,GLTR,GLBR,GHTR,GHBR,GZAHR,GZALR,
      .            GHHHR,GLLLR,GHLLR,GLHHR,GHAAR,GLAAR,GLVVR,GHVVR,
      .            GLPMR,GHPMR,BETAREN,ALPHAREN
@@ -7361,7 +7478,10 @@ c end MMM changed 19/1/19
       COMMON/NLOQCDEWHP/hpwdth2,HBRMN2,HBRLN2,HBRSU2,HBRSC2,HBRCD2,
      .     HBRBC2,HBRBU2,HBRDT2,HBRST2,HBRBT2,HBRWHL2,HBRWHH2,HBRWA2
 c end MMM changed 10/7/18       
-
+c MMM changed 18/2/2019      
+      COMMON/MSANGLES/alphams,betams
+c end MMM changed 18/2/2019
+      
       external hvhinteg
 c end MMM changed 21/8/13
       HVV(X,Y)= GF/(4.D0*PI*DSQRT(2.D0))*X**3/2.D0*BETA_HDEC(Y)
@@ -7580,7 +7700,7 @@ c    .      * (1+WTOP(AMW**2/AMT**2,ALPHAS_HDEC(AMT,3),5))
      .      * LAMB_HDEC(AMB**2/AMT**2,AMW**2/AMT**2)
      .      * ((1-AMW**2/AMT**2)*(1+2*AMW**2/AMT**2)
      .         -AMB**2/AMT**2*(2-AMW**2/AMT**2-AMB**2/AMT**2))
-     .      * (1+WTOP(AMW**2/AMT**2,ALPHAS_HDEC(AMT,3),5))
+     .     * (1+WTOP(AMW**2/AMT**2,ALPHAS_HDEC(AMT,3),5))
       IF(IHIGGS.NE.0.AND.AMT.GT.AMCH+AMB)THEN
        IF(I2HDM.EQ.0)THEN
         TSC = (AMSQ+AMUR+AMDR)/3
@@ -7629,9 +7749,39 @@ c    .      * (1+ALPHAS_HDEC(AMT,3)/PI*CHTOP0(AMCH**2/AMT**2))
      .        +(YMB/AMT)**2*XGAB**2*(1+AMB**2/AMT**2-AMCH**2/AMT**2)
      .      * (1+ALPHAS_HDEC(AMT,3)/PI*CHTOP1(AMCH**2/AMT**2))
      .      + 4*YMB**2/AMT**2*XGAB*GAT)
+c MMM changed 12/2/19       
+       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+          tgbetams = dtan(betams)
+          if(itype2hdm.eq.1) then
+             gatms = 1.D0/tgbetams
+             gabms =-1.D0/tgbetams
+          elseif(itype2hdm.eq.2) then
+             gatms = 1.D0/tgbetams
+             gabms = tgbetams
+          elseif(itype2hdm.eq.3) then
+             gatms = 1.D0/tgbetams
+             gabms =-1.D0/tgbetams
+          elseif(itype2hdm.eq.4) then
+             gatms = 1.D0/tgbetams
+             gabms = tgbetams
+          endif
+          gamt1 = gfcalc*AMT**3/8/DSQRT(2D0)/PI*VTB**2
+     .      * LAMB_HDEC(AMB**2/AMT**2,AMCH**2/AMT**2)
+     .      * (GATMS**2*(1+AMB**2/AMT**2-AMCH**2/AMT**2)
+     .      * (1+ALPHAS_HDEC(AMT,3)/PI*CHTOP(AMCH**2/AMT**2))
+     .        +(YMB/AMT)**2*GABMS**2*(1+AMB**2/AMT**2-AMCH**2/AMT**2)
+     .      * (1+ALPHAS_HDEC(AMT,3)/PI*CHTOP1(AMCH**2/AMT**2))
+     .         + 4*YMB**2/AMT**2*GABMS*GATMS)
+       endif
+c end MMM changed 12/2/19
       ELSE
        GAMT1 = 0
       ENDIF
+c MMM changed 12/2/19      
+      if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
+         gamt0 = gamt0*gfcalc/gf
+      endif
+c end MMM changed 12/2/19
       GAMT1 = GAMT0+GAMT1
 c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 c     write(6,*)'topw: ',GAMT0,WTOP(AMW**2/AMT**2,ALPHAS_HDEC(AMT,3),5),
@@ -9235,13 +9385,13 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
           if(irenscheme.eq.0) then
              do i=1,17,1
-        call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+        call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
         catr(i) = 2*CTT*(1+(1-CTT)*CF(CTT))*GLTR
         cabr(i) = 2*CTB*(1+(1-CTB)*CF(CTB))*GLBR
         cacr(i) = 2*CTC*(1+(1-CTC)*CF(CTC))*GLTR
              end do
           elseif(irenscheme.ne.0) then
-        call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+        call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
         catr(1) = 2*CTT*(1+(1-CTT)*CF(CTT))*GLTR
         cabr(1) = 2*CTB*(1+(1-CTB)*CF(CTB))*GLBR
         cacr(1) = 2*CTC*(1+(1-CTC)*CF(CTC))*GLTR
@@ -9485,7 +9635,7 @@ c MMM changed 19/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-         call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
               HLMMLORESC(i) = HMM*gllepr**2/xglm**2*GFCALC/GF        
               HLMMEW(i) = HLMMLORESC(i)*(1.D0+
      .             (HLMMNLO(i)-HLMMLOR(i))/HLMMLOR(i))
@@ -9495,7 +9645,7 @@ c MMM changed 19/1/19
               endif
               end do
             elseif(irenscheme.ne.0) then
-          call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
               HLMMLORESC(1) = HMM*gllepr**2/xglm**2*GFCALC/GF        
               HLMMEW(1) = HLMMLORESC(1)*(1.D0+
      .             (HLMMNLO(1)-HLMMLOR(1))/HLMMLOR(1))
@@ -9540,7 +9690,7 @@ c MMM changed 19/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                HLLLLORESC(i) = HLL*gllepr**2/xglt**2*GFCALC/GF 
                HLLLEW(i) = HLLLLORESC(i)*(1.D0+
      .              (HLLLNLO(i)-HLLLLOR(i))/HLLLLOR(i))
@@ -9551,7 +9701,7 @@ c               print*,'check',check,hlllloresc(i),hllllor(i),i
                endif
                end do
             elseif(irenscheme.ne.0) then
-          call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
                HLLLLORESC(1) = HLL*gllepr**2/xglt**2*GFCALC/GF                
                HLLLEW(1) = HLLLLORESC(1)*(1.D0+
      .              (HLLLNLO(1)-HLLLLOR(1))/HLLLLOR(1))
@@ -9604,7 +9754,7 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-          call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
             HLSSQCD(i) = HSS*GLBR**2/XGLS**2*GFCALC/GF
             HLSSLORESC(i)=3.D0*HFF(AML,(AMS/AML)**2)*GLBR**2*GFCALC/GF
             check = (HLSSLORESC(i)-HLSSLOR(i))/HLSSLORESC(i)
@@ -9616,7 +9766,7 @@ c MMM changed 19/1/19
      .                 + (HLSSNLO(i)-HLSSLOR(i))/HLSSLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-          call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
             HLSSQCD(1) = HSS*GLBR**2/XGLS**2*GFCALC/GF
             HLSSLORESC(1)=3.D0*HFF(AML,(AMS/AML)**2)*GLBR**2*GFCALC/GF
             check = (HLSSLORESC(1)-HLSSLOR(1))/HLSSLORESC(1)
@@ -9667,7 +9817,7 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
           if(irenscheme.eq.0) then
              do i=1,17,1
-             call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
              HC1=3.D0*HFF(AML,(AMC/AML)**2)
      .            *GLTR**2
      .            *TQCDH(AMC**2/AML**2)
@@ -9688,7 +9838,7 @@ c MMM changed 19/1/19
      .                 (HLCCNLO(i)-HLCCLOR(i))/HLCCLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-          call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)                  
+      call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)                  
              HC1=3.D0*HFF(AML,(AMC/AML)**2)
      .            *GLTR**2
      .            *TQCDH(AMC**2/AML**2)
@@ -9771,7 +9921,7 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
           if(irenscheme.eq.0) then
                do i=1,17,1
-          call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)             
+      call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)             
           HB1=3.D0*HFF(AML,(AMB/AML)**2)
      .         *GLBR**2
      .         *TQCDH(AMB**2/AML**2)
@@ -9793,7 +9943,7 @@ c MMM changed 19/1/19
      .           (HLBBNLO(i)-HLBBLOR(i))/HLBBLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-            call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
             HB1=3.D0*HFF(AML,(AMB/AML)**2)
      .           *GLBR**2
      .           *TQCDH(AMB**2/AML**2)
@@ -9873,7 +10023,7 @@ c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF
                if(ielw2hdm.eq.0) then
                 if(irenscheme.eq.0) then
                      do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                call HTOTT_hdec(aml,amt,amb,amw,amch,gltr,glbr,gatr,gabr,
      .              glvvr,gzahr,htt0)
                HLTTLORESC(i) = factt*htt0*GFCALC**2/GF**2
@@ -9881,7 +10031,7 @@ c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF
                HLTTQCDEW(i) = HLTTLORESC(i)
                      end do
                   elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
                call HTOTT_hdec(aml,amt,amb,amw,amch,gltr,glbr,gatr,gabr,
      .              glvvr,gzahr,htt0)
                HLTTLORESC(1) = factt*htt0*GFCALC**2/GF**2
@@ -9930,7 +10080,7 @@ c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF
                if(ielw2hdm.eq.0) then
                   if(irenscheme.eq.0) then
                      do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                XX(1) = XM1-1D0
                XX(2) = XM1
                XX(3) = XM2
@@ -9971,7 +10121,7 @@ c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF
                HLTTQCDEW(i) = HLTTLORESC(i)
                      end do
                   elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
                XX(1) = XM1-1D0
                XX(2) = XM1
                XX(3) = XM2
@@ -10026,7 +10176,7 @@ c MMM changed 19/1/19
           if(ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-            call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
             HLTTQCD(i) = HTT*gltr**2/glt**2*GFCALC/GF
             HLTTLORESC(i) = 3.D0*HFF(AML,(AMT/AML)**2)*GLTR**2*GFCALC/GF
             check = (HLTTLORESC(i)-HLTTLOR(i))/HLTTLORESC(i)
@@ -10038,7 +10188,7 @@ c MMM changed 19/1/19
      .           (HLTTNLO(i)-HLTTLOR(i))/HLTTLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-            call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
             HLTTQCD(1) = HTT*gltr**2/glt**2*GFCALC/GF
             HLTTLORESC(1) = 3.D0*HFF(AML,(AMT/AML)**2)*GLTR**2*GFCALC/GF
             check = (HLTTLORESC(1)-HLTTLOR(1))/HLTTLORESC(1)
@@ -10083,7 +10233,7 @@ c MMM changed 19/1/19
          if(ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
                do i=1,17,1
-            call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
             HLTTQCD(i) = HTT*gltr**2/glt**2*GFCALC/GF
             HLTTLORESC(i) = 3.D0*HFF(AML,(AMT/AML)**2)*GLTR**2*GFCALC/GF
             check = (HLTTLORESC(i)-HLTTLOR(i))/HLTTLORESC(i)
@@ -10095,7 +10245,7 @@ c MMM changed 19/1/19
      .           (HLTTNLO(i)-HLTTLOR(i))/HLTTLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-            call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
             HLTTQCD(1) = HTT*gltr**2/glt**2*GFCALC/GF
             HLTTLORESC(1) = 3.D0*HFF(AML,(AMT/AML)**2)*GLTR**2*GFCALC/GF
             check = (HLTTLORESC(1)-HLTTLOR(1))/HLTTLORESC(1)
@@ -10145,7 +10295,7 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
           if(irenscheme.eq.0) then
              do i=1,17,1
-        call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+        call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
         catr(i) = 4/3D0 * 2*CTT*(1+(1-CTT)*CF(CTT))*GLTR
      .     * CFACQ_HDEC(0,AML,XRMT)
         cabr(i) = 1/3D0 * 2*CTB*(1+(1-CTB)*CF(CTB))*GLBR
@@ -10157,7 +10307,7 @@ c MMM changed 19/1/19
         cahr(i) = -AMZ**2/2/AMCH**2*CTH*(1-CTH*CF(CTH))*GLPMR
              end do
           elseif(irenscheme.ne.0) then
-        call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+        call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
         catr(1) = 4/3D0 * 2*CTT*(1+(1-CTT)*CF(CTT))*GLTR
      .     * CFACQ_HDEC(0,AML,XRMT)
         cabr(1) = 1/3D0 * 2*CTB*(1+(1-CTB)*CF(CTB))*GLBR
@@ -10344,7 +10494,7 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
           if(irenscheme.eq.0) then
              do i=1,17,1
-        call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+        call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
         FT = -3*2D0/3*(1-4*2D0/3*SS)/DSQRT(SS*CS)*GLTR
         FB = 3*1D0/3*(-1+4*1D0/3*SS)/DSQRT(SS*CS)*GLBR
         FC = -3*2D0/3*(1-4*2D0/3*SS)/DSQRT(SS*CS)*GLTR
@@ -10359,7 +10509,7 @@ c MMM changed 19/1/19
      .       GLPMR
              end do
           elseif(irenscheme.ne.0) then
-        call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+        call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
         FT = -3*2D0/3*(1-4*2D0/3*SS)/DSQRT(SS*CS)*GLTR
         FB = 3*1D0/3*(-1+4*1D0/3*SS)/DSQRT(SS*CS)*GLBR
         FC = -3*2D0/3*(1-4*2D0/3*SS)/DSQRT(SS*CS)*GLTR
@@ -10412,12 +10562,12 @@ c MMM changed 19/1/19
           if(aml.le.2.D0*amw) then
              if(irenscheme.eq.0) then
                 do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                  HLWWLORESC(i) = HWW*GLVVR**2/GLVV**2*GFCALC/GF
                  HLWWEW(i) = HLWWLORESC(i)
                 end do
              elseif(irenscheme.ne.0) then
-                call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
                 HLWWLORESC(1) = HWW*GLVVR**2/GLVV**2*GFCALC/GF
                 HLWWEW(1) = HLWWLORESC(1)
              endif             
@@ -10425,7 +10575,7 @@ c MMM changed 19/1/19
              
             if(irenscheme.eq.0) then
                do i=1,17,1
-                call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+        call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                 HLWWLORESC(i)=HVV(AML,AMW**2/AML**2)*GLVVR**2*GFCALC/GF
                 check = (HLWWLORESC(i)-HLWWLOR(i))/HLWWLORESC(i)
                 if(dabs(check).ge.1.D-5) then
@@ -10435,7 +10585,7 @@ c MMM changed 19/1/19
      .               (HLWWNLO(i)-HLWWLOR(i))/HLWWLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
                 HLWWLORESC(1)=HVV(AML,AMW**2/AML**2)*GLVVR**2*GFCALC/GF
                 check = (HLWWLORESC(1)-HLWWLOR(1))/HLWWLORESC(1)
                 if(dabs(check).ge.1.D-5) then
@@ -10460,12 +10610,12 @@ c MMM changed 19/1/2019
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-                call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                 HLWWLORESC(i) = HWW*GLVVR**2/GLVV**2*GFCALC/GF
                 HLWWEW(i) = HLWWLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
               HLWWLORESC(1) = HWW*GLVVR**2/GLVV**2*GFCALC/GF    
               HLWWEW(1) = HLWWLORESC(1)
            endif   
@@ -10487,12 +10637,12 @@ c MMM changed 19/1/2019
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+        call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                  HLWWLORESC(i) = HWW*GLVVR**2/GLVV**2*GFCALC/GF
                  HLWWEW(i) = HLWWLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+        call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
               HLWWLORESC(1) = HWW*GLVVR**2/GLVV**2*GFCALC/GF
               HLWWEW(1) = HLWWLORESC(1)
            endif              
@@ -10505,7 +10655,7 @@ c MMM changed 19/1/19
           if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                HLWWLORESC(i)=HWW*GLVVR**2/GLVV**2*GFCALC/GF
                check = (HLWWLORESC(i)-HLWWLOR(i))/HLWWLORESC(i)
                if(dabs(check).ge.1.D-5) then
@@ -10515,7 +10665,7 @@ c MMM changed 19/1/19
      .              (HLWWNLO(i)-HLWWLOR(i))/HLWWLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
                HLWWLORESC(1)=HWW*GLVVR**2/GLVV**2*GFCALC/GF
                check = (HLWWLORESC(1)-HLWWLOR(1))/HLWWLORESC(1)
                if(dabs(check).ge.1.D-5) then
@@ -10556,12 +10706,12 @@ c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+        call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                  HLWWLORESC(i) = HWW*GLVVR**2/GLVV**2*GFCALC**2/GF**2
                  HLWWEW(i) = HLWWLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+        call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
               HLWWLORESC(1) = HWW*GLVVR**2/GLVV**2*GFCALC**2/GF**2
               HLWWEW(1) = HLWWLORESC(1)
            endif              
@@ -10583,7 +10733,7 @@ c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                  CWW=3.D0*GF**2*AMW**4/16.D0/PI**3
                  XX(1) = XM1-1D0
                  XX(2) = XM1
@@ -10598,7 +10748,7 @@ c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF
                  HLWWEW(i) = HLWWLORESC(i) 
               end do
            elseif(irenscheme.ne.0) then
-              call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
                  CWW=3.D0*GF**2*AMW**4/16.D0/PI**3
                  XX(1) = XM1-1D0
                  XX(2) = XM1
@@ -10621,7 +10771,7 @@ c MMM changed 19/1/19
           if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                 HLWWLORESC(i)=HWW*GLVVR**2/GLVV**2*GFCALC/GF
                 check = (HLWWLORESC(i)-HLWWLOR(i))/HLWWLORESC(i)
                 if(dabs(check).ge.1.D-5) then
@@ -10631,7 +10781,7 @@ c MMM changed 19/1/19
      .               (HLWWNLO(i)-HLWWLOR(i))/HLWWLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
                 HLWWLORESC(1)=HWW*GLVVR**2/GLVV**2*GFCALC/GF
                 check = (HLWWLORESC(1)-HLWWLOR(1))/HLWWLORESC(1)
                 if(dabs(check).ge.1.D-5) then
@@ -10657,19 +10807,19 @@ c MMM changed 19/1/19
           if(aml.le.2.D0*amz) then
              if(irenscheme.eq.0) then
                 do i=1,17,1
-                call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i) 
+       call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i) 
                 HLZZLORESC(i) = HZZ*GLVVR**2/GLVV**2*GFCALC/GF
                 HLZZEW(i) = HLZZLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-                call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1) 
+       call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1) 
                 HLZZLORESC(1) = HZZ*GLVVR**2/GLVV**2*GFCALC/GF
                 HLZZEW(1) = HLZZLORESC(1)
             endif             
           elseif(aml.gt.2.D0*amz) then
            if(irenscheme.eq.0) then
                do i=1,17,1
-                call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                 HLZZLORESC(i)=HVV(AML,AMZ**2/AML**2)/2.D0*
      .               GLVVR**2*GFCALC/GF
              check = (HLZZLORESC(i)-HLZZLOR(i))/HLZZLORESC(i)
@@ -10680,7 +10830,7 @@ c MMM changed 19/1/19
      .            (HLZZNLO(i)-HLZZLOR(i))/HLZZLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
                HLZZLORESC(1)=HVV(AML,AMZ**2/AML**2)/2.D0*
      .              GLVVR**2*GFCALC/GF
                check = (HLZZLORESC(1)-HLZZLOR(1))/HLZZLORESC(1)
@@ -10706,12 +10856,12 @@ c MMM changed 19/1/2019
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                  HLZZLORESC(i) = HZZ*GLVVR**2/GLVV**2*GFCALC/GF
                  HLZZEW(i) = HLZZLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
               HLZZLORESC(1) = HZZ*GLVVR**2/GLVV**2*GFCALC/GF
               HLZZEW(1) = HLZZLORESC(1)
            endif            
@@ -10733,12 +10883,12 @@ c MMM changed 19/1/2019
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                  HLZZLORESC(i) = HZZ*GLVVR**2/GLVV**2*GFCALC/GF
                  HLZZEW(i) = HLZZLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
               HLZZLORESC(1) = HZZ*GLVVR**2/GLVV**2*GFCALC/GF
               HLZZEW(1) = HLZZLORESC(1)
            endif            
@@ -10751,7 +10901,7 @@ c MMM changed 19/1/19
           if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                   HLZZLORESC(i)=HZZ*GLVVR**2/GLVV**2*GFCALC/GF
                   check = (HLZZLORESC(i)-HLZZLOR(i))/HLZZLORESC(i)
                   if(dabs(check).ge.1.D-5) then
@@ -10761,7 +10911,7 @@ c MMM changed 19/1/19
      .                 (HLZZNLO(i)-HLZZLOR(i))/HLZZLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
                HLZZLORESC(1)=HZZ*GLVVR**2/GLVV**2*GFCALC/GF
                check = (HLZZLORESC(1)-HLZZLOR(1))/HLZZLORESC(1)
                if(dabs(check).ge.1.D-5) then
@@ -10802,12 +10952,12 @@ c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                   HLZZLORESC(i) = HZZ*GLVVR**2/GLVV**2*GFCALC**2/GF**2
                   HLZZEW(i) = HLZZLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
               HLZZLORESC(1) = HZZ*GLVVR**2/GLVV**2*GFCALC**2/GF**2
               HLZZEW(1) = HLZZLORESC(1)
            endif 
@@ -10829,7 +10979,7 @@ c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
        CZZ=3.D0*GF**2*AMZ**4/192.D0/PI**3*(7-40/3.D0*SS+160/9.D0*SS**2)
        XX(1) = XM1-1D0
        XX(2) = XM1
@@ -10844,7 +10994,7 @@ c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF
                   HLZZEW(i) = HLZZLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
        CZZ=3.D0*GF**2*AMZ**4/192.D0/PI**3*(7-40/3.D0*SS+160/9.D0*SS**2)
        XX(1) = XM1-1D0
        XX(2) = XM1
@@ -10867,7 +11017,7 @@ c MMM changed 19/1/19
           if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+        call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                 HLZZLORESC(i)=HZZ*GLVVR**2/GLVV**2*GFCALC/GF
                 check = (HLZZLORESC(i)-HLZZLOR(i))/HLZZLORESC(i)
                 if(dabs(check).ge.1.D-5) then
@@ -10877,7 +11027,7 @@ c MMM changed 19/1/19
      .                 (HLZZNLO(i)-HLZZLOR(i))/HLZZLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
                HLZZLORESC(1)=HZZ*GLVVR**2/GLVV**2*GFCALC/GF
                check = (HLZZLORESC(1)-HLZZLOR(1))/HLZZLORESC(1)
                if(dabs(check).ge.1.D-5) then
@@ -10936,13 +11086,13 @@ c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
                if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                  HLAALORESC(i) = HAA*GLAAR**2/GLAA**2*GABR**2/GAB**2
      .                *GFCALC**2/GF**2
                  HLAAEW(i) = HLAALORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
               HLAALORESC(1) = HAA*GLAAR**2/GLAA**2*GABR**2/GAB**2
      .                *GFCALC**2/GF**2
               HLAAEW(1) = HLAALORESC(1)
@@ -10978,7 +11128,7 @@ c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
                if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                  xx(1) = xm1-1d0
                  xx(2) = xm1
                  xx(3) = xm2
@@ -11007,7 +11157,7 @@ c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
                  HLAAEW(i) = HLAALORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
               xx(1) = xm1-1d0
               xx(2) = xm1
               xx(3) = xm2
@@ -11045,7 +11195,7 @@ c MMM changed 19/1/19
       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
          if(irenscheme.eq.0) then
             do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                HLAALORESC(i)=HAA*glaar**2/glaa**2*GFCALC/GF
                check = (HLAALORESC(i)-HLAALOR(i))/HLAALORESC(i)
                if(dabs(check).ge.1.D-5) then
@@ -11055,7 +11205,7 @@ c MMM changed 19/1/19
      .              (HLAANLO(i)-HLAALOR(i))/HLAALOR(i))
             end do
          elseif(irenscheme.ne.0) then
-            call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
             HLAALORESC(1)=HAA*glaar**2/glaa**2*GFCALC/GF
             check = (HLAALORESC(1)-HLAALOR(1))/HLAALORESC(1)
             if(dabs(check).ge.1.D-5) then
@@ -11091,7 +11241,7 @@ c MMM changed 19/1/19
                if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
                   if(irenscheme.eq.0) then
                      do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                  HLAALORESC(i)=HAA*glaar**2/glaa**2*GFCALC/GF
                  check = (HLAALORESC(i)-HLAALOR(i))/HLAALORESC(i)
                   if(dabs(check).ge.1.D-5) then
@@ -11101,7 +11251,7 @@ c MMM changed 19/1/19
      .                 (HLAANLO(i)-HLAALOR(i))/HLAALOR(i))
                      end do
                   elseif(irenscheme.ne.0) then
-                 call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
                  HLAALORESC(1)=HAA*glaar**2/glaa**2*GFCALC/GF
                  check = (HLAALORESC(1)-HLAALOR(1))/HLAALORESC(1)
                   if(dabs(check).ge.1.D-5) then
@@ -11146,7 +11296,7 @@ c MMM changed 19/1/19
             if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
                if(irenscheme.eq.0) then
                   do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+        call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                   HLCHCHLORESC(i)=Hlchch*glpmr**2/glpm**2*GFCALC/GF
                   check = (HLCHCHLORESC(i)-HLHPHMLOR(i))/HLCHCHLORESC(i)
                   if(dabs(check).ge.1.D-5) then
@@ -11156,7 +11306,7 @@ c MMM changed 19/1/19
      .                 (HLHPHMNLO(i)-HLHPHMLOR(i))/HLHPHMLOR(i))
                   end do
                elseif(irenscheme.ne.0) then
-                  call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+        call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
                   HLCHCHLORESC(1)=Hlchch*glpmr**2/glpm**2*GFCALC/GF
                   check = (HLCHCHLORESC(1)-HLHPHMLOR(1))/HLCHCHLORESC(1)
                   if(dabs(check).ge.1.D-5) then
@@ -11232,12 +11382,12 @@ c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
                      HLAZLORESC = HAZ*GFCALC/GF
                      if(irenscheme.eq.0) then
                         do i=1,17,1
-                   call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                    HLAZLORESC(i) = HAZ*gzalr**2/gzal**2*GFCALC**2/GF**2
                    HLAZEW(i) = HLAZLORESC(i)
                         end do
                      elseif(irenscheme.ne.0) then
-                   call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
                    HLAZLORESC(1) = HAZ*gzalr**2/gzal**2*GFCALC**2/GF**2
                    HLAZEW(1) = HLAZLORESC(1)
                      endif                     
@@ -11267,7 +11417,7 @@ c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
                   if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
                      if(irenscheme.eq.0) then
                         do i=1,17,1
-                   call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                xx(1) = xm1-1d0
                xx(2) = xm1
                xx(3) = xm2
@@ -11289,7 +11439,7 @@ c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
                    HLAZEW(i) = HLAZLORESC(i)
                         end do
                      elseif(irenscheme.ne.0) then
-                   call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
                xx(1) = xm1-1d0
                xx(2) = xm1
                xx(3) = xm2
@@ -11321,7 +11471,7 @@ c MMM changed 19/1/19
             if(ielw2hdm.eq.0) then
                if(irenscheme.eq.0) then
                   do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                  HLAZLORESC(i)=haz*gzalr**2/gzal**2*GFCALC/GF
                  check = (HLAZLORESC(i)-HLZALOR(i))/HLAZLORESC(i)
                  if(dabs(check).ge.1.D-5) then
@@ -11331,7 +11481,7 @@ c MMM changed 19/1/19
      .                (HLZANLO(i)-HLZALOR(i))/HLZALOR(i))
                   end do
                elseif(irenscheme.ne.0) then
-                 call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
                  HLAZLORESC(1)=haz*gzalr**2/gzal**2*GFCALC/GF
                  check = (HLAZLORESC(1)-HLZALOR(1))/HLAZLORESC(1)
                  if(dabs(check).ge.1.D-5) then
@@ -11369,7 +11519,7 @@ c MMM changed 19/1/19
             if(ielw2hdm.eq.0) then
                if(irenscheme.eq.0) then
                   do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                  HLAZLORESC(i)=haz*gzalr**2/gzal**2*GFCALC/GF
                  check = (HLAZLORESC(i)-HLZALOR(i))/HLAZLORESC(i)
                  if(dabs(check).ge.1.D-5) then
@@ -11379,7 +11529,7 @@ c MMM changed 19/1/19
      .                (HLZANLO(i)-HLZALOR(i))/HLZALOR(i))
                   end do
                elseif(irenscheme.ne.0) then
-                 call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
                  HLAZLORESC(1)=haz*gzalr**2/gzal**2*GFCALC/GF
                  check = (HLAZLORESC(1)-HLZALOR(1))/HLAZLORESC(1)
                  if(dabs(check).ge.1.D-5) then
@@ -11478,12 +11628,12 @@ c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
                   if(ielw2hdm.eq.0) then
                      if(irenscheme.eq.0) then
                         do i=1,17,1
-            call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
             HLHPWMLORESC(i) = hhw*ghvvr**2/ghvv**2*GFCALC**2/GF**2
             HLHPWMEW(i) = HLHPWMLORESC(i)
                         end do
                      elseif(irenscheme.ne.0) then
-            call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
             HLHPWMLORESC(1) = hhw*ghvvr**2/ghvv**2*GFCALC**2/GF**2
             HLHPWMEW(1) = HLHPWMLORESC(1)
                      endif                     
@@ -11511,7 +11661,7 @@ c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
                if(ielw2hdm.eq.0) then
                   if(irenscheme.eq.0) then
                      do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                xx(1) = xm1-1d0
                xx(2) = xm1
                xx(3) = xm2
@@ -11531,7 +11681,7 @@ c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
                HLHPWMEW(i) = HLHPWMLORESC(i)
                      end do
                   elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
                xx(1) = xm1-1d0
                xx(2) = xm1
                xx(3) = xm2
@@ -11561,7 +11711,7 @@ c MMM changed 19/1/19
             if(ielw2hdm.eq.0) then
                if(irenscheme.eq.0) then
                   do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                HLHPWMLORESC(i)=hhw*GFCALC/GF*ghvvr*2/ghvv**2
                check = (HLHPWMLORESC(i)-HLHPWMLOR(i))/HLHPWMLORESC(i)
                if(dabs(check).ge.1.D-5) then
@@ -11571,7 +11721,7 @@ c MMM changed 19/1/19
      .              (HLHPWMNLO(i)-HLHPWMLOR(i))/HLHPWMLOR(i))
                   end do
                elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
                HLHPWMLORESC(1)=hhw*GFCALC/GF*ghvvr**2/ghvv**2
                check = (HLHPWMLORESC(1)-HLHPWMLOR(1))/HLHPWMLORESC(1)
                if(dabs(check).ge.1.D-5) then
@@ -11609,7 +11759,7 @@ c MMM changed 19/1/19
             if(ielw2hdm.eq.0) then
                if(irenscheme.eq.0) then
                   do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENL(i),ALPH2HDMRENL(i),AM12RENL(i),i)
                HLHPWMLORESC(i)=hhw*GFCALC/GF*ghvvr**2/ghvv**2
                check = (HLHPWMLORESC(i)-HLHPWMLOR(i))/HLHPWMLORESC(i)
                if(dabs(check).ge.1.D-5) then
@@ -11619,7 +11769,7 @@ c MMM changed 19/1/19
      .              (HLHPWMNLO(i)-HLHPWMLOR(i))/HLHPWMLOR(i))
                   end do
                elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),AM12RENL(1),1)
                HLHPWMLORESC(i)=hhw*GFCALC/GF*ghvvr**2/ghvv**2
                check = (HLHPWMLORESC(1)-HLHPWMLOR(1))/HLHPWMLORESC(1)
                if(dabs(check).ge.1.D-5) then
@@ -12148,7 +12298,8 @@ c MMM changed 19/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),
+     .                 AM12RENHP(i),i)
                HMNLORESC(i) = CFF(AMCH,GABR,(AMMUON/AMCH)**2,0.D0)
      .              *GFCALC/GF
                check = (HMNLORESC(i)-HPMUNULOR(i))/HMNLORESC(i)
@@ -12159,7 +12310,8 @@ c MMM changed 19/1/19
      .              (HPMUNUNLO(i)-HPMUNULOR(i))/HPMUNULOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),
+     .              AM12RENHP(1),1)
                HMNLORESC(1) = CFF(AMCH,GABR,(AMMUON/AMCH)**2,0.D0)
      .              *GFCALC/GF
                check = (HMNLORESC(1)-HPMUNULOR(1))/HMNLORESC(1)
@@ -12206,7 +12358,8 @@ c MMM changed 19/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),
+     .                 AM12RENHP(i),i)
                HLNLORESC(i) = CFF(AMCH,GABR,(AMTAU/AMCH)**2,0.D0)*
      .              GFCALC/GF
             check = (HLNLORESC(i)-HPTAUNULOR(i))/HLNLORESC(i)
@@ -12217,7 +12370,8 @@ c MMM changed 19/1/19
      .           (HPTAUNUNLO(i)-HPTAUNULOR(i))/HPTAUNULOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),
+     .              AM12RENHP(1),1)
                HLNLORESC(1) = CFF(AMCH,GABR,(AMTAU/AMCH)**2,0.D0)*
      .              GFCALC/GF
             check = (HLNLORESC(1)-HPTAUNULOR(1))/HLNLORESC(1)
@@ -12280,7 +12434,8 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),
+     .                 AM12RENHP(i),i)
                 hsu1=3.d0*vus**2*
      .               cqcdm2hdm(amch,gabr,gatr,(ams/amch)**2,eps,ratx)
                 hsu2=3.d0*vus**2*
@@ -12300,7 +12455,8 @@ c MMM changed 19/1/19
      .               /HPSULOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),
+     .              AM12RENHP(1),1)
                 hsu1=3.d0*vus**2*
      .               cqcdm2hdm(amch,gabr,gatr,(ams/amch)**2,eps,ratx)
                 hsu2=3.d0*vus**2*
@@ -12377,7 +12533,8 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),
+     .                 AM12RENHP(i),i)
                   hsc1=3.d0*VCS**2*
      .       cqcdm2hdm(amch,gabr,gatr,(ams/amch)**2,(amc/amch)**2,ratx)
                   hsc2=3.d0*VCS**2*
@@ -12400,7 +12557,8 @@ c MMM changed 19/1/19
      .                 (1.D0+(HPSCNLO(i)-HPSCLOR(i))/HPSCLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),
+     .              AM12RENHP(1),1)
                   hsc1=3.d0*VCS**2*
      .       cqcdm2hdm(amch,gabr,gatr,(ams/amch)**2,(amc/amch)**2,ratx)
                   hsc2=3.d0*VCS**2*
@@ -12470,7 +12628,8 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-            call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),
+     .                 AM12RENHP(i),i)
             hCD1=3.d0*vcd**2*
      .           cqcdm2hdm(amch,gabr,gatr,eps,(amc/amch)**2,ratx)
             hCD2=3.d0*vcd**2*
@@ -12490,7 +12649,8 @@ c MMM changed 19/1/19
      .           /HPDCLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-            call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),
+     .              AM12RENHP(1),1)
             hCD1=3.d0*vcd**2*
      .           cqcdm2hdm(amch,gabr,gatr,eps,(amc/amch)**2,ratx)
             hCD2=3.d0*vcd**2*
@@ -12579,7 +12739,8 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),
+     .                 AM12RENHP(i),i)
                hbc1=3.d0*vcb**2*
      .       cqcdm2hdm(amch,gabr,gatr,(amb/amch)**2,(amc/amch)**2,ratx)
                hbc2=3.d0*vcb**2*
@@ -12599,7 +12760,8 @@ c MMM changed 19/1/19
          HBCQCDEW(i)=HBCQCD(i)*(1.D0+(HPBCNLO(i)-HPBCLOR(i))/HPBCLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),
+     .              AM12RENHP(1),1)
                hbc1=3.d0*vcb**2*
      .       cqcdm2hdm(amch,gabr,gatr,(amb/amch)**2,(amc/amch)**2,ratx)
                hbc2=3.d0*vcb**2*
@@ -12666,7 +12828,8 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),
+     .                 AM12RENHP(i),i)
           hbu1=3.d0*vub**2*
      .         cqcdm2hdm(amch,gabr,gatr,(amb/amch)**2,eps,ratx)
           hbu2=3.d0*vub**2*
@@ -12687,7 +12850,8 @@ c MMM changed 19/1/19
      .         /HPBULOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),
+     .              AM12RENHP(1),1)
           hbu1=3.d0*vub**2*
      .         cqcdm2hdm(amch,gabr,gatr,(amb/amch)**2,eps,ratx)
           hbu2=3.d0*vub**2*
@@ -12750,7 +12914,8 @@ c MMM changed 19/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),
+     .                 AM12RENHP(i),i)
                   FACTB=3.D0*GFCALC**2*AMCH*AMT**4/32.D0/PI**3*gatr**2
                   CALL CTOTT_HDEC(AMCH,AMT,EPS,AMW,i2hdm,gatr,gabr,CTT0)
                   HDT=VTD**2*FACTB*CTT0
@@ -12760,7 +12925,8 @@ c MMM changed 19/1/19
                   HDTQCDEW(i) = HDTLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-                  call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),
+     .              AM12RENHP(1),1)
                   FACTB=3.D0*GFCALC**2*AMCH*AMT**4/32.D0/PI**3*gatr**2
                   CALL CTOTT_HDEC(AMCH,AMT,EPS,AMW,i2hdm,gatr,gabr,CTT0)
                   HDT=VTD**2*FACTB*CTT0
@@ -12825,7 +12991,8 @@ c MMM changed 19/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),
+     .                 AM12RENHP(i),i)
                XX(1) = XM1-1D0
                XX(2) = XM1
                XX(3) = XM2
@@ -12861,7 +13028,8 @@ c MMM changed 19/1/19
            HDTQCDEW(i) = HDTLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),
+     .              AM12RENHP(1),1)
                XX(1) = XM1-1D0
                XX(2) = XM1
                XX(3) = XM2
@@ -12921,7 +13089,8 @@ c MMM changed 19/71/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-            call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),
+     .                 AM12RENHP(i),i)
             HDT2=3.D0*VTD**2*
      .       CQCD2HDM(AMCH,gabr,gatr,(EPS/AMCH)**2,(RMT/AMCH)**2,RATX)
             IF(HDT2.LT.0.D0) HDT2 = 0
@@ -12941,7 +13110,8 @@ c MMM changed 19/71/19
          HDTQCDEW(i)=HDTQCD(i)*(1.D0+(HPTDNLO(i)-HPTDLOR(i))/HPTDLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-            call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),
+     .              AM12RENHP(1),1)
             HDT2=3.D0*VTD**2*
      .       CQCD2HDM(AMCH,gabr,gatr,(EPS/AMCH)**2,(RMT/AMCH)**2,RATX)
             IF(HDT2.LT.0.D0) HDT2 = 0
@@ -13007,7 +13177,8 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),
+     .                 AM12RENHP(i),i)
                HDT2=3.D0*VTD**2*
      .              CQCD2HDM(AMCH,gabr,gatr,EPS,(RMT/AMCH)**2,RATX)
                IF(HDT2.LT.0.D0) HDT2 = 0
@@ -13027,7 +13198,8 @@ c MMM changed 19/1/19
          HDTQCDEW(i)=HDTQCD(i)*(1.D0+(HPTDNLO(i)-HPTDLOR(i))/HPTDLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),
+     .              AM12RENHP(1),1)
                HDT2=3.D0*VTD**2*
      .              CQCD2HDM(AMCH,gabr,gatr,EPS,(RMT/AMCH)**2,RATX)
                IF(HDT2.LT.0.D0) HDT2 = 0
@@ -13101,7 +13273,8 @@ c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),
+     .                 AM12RENHP(i),i)
                   FACTB=3.D0*GFCALC**2/GF**2*
      .                 AMCH*AMT**4/32.D0/PI**3*gat**2
                   CALL CTOTT_HDEC(AMCH,AMT,EPS,AMW,i2hdm,gatr,gabr,CTT0)
@@ -13112,7 +13285,8 @@ c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF
                   HSTQCDEW(i) = HSTLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-                  call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),
+     .              AM12RENHP(1),1)
                   FACTB=3.D0*GFCALC**2/GF**2*
      .                 AMCH*AMT**4/32.D0/PI**3*gat**2
                   CALL CTOTT_HDEC(AMCH,AMT,EPS,AMW,i2hdm,gatr,gabr,CTT0)
@@ -13178,7 +13352,8 @@ c MMM changed 19/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),
+     .                 AM12RENHP(i),i)
                   XX(1) = XM1-1D0
                   XX(2) = XM1
                   XX(3) = XM2
@@ -13214,7 +13389,8 @@ c MMM changed 19/1/19
            HSTQCDEW(i) = HSTLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-                  call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),
+     .              AM12RENHP(1),1)
                   XX(1) = XM1-1D0
                   XX(2) = XM1
                   XX(3) = XM2
@@ -13275,7 +13451,8 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),
+     .                 AM12RENHP(i),i)
                 HST2=3.D0*VTS**2*gfcalc/gf*
      .        CQCD2HDM(AMCH,gabr,gatr,(RMS/AMCH)**2,(RMT/AMCH)**2,RATY)
                 IF(HST2.LT.0.D0) HST2 = 0
@@ -13296,7 +13473,8 @@ c MMM changed 19/1/19
      .               /HPTSLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),
+     .              AM12RENHP(1),1)
                 HST2=3.D0*VTS**2*gfcalc/gf*
      .        CQCD2HDM(AMCH,gabr,gatr,(RMS/AMCH)**2,(RMT/AMCH)**2,RATY)
                 IF(HST2.LT.0.D0) HST2 = 0
@@ -13362,7 +13540,8 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),
+     .                 AM12RENHP(i),i)
                   HST2=3.D0*VTS**2*
      .        CQCD2HDM(AMCH,gabr,gatr,(RMS/AMCH)**2,(RMT/AMCH)**2,RATY)
                   IF(HST2.LT.0.D0) HST2 = 0
@@ -13383,7 +13562,8 @@ c MMM changed 19/1/19
      .                 /HPTSLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),
+     .              AM12RENHP(1),1)
                   HST2=3.D0*VTS**2*
      .        CQCD2HDM(AMCH,gabr,gatr,(RMS/AMCH)**2,(RMT/AMCH)**2,RATY)
                   IF(HST2.LT.0.D0) HST2 = 0
@@ -13452,7 +13632,8 @@ c MMM changed 10/7/18
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),
+     .                 AM12RENHP(i),i)
                   FACTB=3.D0*gfcalc**2*AMCH*AMT**4/32.D0/PI**3*gatr**2
                   CALL CTOTT_HDEC(AMCH,AMT,AMB,AMW,i2hdm,gatr,gabr,CTT0)
                   HBT=VTB**2*FACTB*CTT0
@@ -13462,7 +13643,8 @@ c MMM changed 10/7/18
                   HBTQCDEW(i) = HBTLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-                  call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),
+     .              AM12RENHP(1),1)
                   FACTB=3.D0*gfcalc**2*AMCH*AMT**4/32.D0/PI**3*gatr**2
                   CALL CTOTT_HDEC(AMCH,AMT,AMB,AMW,i2hdm,gatr,gabr,CTT0)
                   HBT=VTB**2*FACTB*CTT0
@@ -13527,7 +13709,8 @@ c MMM changed 19/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),
+     .                 AM12RENHP(i),i)
                 XX(1) = XM1-1D0
                 XX(2) = XM1
                 XX(3) = XM2
@@ -13563,7 +13746,8 @@ c MMM changed 19/1/19
                 HBTQCDEW(i) = HBTLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-                call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),
+     .              AM12RENHP(1),1)
                 XX(1) = XM1-1D0
                 XX(2) = XM1
                 XX(3) = XM2
@@ -13624,7 +13808,8 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),
+     .                 AM12RENHP(i),i)
                HBT2=3.D0*VTB**2*
      .       CQCD2HDM(AMCH,gabr,gatr,(RMB/AMCH)**2,(RMT/AMCH)**2,RATY)
                IF(HBT2.LT.0.D0) HBT2 = 0
@@ -13645,7 +13830,8 @@ c MMM changed 19/1/19
      .              /HPTBLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),
+     .              AM12RENHP(1),1)
                HBT2=3.D0*VTB**2*
      .       CQCD2HDM(AMCH,gabr,gatr,(RMB/AMCH)**2,(RMT/AMCH)**2,RATY)
                IF(HBT2.LT.0.D0) HBT2 = 0
@@ -13712,7 +13898,8 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),
+     .                 AM12RENHP(i),i)
                   HBT2=3.D0*VTB**2*
      .       CQCD2HDM(AMCH,gabr,gatr,(RMB/AMCH)**2,(RMT/AMCH)**2,RATY)
                   IF(HBT2.LT.0.D0) HBT2 = 0
@@ -13733,7 +13920,8 @@ c MMM changed 19/1/19
      .                 /HPTBLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),
+     .              AM12RENHP(1),1)
                   HBT2=3.D0*VTB**2*
      .       CQCD2HDM(AMCH,gabr,gatr,(RMB/AMCH)**2,(RMT/AMCH)**2,RATY)
                   IF(HBT2.LT.0.D0) HBT2 = 0
@@ -13806,12 +13994,14 @@ c Bug fix 19/1/19 GFCALC**2/GF**2 instead of GFCALC/GF
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),
+     .                 AM12RENHP(i),i)
                   HWHLLORESC(i) = HWH*gfcalc**2/gf**2*ghvvr**2/ghvv**2
                   HPWHLEW(i) = HWHLLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),
+     .              AM12RENHP(1),1)
                HWHLLORESC(1) = HWH*gfcalc**2/gf**2*ghvvr**2/ghvv**2
                HPWHLEW(1) = HWHLLORESC(1)
             endif
@@ -13838,7 +14028,8 @@ c MMM changed 19/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),
+     .                 AM12RENHP(i),i)
                   XX(1) = XM1-1D0
                   XX(2) = XM1
                   XX(3) = XM2
@@ -13858,7 +14049,8 @@ c MMM changed 19/1/19
                   HPWHLEW(i) = HWHLLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),
+     .              AM12RENHP(1),1)
                   XX(1) = XM1-1D0
                   XX(2) = XM1
                   XX(3) = XM2
@@ -13887,7 +14079,8 @@ c MMM changed 10/7/18
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),
+     .                 AM12RENHP(i),i)
                   HWHLLORESC(i) = HWH*gfcalc/gf*ghvvr**2/ghvv**2
                   check = (HWHLLORESC(i)-HPWHLLOR(i))/HWHLLORESC(i)
                   if(dabs(check).ge.1.D-5) then
@@ -13897,7 +14090,8 @@ c MMM changed 10/7/18
      .                 +(HPWHLNLO(i)-HPWHLLOR(i))/HPWHLLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),
+     .              AM12RENHP(1),1)
                   HWHLLORESC(1) = HWH*gfcalc/gf*ghvvr**2/ghvv**2
                   check = (HWHLLORESC(1)-HPWHLLOR(1))/HWHLLORESC(1)
                   if(dabs(check).ge.1.D-5) then
@@ -13933,7 +14127,8 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),
+     .                 AM12RENHP(i),i)
                HWHLLORESC(i) = HWH*gfcalc/gf*ghvvr**2/ghvv**2
                check = (HWHLLORESC(i)-HPWHLLOR(i))/HWHLLORESC(i)
                if(dabs(check).ge.1.D-5) then
@@ -13943,7 +14138,8 @@ c MMM changed 19/1/19
      .              (HPWHLNLO(i)-HPWHLLOR(i))/HPWHLLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),
+     .              AM12RENHP(1),1)
                HWHLLORESC(1) = HWH*gfcalc/gf*ghvvr**2/ghvv**2
                check = (HWHLLORESC(1)-HPWHLLOR(1))/HWHLLORESC(1)
                if(dabs(check).ge.1.D-5) then
@@ -14006,12 +14202,14 @@ c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),
+     .                 AM12RENHP(i),i)
                HWHHLORESC(i) = HWHH*gfcalc**2/gf**2*glvvr**2/glvv**2
                HPWHHEW(i) = HWHHLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),
+     .              AM12RENHP(1),1)
                HWHHLORESC(1) = HWHH*gfcalc**2/gf**2*glvvr**2/glvv**2
                HPWHHEW(1) = HWHHLORESC(1)
             endif
@@ -14038,7 +14236,8 @@ c MMM changed 13/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),
+     .                 AM12RENHP(i),i)
                   XX(1) = XM1-1D0
                   XX(2) = XM1
                   XX(3) = XM2
@@ -14058,7 +14257,8 @@ c MMM changed 13/1/19
                   HPWHHEW(i) = HWHHLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-                  call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),
+     .              AM12RENHP(1),1)
                   XX(1) = XM1-1D0
                   XX(2) = XM1
                   XX(3) = XM2
@@ -14087,7 +14287,8 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),
+     .                 AM12RENHP(i),i)
                   HWHHLORESC(i) = HWHH*gfcalc/gf*glvvr**2/glvv**2
                   check = (HWHHLORESC(i)-HPWHHLOR(i))/HWHHLORESC(i)
                   if(dabs(check).ge.1.D-5) then
@@ -14097,7 +14298,8 @@ c MMM changed 19/1/19
      .                 (HPWHHNLO(i)-HPWHHLOR(i))/HPWHHLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),
+     .              AM12RENHP(1),1)
                   HWHHLORESC(1) = HWHH*gfcalc/gf*glvvr**2/glvv**2
                   check = (HWHHLORESC(1)-HPWHHLOR(1))/HWHHLORESC(1)
                   if(dabs(check).ge.1.D-5) then
@@ -14134,7 +14336,8 @@ c MMM changed 10/7/18
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),i)
+                  call THDMCP_HDEC(TGBET2HDMRENHP(i),ALPH2HDMRENHP(i),
+     .                 AM12RENHP(i),i)
                   HWHHLORESC(i) = HWHH*gfcalc/gf*glvvr**2/glvv**2
                   check = (HWHHLORESC(i)-HPWHHLOR(i))/HWHHLORESC(i)
                   if(dabs(check).ge.1.D-5) then
@@ -14144,7 +14347,8 @@ c MMM changed 10/7/18
      .                 (HPWHHNLO(i)-HPWHHLOR(i))/HPWHHLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),1)
+               call THDMCP_HDEC(TGBET2HDMRENHP(1),ALPH2HDMRENHP(1),
+     .              AM12RENHP(1),1)
                   HWHHLORESC(1) = HWHH*gfcalc/gf*glvvr**2/glvv**2
                   check = (HWHHLORESC(1)-HPWHHLOR(1))/HWHHLORESC(1)
                   if(dabs(check).ge.1.D-5) then
@@ -14777,13 +14981,13 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
           if(irenscheme.eq.0) then
              do i=1,17,1
-        call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+        call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
         catr(i) = 2*CTT*(1+(1-CTT)*CF(CTT))*GHTR
         cabr(i) = 2*CTB*(1+(1-CTB)*CF(CTB))*GHBR
         cacr(i) = 2*CTC*(1+(1-CTC)*CF(CTC))*GHTR
              end do
           elseif(irenscheme.ne.0) then
-        call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+        call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
         catr(1) = 2*CTT*(1+(1-CTT)*CF(CTT))*GHTR
         cabr(1) = 2*CTB*(1+(1-CTB)*CF(CTB))*GHBR
         cacr(1) = 2*CTC*(1+(1-CTC)*CF(CTC))*GHTR
@@ -15027,7 +15231,7 @@ c MMM changed 19/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-         call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
               HHMMLORESC(i) = HMM*ghlepr**2/xghm**2*GFCALC/GF
               HHMMEW(i) = HHMMLORESC(i)*(1.D0+
      .             (HHMMNLO(i)-HHMMLOR(i))/HHMMLOR(i))
@@ -15037,7 +15241,7 @@ c MMM changed 19/1/19
               endif
               end do
            elseif(irenscheme.ne.0) then
-         call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
               HHMMLORESC(1) = HMM*ghlepr**2/xghm**2*GFCALC/GF
               HHMMEW(1) = HHMMLORESC(1)*(1.D0+
      .             (HHMMNLO(1)-HHMMLOR(1))/HHMMLOR(1))
@@ -15082,7 +15286,7 @@ c MMM changed 19/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-          call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                HHLLLORESC(i) = HLL*ghlepr**2/xght**2*GFCALC/GF
                HHLLEW(i) = HHLLLORESC(i)*(1.D0+
      .              (HHLLNLO(i)-HHLLLOR(i))/HHLLLOR(i))
@@ -15092,7 +15296,7 @@ c MMM changed 19/1/19
                endif               
                end do
             elseif(irenscheme.ne.0) then
-          call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
                HHLLLORESC(1) = HLL*ghlepr**2/xght**2*GFCALC/GF
                HHLLEW(1) = HHLLLORESC(1)*(1.D0+
      .              (HHLLNLO(1)-HHLLLOR(1))/HHLLLOR(1))
@@ -15145,7 +15349,7 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-            call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
             HHSSQCD(i) = HSS*GHBR**2/XGHS**2*GFCALC/GF
             HHSSLORESC(i) = 3.D0*HFF(AMH,(AMS/AMH)**2)*GHBR**2*GFCALC/GF
             check = (HHSSLORESC(i)-HHSSLOR(i))/HHSSLORESC(i)
@@ -15157,7 +15361,7 @@ c MMM changed 19/1/19
      .           (HHSSNLO(i)-HHSSLOR(i))/HHSSLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-            call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
             HHSSQCD(1) = HSS*GHBR**2/XGHS**2*GFCALC/GF
             HHSSLORESC(1) = 3.D0*HFF(AMH,(AMS/AMH)**2)*GHBR**2*GFCALC/GF
             check = (HHSSLORESC(1)-HHSSLOR(1))/HHSSLORESC(1)
@@ -15208,7 +15412,7 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
           if(irenscheme.eq.0) then
              do i=1,17,1
-          call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
           HC1=3.D0*HFF(AMH,(AMC/AMH)**2)
      .         *GHTR**2
      .         *TQCDH(AMC**2/AMH**2)
@@ -15229,7 +15433,7 @@ c MMM changed 19/1/19
      .                 + (HHCCNLO(i)-HHCCLOR(i))/HHCCLOR(i))
          end do
       elseif(irenscheme.ne.0) then
-          call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
           HC1=3.D0*HFF(AMH,(AMC/AMH)**2)
      .         *GHTR**2
      .         *TQCDH(AMC**2/AMH**2)
@@ -15307,7 +15511,7 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-           call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
            HB1=3.D0*HFF(AMH,(AMB/AMH)**2)
      .          *GHBR**2
      .          *TQCDH(AMB**2/AMH**2)
@@ -15329,7 +15533,7 @@ c MMM changed 19/1/19
      .          + (HHBBNLO(i)-HHBBLOR(i))/HHBBLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-            call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
             HB1=3.D0*HFF(AMH,(AMB/AMH)**2)
      .           *GHBR**2
      .           *TQCDH(AMB**2/AMH**2)
@@ -15467,7 +15671,7 @@ c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
                if(ielw2hdm.eq.0) then
                   if(irenscheme.eq.0) then                    
                      do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                call HTOTT_hdec(amh,amt,amb,amw,amch,ghtr,ghbr,gatr,gabr,
      .              ghvvr,gzalr,htt0)
                HHTTLORESC(i) = factt*htt0*GFCALC**2/GF**2
@@ -15475,7 +15679,7 @@ c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
                HHTTQCDEW(i) = HHTTLORESC(i)                        
                      end do
                   elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
                call HTOTT_hdec(amh,amt,amb,amw,amch,ghtr,ghbr,gatr,gabr,
      .              ghvvr,gzalr,htt0)
                HHTTLORESC(1) = factt*htt0*GFCALC**2/GF**2
@@ -15524,7 +15728,7 @@ c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
                if(ielw2hdm.eq.0) then
                   if(irenscheme.eq.0) then
                      do i=1,17,1
-             call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
              XX(1) = XM1-1D0
              XX(2) = XM1
              XX(3) = XM2
@@ -15565,7 +15769,7 @@ c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
              HHTTQCDEW(i) = HHTTLORESC(i)
                      end do
                   elseif(irenscheme.ne.0) then
-             call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
              XX(1) = XM1-1D0
              XX(2) = XM1
              XX(3) = XM2
@@ -15620,7 +15824,7 @@ c MMM changed 19/1/19
           if(ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-            call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
             HHTTQCD(i) = HTT*ghtr**2/ght**2*GFCALC/GF
             HHTTLORESC(i) = 3.D0*HFF(AMH,(AMT/AMH)**2)*GHTR**2*GFCALC/GF
             check = (HHTTLORESC(i)-HHTTLOR(i))/HHTTLORESC(i)
@@ -15633,7 +15837,7 @@ c MMM changed 19/1/19
                end do
           
             elseif(irenscheme.ne.0) then
-            call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
             HHTTQCD(1) = HTT*ghtr**2/ght**2*GFCALC/GF
             HHTTLORESC(1) = 3.D0*HFF(AMH,(AMT/AMH)**2)*GHTR**2*GFCALC/GF
             check = (HHTTLORESC(1)-HHTTLOR(1))/HHTTLORESC(1)
@@ -15680,7 +15884,7 @@ c MMM changed 19/1/19
          if(ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-            call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
             HHTTQCD(i) = HHT*ghtr**2/ght**2*GFCALC/GF
             HHTTLORESC(i) = 3.D0*HFF(AMH,(AMT/AMH)**2)*GHTR**2*GFCALC/GF
             check = (HHTTLORESC(i)-HHTTLOR(i))/HHTTLORESC(i)
@@ -15692,7 +15896,7 @@ c MMM changed 19/1/19
      .           + (HHTTNLO(i)-HHTTLOR(i))/HHTTLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-            call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
             HHTTQCD(1) = HHT*ghtr**2/ght**2*GFCALC/GF
             HHTTLORESC(1) = 3.D0*HFF(AMH,(AMT/AMH)**2)*GHTR**2*GFCALC/GF
             check = (HHTTLORESC(1)-HHTTLOR(1))/HHTTLORESC(1)
@@ -15741,7 +15945,7 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
           if(irenscheme.eq.0) then
              do i=1,17,1
-        call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+        call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
         catr(i) = 4/3D0 * 2*CTT*(1+(1-CTT)*CF(CTT))*GHTR
      .     * CFACQ_HDEC(0,AMH,XRMT)
         cabr(i) = 1/3D0 * 2*CTB*(1+(1-CTB)*CF(CTB))*GHBR
@@ -15753,7 +15957,7 @@ c MMM changed 19/1/19
         cahr(i) = -AMZ**2/2/AMCH**2*CTH*(1-CTH*CF(CTH))*GHPMR
              end do
           elseif(irenscheme.ne.0) then
-        call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+        call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
         catr(1) = 4/3D0 * 2*CTT*(1+(1-CTT)*CF(CTT))*GHTR
      .     * CFACQ_HDEC(0,AMH,XRMT)
         cabr(1) = 1/3D0 * 2*CTB*(1+(1-CTB)*CF(CTB))*GHBR
@@ -15939,7 +16143,7 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
           if(irenscheme.eq.0) then
              do i=1,17,1
-        call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+        call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
         FT = -3*2D0/3*(1-4*2D0/3*SS)/DSQRT(SS*CS)*GHTR
         FB = 3*1D0/3*(-1+4*1D0/3*SS)/DSQRT(SS*CS)*GHBR
         FC = -3*2D0/3*(1-4*2D0/3*SS)/DSQRT(SS*CS)*GHTR
@@ -15954,7 +16158,7 @@ c MMM changed 19/1/19
      .       GHPMR
              end do
           elseif(irenscheme.ne.0) then
-        call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+        call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
         FT = -3*2D0/3*(1-4*2D0/3*SS)/DSQRT(SS*CS)*GHTR
         FB = 3*1D0/3*(-1+4*1D0/3*SS)/DSQRT(SS*CS)*GHBR
         FC = -3*2D0/3*(1-4*2D0/3*SS)/DSQRT(SS*CS)*GHTR
@@ -16007,12 +16211,12 @@ c MMM changed 19/1/19
           if(amh.le.2.D0*amw) then
              if(irenscheme.eq.0) then
                 do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                  HHWWLORESC(i) = HWW*GHVVR**2/GHVV**2*GFCALC/GF  
                  HHWWEW(i) = HHWWLORESC(i)
                 end do
              elseif(irenscheme.ne.0) then
-                call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
                 HHWWLORESC(1) = HWW*GHVVR**2/GHVV**2*GFCALC/GF                
                 HHWWEW(1) = HHWWLORESC(1)
              endif             
@@ -16020,7 +16224,7 @@ c MMM changed 19/1/19
 
             if(irenscheme.eq.0) then
                do i=1,17,1
-                call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                 HHWWLORESC(i)=HVV(AMH,AMW**2/AMH**2)*GHVVR**2*GFCALC/GF
                 check= (HHWWLORESC(i)-HHWWLOR(i))/HHWWLORESC(i)
                 if(dabs(check).ge.1.D-5) then
@@ -16030,7 +16234,7 @@ c MMM changed 19/1/19
      .               (HHWWNLO(i)-HHWWLOR(i))/HHWWLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
                 HHWWLORESC(1)=HVV(AMH,AMW**2/AMH**2)*GHVVR**2*GFCALC/GF
                 check= (HHWWLORESC(1)-HHWWLOR(1))/HHWWLORESC(1)
                 if(dabs(check).ge.1.D-5) then
@@ -16055,12 +16259,12 @@ c MMM changed 19/1/2019
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+        call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                  HHWWLORESC(i) = HWW*GHVVR**2/GHVV**2*GFCALC/GF
                  HHWWEW(i) = HHWWLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+        call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
               HHWWLORESC(1) = HWW*GHVVR**2/GHVV**2*GFCALC/GF
               HHWWEW(1) = HHWWLORESC(1)
            endif   
@@ -16082,12 +16286,12 @@ c MMM changed 19/1/2019
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+        call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                  HHWWLORESC(i) = HWW*GHVVR**2/GHVV**2*GFCALC/GF
                  HHWWEW(i) = HHWWLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+        call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
               HHWWLORESC(1) = HWW*GHVVR**2/GHVV**2*GFCALC/GF              
               HHWWEW(1) = HHWWLORESC(1)
            endif              
@@ -16100,7 +16304,7 @@ c MMM changed 19/1/19
           if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                 HHWWLORESC(i)=HWW*GHVVR**2/GHVV**2*GFCALC/GF
                 check = (HHWWLORESC(i)-HHWWLOR(i))/HHWWLORESC(i)
                 if(dabs(check).ge.1.D-5) then
@@ -16110,7 +16314,7 @@ c MMM changed 19/1/19
      .               (HHWWNLO(i)-HHWWLOR(i))/HHWWLOR(i))
               end do
            elseif(irenscheme.ne.0) then
-              call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
               HHWWLORESC(1)=HWW*GHVVR**2/GHVV**2*GFCALC/GF
               check = (HHWWLORESC(1)-HHWWLOR(1))/HHWWLORESC(1)
               if(dabs(check).ge.1.D-5) then
@@ -16151,12 +16355,12 @@ c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                  HHWWLORESC(i) = HWW*GHVVR**2/GHVV**2*GFCALC**2/GF**2
                  HHWWEW(i) = HHWWLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
               HHWWLORESC(1) = HWW*GHVVR**2/GHVV**2*GFCALC**2/GF**2
               HHWWEW(1) = HHWWLORESC(1)              
            endif              
@@ -16178,7 +16382,7 @@ c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
        CWW=3.D0*GF**2*AMW**4/16.D0/PI**3
        XX(1) = XM1-1D0
        XX(2) = XM1
@@ -16193,7 +16397,7 @@ c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
                  HHWWEW(i) = HHWWLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
        CWW=3.D0*GF**2*AMW**4/16.D0/PI**3
        XX(1) = XM1-1D0
        XX(2) = XM1
@@ -16216,7 +16420,7 @@ c MMM changed 19/1/19
           if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                   HHWWLORESC(i)=HWW**GHVVR**2/GHVV**2*GFCALC/GF
                   check = (HHWWLORESC(i)-HHWWLOR(i))/HHWWLORESC(i)
                   if(dabs(check).ge.1.D-5) then
@@ -16226,7 +16430,7 @@ c MMM changed 19/1/19
      .                 (HHWWNLO(i)-HHWWLOR(i))/HHWWLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
                HHWWLORESC(1)=HWW**GHVVR**2/GHVV**2*GFCALC/GF
                check = (HHWWLORESC(1)-HHWWLOR(1))/HHWWLORESC(1)
                if(dabs(check).ge.1.D-5) then
@@ -16255,19 +16459,19 @@ c MMM changed 19/1/19
           if(amh.le.2.D0*amz) then
              if(irenscheme.eq.0) then
                 do i=1,17,1
-                   call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                    HHZZLORESC(i) = HZZ*GHVVR**2/GHVV**2*GFCALC/GF
                    HHZZEW(i) = HHZZLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
                HHZZLORESC(1) = HZZ*GHVVR**2/GHVV**2*GFCALC/GF
                HHZZEW(1) = HHZZLORESC(1)
             endif             
           elseif(amh.gt.2.D0*amz) then
            if(irenscheme.eq.0) then
                do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                   HHZZLORESC(i)=HVV(AMH,AMZ**2/AMH**2)/2.D0*GHVVR**2*
      .                 GFCALC/GF
                   check = (HHZZLORESC(i)-HHZZLOR(i))/HHZZLORESC(i)
@@ -16278,7 +16482,7 @@ c MMM changed 19/1/19
      .                 (HHZZNLO(i)-HHZZLOR(i))/HHZZLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
                HHZZLORESC(1)=HVV(AMH,AMZ**2/AMH**2)/2.D0*GHVVR**2*
      .              GFCALC/GF
                check = (HHZZLORESC(1)-HHZZLOR(1))/HHZZLORESC(1)
@@ -16304,12 +16508,12 @@ c MMM changed 19/1/2019
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                  HHZZLORESC(i) = HZZ*GHVVR**2/GHVV**2*GFCALC/GF
                  HHZZEW(i) = HHZZLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
               HHZZLORESC(1) = HZZ*GHVVR**2/GHVV**2*GFCALC/GF
               HHZZEW(1) = HHZZLORESC(1)
            endif            
@@ -16331,12 +16535,12 @@ c MMM changed 19/1/2019
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+        call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                  HHZZLORESC(i) = HZZ*GHVVR**2/GHVV**2*GFCALC/GF                 
                  HHZZEW(i) = HHZZLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+        call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
               HHZZLORESC(1) = HZZ*GHVVR**2/GHVV**2*GFCALC/GF                 
               HHZZEW(1) = HHZZLORESC(1)
            endif            
@@ -16349,7 +16553,7 @@ c MMM changed 19/1/19
           if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                   HHZZLORESC(i)=HZZ*GHVVR**2/GHVV**2*GFCALC/GF
                   check = (HHZZLORESC(i)-HHZZLOR(i))/HHZZLORESC(i)
                   if(dabs(check).ge.1.D-5) then
@@ -16359,7 +16563,7 @@ c MMM changed 19/1/19
      .                 (HHZZNLO(i)-HHZZLOR(i))/HHZZLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
                HHZZLORESC(1)=HZZ*GHVVR**2/GHVV**2*GFCALC/GF
                check = (HHZZLORESC(1)-HHZZLOR(1))/HHZZLORESC(1)
                if(dabs(check).ge.1.D-5) then
@@ -16400,12 +16604,12 @@ c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                  HHZZLORESC(i) = HZZ*GHVVR**2/GHVV**2*GFCALC**2/GF**2
                  HHZZEW(i) = HHZZLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
               HHZZLORESC(1) = HZZ*GHVVR**2/GHVV**2*GFCALC**2/GF**2
               HHZZEW(1) = HHZZLORESC(1)
            endif 
@@ -16427,7 +16631,7 @@ c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
        CZZ=3.D0*GF**2*AMZ**4/192.D0/PI**3*(7-40/3.D0*SS+160/9.D0*SS**2)
        XX(1) = XM1-1D0
        XX(2) = XM1
@@ -16442,7 +16646,7 @@ c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
                  HHZZEW(i) = HHZZLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
        CZZ=3.D0*GF**2*AMZ**4/192.D0/PI**3*(7-40/3.D0*SS+160/9.D0*SS**2)
        XX(1) = XM1-1D0
        XX(2) = XM1
@@ -16465,7 +16669,7 @@ c MMM changed 19/1/19
           if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                   HHZZLORESC(i)=HZZ*GHVVR**2/GHVV**2*GFCALC/GF
                   check = (HHZZLORESC(i)-HHZZLOR(i))/HHZZLORESC(i)
                   if(dabs(check).ge.1.D-5) then
@@ -16475,7 +16679,7 @@ c MMM changed 19/1/19
      .                 (HHZZNLO(i)-HHZZLOR(i))/HHZZLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
                HHZZLORESC(1)=HZZ*GHVVR**2/GHVV**2*GFCALC/GF
                check = (HHZZLORESC(1)-HHZZLOR(1))/HHZZLORESC(1)
                if(dabs(check).ge.1.D-5) then
@@ -16798,13 +17002,13 @@ c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
                if(ielw2hdm.eq.0) then
              if(irenscheme.eq.0) then
                 do i=1,17,1
-                   call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                    HHHLORESC(i) = HHH*GHLLR**2/GHLL**2*GLBR**2/GLB**2*
      .                  GFCALC**2/GF**2
                    HHHEW(i) = HHHLORESC(i)
                 end do
              elseif(irenscheme.ne.0) then
-                call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
                 HHHLORESC(1) = HHH*GHLLR**2/GHLL**2*GLBR**2/GLB**2*
      .               GFCALC**2/GF**2
                 HHHEW(1) = HHHLORESC(1)
@@ -16841,7 +17045,7 @@ c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF
                if(ielw2hdm.eq.0) then
              if(irenscheme.eq.0) then
                 do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                xx(1) = xm1-1d0
                xx(2) = xm1
                xx(3) = xm2
@@ -16870,7 +17074,7 @@ c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF
                HHHEW(i) = HHHLORESC(i)
                 end do
              elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
                xx(1) = xm1-1d0
                xx(2) = xm1
                xx(3) = xm2
@@ -16907,7 +17111,7 @@ c MMM changed 19/1/19
        if(ielw2hdm.eq.0) then
           if(irenscheme.eq.0) then
              do i=1,17,1
-                call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                 HHHLORESC(i)=HHH*ghllr**2/ghll**2*GFCALC/GF
                 check = (HHHLORESC(i)-HHHLHLLOR(i))/HHHLORESC(i)
                 if(dabs(check).ge.1.D-5) then
@@ -16917,7 +17121,7 @@ c MMM changed 19/1/19
      .               (HHHLHLNLO(i)-HHHLHLLOR(i))/HHHLHLLOR(i))
              end do
           elseif(irenscheme.ne.0) then
-             call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
              HHHLORESC(1)=HHH*ghllr**2/ghll**2*GFCALC/GF
              check = (HHHLORESC(1)-HHHLHLLOR(1))/HHHLORESC(1)
              if(dabs(check).ge.1.D-5) then
@@ -16954,7 +17158,7 @@ c MMM changed 19/1/19
        if(ielw2hdm.eq.0) then
           if(irenscheme.eq.0) then
              do i=1,17,1
-                call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                 HHHLORESC(i)=HHH*ghllr**2/ghll**2*GFCALC/GF
                 check = (HHHLORESC(i)-HHHLHLLOR(i))/HHHLORESC(i)
                 if(dabs(check).ge.1.D-5) then
@@ -16964,7 +17168,7 @@ c MMM changed 19/1/19
      .               (HHHLHLNLO(i)-HHHLHLLOR(i))/HHHLHLLOR(i))
              end do
           elseif(irenscheme.ne.0) then
-             call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
              HHHLORESC(1)=HHH*ghllr**2/ghll**2*GFCALC/GF
              check = (HHHLORESC(1)-HHHLHLLOR(1))/HHHLORESC(1)
              if(dabs(check).ge.1.D-5) then
@@ -17175,13 +17379,13 @@ c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
                if(ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                  HHAALORESC(i) = HAA*ghaar**2/ghaa**2*gabr**2/gab**2*
      .                GFCALC**2/GF**2
                  HHAAEW(i) = HHAALORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
               HHAALORESC(1) = HAA*ghaar**2/ghaa**2*gabr**2/gab**2*
      .             GFCALC**2/GF**2
               HHAAEW(1) = HHAALORESC(1)              
@@ -17217,7 +17421,7 @@ c MMM changed 19/1/2019
         if(ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                xx(1) = xm1-1d0
                xx(2) = xm1
                xx(3) = xm2
@@ -17246,7 +17450,7 @@ c MMM changed 19/1/2019
                HHAAEW(i) = HHAALORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
                xx(1) = xm1-1d0
                xx(2) = xm1
                xx(3) = xm2
@@ -17284,7 +17488,7 @@ c MMM changed 19/1/19
       if(ielw2hdm.eq.0) then
          if(irenscheme.eq.0) then
             do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                HHAALORESC(i)=HAA*ghaar**2/ghaa**2*GFCALC/GF
                check = (HHAALORESC(i)-HHAALOR(i))/HHAALORESC(i)
                if(dabs(check).ge.1.D-5) then
@@ -17294,7 +17498,7 @@ c MMM changed 19/1/19
      .              (HHAANLO(i)-HHAALOR(i))/HHAALOR(i))
             end do
          elseif(irenscheme.ne.0) then
-            call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
             HHAALORESC(1)=HAA*ghaar**2/ghaa**2*GFCALC/GF
             check = (HHAALORESC(1)-HHAALOR(1))/HHAALORESC(1)
             if(dabs(check).ge.1.D-5) then
@@ -17331,7 +17535,7 @@ c MMM changed 19/1/19
       if(ielw2hdm.eq.0) then
          if(irenscheme.eq.0) then
             do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                HHAALORESC(i)=HAA*ghaar**2/ghaa**2*GFCALC/GF
                check = (HHAALORESC(i)-HHAALOR(i))/HHAALORESC(i)
                if(dabs(check).ge.1.D-5) then
@@ -17341,7 +17545,7 @@ c MMM changed 19/1/19
      .              (HHAANLO(i)-HHAALOR(i))/HHAALOR(i))
             end do
          elseif(irenscheme.ne.0) then
-            call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
             HHAALORESC(1)=HAA*ghaar**2/ghaa**2*GFCALC/GF
             check = (HHAALORESC(1)-HHAALOR(1))/HHAALORESC(1)
             if(dabs(check).ge.1.D-5) then
@@ -17385,7 +17589,7 @@ c MMM changed 19/1/19
             if(ielw2hdm.eq.0) then
                if(irenscheme.eq.0) then
                   do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                HHCHCHLORESC(i)=hchch*ghpmr**2/ghpm**2*GFCALC/GF
                check = (HHCHCHLORESC(i)-HHHPHMLOR(i))/HHCHCHLORESC(i)
                if(dabs(check).ge.1.D-5) then
@@ -17395,7 +17599,7 @@ c MMM changed 19/1/19
      .                    (HHHPHMNLO(i)-HHHPHMLOR(i))/HHHPHMLOR(i))
                   end do
                elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
                HHCHCHLORESC(1)=hchch*ghpmr**2/ghpm**2*GFCALC/GF
                check = (HHCHCHLORESC(1)-HHHPHMLOR(1))/HHCHCHLORESC(1)
                if(dabs(check).ge.1.D-5) then
@@ -17565,12 +17769,12 @@ c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF
                   if(ielw2hdm.eq.0) then
                      if(irenscheme.eq.0) then
                         do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                   HHAZLORESC(i) = HAZ*gzahr**2/gzah**2*GFCALC**2/GF**2
                   HHAZEW(i) = HHAZLORESC(i)
                         end do
                      elseif(irenscheme.ne.0) then
-                  call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
                   HHAZLORESC(1) = HAZ*gzahr**2/gzah**2*GFCALC**2/GF**2
                   HHAZEW(1) = HHAZLORESC(1)
                      endif                     
@@ -17600,7 +17804,7 @@ c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
                if(ielw2hdm.eq.0) then
                      if(irenscheme.eq.0) then
                         do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                xx(1) = xm1-1d0
                xx(2) = xm1
                xx(3) = xm2
@@ -17623,7 +17827,7 @@ c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
                HHAZEW(i) = HHAZLORESC(i)
                         end do
                      elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
                xx(1) = xm1-1d0
                xx(2) = xm1
                xx(3) = xm2
@@ -17656,7 +17860,7 @@ c MMM changed 19/1/19
             if(ielw2hdm.eq.0) then
                if(irenscheme.eq.0) then
                   do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                HHAZLORESC(i)=haz*GZAHR**2/GZAH**2*GFCALC/GF
                check = (HHAZLORESC(i)-HHZALOR(i))/HHAZLORESC(i)
                if(dabs(check).ge.1.D-5) then
@@ -17666,7 +17870,7 @@ c MMM changed 19/1/19
      .                    (HHZANLO(i)-HHZALOR(i))/HHZALOR(i))
                   end do
                elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
                HHAZLORESC(1)=haz*GZAHR**2/GZAH**2*GFCALC/GF
                check = (HHAZLORESC(1)-HHZALOR(1))/HHAZLORESC(1)
                if(dabs(check).ge.1.D-5) then
@@ -17704,7 +17908,7 @@ c MMM changed 19/1/19
             if(ielw2hdm.eq.0) then
                if(irenscheme.eq.0) then
                   do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                HHAZLORESC(i)=haz*GZAHR**2/GZAH**2*GFCALC/GF
                check = (HHAZLORESC(i)-HHZALOR(i))/HHAZLORESC(i)
                if(dabs(check).ge.1.D-5) then
@@ -17714,7 +17918,7 @@ c MMM changed 19/1/19
      .                    (HHZANLO(i)-HHZALOR(i))/HHZALOR(i))
                   end do
                elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
                HHAZLORESC(1)=haz*GZAHR**2/GZAH**2*GFCALC/GF
                check = (HHAZLORESC(1)-HHZALOR(1))/HHAZLORESC(1)
                if(dabs(check).ge.1.D-5) then
@@ -17887,12 +18091,12 @@ c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
                   if(ielw2hdm.eq.0) then
                      if(irenscheme.eq.0) then
                         do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                HHHPWMLORESC(i) = hhw*GFCALC**2/GF**2*glvvr**2/glvv**2
                HHHPWMEW(i) = HHHPWMLORESC(i)
                         end do
                      elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
                HHHPWMLORESC(1) = hhw*GFCALC**2/GF**2*glvvr**2/glvv**2
                HHHPWMEW(1) = HHHPWMLORESC(1)
                      endif                     
@@ -17920,7 +18124,7 @@ c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
                if(ielw2hdm.eq.0) then
                      if(irenscheme.eq.0) then
                         do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)
                xx(1) = xm1-1d0
                xx(2) = xm1
                xx(3) = xm2
@@ -17941,7 +18145,7 @@ c BUG fix GFCALC**2/GF**2 instead of GFCALC/GF
                HHHPWMEW(i) = HHHPWMLORESC(i)
                         end do
                      elseif(irenscheme.ne.0) then
-                  call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)
                xx(1) = xm1-1d0
                xx(2) = xm1
                xx(3) = xm2
@@ -17972,7 +18176,7 @@ c MMM changed 19/1/19
             if(ielw2hdm.eq.0) then
                if(irenscheme.eq.0) then
                   do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)      
+      call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)      
                HHHPWMLORESC(i)=hhw*GFCALC/GF*glvvr**2/glvv**2
                check = (HHHPWMLORESC(i)-HHHPWMLOR(i))/HHHPWMLORESC(i)
                if(dabs(check).ge.1.D-5) then
@@ -17982,7 +18186,7 @@ c MMM changed 19/1/19
      .              (HHHPWMNLO(i)-HHHPWMLOR(i))/HHHPWMLOR(i))
                   end do
                elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)      
+      call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)      
                HHHPWMLORESC(1)=hhw*GFCALC/GF*glvvr**2/glvv**2
                check = (HHHPWMLORESC(1)-HHHPWMLOR(1))/HHHPWMLORESC(1)
                if(dabs(check).ge.1.D-5) then
@@ -18020,7 +18224,7 @@ c MMM changed 19/1/19
             if(ielw2hdm.eq.0) then
                if(irenscheme.eq.0) then
                   do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),i)      
+      call THDMCP_HDEC(TGBET2HDMRENH(i),ALPH2HDMRENH(i),AM12RENH(i),i)      
                HHHPWMLORESC(i)=hhw*GFCALC/GF*glvvr**2/glvv**2
                check = (HHHPWMLORESC(i)-HHHPWMLOR(i))/HHHPWMLORESC(i)
                if(dabs(check).ge.1.D-5) then
@@ -18030,7 +18234,7 @@ c MMM changed 19/1/19
      .              (HHHPWMNLO(i)-HHHPWMLOR(i))/HHHPWMLOR(i))
                   end do
                elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),1)      
+      call THDMCP_HDEC(TGBET2HDMRENH(1),ALPH2HDMRENH(1),AM12RENH(1),1)      
                HHHPWMLORESC(1)=hhw*GFCALC/GF*glvvr**2/glvv**2
                check = (HHHPWMLORESC(1)-HHHPWMLOR(1))/HHHPWMLORESC(1)
                if(dabs(check).ge.1.D-5) then
@@ -18644,13 +18848,13 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
           if(irenscheme.eq.0) then
              do i=1,17,1
-        call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+        call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),AM12RENA(i),i)
         catr(i) = CTT*CF(CTT)*GATR
         cabr(i) = CTB*CF(CTB)*GABR
         cacr(i) = CTC*CF(CTC)*GATR
              end do
           elseif(irenscheme.ne.0) then
-        call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+        call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),AM12RENA(1),1)
         catr(1) = CTT*CF(CTT)*GATR
         cabr(1) = CTB*CF(CTB)*GABR
         cacr(1) = CTC*CF(CTC)*GATR
@@ -18829,7 +19033,7 @@ c MMM changed 13/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+        call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),AM12RENA(i),i)
                   AMMLORESC(i) = HMM*GFCALC/GF*galepr**2/xgam**2
                   check = (AMMLORESC(i)-AMMLOR(i))/AMMLORESC(i)
                   if(dabs(check).ge.1.D-5) then
@@ -18839,7 +19043,7 @@ c MMM changed 13/1/19
      .                 (AMMNLO(i)-AMMLOR(i))/AMMLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+        call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),AM12RENA(1),1)
                   AMMLORESC(1) = HMM*GFCALC/GF*galepr**2/xgam**2
                   check = (AMMLORESC(1)-AMMLOR(1))/AMMLORESC(1)
                   if(dabs(check).ge.1.D-5) then
@@ -18885,7 +19089,7 @@ c MMM changed 19/1/19
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+        call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),AM12RENA(i),i)
                   ALLLORESC(i) = HLL*GFCALC/GF*galepr**2/xgat**2
                   check = (ALLLORESC(i)-ALLLOR(i))/ALLLORESC(i)
                   if(dabs(check).ge.1.D-5) then
@@ -18895,7 +19099,7 @@ c MMM changed 19/1/19
      .                 +(ALLNLO(i)-ALLLOR(i))/ALLLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                  call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+        call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),AM12RENA(1),1)
                   ALLLORESC(1) = HLL*GFCALC/GF*galepr**2/xgat**2
                   check = (ALLLORESC(1)-ALLLOR(1))/ALLLORESC(1)
                   if(dabs(check).ge.1.D-5) then
@@ -18951,7 +19155,7 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+        call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),AM12RENA(i),i)
                   ASSQCD(i) = HSS*GFCALC/GF*gabr**2/xgas**2
                   ASSLORESC(i) = 3.D0*AFF(AMA,(AMS/AMA)**2)*gabr**2*
      .                 GFCALC/GF
@@ -18964,7 +19168,7 @@ c MMM changed 19/1/19
      .                 /ASSLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+        call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),AM12RENA(1),1)
                ASSQCD(1) = HSS*GFCALC/GF*gabr**2/xgas**2
                ASSLORESC(1) = 3.D0*AFF(AMA,(AMS/AMA)**2)*gabr**2*
      .              GFCALC/GF
@@ -19017,7 +19221,7 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),AM12RENA(i),i)
                 HC1=3.D0*AFF(AMA,(AMC/AMA)**2)
      .               *GATR**2
      .               *TQCDA(AMC**2/AMA**2)
@@ -19040,7 +19244,7 @@ c MMM changed 19/1/19
      .               /ACCLOR(i))
                end do
             elseif(irenscheme.ne.0) then
-                call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),AM12RENA(1),1)
                 HC1=3.D0*AFF(AMA,(AMC/AMA)**2)
      .               *GATR**2
      .               *TQCDA(AMC**2/AMA**2)
@@ -19121,7 +19325,7 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
           if(irenscheme.eq.0) then
              do i=1,17,1
-                call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+        call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),AM12RENA(i),i)
                 HB1=3.D0*AFF(AMA,(AMB/AMA)**2)
      .               *GABR**2
      .               *TQCDA(AMB**2/AMA**2)
@@ -19144,7 +19348,7 @@ c MMM changed 19/1/19
      .               /ABBLOR(i))
              end do
           elseif(irenscheme.ne.0) then
-             call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+        call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),AM12RENA(1),1)
              HB1=3.D0*AFF(AMA,(AMB/AMA)**2)
      .            *GABR**2
      .            *TQCDA(AMB**2/AMA**2)
@@ -19217,7 +19421,7 @@ c MMM changed 19/1/2019
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),AM12RENA(i),i)
                FACTT=6.D0*gfcalc**2*AMA**3*AMT**2/2.D0/128.D0/PI**3*
      .              GATR**2
                call ATOTT_HDEC(ama,amt,amb,amw,amch,att0,gabr,gatr)
@@ -19227,7 +19431,7 @@ c MMM changed 19/1/2019
                ATTQCDEW(i) = ATTLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),AM12RENA(1),1)
               FACTT=6.D0*gfcalc**2*AMA**3*AMT**2/2.D0/128.D0/PI**3*
      .             GATR**2
               call ATOTT_HDEC(ama,amt,amb,amw,amch,att0,gabr,gatr)
@@ -19270,7 +19474,7 @@ c MMM changed 19/1/2019
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),AM12RENA(i),i)
                XX(1) = XM1-1D0
                XX(2) = XM1
                XX(3) = XM2
@@ -19303,7 +19507,7 @@ c MMM changed 19/1/2019
                ATTQCDEW(i) = ATTLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-              call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),AM12RENA(1),1)
               XX(1) = XM1-1D0
               XX(2) = XM1
               XX(3) = XM2
@@ -19350,7 +19554,7 @@ c MMM changed 19/1/19
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then        
            if(irenscheme.eq.0) then
               do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),AM12RENA(i),i)
                  ATTQCD(i) = HTT*GFCALC/GF*GATR**2/GAT**2
                  ATTLORESC(i) = 3.D0*AFF(AMA,(AMT/AMA)**2)*GATR**2*
      .                GFCALC/GF
@@ -19363,7 +19567,7 @@ c MMM changed 19/1/19
      .                /ATTLOR(i))
               end do
            elseif(irenscheme.ne.0) then
-                 call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),AM12RENA(1),1)
                  ATTQCD(1) = HTT*GFCALC/GF*GATR**2/GAT**2
                  ATTLORESC(1) = 3.D0*AFF(AMA,(AMT/AMA)**2)*GATR**2*
      .                GFCALC/GF
@@ -19410,7 +19614,7 @@ c MMM changed 19/1/19
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),AM12RENA(i),i)
                  ATTQCD(i) = HTT*GFCALC/GF*gatr**2/gat**2
                  ATTLORESC(i) = 3.D0*AFF(AMA,(AMT/AMA)**2)*GATR**2*
      .                GFCALC/GF
@@ -19423,7 +19627,7 @@ c MMM changed 19/1/19
      .                /ATTLOR(i))
               end do
            elseif(irenscheme.ne.0) then
-              call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),AM12RENA(1),1)
               ATTQCD(1) = HTT*GFCALC/GF*gatr**2/gat**2
               ATTLORESC(1) = 3.D0*AFF(AMA,(AMT/AMA)**2)*GATR**2*
      .             GFCALC/GF
@@ -19467,7 +19671,7 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
           if(irenscheme.eq.0) then
              do i=1,17,1
-                call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),AM12RENA(i),i)
                 CATR(i) = 4/3D0 * CTT*CF(CTT)*GATR
      .               * CFACQ_HDEC(1,AMA,XRMT)
                 CABR(i) = 1/3D0 * CTB*CF(CTB)*GABR
@@ -19477,7 +19681,7 @@ c MMM changed 19/1/19
                 CALR(i) = 1.D0  * CTL*CF(CTL)*galepr                
              end do
           elseif(irenscheme.ne.0) then
-             call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),AM12RENA(1),1)
              CATR(1) = 4/3D0 * CTT*CF(CTT)*GATR
      .            * CFACQ_HDEC(1,AMA,XRMT)
              CABR(1) = 1/3D0 * CTB*CF(CTB)*GABR
@@ -19560,7 +19764,7 @@ c MMM changed 19/1/19
        if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
           if(irenscheme.eq.0) then
              do i=1,17,1
-                call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),AM12RENA(i),i)
                 TS = SS/CS
                 FT = -3*2D0/3*(1-4*2D0/3*SS)/DSQRT(SS*CS)*GATR
                 FB = 3*1D0/3*(-1+4*1D0/3*SS)/DSQRT(SS*CS)*GABR
@@ -19572,7 +19776,7 @@ c MMM changed 19/1/19
                 CALR(i) = FL*(- CI2(CTL,CLE))
              end do
           elseif(irenscheme.ne.0) then
-             call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),AM12RENA(1),1)
              TS = SS/CS
              FT = -3*2D0/3*(1-4*2D0/3*SS)/DSQRT(SS*CS)*GATR
              FB = 3*1D0/3*(-1+4*1D0/3*SS)/DSQRT(SS*CS)*GABR
@@ -19659,12 +19863,12 @@ c MMM changed 19/1/2019
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),AM12RENA(i),i)
                 AHLZLORESC(i) = HAZ*GFCALC**2/GF**2*gzalr**2/gzal**2
                 AHLZEW(i) = AHLZLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),AM12RENA(1),1)
                AHLZLORESC(1) = HAZ*GFCALC**2/GF**2*gzalr**2/gzal**2
                AHLZEW(1) = AHLZLORESC(1)
             endif                     
@@ -19693,7 +19897,7 @@ c MMM changed 19/1/2019
          if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),AM12RENA(i),i)
                   XX(1) = XM1-1D0
                   XX(2) = XM1
                   XX(3) = XM2
@@ -19715,7 +19919,7 @@ c MMM changed 19/1/2019
                   AHLZEW(i) = AHLZLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),AM12RENA(1),1)
                XX(1) = XM1-1D0
                XX(2) = XM1
                XX(3) = XM2
@@ -19747,7 +19951,7 @@ c MMM changed 19/1/19
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),AM12RENA(i),i)
                  AHLZLORESC(i)=haz*GFCALC/GF*gzalr**2/gzal**2
                  check = (AHLZLORESC(i)-AHLZLOR(i))/AHLZLORESC(i)
                  if(dabs(check).ge.1.D-5) then
@@ -19757,7 +19961,7 @@ c MMM changed 19/1/19
      .                (AHLZNLO(i)-AHLZLOR(i))/AHLZLOR(i))
               end do
            elseif(irenscheme.ne.0) then
-              call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),AM12RENA(1),1)
               AHLZLORESC(1)=haz*GFCALC/GF*gzalr**2/gzal**2
               check = (AHLZLORESC(1)-AHLZLOR(1))/AHLZLORESC(1)
               if(dabs(check).ge.1.D-5) then
@@ -19795,7 +19999,7 @@ c MMM changed 19/1/19
         if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),AM12RENA(i),i)
                  AHLZLORESC(i)=haz*GFCALC/GF*gzalr**2/gzal**2
                  check = (AHLZLORESC(i)-AHLZLOR(i))/AHLZLORESC(i)
                  if(dabs(check).ge.1.D-5) then
@@ -19805,7 +20009,7 @@ c MMM changed 19/1/19
      .                (AHLZNLO(i)-AHLZLOR(i))/AHLZLOR(i))
               end do
            elseif(irenscheme.ne.0) then
-                 call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),AM12RENA(1),1)
                  AHLZLORESC(1)=haz*GFCALC/GF*gzalr**2/gzal**2
                  check = (AHLZLORESC(1)-AHLZLOR(1))/AHLZLORESC(1)
                  if(dabs(check).ge.1.D-5) then
@@ -19871,12 +20075,12 @@ c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF
          if(ielw2hdm.eq.0) then
             if(irenscheme.eq.0) then
                do i=1,17,1
-                  call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),AM12RENA(i),i)
                   AHHZLORESC(i) = HHAZ*GFCALC**2/GF**2*gzahr**2/gzah**2
                   AHHZEW(i) = AHHZLORESC(i)
                end do
             elseif(irenscheme.ne.0) then
-                  call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),AM12RENA(1),1)
                   AHHZLORESC(1) = HHAZ*GFCALC**2/GF**2*gzahr**2/gzah**2
                   AHHZEW(1) = AHHZLORESC(1)
             endif                     
@@ -19905,7 +20109,7 @@ c MMM changed 19/1/2019
         if(ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+       call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),AM12RENA(i),i)
                  XX(1) = XM1-1D0
                  XX(2) = XM1
                  XX(3) = XM2
@@ -19927,7 +20131,7 @@ c MMM changed 19/1/2019
                  AHHZEW(i) = AHHZLORESC(i)
               end do
            elseif(irenscheme.ne.0) then
-                 call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+       call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),AM12RENA(1),1)
                  XX(1) = XM1-1D0
                  XX(2) = XM1
                  XX(3) = XM2
@@ -19959,7 +20163,7 @@ c MMM changed 19/1/19
         if(ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),AM12RENA(i),i)
                  AHHZLORESC(i)=hhaz*GFCALC/GF*gzahr**2/gzah**2
                  check = (AHHZLORESC(i)-AHHZLOR(i))/AHHZLORESC(i)
                  if(dabs(check).ge.1.D-5) then
@@ -19969,7 +20173,7 @@ c MMM changed 19/1/19
      .                (AHHZNLO(i)-AHHZLOR(i))/AHHZLOR(i))
               end do
            elseif(irenscheme.ne.0) then
-                 call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),AM12RENA(1),1)
                  AHHZLORESC(1)=hhaz*GFCALC/GF*gzahr**2/gzah**2
                  check = (AHHZLORESC(1)-AHHZLOR(1))/AHHZLORESC(1)
                  if(dabs(check).ge.1.D-5) then
@@ -20007,7 +20211,7 @@ c MMM changed 19/1/19
         if(ielw2hdm.eq.0) then
            if(irenscheme.eq.0) then
               do i=1,17,1
-                 call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),AM12RENA(i),i)
                  AHHZLORESC(i)=hhaz*GFCALC/GF*gzahr**2/gzah**2
                  check = (AHHZLORESC(i)-AHHZLOR(i))/AHHZLORESC(i)
            if(dabs(check).ge.1.D-5) then
@@ -20017,7 +20221,7 @@ c MMM changed 19/1/19
      .          (AHHZNLO(i)-AHHZLOR(i))/AHHZLOR(i))
               end do
            elseif(irenscheme.ne.0) then
-              call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),AM12RENA(1),1)
               AHHZLORESC(1)=hhaz*GFCALC/GF*gzahr**2/gzah**2
               check = (AHHZLORESC(1)-AHHZLOR(1))/AHHZLORESC(1)
               if(dabs(check).ge.1.D-5) then
@@ -20085,12 +20289,12 @@ c Bug fix GFCALC**2/GF**2 instead of GFCALC/GF
                   if(ielw2hdm.eq.0) then
                      if(irenscheme.eq.0) then
                         do i=1,17,1
-                call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),AM12RENA(i),i)
                 AHPWMLORESC(i) = hawphm*GFCALC**2/GF**2
                 AHPWMEW(i) = AHPWMLORESC(i)
                         end do
                      elseif(irenscheme.ne.0) then
-                call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),AM12RENA(1),1)
                 AHPWMLORESC(1) = hawphm*GFCALC**2/GF**2
                 AHPWMEW(1) = AHPWMLORESC(1)
                      endif                     
@@ -20117,7 +20321,7 @@ c MMM changed 19/1/19
                   if(ielw2hdm.eq.0) then
                      if(irenscheme.eq.0) then
                         do i=1,17,1
-               call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),i)
+      call THDMCP_HDEC(TGBET2HDMRENA(i),ALPH2HDMRENA(i),AM12RENA(i),i)
                xx(1) = xm1-1d0
                xx(2) = xm1
                xx(3) = xm2
@@ -20137,7 +20341,7 @@ c MMM changed 19/1/19
                AHPWMEW(i) = AHPWMLORESC(i)
                         end do
                      elseif(irenscheme.ne.0) then
-               call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),1)
+      call THDMCP_HDEC(TGBET2HDMRENA(1),ALPH2HDMRENA(1),AM12RENA(1),1)
                xx(1) = xm1-1d0
                xx(2) = xm1
                xx(3) = xm2
@@ -21809,7 +22013,7 @@ c MMM changed 19/1/19
 C ************* SUBROUTINE FOR THE 2HDM REN COUPLINGS *****************
 c Only parametrization 1 is applied, as the lambda1...5 for the changed
 c alpha, beta that fit with the given input masses are not given.      
-      SUBROUTINE THDMCP_HDEC(TGBETA,ALPHA,IRENORMSCHEME)
+      SUBROUTINE THDMCP_HDEC(TGBETA,ALPHA,AM12H2,IRENORMSCHEME)
       IMPLICIT DOUBLE PRECISION (A-H,M,O-Z)
       CHARACTER(50) valinscale      
       DOUBLE PRECISION LA1,LA2,LA3,LA4,LA5,LA6,LA7,LA3T
@@ -21844,8 +22048,10 @@ c alpha, beta that fit with the given input masses are not given.
       bet = bb
       cb = dcos(bb)
       sb = dsin(bb)
-      ammh2 = AM12SQ/sb/cb
-
+c MMM changed 12/2/19      
+      ammh2 = AM12H2/sb/cb
+c end MMM changed 12/2/19
+      
 c This is parametrization 1
       sa = dsin(alpha)
       ca = dcos(alpha)

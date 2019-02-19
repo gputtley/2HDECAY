@@ -2,47 +2,47 @@
 #Filename: 2HDECAY.py
 
 
- ###############################################################################################################
-#                                                                                                               #
-#                                                    2HDECAY                                                    #
-#                                                                                                               #
-#   Purpose:    A program for the calculation One-Loop Electroweak Corrections to Higgs Decays in the           #
-#               Two-Higgs-Doublet Model (2HDM) Including State-of-the-Art QCD Corrections                       #
-#   Authors:    Marcel Krause (marcel.krause@kit.edu)                                                           #
-#               Prof. Dr. M. Margarete Muehlleitner (margarete.muehlleitner@kit.edu)                            #
-#               Dr. Michael Spira (michael.spira@psi.ch)                                                        #
-#   Version:    1.1.0                                                                                           #
-#   Date:       30.10.2018                                                                                      #
-#   Copyright:  Copyright (C) 2018-2019, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira         #
-#   License:    GNU General Public License (GNU GPL-3.0-or-later)                                               #
-#                                                                                                               #
-#               2HDECAY is released under GNU General Public License (GNU GPL-3.0-or-later).                    #
-#               This program is free software: you can redistribute it and/or modify it under the terms of the  #
-#               GNU General Public License as published by the Free Software Foundation, either version 3 of    #
-#               the License, or any later version.                                                              #
-#                                                                                                               #
-#               This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;       #
-#               without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.       #
-#               See the GNU General Public License for more details.                                            #
-#                                                                                                               #
-#               You have received a copy (LICENSE.md) of the GNU General Public License along with this program #
-#               in the 2HDECAY root directory.                                                                  #
-#                                                                                                               #
-#   Citation:   When you use this program, please acknowledge the work of our and other groups by citing the    #
-#               following papers:                                                                               #
-#                   The manual for 2HDECAY:                                                                     #
-#                    - M. Krause, M. Muhlleitner, M. Spira, arXiv:1810.00768                                    #
-#                   The manuals for HDECAY:                                                                     #
-#                    - A. Djouadi, J. Kalinowski, M. Spira, Comp. Phys. Commun. 108 (1998) 56, hep-ph/9704448   #
-#                    - A. Djouadi, J. Kalinowski, M. Muhlleitner, M. Spira, arXiv:1801.09506 [hep-ph]           #
-#                   The papers on the EW correction to the 2HDM decays:                                         #
-#                    - M. Krause, R. Lorenz, M. Muhlleitner, R. Santos, H. Ziesche, JHEP 1609 (2016) 143        #
-#                    - M. Krause, M. Muhlleitner, R. Santos, H. Ziesche, Phys.Rev. D95 (2017) no.7, 075019      #
-#                    - A. Denner, S. Dittmaier, J.-N. Lang, J. High Energ. Phys. (2018) 2018: 104               #
-#                   The publication of LoopTools:                                                               #
-#                    - T. Hahn, M. Perez-Victoria, Comp. Phys. Commun. 118 (1999) 153-165, hep-ph/9807565       #
-#                                                                                                               #
- ###############################################################################################################
+ ##########################################################################################################################################
+#                                                                                                                                          #
+#                                                                2HDECAY                                                                   #
+#                                                                                                                                          #
+#   Purpose:    A program for the calculation One-Loop Electroweak Corrections to Higgs Decays in the                                      #
+#               Two-Higgs-Doublet Model (2HDM) Including State-of-the-Art QCD Corrections                                                  #
+#   Authors:    Marcel Krause (marcel.krause@kit.edu)                                                                                      #
+#               Prof. Dr. M. Margarete Muehlleitner (margarete.muehlleitner@kit.edu)                                                       #
+#               Dr. Michael Spira (michael.spira@psi.ch)                                                                                   #
+#   Version:    1.1.0                                                                                                                      #
+#   Date:       30.10.2018                                                                                                                 #
+#   Copyright:  Copyright (C) 2018-2019, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira                                    #
+#   License:    GNU General Public License (GNU GPL-3.0-or-later)                                                                          #
+#                                                                                                                                          #
+#               2HDECAY is released under GNU General Public License (GNU GPL-3.0-or-later).                                               #
+#               This program is free software: you can redistribute it and/or modify it under the terms of the                             #
+#               GNU General Public License as published by the Free Software Foundation, either version 3 of                               #
+#               the License, or any later version.                                                                                         #
+#                                                                                                                                          #
+#               This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;                                  #
+#               without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                                  #
+#               See the GNU General Public License for more details.                                                                       #
+#                                                                                                                                          #
+#               You have received a copy (LICENSE.md) of the GNU General Public License along with this program                            #
+#               in the 2HDECAY root directory.                                                                                             #
+#                                                                                                                                          #
+#   Citation:   When you use this program, please acknowledge the work of our and other groups by citing the                               #
+#               following papers:                                                                                                          #
+#                   The manual for 2HDECAY:                                                                                                #
+#                    - M. Krause, M. Muhlleitner, M. Spira, arXiv:1810.00768                                                               #
+#                   The manuals for HDECAY:                                                                                                #
+#                    - A. Djouadi, J. Kalinowski, M. Spira, Comp. Phys. Commun. 108 (1998) 56, hep-ph/9704448                              #
+#                    - A. Djouadi, J. Kalinowski, M. Muhlleitner, M. Spira, arXiv:1801.09506 (hep-ph)                                      #
+#                   The papers on the EW correction to the 2HDM decays:                                                                    #
+#                    - M. Krause, R. Lorenz, M. Muhlleitner, R. Santos, H. Ziesche, JHEP 1609 (2016) 143, arXiv:1605.04853 (hep-ph)        #
+#                    - M. Krause, M. Muhlleitner, R. Santos, H. Ziesche, Phys.Rev. D95 (2017) no.7, 075019, arXiv:1609.04185 (hep-ph)      #
+#                    - A. Denner, S. Dittmaier, J.-N. Lang, J. High Energ. Phys. (2018) 2018: 104, arXiv:1808.03466 (hep-ph)               #
+#                   The publication of LoopTools:                                                                                          #
+#                    - T. Hahn, M. Perez-Victoria, Comp. Phys. Commun. 118 (1999) 153-165, hep-ph/9807565                                  #
+#                                                                                                                                          #
+ ##########################################################################################################################################
 
 
 #------------------------------#
@@ -60,7 +60,7 @@ import CommonFunctions      # Provides common, often used functions for differen
 #        Settings         #
 #-------------------------#
 # WARNING: do not change these settings if you do not know what they do!
-lineToInsert = 123      # This is the line at which the temporary input file ends and at which we append the electroweak corrections
+lineToInsert = 124      # This is the line at which the temporary input file ends and at which we append the electroweak corrections
 lineWhereAlphaAtMZ = 26 # This is the line at which in the temporary input file the fine-structure constant at the Z boson mass MZ is specified
 lineWhereGFCalc = 28    # This is the line at which in the temporary input file the calculated Fermi constant GFCALC is specified
 lineWhereMZ = 31        # This is the line at which in the temporary input file the Z boson mass MZ is specified
@@ -99,11 +99,11 @@ When you use this program please cite:
 	 - M. Krause, M. Muhlleitner, M. Spira, arXiv:1810.00768
 	The manuals for HDECAY:
 	 - A. Djouadi, J. Kalinowski, M. Spira, Comp. Phys. Commun. 108 (1998) 56, hep-ph/9704448
-	 - A. Djouadi, J. Kalinowski, M. Muhlleitner, M. Spira, arXiv:1801.09506 [hep-ph]
+	 - A. Djouadi, J. Kalinowski, M. Muhlleitner, M. Spira, arXiv:1801.09506 (hep-ph)
 	The papers on the EW correction to the 2HDM decays:
-	 - M. Krause, R. Lorenz, M. Muhlleitner, R. Santos, H. Ziesche, JHEP 1609 (2016) 143
-	 - M. Krause, M. Muhlleitner, R. Santos, H. Ziesche, Phys.Rev. D95 (2017) no.7, 075019
-	 - A. Denner, S. Dittmaier, J.-N. Lang, J. High Energ. Phys. (2018) 2018: 104
+	 - M. Krause, R. Lorenz, M. Muhlleitner, R. Santos, H. Ziesche, JHEP 1609 (2016) 143, arXiv:1605.04853 (hep-ph)
+	 - M. Krause, M. Muhlleitner, R. Santos, H. Ziesche, Phys.Rev. D95 (2017) no.7, 075019, arXiv:1609.04185 (hep-ph)
+	 - A. Denner, S. Dittmaier, J.-N. Lang, J. High Energ. Phys. (2018) 2018: 104, arXiv:1808.03466 (hep-ph)
 	The publication of LoopTools:
 	 - T. Hahn, M. Perez-Victoria, Comp. Phys. Commun. 118 (1999) 153-165, hep-ph/9807565
 
@@ -137,12 +137,16 @@ Copyright 2018-2019, Marcel Krause, Milada Margarete Muehlleitner and Michael Sp
 		print("Copying input files into HDECAY folder...")
 		filenameIn = "Input" + os.sep + inputFileTemp
 		filenameOut = "HDECAY" + os.sep + "hdecay.in"
-		# Remove any existing input and fermion masses file in HDECAY
+		# Remove any existing input and fermion masses file in HDECAY and prepare a template mixing angles file
 		if os.path.isfile(filenameOut):
 			os.remove(filenameOut)
 		if os.path.isfile("HDECAY" + os.sep + "fermionmasses.dat"):
 			os.remove("HDECAY" + os.sep + "fermionmasses.dat")
+		if os.path.isfile("HDECAY" + os.sep + "alphaandbeta.dat"):
+			os.remove("HDECAY" + os.sep + "alphaandbeta.dat")
 		copyfile(filenameIn, filenameOut)
+		with open("HDECAY" + os.sep + "alphaandbeta.dat", 'w') as fileHandler:
+			fileHandler.write(' alpha = 0D0\n beta  = 0D0\n')
 		print("... done.\n")
 
 		# Let HDECAY run in minimal mode to produce the fermion mass file
@@ -172,10 +176,14 @@ Copyright 2018-2019, Marcel Krause, Milada Margarete Muehlleitner and Michael Sp
 			# If the parameter type is 2, then the reference renormalization scheme has to be set to zero
 			if (lineCount == lineWhereRefScheme):
 				refScheme = int((line.split())[2])
+				if (refScheme == 0):
+					print("\nERROR: REFSCHEM=0 is given as input, but REFSCHEM must be greater than zero.")
+					print("2HDECAY will be terminated now (ERROR: REFSCHEM=0 was set).")
+					sys.exit()
 				if (refScheme != 0) and (paramType == 2):
 					convertedFileHandler.append("REFSCHEM = 0\n")
-					print("\nWARNING: RefScheme is given as a non-zero value, but parameterType=2 (lambdas as input) is set.")
-					print("RefScheme is overwritten to zero, automatic parameter conversion is deactivated!")
+					print("\nWARNING: REFSCHEM (line 59) is given as a non-zero value, but TYPE=2 (line 57, lambdas as input) is set.")
+					print("REFSCHEM is overwritten to zero, automatic parameter conversion is deactivated!")
 					lineCount += 1
 					continue
 			# Write the current line in an array
@@ -212,7 +220,7 @@ Copyright 2018-2019, Marcel Krause, Milada Margarete Muehlleitner and Michael Sp
 		convertedFile = ''
 		renScaleIsDynamic = '0'
 		for line in convertedFileHandler:
-			if "INSCALE" in line and "MIN" in line:
+			if "OUTSCALE" in line and "MIN" in line:
 				renScaleIsDynamic = '1'
 			if lineCount == lineWhereGFCalc:
 				convertedFile += GFline
@@ -279,6 +287,8 @@ Copyright 2018-2019, Marcel Krause, Milada Margarete Muehlleitner and Michael Sp
 		# Cleaning 
 		if os.path.isfile("HDECAY" + os.sep + "fermionmasses.dat"):
 			os.remove("HDECAY" + os.sep + "fermionmasses.dat")
+		if os.path.isfile("HDECAY" + os.sep + "alphaandbeta.dat"):
+			os.remove("HDECAY" + os.sep + "alphaandbeta.dat")
 
 		print("Corrections for input file " + inputFileTemp + " done.\n")
 
@@ -292,11 +302,11 @@ When you use this program please cite:
 	 - M. Krause, M. Muhlleitner, M. Spira, arXiv:1810.00768
 	The manuals for HDECAY:
 	 - A. Djouadi, J. Kalinowski, M. Spira, Comp. Phys. Commun. 108 (1998) 56, hep-ph/9704448
-	 - A. Djouadi, J. Kalinowski, M. Muhlleitner, M. Spira, arXiv:1801.09506 [hep-ph]
+	 - A. Djouadi, J. Kalinowski, M. Muhlleitner, M. Spira, arXiv:1801.09506 (hep-ph)
 	The papers on the EW correction to the 2HDM decays:
-	 - M. Krause, R. Lorenz, M. Muhlleitner, R. Santos, H. Ziesche, JHEP 1609 (2016) 143
-	 - M. Krause, M. Muhlleitner, R. Santos, H. Ziesche, Phys.Rev. D95 (2017) no.7, 075019
-	 - A. Denner, S. Dittmaier, J.-N. Lang, J. High Energ. Phys. (2018) 2018: 104
+	 - M. Krause, R. Lorenz, M. Muhlleitner, R. Santos, H. Ziesche, JHEP 1609 (2016) 143, arXiv:1605.04853 (hep-ph)
+	 - M. Krause, M. Muhlleitner, R. Santos, H. Ziesche, Phys.Rev. D95 (2017) no.7, 075019, arXiv:1609.04185 (hep-ph)
+	 - A. Denner, S. Dittmaier, J.-N. Lang, J. High Energ. Phys. (2018) 2018: 104, arXiv:1808.03466 (hep-ph)
 	The publication of LoopTools:
 	 - T. Hahn, M. Perez-Victoria, Comp. Phys. Commun. 118 (1999) 153-165, hep-ph/9807565
 

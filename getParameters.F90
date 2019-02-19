@@ -154,9 +154,9 @@ subroutine getParameters(OStype, param2HDMonly)
                 ! Read m12^2
                 read(42, *) dump, dump2, m12squared
 
-                ! Read the input scale
-                ! read(42, *) dump, dump2, InputScale
-                read(42, *) dump, dump2, InputScaleReadIn
+                ! Read the input and output scales
+                read(42, *) dump, dump2, InputScale
+                read(42, *) dump, dump2, OutputScaleReadIn
 
                 ! Skip a line
                 read(42, *)

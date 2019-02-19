@@ -44,8 +44,8 @@ module constants
 
 	! UV scale and regularization scale
 	double precision :: UVDelta = 0D0
-	double precision :: InputScale
-	character(len=50) :: InputScaleReadIn
+	double precision :: InputScale, OutputScale, EvalScale
+	character(len=50) :: OutputScaleReadIn
 
 	! 2HDM type, input parameter type (1: masses and alpha are given; 2: lambda1 to lambda5 are given), renormalization scheme and reference scheme
 	integer :: TypeOf2HDM
