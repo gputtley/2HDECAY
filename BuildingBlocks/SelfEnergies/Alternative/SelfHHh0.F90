@@ -16,14 +16,14 @@ double complex function SelfHHh0Alter(x)
  amplitudes(3) = (0.0078125D0*(2.D0*CAB*CBA*EL2*Mh02*S2A - 2.D0*S2A*(EL2*MHH2*SAB*SBA + 2.D0*C2B*Lambda5*MW2*SW2) + CBA*S2B*SBA*(&
   &EL2*(-1.D0*Mh02*S2A + MHH2*S2A + 2.D0*MA02*S2B) - 4.D0*Lambda5*MW2*S2B*SW2))*A0(MA02))/(MW2*PI2*S2B2*SW2)
 
- amplitudes(4) = (0.0078125D0*CBA*SBA*(EL2*(Mh02*S2A - 1.D0*MHH2*S2A - 2.D0*MA02*S2B) + 4.D0*Lambda5*MW2*S2B*SW2)*A0(GaugeXiZ*MZ2&
-  &))/(MW2*PI2*S2B*SW2)
+ amplitudes(4) = (0.0078125D0*CBA*SBA*(EL2*(Mh02*S2A - 1.D0*MHH2*S2A - 2.D0*MA02*S2B) + 4.D0*Lambda5*MW2*S2B*SW2)*A0(MZ2))/(MW2*P&
+  &I2*S2B*SW2)
 
  amplitudes(5) = (0.015625D0*(2.D0*CAB*CBA*EL2*Mh02*S2A - 2.D0*S2A*(EL2*MHH2*SAB*SBA + 2.D0*C2B*Lambda5*MW2*SW2) + CBA*S2B*SBA*(E&
   &L2*(-1.D0*Mh02*S2A + MHH2*S2A + 2.D0*MHp2*S2B) - 4.D0*Lambda5*MW2*S2B*SW2))*A0(MHp2))/(MW2*PI2*S2B2*SW2)
 
- amplitudes(6) = (0.015625D0*CBA*SBA*(EL2*(Mh02*S2A - 1.D0*MHH2*S2A - 2.D0*MHp2*S2B) + 4.D0*Lambda5*MW2*S2B*SW2)*A0(GaugeXiW*MW2)&
-  &)/(MW2*PI2*S2B*SW2)
+ amplitudes(6) = (0.015625D0*CBA*SBA*(EL2*(Mh02*S2A - 1.D0*MHH2*S2A - 2.D0*MHp2*S2B) + 4.D0*Lambda5*MW2*S2B*SW2)*A0(MW2))/(MW2*PI&
+  &2*S2B*SW2)
 
  amplitudes(7) = (0.0625D0*CBA*ME2*(EL2*(2.D0*Mh02 + MHH2)*S2A + 2.D0*Lambda5*MW2*(-3.D0*S2A + S2B)*SW2)*Yuk4*A0(ME2))/(Mh02*MW2*&
   &PI2*S2B*SW2)
@@ -88,14 +88,14 @@ double complex function SelfHHh0Alter(x)
  amplitudes(27) = (0.0078125D0*CBA*(EL2*(2.D0*Mh02 + MHH2)*S2A + 2.D0*Lambda5*MW2*(-3.D0*S2A + S2B)*SW2)* (EL2*(-2.D0*MA02 + Mh02&
   &)*S2B*SBA + CAB*(-2.D0*EL2*Mh02 + 4.D0*Lambda5*MW2*SW2))*A0(MA02))/(EL2*Mh02*MW2*PI2*S2B2*SW2)
 
- amplitudes(28) = (-0.0078125D0*CBA*SBA*(EL2*(2.D0*Mh02 + MHH2)*S2A + 2.D0*Lambda5*MW2*(-3.D0*S2A + S2B)*SW2)*A0(GaugeXiZ*MZ2))/(&
-  &MW2*PI2*S2B*SW2)
+ amplitudes(28) = (-0.0078125D0*CBA*SBA*(EL2*(2.D0*Mh02 + MHH2)*S2A + 2.D0*Lambda5*MW2*(-3.D0*S2A + S2B)*SW2)*A0(MZ2))/(MW2*PI2*S&
+  &2B*SW2)
 
  amplitudes(29) = (0.015625D0*CBA*(EL2*(2.D0*Mh02 + MHH2)*S2A + 2.D0*Lambda5*MW2*(-3.D0*S2A + S2B)*SW2)* (EL2*(Mh02 - 2.D0*MHp2)*&
   &S2B*SBA + CAB*(-2.D0*EL2*Mh02 + 4.D0*Lambda5*MW2*SW2))*A0(MHp2))/(EL2*Mh02*MW2*PI2*S2B2*SW2)
 
- amplitudes(30) = (-0.015625D0*CBA*SBA*(EL2*(2.D0*Mh02 + MHH2)*S2A + 2.D0*Lambda5*MW2*(-3.D0*S2A + S2B)*SW2)*A0(GaugeXiW*MW2))/(M&
-  &W2*PI2*S2B*SW2)
+ amplitudes(30) = (-0.015625D0*CBA*SBA*(EL2*(2.D0*Mh02 + MHH2)*S2A + 2.D0*Lambda5*MW2*(-3.D0*S2A + S2B)*SW2)*A0(MW2))/(MW2*PI2*S2&
+  &B*SW2)
 
  amplitudes(31) = (0.0078125D0*CBA*SBA*(EL2*(2.D0*Mh02 + MHH2)*S2A + 2.D0*Lambda5*MW2*(-3.D0*S2A + S2B)*SW2)* (EL2*(Mh02 + 2.D0*M&
   &HH2)*S2A - 2.D0*Lambda5*MW2*(3.D0*S2A + S2B)*SW2)*A0(Mh02))/(EL2*MHH2*MW2*PI2*S2B2*SW2)
@@ -106,44 +106,44 @@ double complex function SelfHHh0Alter(x)
  amplitudes(33) = (-0.0078125D0*SBA*(EL2*(Mh02 + 2.D0*MHH2)*S2A - 2.D0*Lambda5*MW2*(3.D0*S2A + S2B)*SW2)*(CBA*EL2*(-2.D0*MA02 + M&
   &HH2)*S2B - 2.D0*EL2*MHH2*SAB + 4.D0*Lambda5*MW2*SAB*SW2)*A0(MA02))/(EL2*MHH2*MW2*PI2*S2B2*SW2)
 
- amplitudes(34) = (0.0078125D0*CBA*SBA*(EL2*(Mh02 + 2.D0*MHH2)*S2A - 2.D0*Lambda5*MW2*(3.D0*S2A + S2B)*SW2)*A0(GaugeXiZ*MZ2))/(MW&
-  &2*PI2*S2B*SW2)
+ amplitudes(34) = (0.0078125D0*CBA*SBA*(EL2*(Mh02 + 2.D0*MHH2)*S2A - 2.D0*Lambda5*MW2*(3.D0*S2A + S2B)*SW2)*A0(MZ2))/(MW2*PI2*S2B&
+  &*SW2)
 
  amplitudes(35) = (-0.015625D0*SBA*(EL2*(Mh02 + 2.D0*MHH2)*S2A - 2.D0*Lambda5*MW2*(3.D0*S2A + S2B)*SW2)*(CBA*EL2*(MHH2 - 2.D0*MHp&
   &2)*S2B - 2.D0*EL2*MHH2*SAB + 4.D0*Lambda5*MW2*SAB*SW2)*A0(MHp2))/(EL2*MHH2*MW2*PI2*S2B2*SW2)
 
- amplitudes(36) = (0.015625D0*CBA*SBA*(EL2*(Mh02 + 2.D0*MHH2)*S2A - 2.D0*Lambda5*MW2*(3.D0*S2A + S2B)*SW2)*A0(GaugeXiW*MW2))/(MW2&
-  &*PI2*S2B*SW2)
+ amplitudes(36) = (0.015625D0*CBA*SBA*(EL2*(Mh02 + 2.D0*MHH2)*S2A - 2.D0*Lambda5*MW2*(3.D0*S2A + S2B)*SW2)*A0(MW2))/(MW2*PI2*S2B*&
+  &SW2)
 
- amplitudes(37) = (0.015625D0*CBA*GaugeXiZ*SBA*(EL2*(2.D0*Mh02 + MHH2)*S2A + 2.D0*Lambda5*MW2*(-3.D0*S2A + S2B)*SW2)*A0(GaugeXiZ*&
-  &MZ2))/(CW2*Mh02*PI2*S2B*SW2)
+ amplitudes(37) = (0.015625D0*CBA*SBA*(EL2*(2.D0*Mh02 + MHH2)*S2A + 2.D0*Lambda5*MW2*(-3.D0*S2A + S2B)*SW2)*A0(MZ2))/(CW2*Mh02*PI&
+  &2*S2B*SW2)
 
- amplitudes(38) = (0.015625D0*CBA*GaugeXiW*SBA*(EL2*(2.D0*Mh02 + MHH2)*S2A + 2.D0*Lambda5*MW2*(-3.D0*S2A + S2B)*SW2)*A0(GaugeXiW*&
-  &MW2))/(Mh02*PI2*S2B*SW2)
+ amplitudes(38) = (0.015625D0*CBA*SBA*(EL2*(2.D0*Mh02 + MHH2)*S2A + 2.D0*Lambda5*MW2*(-3.D0*S2A + S2B)*SW2)*A0(MW2))/(Mh02*PI2*S2&
+  &B*SW2)
 
- amplitudes(39) = (0.015625D0*CBA*GaugeXiW*SBA*(EL2*(2.D0*Mh02 + MHH2)*S2A + 2.D0*Lambda5*MW2*(-3.D0*S2A + S2B)*SW2)*A0(GaugeXiW*&
-  &MW2))/(Mh02*PI2*S2B*SW2)
+ amplitudes(39) = (0.015625D0*CBA*SBA*(EL2*(2.D0*Mh02 + MHH2)*S2A + 2.D0*Lambda5*MW2*(-3.D0*S2A + S2B)*SW2)*A0(MW2))/(Mh02*PI2*S2&
+  &B*SW2)
 
- amplitudes(40) = (-0.015625D0*CBA*GaugeXiZ*SBA*(EL2*(Mh02 + 2.D0*MHH2)*S2A - 2.D0*Lambda5*MW2*(3.D0*S2A + S2B)*SW2)*A0(GaugeXiZ*&
-  &MZ2))/(CW2*MHH2*PI2*S2B*SW2)
+ amplitudes(40) = (-0.015625D0*CBA*SBA*(EL2*(Mh02 + 2.D0*MHH2)*S2A - 2.D0*Lambda5*MW2*(3.D0*S2A + S2B)*SW2)*A0(MZ2))/(CW2*MHH2*PI&
+  &2*S2B*SW2)
 
- amplitudes(41) = (-0.015625D0*CBA*GaugeXiW*SBA*(EL2*(Mh02 + 2.D0*MHH2)*S2A - 2.D0*Lambda5*MW2*(3.D0*S2A + S2B)*SW2)*A0(GaugeXiW*&
-  &MW2))/(MHH2*PI2*S2B*SW2)
+ amplitudes(41) = (-0.015625D0*CBA*SBA*(EL2*(Mh02 + 2.D0*MHH2)*S2A - 2.D0*Lambda5*MW2*(3.D0*S2A + S2B)*SW2)*A0(MW2))/(MHH2*PI2*S2&
+  &B*SW2)
 
- amplitudes(42) = (-0.015625D0*CBA*GaugeXiW*SBA*(EL2*(Mh02 + 2.D0*MHH2)*S2A - 2.D0*Lambda5*MW2*(3.D0*S2A + S2B)*SW2)*A0(GaugeXiW*&
-  &MW2))/(MHH2*PI2*S2B*SW2)
+ amplitudes(42) = (-0.015625D0*CBA*SBA*(EL2*(Mh02 + 2.D0*MHH2)*S2A - 2.D0*Lambda5*MW2*(3.D0*S2A + S2B)*SW2)*A0(MW2))/(MHH2*PI2*S2&
+  &B*SW2)
 
- amplitudes(43) = (0.015625D0*CBA*SBA*(EL2*(2.D0*Mh02 + MHH2)*S2A + 2.D0*Lambda5*MW2*(-3.D0*S2A + S2B)*SW2)*(2.D0*MZ2 - 3.D0*A0(M&
-  &Z2) - 1.D0*GaugeXiZ*A0(GaugeXiZ*MZ2)))/ (CW2*Mh02*PI2*S2B*SW2)
+ amplitudes(43) = (0.03125D0*CBA*SBA*(EL2*(2.D0*Mh02 + MHH2)*S2A + 2.D0*Lambda5*MW2*(-3.D0*S2A + S2B)*SW2)*(MZ2 - 2.D0*A0(MZ2)))/&
+  &(CW2*Mh02*PI2*S2B*SW2)
 
- amplitudes(44) = (0.03125D0*CBA*SBA*(EL2*(2.D0*Mh02 + MHH2)*S2A + 2.D0*Lambda5*MW2*(-3.D0*S2A + S2B)*SW2)*(2.D0*MW2 - 3.D0*A0(MW&
-  &2) - 1.D0*GaugeXiW*A0(GaugeXiW*MW2)))/ (Mh02*PI2*S2B*SW2)
+ amplitudes(44) = (0.0625D0*CBA*SBA*(EL2*(2.D0*Mh02 + MHH2)*S2A + 2.D0*Lambda5*MW2*(-3.D0*S2A + S2B)*SW2)*(MW2 - 2.D0*A0(MW2)))/(&
+  &Mh02*PI2*S2B*SW2)
 
- amplitudes(45) = (-0.015625D0*CBA*SBA*(EL2*(Mh02 + 2.D0*MHH2)*S2A - 2.D0*Lambda5*MW2*(3.D0*S2A + S2B)*SW2)*(2.D0*MZ2 - 3.D0*A0(M&
-  &Z2) - 1.D0*GaugeXiZ*A0(GaugeXiZ*MZ2)))/ (CW2*MHH2*PI2*S2B*SW2)
+ amplitudes(45) = (-0.03125D0*CBA*SBA*(EL2*(Mh02 + 2.D0*MHH2)*S2A - 2.D0*Lambda5*MW2*(3.D0*S2A + S2B)*SW2)*(MZ2 - 2.D0*A0(MZ2)))/&
+  &(CW2*MHH2*PI2*S2B*SW2)
 
- amplitudes(46) = (-0.03125D0*CBA*SBA*(EL2*(Mh02 + 2.D0*MHH2)*S2A - 2.D0*Lambda5*MW2*(3.D0*S2A + S2B)*SW2)*(2.D0*MW2 - 3.D0*A0(MW&
-  &2) - 1.D0*GaugeXiW*A0(GaugeXiW*MW2)))/ (MHH2*PI2*S2B*SW2)
+ amplitudes(46) = (-0.0625D0*CBA*SBA*(EL2*(Mh02 + 2.D0*MHH2)*S2A - 2.D0*Lambda5*MW2*(3.D0*S2A + S2B)*SW2)*(MW2 - 2.D0*A0(MW2)))/(&
+  &MHH2*PI2*S2B*SW2)
 
  amplitudes(47) = (-0.03125D0*EL2*ME2*Yuk4*Yuk5*(2.D0*A0(ME2) + (4.D0*ME2 - 1.D0*x)*B0(x, ME2, ME2)))/(MW2*PI2*SW2)
 
@@ -175,80 +175,41 @@ double complex function SelfHHh0Alter(x)
  amplitudes(59) = (0.0078125D0*(EL2*(2.D0*MA02 - 1.D0*Mh02)*S2B*SBA + 2.D0*CAB*(EL2*Mh02 - 2.D0*Lambda5*MW2*SW2))* (CBA*EL2*(2.D0&
   &*MA02 - 1.D0*MHH2)*S2B + 2.D0*SAB*(EL2*MHH2 - 2.D0*Lambda5*MW2*SW2))*B0(x, MA02, MA02))/(EL2*MW2*PI2*S2B2*SW2)
 
- amplitudes(60) = (0.0078125D0*CBA*EL2*Mh02*MHH2*SBA*B0(x, GaugeXiZ*MZ2, GaugeXiZ*MZ2))/(MW2*PI2*SW2)
+ amplitudes(60) = (0.0078125D0*CBA*EL2*Mh02*MHH2*SBA*B0(x, MZ2, MZ2))/(MW2*PI2*SW2)
 
- amplitudes(61) = (-0.015625D0*CBA*EL2*(MA02 - 1.D0*Mh02)*(MA02 - 1.D0*MHH2)*SBA*B0(x, MA02, GaugeXiZ*MZ2))/(MW2*PI2*SW2)
+ amplitudes(61) = (-0.015625D0*CBA*EL2*(MA02 - 1.D0*Mh02)*(MA02 - 1.D0*MHH2)*SBA*B0(x, MA02, MZ2))/(MW2*PI2*SW2)
 
  amplitudes(62) = (0.015625D0*(-1.D0*EL2*(Mh02 - 2.D0*MHp2)*S2B*SBA + 2.D0*CAB*(EL2*Mh02 - 2.D0*Lambda5*MW2*SW2))* (-1.D0*CBA*EL2&
   &*(MHH2 - 2.D0*MHp2)*S2B + 2.D0*SAB*(EL2*MHH2 - 2.D0*Lambda5*MW2*SW2))*B0(x, MHp2, MHp2))/(EL2*MW2*PI2*S2B2*SW2)
 
- amplitudes(63) = (0.015625D0*CBA*EL2*Mh02*MHH2*SBA*B0(x, GaugeXiW*MW2, GaugeXiW*MW2))/(MW2*PI2*SW2)
+ amplitudes(63) = (0.015625D0*CBA*EL2*Mh02*MHH2*SBA*B0(x, MW2, MW2))/(MW2*PI2*SW2)
 
- amplitudes(64) = (0.015625D0*CBA*EL2*(Mh02 - 1.D0*MHp2)*(-1.D0*MHH2 + MHp2)*SBA*B0(x, MHp2, GaugeXiW*MW2))/(MW2*PI2*SW2)
+ amplitudes(64) = (0.015625D0*CBA*EL2*(Mh02 - 1.D0*MHp2)*(-1.D0*MHH2 + MHp2)*SBA*B0(x, MHp2, MW2))/(MW2*PI2*SW2)
 
- amplitudes(65) = (0.015625D0*CBA*EL2*(Mh02 - 1.D0*MHp2)*(-1.D0*MHH2 + MHp2)*SBA*B0(x, MHp2, GaugeXiW*MW2))/(MW2*PI2*SW2)
+ amplitudes(65) = (0.015625D0*CBA*EL2*(Mh02 - 1.D0*MHp2)*(-1.D0*MHH2 + MHp2)*SBA*B0(x, MHp2, MW2))/(MW2*PI2*SW2)
 
- amplitudes(66) = (-0.015625D0*CBA*EL2*MW2*SBA*B0(x, GaugeXiZ*MZ2, GaugeXiZ*MZ2)*DBLE(CW**INT(-4.D0))*DBLE(GaugeXiZ**INT(2.D0)))/&
-  &(PI2*SW2)
+ amplitudes(66) = (-0.015625D0*CBA*EL2*MW2*SBA*B0(x, MZ2, MZ2)*DBLE(CW**INT(-4.D0)))/(PI2*SW2)
 
- amplitudes(67) = (-0.015625D0*CBA*EL2*MW2*SBA*B0(x, GaugeXiW*MW2, GaugeXiW*MW2)*DBLE(GaugeXiW**INT(2.D0)))/(PI2*SW2)
+ amplitudes(67) = (-0.015625D0*CBA*EL2*MW2*SBA*B0(x, MW2, MW2))/(PI2*SW2)
 
- amplitudes(68) = (-0.015625D0*CBA*EL2*MW2*SBA*B0(x, GaugeXiW*MW2, GaugeXiW*MW2)*DBLE(GaugeXiW**INT(2.D0)))/(PI2*SW2)
+ amplitudes(68) = (-0.015625D0*CBA*EL2*MW2*SBA*B0(x, MW2, MW2))/(PI2*SW2)
 
- amplitudes(69) = (0.0078125D0*CBA*EL2*MW2*SBA*DBLE(CW**INT(-4.D0))*DBLE(MZ**INT(-4.D0))*(-2.D0*(-1.D0 + GaugeXiZ)*MZ2*A0(MZ2) + &
-  &2.D0*(-1.D0 + GaugeXiZ)*MZ2*A0(GaugeXiZ*MZ2) - 4.D0*MZ2*x*B0(x, MZ2, MZ2) + 4.D0*MZ2*x*B0(x, MZ2, GaugeXiZ*MZ2) + 4.D0*GaugeXi&
-  &Z*MZ2*x*B0(x, MZ2, GaugeXiZ*MZ2) - 4.D0*GaugeXiZ*MZ2*x*B0(x, GaugeXiZ*MZ2, GaugeXiZ*MZ2) - 8.D0*DBLE(MZ**INT(4.D0)) + 12.D0*B0&
-  &(x, MZ2, MZ2)*DBLE(MZ**INT(4.D0)) - 2.D0*B0(x, MZ2, GaugeXiZ*MZ2)*DBLE(MZ**INT(4.D0)) + 4.D0*GaugeXiZ*B0(x, MZ2, GaugeXiZ*MZ2)&
-  &*DBLE(MZ**INT(4.D0)) - 2.D0*B0(x, MZ2, GaugeXiZ*MZ2)*DBLE(GaugeXiZ**INT(2.D0))*DBLE(MZ**INT(4.D0)) + 4.D0*B0(x, GaugeXiZ*MZ2, &
-  &GaugeXiZ*MZ2)*DBLE(GaugeXiZ**INT(2.D0))*DBLE(MZ**INT(4.D0)) + B0(x, MZ2, MZ2)*DBLE(x**INT(2.D0)) - 2.D0*B0(x, MZ2, GaugeXiZ*MZ&
-  &2)*DBLE(x**INT(2.D0)) + B0(x, GaugeXiZ*MZ2, GaugeXiZ*MZ2)*DBLE(x**INT(2.D0))))/(PI2*SW2)
+ amplitudes(69) = (0.0625D0*CBA*EL2*MW2*SBA*(-1.D0 + 2.D0*B0(x, MZ2, MZ2))*DBLE(CW**INT(-4.D0)))/(PI2*SW2)
 
- amplitudes(70) = (0.015625D0*CBA*EL2*SBA*(-2.D0*(-1.D0 + GaugeXiW)*MW2*A0(MW2) + 2.D0*(-1.D0 + GaugeXiW)*MW2*A0(GaugeXiW*MW2) - &
-  &4.D0*MW2*x*B0(x, MW2, MW2) + 4.D0*MW2*x*B0(x, MW2, GaugeXiW*MW2) + 4.D0*GaugeXiW*MW2*x*B0(x, MW2, GaugeXiW*MW2) - 4.D0*GaugeXi&
-  &W*MW2*x*B0(x, GaugeXiW*MW2, GaugeXiW*MW2) - 8.D0*DBLE(MW**INT(4.D0)) + 12.D0*B0(x, MW2, MW2)*DBLE(MW**INT(4.D0)) - 2.D0*B0(x, &
-  &MW2, GaugeXiW*MW2)*DBLE(MW**INT(4.D0)) + 4.D0*GaugeXiW*B0(x, MW2, GaugeXiW*MW2)*DBLE(MW**INT(4.D0)) - 2.D0*B0(x, MW2, GaugeXiW&
-  &*MW2)*DBLE(GaugeXiW**INT(2.D0))*DBLE(MW**INT(4.D0)) + 4.D0*B0(x, GaugeXiW*MW2, GaugeXiW*MW2)*DBLE(GaugeXiW**INT(2.D0))* DBLE(M&
-  &W**INT(4.D0)) + B0(x, MW2, MW2)*DBLE(x**INT(2.D0)) - 2.D0*B0(x, MW2, GaugeXiW*MW2)*DBLE(x**INT(2.D0)) + B0(x, GaugeXiW*MW2, Ga&
-  &ugeXiW*MW2)*DBLE(x**INT(2.D0))))/(MW2*PI2*SW2)
+ amplitudes(70) = (0.125D0*CBA*EL2*MW2*SBA*(-1.D0 + 2.D0*B0(x, MW2, MW2)))/(PI2*SW2)
 
- amplitudes(71) = (0.015625D0*CBA*EL2*SBA*(-1.D0*MZ2*A0(MA02) + (-1.D0*MA02 + MZ2 + x)*A0(MZ2) + MA02*A0(GaugeXiZ*MZ2) + GaugeXiZ&
-  &*MZ2*A0(GaugeXiZ*MZ2) - 1.D0*x*A0(GaugeXiZ*MZ2) + 2.D0*MA02*MZ2*B0(x, MA02, MZ2) + 2.D0*MA02*x*B0(x, MA02, MZ2) + 2.D0*MZ2*x*B&
-  &0(x, MA02, MZ2) - 2.D0*MA02*x*B0(x, MA02, GaugeXiZ*MZ2) - 1.D0*B0(x, MA02, MZ2)*DBLE(MA0**INT(4.D0)) + B0(x, MA02, GaugeXiZ*MZ&
-  &2)*DBLE(MA0**INT(4.D0)) - 1.D0*B0(x, MA02, MZ2)*DBLE(MZ**INT(4.D0)) - 1.D0*B0(x, MA02, MZ2)*DBLE(x**INT(2.D0)) + B0(x, MA02, G&
-  &augeXiZ*MZ2)*DBLE(x**INT(2.D0))))/ (CW2*MZ2*PI2*SW2)
+ amplitudes(71) = (-0.015625D0*CBA*EL2*SBA*(A0(MA02) - 2.D0*A0(MZ2) + (-2.D0*MA02 + MZ2 - 2.D0*x)*B0(x, MA02, MZ2)))/(CW2*PI2*SW2&
+  &)
 
- amplitudes(72) = (0.015625D0*CBA*EL2*SBA*((-1.D0*MZ2 + GaugeXiZ*MZ2 - 1.D0*x)*A0(MZ2) + (MZ2 - 2.D0*GaugeXiZ*MZ2 + x)*A0(GaugeXi&
-  &Z*MZ2) - 2.D0*MZ2*x*B0(x, MZ2, GaugeXiZ*MZ2) - 2.D0*GaugeXiZ*MZ2*x*B0(x, MZ2, GaugeXiZ*MZ2) + 2.D0*GaugeXiZ*MZ2*x*B0(x, GaugeX&
-  &iZ*MZ2, GaugeXiZ*MZ2) + B0(x, MZ2, GaugeXiZ*MZ2)*DBLE(MZ**INT(4.D0)) - 2.D0*GaugeXiZ*B0(x, MZ2, GaugeXiZ*MZ2)*DBLE(MZ**INT(4.D&
-  &0)) + B0(x, MZ2, GaugeXiZ*MZ2)*DBLE(GaugeXiZ**INT(2.D0))*DBLE(MZ**INT(4.D0)) - 1.D0*B0(x, GaugeXiZ*MZ2, GaugeXiZ*MZ2)*DBLE(Gau&
-  &geXiZ**INT(2.D0))*DBLE(MZ**INT(4.D0)) + B0(x, MZ2, GaugeXiZ*MZ2)*DBLE(x**INT(2.D0)) - 1.D0*B0(x, GaugeXiZ*MZ2, GaugeXiZ*MZ2)*D&
-  &BLE(x**INT(2.D0))))/(CW2*MZ2*PI2*SW2)
+ amplitudes(72) = (-0.015625D0*CBA*EL2*SBA*(A0(MZ2) + (MZ2 + 2.D0*x)*B0(x, MZ2, MZ2)))/(CW2*PI2*SW2)
 
- amplitudes(73) = (0.015625D0*CBA*EL2*SBA*(-1.D0*MW2*A0(MHp2) + (-1.D0*MHp2 + MW2 + x)*A0(MW2) + MHp2*A0(GaugeXiW*MW2) + GaugeXiW&
-  &*MW2*A0(GaugeXiW*MW2) - 1.D0*x*A0(GaugeXiW*MW2) + 2.D0*MHp2*MW2*B0(x, MHp2, MW2) + 2.D0*MHp2*x*B0(x, MHp2, MW2) + 2.D0*MW2*x*B&
-  &0(x, MHp2, MW2) - 2.D0*MHp2*x*B0(x, MHp2, GaugeXiW*MW2) - 1.D0*B0(x, MHp2, MW2)*DBLE(MHp**INT(4.D0)) + B0(x, MHp2, GaugeXiW*MW&
-  &2)*DBLE(MHp**INT(4.D0)) - 1.D0*B0(x, MHp2, MW2)*DBLE(MW**INT(4.D0)) - 1.D0*B0(x, MHp2, MW2)*DBLE(x**INT(2.D0)) + B0(x, MHp2, G&
-  &augeXiW*MW2)*DBLE(x**INT(2.D0))))/ (MW2*PI2*SW2)
+ amplitudes(73) = (-0.015625D0*CBA*EL2*SBA*(A0(MHp2) - 2.D0*A0(MW2) + (-2.D0*MHp2 + MW2 - 2.D0*x)*B0(x, MHp2, MW2)))/(PI2*SW2)
 
- amplitudes(74) = (0.015625D0*CBA*EL2*SBA*(-1.D0*MW2*A0(MHp2) + (-1.D0*MHp2 + MW2 + x)*A0(MW2) + MHp2*A0(GaugeXiW*MW2) + GaugeXiW&
-  &*MW2*A0(GaugeXiW*MW2) - 1.D0*x*A0(GaugeXiW*MW2) + 2.D0*MHp2*MW2*B0(x, MHp2, MW2) + 2.D0*MHp2*x*B0(x, MHp2, MW2) + 2.D0*MW2*x*B&
-  &0(x, MHp2, MW2) - 2.D0*MHp2*x*B0(x, MHp2, GaugeXiW*MW2) - 1.D0*B0(x, MHp2, MW2)*DBLE(MHp**INT(4.D0)) + B0(x, MHp2, GaugeXiW*MW&
-  &2)*DBLE(MHp**INT(4.D0)) - 1.D0*B0(x, MHp2, MW2)*DBLE(MW**INT(4.D0)) - 1.D0*B0(x, MHp2, MW2)*DBLE(x**INT(2.D0)) + B0(x, MHp2, G&
-  &augeXiW*MW2)*DBLE(x**INT(2.D0))))/ (MW2*PI2*SW2)
+ amplitudes(74) = (-0.015625D0*CBA*EL2*SBA*(A0(MHp2) - 2.D0*A0(MW2) + (-2.D0*MHp2 + MW2 - 2.D0*x)*B0(x, MHp2, MW2)))/(PI2*SW2)
 
- amplitudes(75) = (0.015625D0*CBA*EL2*SBA*((-1.D0*MW2 + GaugeXiW*MW2 - 1.D0*x)*A0(MW2) + (MW2 - 2.D0*GaugeXiW*MW2 + x)*A0(GaugeXi&
-  &W*MW2) - 2.D0*MW2*x*B0(x, MW2, GaugeXiW*MW2) - 2.D0*GaugeXiW*MW2*x*B0(x, MW2, GaugeXiW*MW2) + 2.D0*GaugeXiW*MW2*x*B0(x, GaugeX&
-  &iW*MW2, GaugeXiW*MW2) + B0(x, MW2, GaugeXiW*MW2)*DBLE(MW**INT(4.D0)) - 2.D0*GaugeXiW*B0(x, MW2, GaugeXiW*MW2)*DBLE(MW**INT(4.D&
-  &0)) + B0(x, MW2, GaugeXiW*MW2)*DBLE(GaugeXiW**INT(2.D0))*DBLE(MW**INT(4.D0)) - 1.D0*B0(x, GaugeXiW*MW2, GaugeXiW*MW2)*DBLE(Gau&
-  &geXiW**INT(2.D0))*DBLE(MW**INT(4.D0)) + B0(x, MW2, GaugeXiW*MW2)*DBLE(x**INT(2.D0)) - 1.D0*B0(x, GaugeXiW*MW2, GaugeXiW*MW2)*D&
-  &BLE(x**INT(2.D0))))/(MW2*PI2*SW2)
+ amplitudes(75) = (-0.015625D0*CBA*EL2*SBA*(A0(MW2) + (MW2 + 2.D0*x)*B0(x, MW2, MW2)))/(PI2*SW2)
 
- amplitudes(76) = (0.015625D0*CBA*EL2*SBA*((-1.D0*MW2 + GaugeXiW*MW2 - 1.D0*x)*A0(MW2) + (MW2 - 2.D0*GaugeXiW*MW2 + x)*A0(GaugeXi&
-  &W*MW2) - 2.D0*MW2*x*B0(x, MW2, GaugeXiW*MW2) - 2.D0*GaugeXiW*MW2*x*B0(x, MW2, GaugeXiW*MW2) + 2.D0*GaugeXiW*MW2*x*B0(x, GaugeX&
-  &iW*MW2, GaugeXiW*MW2) + B0(x, MW2, GaugeXiW*MW2)*DBLE(MW**INT(4.D0)) - 2.D0*GaugeXiW*B0(x, MW2, GaugeXiW*MW2)*DBLE(MW**INT(4.D&
-  &0)) + B0(x, MW2, GaugeXiW*MW2)*DBLE(GaugeXiW**INT(2.D0))*DBLE(MW**INT(4.D0)) - 1.D0*B0(x, GaugeXiW*MW2, GaugeXiW*MW2)*DBLE(Gau&
-  &geXiW**INT(2.D0))*DBLE(MW**INT(4.D0)) + B0(x, MW2, GaugeXiW*MW2)*DBLE(x**INT(2.D0)) - 1.D0*B0(x, GaugeXiW*MW2, GaugeXiW*MW2)*D&
-  &BLE(x**INT(2.D0))))/(MW2*PI2*SW2)
+ amplitudes(76) = (-0.015625D0*CBA*EL2*SBA*(A0(MW2) + (MW2 + 2.D0*x)*B0(x, MW2, MW2)))/(PI2*SW2)
 
   totalAmplitude = (0D0,0D0)
  do j=1,76

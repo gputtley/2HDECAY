@@ -167,13 +167,13 @@ double complex function DSelfTauTauScalarWeak(x)
 
  amplitudes(80) = (-0.015625D0*EL2*ML2*DB0(x, MA02, ML2)*DBLE(Yuk6**INT(2.D0)))/(MW2*PI2*SW2)
 
- amplitudes(81) = (-0.015625D0*EL2*ML2*DB0(x, ML2, GaugeXiZ*MZ2))/(MW2*PI2*SW2)
+ amplitudes(81) = (-0.015625D0*EL2*ML2*DB0(x, ML2, MZ2))/(MW2*PI2*SW2)
 
  amplitudes(82) = 0.D0
 
  amplitudes(83) = 0.D0
 
- amplitudes(84) = (-0.03125D0*EL2*(-1.D0 + 2.D0*SW2)*(3.D0*DB0(x, ML2, MZ2) + GaugeXiZ*DB0(x, ML2, GaugeXiZ*MZ2)))/(CW2*PI2)
+ amplitudes(84) = (-0.125D0*EL2*(-1.D0 + 2.D0*SW2)*DB0(x, ML2, MZ2))/(CW2*PI2)
 
  amplitudes(85) = 0.D0
 

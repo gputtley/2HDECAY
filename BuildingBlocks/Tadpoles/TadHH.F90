@@ -33,22 +33,22 @@ double complex function TadHH()
  amplitudes(12) = (0.015625D0*(CBA*EL2*(2.D0*MA02 - 1.D0*MHH2)*S2B + 2.D0*SAB*(EL2*MHH2 - 2.D0*Lambda5*MW2*SW2))*A0(MA02))/(EL*MW&
   &*PI2*S2B*SW)
 
- amplitudes(13) = (0.015625D0*CBA*EL*MHH2*A0(GaugeXiZ*MZ2))/(MW*PI2*SW)
+ amplitudes(13) = (0.015625D0*CBA*EL*MHH2*A0(MZ2))/(MW*PI2*SW)
 
  amplitudes(14) = (-0.03125D0*(CBA*EL2*(MHH2 - 2.D0*MHp2)*S2B - 2.D0*EL2*MHH2*SAB + 4.D0*Lambda5*MW2*SAB*SW2)*A0(MHp2))/(EL*MW*PI&
   &2*S2B*SW)
 
- amplitudes(15) = (0.03125D0*CBA*EL*MHH2*A0(GaugeXiW*MW2))/(MW*PI2*SW)
+ amplitudes(15) = (0.03125D0*CBA*EL*MHH2*A0(MW2))/(MW*PI2*SW)
 
- amplitudes(16) = (-0.03125D0*CBA*EL*GaugeXiZ*MW*A0(GaugeXiZ*MZ2))/(CW2*PI2*SW)
+ amplitudes(16) = (-0.03125D0*CBA*EL*MW*A0(MZ2))/(CW2*PI2*SW)
 
- amplitudes(17) = (-0.03125D0*CBA*EL*GaugeXiW*MW*A0(GaugeXiW*MW2))/(PI2*SW)
+ amplitudes(17) = (-0.03125D0*CBA*EL*MW*A0(MW2))/(PI2*SW)
 
- amplitudes(18) = (-0.03125D0*CBA*EL*GaugeXiW*MW*A0(GaugeXiW*MW2))/(PI2*SW)
+ amplitudes(18) = (-0.03125D0*CBA*EL*MW*A0(MW2))/(PI2*SW)
 
- amplitudes(19) = (0.03125D0*CBA*EL*MW*(-2.D0*MZ2 + 3.D0*A0(MZ2) + GaugeXiZ*A0(GaugeXiZ*MZ2)))/(CW2*PI2*SW)
+ amplitudes(19) = (-0.0625D0*CBA*EL*MW*(MZ2 - 2.D0*A0(MZ2)))/(CW2*PI2*SW)
 
- amplitudes(20) = (0.0625D0*CBA*EL*MW*(-2.D0*MW2 + 3.D0*A0(MW2) + GaugeXiW*A0(GaugeXiW*MW2)))/(PI2*SW)
+ amplitudes(20) = (-0.125D0*CBA*EL*MW*(MW2 - 2.D0*A0(MW2)))/(PI2*SW)
 
   totalAmplitude = (0D0,0D0)
  do j=1,20

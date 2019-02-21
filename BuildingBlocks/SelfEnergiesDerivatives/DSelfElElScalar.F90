@@ -13,15 +13,15 @@ double complex function DSelfElElScalar(x)
 
  amplitudes(3) = (-0.015625D0*EL2*ME2*DB0(x, MA02, ME2)*DBLE(Yuk6**INT(2.D0)))/(MW2*PI2*SW2)
 
- amplitudes(4) = (-0.015625D0*EL2*ME2*DB0(x, ME2, GaugeXiZ*MZ2))/(MW2*PI2*SW2)
+ amplitudes(4) = (-0.015625D0*EL2*ME2*DB0(x, ME2, MZ2))/(MW2*PI2*SW2)
 
  amplitudes(5) = 0.D0
 
  amplitudes(6) = 0.D0
 
- amplitudes(7) = (-0.0625D0*EL2*(3.D0 + GaugeXiA)*DB0(x, 0.D0, ME2))/PI2
+ amplitudes(7) = (-0.25D0*EL2*DB0(x, 0.D0, ME2))/PI2
 
- amplitudes(8) = (-0.03125D0*EL2*(-1.D0 + 2.D0*SW2)*(3.D0*DB0(x, ME2, MZ2) + GaugeXiZ*DB0(x, ME2, GaugeXiZ*MZ2)))/(CW2*PI2)
+ amplitudes(8) = (-0.125D0*EL2*(-1.D0 + 2.D0*SW2)*DB0(x, ME2, MZ2))/(CW2*PI2)
 
  amplitudes(9) = 0.D0
 

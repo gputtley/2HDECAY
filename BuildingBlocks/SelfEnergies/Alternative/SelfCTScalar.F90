@@ -13,11 +13,11 @@ double complex function SelfCTScalarAlter(x)
 
  amplitudes(3) = (0.03125D0*CKM33*CKMC23*EL2*MB2*Yuk3*B0(x, MB2, MHp2))/(MW2*PI2*SW2*TB)
 
- amplitudes(4) = (-0.03125D0*CKM31*CKMC21*EL2*MD2*B0(x, MD2, GaugeXiW*MW2))/(MW2*PI2*SW2)
+ amplitudes(4) = (-0.03125D0*CKM31*CKMC21*EL2*MD2*B0(x, MD2, MW2))/(MW2*PI2*SW2)
 
- amplitudes(5) = (-0.03125D0*CKM32*CKMC22*EL2*MS2*B0(x, MS2, GaugeXiW*MW2))/(MW2*PI2*SW2)
+ amplitudes(5) = (-0.03125D0*CKM32*CKMC22*EL2*MS2*B0(x, MS2, MW2))/(MW2*PI2*SW2)
 
- amplitudes(6) = (-0.03125D0*CKM33*CKMC23*EL2*MB2*B0(x, MB2, GaugeXiW*MW2))/(MW2*PI2*SW2)
+ amplitudes(6) = (-0.03125D0*CKM33*CKMC23*EL2*MB2*B0(x, MB2, MW2))/(MW2*PI2*SW2)
 
  amplitudes(7) = 0.D0
 

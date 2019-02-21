@@ -19,14 +19,14 @@ double complex function SelfDSRightAlter(x)
   &.D0)) - 1.D0*MD*MHp2*MS*TB2*B0(x, MHp2, MT2)*DBLE(Yuk3**INT(2.D0)) + MD*MS*MT2*TB2*B0(x, MHp2, MT2)*DBLE(Yuk3**INT(2.D0)) + MD&
   &*MS*TB2*x*B0(x, MHp2, MT2)*DBLE(Yuk3**INT(2.D0))))/(MW2*PI2*SW2*TB2*x)
 
- amplitudes(4) = (0.015625D0*CKM11*CKMC12*EL2*(-1.D0*MD*MS*A0(MU2) + MD*MS*A0(GaugeXiW*MW2) + MD*MS*MU2*B0(x, MU2, GaugeXiW*MW2) &
-  &- 1.D0*GaugeXiW*MD*MS*MW2*B0(x, MU2, GaugeXiW*MW2) + MD*MS*x*B0(x, MU2, GaugeXiW*MW2)))/(MW2*PI2*SW2*x)
+ amplitudes(4) = (0.015625D0*CKM11*CKMC12*EL2*(-1.D0*MD*MS*A0(MU2) + MD*MS*A0(MW2) + MD*MS*MU2*B0(x, MU2, MW2) - 1.D0*MD*MS*MW2*B&
+  &0(x, MU2, MW2) + MD*MS*x*B0(x, MU2, MW2)))/(MW2*PI2*SW2*x)
 
- amplitudes(5) = (0.015625D0*CKM21*CKMC22*EL2*(-1.D0*MD*MS*A0(MC2) + MD*MS*A0(GaugeXiW*MW2) + MC2*MD*MS*B0(x, MC2, GaugeXiW*MW2) &
-  &- 1.D0*GaugeXiW*MD*MS*MW2*B0(x, MC2, GaugeXiW*MW2) + MD*MS*x*B0(x, MC2, GaugeXiW*MW2)))/(MW2*PI2*SW2*x)
+ amplitudes(5) = (0.015625D0*CKM21*CKMC22*EL2*(-1.D0*MD*MS*A0(MC2) + MD*MS*A0(MW2) + MC2*MD*MS*B0(x, MC2, MW2) - 1.D0*MD*MS*MW2*B&
+  &0(x, MC2, MW2) + MD*MS*x*B0(x, MC2, MW2)))/(MW2*PI2*SW2*x)
 
- amplitudes(6) = (0.015625D0*CKM31*CKMC32*EL2*(-1.D0*MD*MS*A0(MT2) + MD*MS*A0(GaugeXiW*MW2) + MD*MS*MT2*B0(x, MT2, GaugeXiW*MW2) &
-  &- 1.D0*GaugeXiW*MD*MS*MW2*B0(x, MT2, GaugeXiW*MW2) + MD*MS*x*B0(x, MT2, GaugeXiW*MW2)))/(MW2*PI2*SW2*x)
+ amplitudes(6) = (0.015625D0*CKM31*CKMC32*EL2*(-1.D0*MD*MS*A0(MT2) + MD*MS*A0(MW2) + MD*MS*MT2*B0(x, MT2, MW2) - 1.D0*MD*MS*MW2*B&
+  &0(x, MT2, MW2) + MD*MS*x*B0(x, MT2, MW2)))/(MW2*PI2*SW2*x)
 
  amplitudes(7) = 0.D0
 

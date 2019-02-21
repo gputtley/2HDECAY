@@ -7,7 +7,7 @@ double complex function DSelfTauTauScalarQED(x)
  double complex :: totalAmplitude
  double complex :: amplitudes(1)
 
- amplitudes(1) = (-0.0625D0*EL2*(3.D0 + GaugeXiA)*DB0(x, 0.D0, ML2))/PI2
+ amplitudes(1) = (-0.25D0*EL2*DB0(x, 0.D0, ML2))/PI2
 
   totalAmplitude = (0D0,0D0)
  do j=1,1

@@ -5919,7 +5919,7 @@ c ============================================================================ c
 
       write(nou1,105)
       write(nou1,888)
-      write(nou1,114) 25,'h non-zero LO EW decay widths of on-shell and
+      write(nou1,112) 25,'h non-zero LO EW decay widths of on-shell and
      .non-loop induced decays'
       write(nou1,5256) irenscheme,'Renormalization Scheme Number'     
       write(nou1,5257) alph2hdmrenl(1),'Corresponding mixing angle alpha
@@ -6181,7 +6181,7 @@ c ============================================================================ c
 
       write(nou1,105)
       write(nou1,888)
-      write(nou1,114) 25,'H non-zero LO EW decay widths of on-shell and
+      write(nou1,112) 35,'H non-zero LO EW decay widths of on-shell and
      .non-loop induced decays'
       write(nou1,5256) irenscheme,'Renormalization Scheme Number'     
       write(nou1,5257) alph2hdmrenh(1),'Corresponding mixing angle alpha

@@ -88,12 +88,12 @@ double complex function SelfCCScalarAlter(x)
  amplitudes(39) = (0.0078125D0*CA*(EL2*(-2.D0*MA02 + Mh02)*S2B*SBA + CAB*(-2.D0*EL2*Mh02 + 4.D0*Lambda5*MW2*SW2))*A0(MA02))/(Mh02&
   &*MW2*PI2*S2B*SB*SW2)
 
- amplitudes(40) = (-0.0078125D0*CA*EL2*SBA*A0(GaugeXiZ*MZ2))/(MW2*PI2*SB*SW2)
+ amplitudes(40) = (-0.0078125D0*CA*EL2*SBA*A0(MZ2))/(MW2*PI2*SB*SW2)
 
  amplitudes(41) = (0.015625D0*CA*(EL2*(Mh02 - 2.D0*MHp2)*S2B*SBA + CAB*(-2.D0*EL2*Mh02 + 4.D0*Lambda5*MW2*SW2))*A0(MHp2))/(Mh02*M&
   &W2*PI2*S2B*SB*SW2)
 
- amplitudes(42) = (-0.015625D0*CA*EL2*SBA*A0(GaugeXiW*MW2))/(MW2*PI2*SB*SW2)
+ amplitudes(42) = (-0.015625D0*CA*EL2*SBA*A0(MW2))/(MW2*PI2*SB*SW2)
 
  amplitudes(43) = (-0.0078125D0*CBA*SA*(EL2*(2.D0*Mh02 + MHH2)*S2A + 2.D0*Lambda5*MW2*(-3.D0*S2A + S2B)*SW2)*A0(Mh02))/(MHH2*MW2*&
   &PI2*S2B*SB*SW2)
@@ -104,36 +104,36 @@ double complex function SelfCCScalarAlter(x)
  amplitudes(45) = (0.0078125D0*SA*(CBA*EL2*(-2.D0*MA02 + MHH2)*S2B - 2.D0*EL2*MHH2*SAB + 4.D0*Lambda5*MW2*SAB*SW2)*A0(MA02))/(MHH&
   &2*MW2*PI2*S2B*SB*SW2)
 
- amplitudes(46) = (-0.0078125D0*CBA*EL2*SA*A0(GaugeXiZ*MZ2))/(MW2*PI2*SB*SW2)
+ amplitudes(46) = (-0.0078125D0*CBA*EL2*SA*A0(MZ2))/(MW2*PI2*SB*SW2)
 
  amplitudes(47) = (0.015625D0*SA*(CBA*EL2*(MHH2 - 2.D0*MHp2)*S2B - 2.D0*EL2*MHH2*SAB + 4.D0*Lambda5*MW2*SAB*SW2)*A0(MHp2))/(MHH2*&
   &MW2*PI2*S2B*SB*SW2)
 
- amplitudes(48) = (-0.015625D0*CBA*EL2*SA*A0(GaugeXiW*MW2))/(MW2*PI2*SB*SW2)
+ amplitudes(48) = (-0.015625D0*CBA*EL2*SA*A0(MW2))/(MW2*PI2*SB*SW2)
 
- amplitudes(49) = (0.015625D0*CA*EL2*GaugeXiZ*SBA*A0(GaugeXiZ*MZ2))/(CW2*Mh02*PI2*SB*SW2)
+ amplitudes(49) = (0.015625D0*CA*EL2*SBA*A0(MZ2))/(CW2*Mh02*PI2*SB*SW2)
 
- amplitudes(50) = (0.015625D0*CA*EL2*GaugeXiW*SBA*A0(GaugeXiW*MW2))/(Mh02*PI2*SB*SW2)
+ amplitudes(50) = (0.015625D0*CA*EL2*SBA*A0(MW2))/(Mh02*PI2*SB*SW2)
 
- amplitudes(51) = (0.015625D0*CA*EL2*GaugeXiW*SBA*A0(GaugeXiW*MW2))/(Mh02*PI2*SB*SW2)
+ amplitudes(51) = (0.015625D0*CA*EL2*SBA*A0(MW2))/(Mh02*PI2*SB*SW2)
 
- amplitudes(52) = (0.015625D0*CBA*EL2*GaugeXiZ*SA*A0(GaugeXiZ*MZ2))/(CW2*MHH2*PI2*SB*SW2)
+ amplitudes(52) = (0.015625D0*CBA*EL2*SA*A0(MZ2))/(CW2*MHH2*PI2*SB*SW2)
 
- amplitudes(53) = (0.015625D0*CBA*EL2*GaugeXiW*SA*A0(GaugeXiW*MW2))/(MHH2*PI2*SB*SW2)
+ amplitudes(53) = (0.015625D0*CBA*EL2*SA*A0(MW2))/(MHH2*PI2*SB*SW2)
 
- amplitudes(54) = (0.015625D0*CBA*EL2*GaugeXiW*SA*A0(GaugeXiW*MW2))/(MHH2*PI2*SB*SW2)
+ amplitudes(54) = (0.015625D0*CBA*EL2*SA*A0(MW2))/(MHH2*PI2*SB*SW2)
 
- amplitudes(55) = (-0.015625D0*EL2*GaugeXiW*A0(GaugeXiW*MW2)*(DiracGamma(6.D0) - 1.D0*DiracGamma(7.D0)))/(GaugeXiZ*MZ2*PI2*SW2)
+ amplitudes(55) = (-0.015625D0*EL2*A0(MW2)*(DiracGamma(6.D0) - 1.D0*DiracGamma(7.D0)))/(MZ2*PI2*SW2)
 
- amplitudes(56) = (0.015625D0*EL2*GaugeXiW*A0(GaugeXiW*MW2)*(DiracGamma(6.D0) - 1.D0*DiracGamma(7.D0)))/(GaugeXiZ*MZ2*PI2*SW2)
+ amplitudes(56) = (0.015625D0*EL2*A0(MW2)*(DiracGamma(6.D0) - 1.D0*DiracGamma(7.D0)))/(MZ2*PI2*SW2)
 
- amplitudes(57) = (0.015625D0*CA*EL2*SBA*(2.D0*MZ2 - 3.D0*A0(MZ2) - 1.D0*GaugeXiZ*A0(GaugeXiZ*MZ2)))/(CW2*Mh02*PI2*SB*SW2)
+ amplitudes(57) = (0.03125D0*CA*EL2*SBA*(MZ2 - 2.D0*A0(MZ2)))/(CW2*Mh02*PI2*SB*SW2)
 
- amplitudes(58) = (0.03125D0*CA*EL2*SBA*(2.D0*MW2 - 3.D0*A0(MW2) - 1.D0*GaugeXiW*A0(GaugeXiW*MW2)))/(Mh02*PI2*SB*SW2)
+ amplitudes(58) = (0.0625D0*CA*EL2*SBA*(MW2 - 2.D0*A0(MW2)))/(Mh02*PI2*SB*SW2)
 
- amplitudes(59) = (0.015625D0*CBA*EL2*SA*(2.D0*MZ2 - 3.D0*A0(MZ2) - 1.D0*GaugeXiZ*A0(GaugeXiZ*MZ2)))/(CW2*MHH2*PI2*SB*SW2)
+ amplitudes(59) = (0.03125D0*CBA*EL2*SA*(MZ2 - 2.D0*A0(MZ2)))/(CW2*MHH2*PI2*SB*SW2)
 
- amplitudes(60) = (0.03125D0*CBA*EL2*SA*(2.D0*MW2 - 3.D0*A0(MW2) - 1.D0*GaugeXiW*A0(GaugeXiW*MW2)))/(MHH2*PI2*SB*SW2)
+ amplitudes(60) = (0.0625D0*CBA*EL2*SA*(MW2 - 2.D0*A0(MW2)))/(MHH2*PI2*SB*SW2)
 
  amplitudes(61) = 0.D0
 
@@ -203,7 +203,7 @@ double complex function SelfCCScalarAlter(x)
 
  amplitudes(94) = (-0.015625D0*EL2*MC2*B0(x, MA02, MC2))/(MW2*PI2*SW2*TB2)
 
- amplitudes(95) = (-0.015625D0*EL2*MC2*B0(x, MC2, GaugeXiZ*MZ2))/(MW2*PI2*SW2)
+ amplitudes(95) = (-0.015625D0*EL2*MC2*B0(x, MC2, MZ2))/(MW2*PI2*SW2)
 
  amplitudes(96) = (0.03125D0*CKM21*CKMC21*EL2*MD2*Yuk3*B0(x, MD2, MHp2))/(MW2*PI2*SW2*TB)
 
@@ -211,16 +211,15 @@ double complex function SelfCCScalarAlter(x)
 
  amplitudes(98) = (0.03125D0*CKM23*CKMC23*EL2*MB2*Yuk3*B0(x, MB2, MHp2))/(MW2*PI2*SW2*TB)
 
- amplitudes(99) = (-0.03125D0*CKM21*CKMC21*EL2*MD2*B0(x, MD2, GaugeXiW*MW2))/(MW2*PI2*SW2)
+ amplitudes(99) = (-0.03125D0*CKM21*CKMC21*EL2*MD2*B0(x, MD2, MW2))/(MW2*PI2*SW2)
 
- amplitudes(100) = (-0.03125D0*CKM22*CKMC22*EL2*MS2*B0(x, MS2, GaugeXiW*MW2))/(MW2*PI2*SW2)
+ amplitudes(100) = (-0.03125D0*CKM22*CKMC22*EL2*MS2*B0(x, MS2, MW2))/(MW2*PI2*SW2)
 
- amplitudes(101) = (-0.03125D0*CKM23*CKMC23*EL2*MB2*B0(x, MB2, GaugeXiW*MW2))/(MW2*PI2*SW2)
+ amplitudes(101) = (-0.03125D0*CKM23*CKMC23*EL2*MB2*B0(x, MB2, MW2))/(MW2*PI2*SW2)
 
- amplitudes(102) = (-0.027777777777777776D0*EL2*(-2.D0 + (3.D0 + GaugeXiA)*B0(x, 0.D0, MC2)))/PI2
+ amplitudes(102) = (-0.05555555555555555D0*EL2*(-1.D0 + 2.D0*B0(x, 0.D0, MC2)))/PI2
 
- amplitudes(103) = (-0.006944444444444444D0*EL2*(-3.D0 + 4.D0*SW2)*(-2.D0 + 3.D0*B0(x, MC2, MZ2) + GaugeXiZ*B0(x, MC2, GaugeXiZ*M&
-  &Z2)))/(CW2*PI2)
+ amplitudes(103) = (-0.013888888888888888D0*EL2*(-3.D0 + 4.D0*SW2)*(-1.D0 + 2.D0*B0(x, MC2, MZ2)))/(CW2*PI2)
 
  amplitudes(104) = 0.D0
 

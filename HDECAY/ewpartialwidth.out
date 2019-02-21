@@ -49,7 +49,7 @@ BLOCK VCKMIN  # CKM mixing
          9     9.74270000E-01   # V_ud
 #
 #                 PDG
-NLO DECAY WIDTH    25   # h non-zero LO EW decay widths of on-shell and non-loop induced decays
+LO DECAY WIDTH    25   # h non-zero LO EW decay widths of on-shell and non-loop induced decays
                     7   # Renormalization Scheme Number
       -0.18809815E+00   # Corresponding mixing angle alpha
        0.43048897E+01   # Corresponding tan(beta)
@@ -75,7 +75,7 @@ NLO DECAY WIDTH    25   # h non-zero NLO EW decay widths of on-shell and non-loo
      5.11021167E-04    2           4        -4   # GAM(h -> c       cb    )
 #
 #                 PDG
-NLO DECAY WIDTH    25   # H non-zero LO EW decay widths of on-shell and non-loop induced decays
+LO DECAY WIDTH    35   # H non-zero LO EW decay widths of on-shell and non-loop induced decays
                     7   # Renormalization Scheme Number
       -0.18809815E+00   # Corresponding mixing angle alpha
        0.43048897E+01   # Corresponding tan(beta)
@@ -167,11 +167,11 @@ NLO DECAY WIDTH    37   # H+ non-zero NLO EW decay widths of on-shell and non-lo
      1.74960317E-06    2           4        -5   # GAM(H+ -> c       bb     )
      4.32311986E-05    2         -15        16   # GAM(H+ -> tau+    nu_tau )
      1.49365904E-07    2         -13        14   # GAM(H+ -> mu+     nu_mu  )
-     1.03507366E-08    2           2        -5   # GAM(H+ -> u       bb     )
-     1.93672757E-08    2           2        -3   # GAM(H+ -> u       sb     )
-     4.36006286E-06    2           4        -1   # GAM(H+ -> c       db     )
+     1.03506338E-08    2           2        -5   # GAM(H+ -> u       bb     )
+     1.93671125E-08    2           2        -3   # GAM(H+ -> u       sb     )
+     4.36006145E-06    2           4        -1   # GAM(H+ -> c       db     )
      8.18307685E-05    2           4        -3   # GAM(H+ -> c       sb     )
      8.81761847E-01    2           6        -5   # GAM(H+ -> t       bb     )
      1.44227891E-03    2           6        -3   # GAM(H+ -> t       sb     )
-     6.67336850E-05    2           6        -1   # GAM(H+ -> t       db     )
+     6.67336642E-05    2           6        -1   # GAM(H+ -> t       db     )
      2.75853874E-02    2          24        25   # GAM(H+ -> W+      h      )

@@ -32,11 +32,11 @@ double precision function HptoHHWpCT(x)
             & ( (MHp2**2 + MW2**2 + MHH2**2 - 2D0*MHp2*MW2 - 2D0*MHp2*MHH2 - 2D0*MW2*MHH2)/(4D0*MW2) )
     case (7)
         totalAmplitude = ( dgAtMZ()/(EL/SW) + dZHHHHOS()/2D0 + dZHpHpOS()/2D0 + dZWpWpOS()/2D0 - &
-            & CBA/SBA*(dZGpHpOSAlter()/2D0 + dZh0HHOSAlter()/2D0 + dAlphaPinchPStar() - dBeta1PinchOS()) ) * (EL2/SW2)*SBA2 * &
+            & CBA/SBA*(dZGpHpOSAlter()/2D0 + dZh0HHOSAlter()/2D0 + dAlphaPinchOS() - dBeta1PinchOS()) ) * (EL2/SW2)*SBA2 * &
             & ( (MHp2**2 + MW2**2 + MHH2**2 - 2D0*MHp2*MW2 - 2D0*MHp2*MHH2 - 2D0*MW2*MHH2)/(4D0*MW2) )
     case (8)
         totalAmplitude = ( dgAtMZ()/(EL/SW) + dZHHHHOS()/2D0 + dZHpHpOS()/2D0 + dZWpWpOS()/2D0 - &
-            & CBA/SBA*(dZGpHpOSAlter()/2D0 + dZh0HHOSAlter()/2D0 + dAlphaPinchPStar() - dBeta2PinchOS()) ) * (EL2/SW2)*SBA2 * &
+            & CBA/SBA*(dZGpHpOSAlter()/2D0 + dZh0HHOSAlter()/2D0 + dAlphaPinchOS() - dBeta2PinchOS()) ) * (EL2/SW2)*SBA2 * &
             & ( (MHp2**2 + MW2**2 + MHH2**2 - 2D0*MHp2*MW2 - 2D0*MHp2*MHH2 - 2D0*MW2*MHH2)/(4D0*MW2) )
     case (9)
         totalAmplitude = ( dgAtMZ()/(EL/SW) + dZHHHHOS()/2D0 + dZHpHpOS()/2D0 + dZWpWpOS()/2D0 - &

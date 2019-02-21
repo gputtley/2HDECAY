@@ -13,11 +13,11 @@ double complex function SelfDBScalarAlter(x)
 
  amplitudes(3) = (0.03125D0*CKM31*CKMC33*EL2*MT2*Yuk3*B0(x, MHp2, MT2))/(MW2*PI2*SW2*TB)
 
- amplitudes(4) = (-0.03125D0*CKM11*CKMC13*EL2*MU2*B0(x, MU2, GaugeXiW*MW2))/(MW2*PI2*SW2)
+ amplitudes(4) = (-0.03125D0*CKM11*CKMC13*EL2*MU2*B0(x, MU2, MW2))/(MW2*PI2*SW2)
 
- amplitudes(5) = (-0.03125D0*CKM21*CKMC23*EL2*MC2*B0(x, MC2, GaugeXiW*MW2))/(MW2*PI2*SW2)
+ amplitudes(5) = (-0.03125D0*CKM21*CKMC23*EL2*MC2*B0(x, MC2, MW2))/(MW2*PI2*SW2)
 
- amplitudes(6) = (-0.03125D0*CKM31*CKMC33*EL2*MT2*B0(x, MT2, GaugeXiW*MW2))/(MW2*PI2*SW2)
+ amplitudes(6) = (-0.03125D0*CKM31*CKMC33*EL2*MT2*B0(x, MT2, MW2))/(MW2*PI2*SW2)
 
  amplitudes(7) = 0.D0
 

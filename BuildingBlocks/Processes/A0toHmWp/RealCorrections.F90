@@ -8,9 +8,10 @@ double precision function A0toHmWpReal()
  double precision :: p2, p3, E2, E3, m1, m2, m3, kappa, beta1, beta2, beta3
  double precision :: I11, I22, I33, I12, I13, I23
  double precision :: IFin, Id1Fin, Id2Fin, Id3Fin, Iu2d1Fin, Iu3d1Fin, Iu1d2Fin, Iu1d3Fin, Iu2d3Fin, Iu3d2Fin, Iu22d33Fin
+ double precision :: Iu11d22Fin, Osvv11, Osvv12, Osvv22
  double precision :: OLL00, OLL01, OLL02, OLL11, OLL12, OLL22, OLR00, OLR01, OLR02, OLR11, OLR12, OLR22, OLLFull, OLRFull
  double precision :: Ossv00, Ossv01, Ossv11, Ossv02, Ossv12, Ossv22, Ossv03, Ossv13, Ossv23, Ossv33, OssvFull
- double precision :: Qssv0, Qssv1, Qssv2
+ double precision :: Qssv0, Qssv1, Qssv2, Qsvv1, Qsvv2, QsvvFull, Osss11, Osss12, Osss22, OsssFull, Qsss1, Qsss2
 
  m1 = MA0
  m2 = MHp
@@ -55,6 +56,10 @@ double precision function A0toHmWpReal()
      & - kappa/4D0*(m3**2 - 3D0*m2**2 + 5D0*m1**2) )/(4D0*m1**2)
  Iu3d2Fin = ( m3**4*DLOG(beta1) - m1**2*(2D0*m2**2 - 2D0*m3**2 + m1**2)*DLOG(beta3) &
      & - kappa/4D0*(m2**2 - 3D0*m3**2 + 5D0*m1**2) )/(4D0*m1**2)
+ Iu11d22Fin = ( 2D0*m3**2*(m2**2 + m3**2 - m1**2)*DLOG(beta1) &
+     & + kappa**3/(6D0*m2**2) + 2D0*kappa*m3**2 )/(4D0*m1**2)
+ Iu22d33Fin = ( 2D0*m1**2*(m1**2 + m3**2 - m2**2)*DLOG(beta2) &
+     & + kappa**3/(6D0*m3**2) + 2D0*kappa*m1**2 )/(4D0*m1**2)
 
 ! OLR00 = 16D0*I11*m1**2*m2*m3
 ! OLR01 = -16D0*Id1Fin*m2*m3 - 16D0*Id2Fin*m2*m3 + I12*(-16D0*m1**2*m2*m3 - 16D0*m2**3*m3 + 16D0*m2*m3**3)

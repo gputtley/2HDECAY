@@ -16,14 +16,14 @@ double complex function SelfUTRightUsual(x)
  amplitudes(3) = (0.015625D0*CKM33*CKMC13*EL2*(-1.D0*MT*MU*A0(MB2) + MT*MU*A0(MHp2) + MB2*MT*MU*B0(x, MB2, MHp2) - 1.D0*MHp2*MT*M&
   &U*B0(x, MB2, MHp2) + MT*MU*x*B0(x, MB2, MHp2)))/(MW2*PI2*SW2*TB2*x)
 
- amplitudes(4) = (0.015625D0*CKM31*CKMC11*EL2*(-1.D0*MT*MU*A0(MD2) + MT*MU*A0(GaugeXiW*MW2) + MD2*MT*MU*B0(x, MD2, GaugeXiW*MW2) &
-  &- 1.D0*GaugeXiW*MT*MU*MW2*B0(x, MD2, GaugeXiW*MW2) + MT*MU*x*B0(x, MD2, GaugeXiW*MW2)))/(MW2*PI2*SW2*x)
+ amplitudes(4) = (0.015625D0*CKM31*CKMC11*EL2*(-1.D0*MT*MU*A0(MD2) + MT*MU*A0(MW2) + MD2*MT*MU*B0(x, MD2, MW2) - 1.D0*MT*MU*MW2*B&
+  &0(x, MD2, MW2) + MT*MU*x*B0(x, MD2, MW2)))/(MW2*PI2*SW2*x)
 
- amplitudes(5) = (0.015625D0*CKM32*CKMC12*EL2*(-1.D0*MT*MU*A0(MS2) + MT*MU*A0(GaugeXiW*MW2) + MS2*MT*MU*B0(x, MS2, GaugeXiW*MW2) &
-  &- 1.D0*GaugeXiW*MT*MU*MW2*B0(x, MS2, GaugeXiW*MW2) + MT*MU*x*B0(x, MS2, GaugeXiW*MW2)))/(MW2*PI2*SW2*x)
+ amplitudes(5) = (0.015625D0*CKM32*CKMC12*EL2*(-1.D0*MT*MU*A0(MS2) + MT*MU*A0(MW2) + MS2*MT*MU*B0(x, MS2, MW2) - 1.D0*MT*MU*MW2*B&
+  &0(x, MS2, MW2) + MT*MU*x*B0(x, MS2, MW2)))/(MW2*PI2*SW2*x)
 
- amplitudes(6) = (0.015625D0*CKM33*CKMC13*EL2*(-1.D0*MT*MU*A0(MB2) + MT*MU*A0(GaugeXiW*MW2) + MB2*MT*MU*B0(x, MB2, GaugeXiW*MW2) &
-  &- 1.D0*GaugeXiW*MT*MU*MW2*B0(x, MB2, GaugeXiW*MW2) + MT*MU*x*B0(x, MB2, GaugeXiW*MW2)))/(MW2*PI2*SW2*x)
+ amplitudes(6) = (0.015625D0*CKM33*CKMC13*EL2*(-1.D0*MT*MU*A0(MB2) + MT*MU*A0(MW2) + MB2*MT*MU*B0(x, MB2, MW2) - 1.D0*MT*MU*MW2*B&
+  &0(x, MB2, MW2) + MT*MU*x*B0(x, MB2, MW2)))/(MW2*PI2*SW2*x)
 
  amplitudes(7) = 0.D0
 

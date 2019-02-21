@@ -58,21 +58,13 @@ double complex function DSelfGpHp(x)
  amplitudes(20) = (0.015625D0*(MHH2 - 1.D0*MHp2)*SBA*(CBA*EL2*(MHH2 - 2.D0*MHp2)*S2B - 2.D0*EL2*MHH2*SAB + 4.D0*Lambda5*MW2*SAB*S&
   &W2)*DB0(x, MHH2, MHp2))/ (MW2*PI2*S2B*SW2)
 
- amplitudes(21) = (0.015625D0*CBA*EL2*Mh02*(Mh02 - 1.D0*MHp2)*SBA*DB0(x, Mh02, GaugeXiW*MW2))/(MW2*PI2*SW2)
+ amplitudes(21) = (0.015625D0*CBA*EL2*Mh02*(Mh02 - 1.D0*MHp2)*SBA*DB0(x, Mh02, MW2))/(MW2*PI2*SW2)
 
- amplitudes(22) = (-0.015625D0*CBA*EL2*MHH2*(MHH2 - 1.D0*MHp2)*SBA*DB0(x, MHH2, GaugeXiW*MW2))/(MW2*PI2*SW2)
+ amplitudes(22) = (-0.015625D0*CBA*EL2*MHH2*(MHH2 - 1.D0*MHp2)*SBA*DB0(x, MHH2, MW2))/(MW2*PI2*SW2)
 
- amplitudes(23) = (0.015625D0*CBA*EL2*SBA*(-1.D0*A0(MW2) + A0(GaugeXiW*MW2) - 2.D0*Mh02*B0(x, Mh02, MW2) - 2.D0*MW2*B0(x, Mh02, M&
-  &W2) + 2.D0*x*B0(x, Mh02, MW2) + 2.D0*Mh02*B0(x, Mh02, GaugeXiW*MW2) - 2.D0*x*B0(x, Mh02, GaugeXiW*MW2) - 2.D0*Mh02*MW2*DB0(x, &
-  &Mh02, MW2) - 2.D0*Mh02*x*DB0(x, Mh02, MW2) - 2.D0*MW2*x*DB0(x, Mh02, MW2) + 2.D0*Mh02*x*DB0(x, Mh02, GaugeXiW*MW2) + DB0(x, Mh&
-  &02, MW2)*DBLE(Mh0**INT(4.D0)) - 1.D0*DB0(x, Mh02, GaugeXiW*MW2)*DBLE(Mh0**INT(4.D0)) + DB0(x, Mh02, MW2)*DBLE(MW**INT(4.D0)) +&
-  & DB0(x, Mh02, MW2)*DBLE(x**INT(2.D0)) - 1.D0*DB0(x, Mh02, GaugeXiW*MW2)*DBLE(x**INT(2.D0))))/(MW2*PI2*SW2)
+ amplitudes(23) = (0.015625D0*CBA*EL2*SBA*(-2.D0*B0(x, Mh02, MW2) + (-2.D0*Mh02 + MW2 - 2.D0*x)*DB0(x, Mh02, MW2)))/(PI2*SW2)
 
- amplitudes(24) = (0.015625D0*CBA*EL2*SBA*(A0(MW2) - 1.D0*A0(GaugeXiW*MW2) + 2.D0*MHH2*B0(x, MHH2, MW2) + 2.D0*MW2*B0(x, MHH2, MW&
-  &2) - 2.D0*x*B0(x, MHH2, MW2) - 2.D0*MHH2*B0(x, MHH2, GaugeXiW*MW2) + 2.D0*x*B0(x, MHH2, GaugeXiW*MW2) + 2.D0*MHH2*MW2*DB0(x, M&
-  &HH2, MW2) + 2.D0*MHH2*x*DB0(x, MHH2, MW2) + 2.D0*MW2*x*DB0(x, MHH2, MW2) - 2.D0*MHH2*x*DB0(x, MHH2, GaugeXiW*MW2) - 1.D0*DB0(x&
-  &, MHH2, MW2)*DBLE(MHH**INT(4.D0)) + DB0(x, MHH2, GaugeXiW*MW2)*DBLE(MHH**INT(4.D0)) - 1.D0*DB0(x, MHH2, MW2)*DBLE(MW**INT(4.D0&
-  &)) - 1.D0*DB0(x, MHH2, MW2)*DBLE(x**INT(2.D0)) + DB0(x, MHH2, GaugeXiW*MW2)*DBLE(x**INT(2.D0))))/(MW2*PI2*SW2)
+ amplitudes(24) = (-0.015625D0*CBA*EL2*SBA*(-2.D0*B0(x, MHH2, MW2) + (-2.D0*MHH2 + MW2 - 2.D0*x)*DB0(x, MHH2, MW2)))/(PI2*SW2)
 
   totalAmplitude = (0D0,0D0)
  do j=1,24

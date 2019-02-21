@@ -43,21 +43,14 @@ double complex function DSelfG0A0(x)
  amplitudes(17) = (0.015625D0*(MA02 - 1.D0*MHH2)*SBA*(CBA*EL2*(2.D0*MA02 - 1.D0*MHH2)*S2B + 2.D0*SAB*(EL2*MHH2 - 2.D0*Lambda5*MW2&
   &*SW2))*DB0(x, MA02, MHH2))/ (MW2*PI2*S2B*SW2)
 
- amplitudes(18) = (0.015625D0*CBA*EL2*Mh02*(-1.D0*MA02 + Mh02)*SBA*DB0(x, Mh02, GaugeXiZ*MZ2))/(MW2*PI2*SW2)
+ amplitudes(18) = (0.015625D0*CBA*EL2*Mh02*(-1.D0*MA02 + Mh02)*SBA*DB0(x, Mh02, MZ2))/(MW2*PI2*SW2)
 
- amplitudes(19) = (0.015625D0*CBA*EL2*(MA02 - 1.D0*MHH2)*MHH2*SBA*DB0(x, MHH2, GaugeXiZ*MZ2))/(MW2*PI2*SW2)
+ amplitudes(19) = (0.015625D0*CBA*EL2*(MA02 - 1.D0*MHH2)*MHH2*SBA*DB0(x, MHH2, MZ2))/(MW2*PI2*SW2)
 
- amplitudes(20) = (0.015625D0*CBA*EL2*SBA*(-1.D0*A0(MZ2) + A0(GaugeXiZ*MZ2) - 2.D0*Mh02*B0(x, Mh02, MZ2) - 2.D0*MZ2*B0(x, Mh02, M&
-  &Z2) + 2.D0*x*B0(x, Mh02, MZ2) + 2.D0*Mh02*B0(x, Mh02, GaugeXiZ*MZ2) - 2.D0*x*B0(x, Mh02, GaugeXiZ*MZ2) - 2.D0*Mh02*MZ2*DB0(x, &
-  &Mh02, MZ2) - 2.D0*Mh02*x*DB0(x, Mh02, MZ2) - 2.D0*MZ2*x*DB0(x, Mh02, MZ2) + 2.D0*Mh02*x*DB0(x, Mh02, GaugeXiZ*MZ2) + DB0(x, Mh&
-  &02, MZ2)*DBLE(Mh0**INT(4.D0)) - 1.D0*DB0(x, Mh02, GaugeXiZ*MZ2)*DBLE(Mh0**INT(4.D0)) + DB0(x, Mh02, MZ2)*DBLE(MZ**INT(4.D0)) +&
-  & DB0(x, Mh02, MZ2)*DBLE(x**INT(2.D0)) - 1.D0*DB0(x, Mh02, GaugeXiZ*MZ2)*DBLE(x**INT(2.D0))))/(CW2*MZ2*PI2*SW2)
+ amplitudes(20) = (0.015625D0*CBA*EL2*SBA*(-2.D0*B0(x, Mh02, MZ2) + (-2.D0*Mh02 + MZ2 - 2.D0*x)*DB0(x, Mh02, MZ2)))/(CW2*PI2*SW2)
 
- amplitudes(21) = (0.015625D0*CBA*EL2*SBA*(A0(MZ2) - 1.D0*A0(GaugeXiZ*MZ2) + 2.D0*MHH2*B0(x, MHH2, MZ2) + 2.D0*MZ2*B0(x, MHH2, MZ&
-  &2) - 2.D0*x*B0(x, MHH2, MZ2) - 2.D0*MHH2*B0(x, MHH2, GaugeXiZ*MZ2) + 2.D0*x*B0(x, MHH2, GaugeXiZ*MZ2) + 2.D0*MHH2*MZ2*DB0(x, M&
-  &HH2, MZ2) + 2.D0*MHH2*x*DB0(x, MHH2, MZ2) + 2.D0*MZ2*x*DB0(x, MHH2, MZ2) - 2.D0*MHH2*x*DB0(x, MHH2, GaugeXiZ*MZ2) - 1.D0*DB0(x&
-  &, MHH2, MZ2)*DBLE(MHH**INT(4.D0)) + DB0(x, MHH2, GaugeXiZ*MZ2)*DBLE(MHH**INT(4.D0)) - 1.D0*DB0(x, MHH2, MZ2)*DBLE(MZ**INT(4.D0&
-  &)) - 1.D0*DB0(x, MHH2, MZ2)*DBLE(x**INT(2.D0)) + DB0(x, MHH2, GaugeXiZ*MZ2)*DBLE(x**INT(2.D0))))/(CW2*MZ2*PI2*SW2)
+ amplitudes(21) = (-0.015625D0*CBA*EL2*SBA*(-2.D0*B0(x, MHH2, MZ2) + (-2.D0*MHH2 + MZ2 - 2.D0*x)*DB0(x, MHH2, MZ2)))/(CW2*PI2*SW2&
+  &)
 
   totalAmplitude = (0D0,0D0)
  do j=1,21
