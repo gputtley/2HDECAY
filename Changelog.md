@@ -1,4 +1,4 @@
-## [1.1.0] - 2018-10-30
+## [1.1.0] - 2019-02-22
 ### New
 - Implemented the parameter conversion for directly comparing results computed in distinct renormalization schemes.
 - Implemented the scale evolution of ![](https://latex.codecogs.com/gif.latex?%5Coverline%7B%5Ctext%7BMS%7D%7D "\overline{\text{MS}}") input parameters from an input renormalization scale (INSCALE) to the renormalization scale at which the NLO calculations are performed (OUTSCALE).

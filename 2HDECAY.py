@@ -12,7 +12,7 @@
 #               Prof. Dr. M. Margarete Muehlleitner (margarete.muehlleitner@kit.edu)                                                       #
 #               Dr. Michael Spira (michael.spira@psi.ch)                                                                                   #
 #   Version:    1.1.0                                                                                                                      #
-#   Date:       30.10.2018                                                                                                                 #
+#   Date:       22.02.2019                                                                                                                 #
 #   Copyright:  Copyright (C) 2018-2019, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira                                    #
 #   License:    GNU General Public License (GNU GPL-3.0-or-later)                                                                          #
 #                                                                                                                                          #
