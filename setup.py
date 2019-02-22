@@ -802,8 +802,8 @@ def createElectroweakCorrections():
 		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\t! Get the full tree-level decay width\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\ttreeLevelWidth = prefactor*treeLevelTemp\n\n')
 		
-		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\t! Schemes 1 and 2 are without tadpoles\n')
-		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\tif ((m == 1) .OR. (m == 2)) then\n')
+		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\t! Schemes 1, 2 and 16 are without tadpoles\n')
+		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\tif ((m == 1) .OR. (m == 2) .OR. (m == 16)) then\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\t\tfullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\t\t\t\t& 2D0*' + processDescriptionList[x][0] + 'CT(m)\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\t\tcall clearcache\n')
@@ -883,8 +883,8 @@ def createElectroweakCorrections():
 		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\t! Get the full tree-level decay width\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\ttreeLevelWidth = prefactor*treeLevelTemp\n\n')
 		
-		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\t! Schemes 1 and 2 are without tadpoles\n')
-		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\tif ((m == 1) .OR. (m == 2)) then\n')
+		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\t! Schemes 1, 2 and 16 are without tadpoles\n')
+		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\tif ((m == 1) .OR. (m == 2) .OR. (m == 16)) then\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\t\tfullamplitude(m) = treeLevelTemp + 2D0*DBLE(vertexCorrectionsTemp) + &\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\t\t\t\t& 2D0*' + processDescriptionList[x][0] + 'CT(m)\n')
 		electroweakCorrectionsFile.write('\t\t\t\t\t\t\t\t\tcall clearcache\n')
