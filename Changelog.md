@@ -1,3 +1,7 @@
+## [1.1.1] - 2019-04-03
+### Changed
+- Fixed some minor bugs in the rescaling of the Fermi constant for some decays in the HDECAY subroutine (the numerical effect of the bugs on the branching ratios and partial decay widths is negligible).
+
 ## [1.1.0] - 2019-02-22
 ### New
 - Implemented the parameter conversion for directly comparing results computed in distinct renormalization schemes.
