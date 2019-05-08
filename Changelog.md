@@ -1,3 +1,7 @@
+## [1.1.2] - 2019-05-08
+### Changed
+- Removed the gitignore statement for the makefile in the subfolder HDECAY in order to track changes made in this file.
+
 ## [1.1.1] - 2019-04-03
 ### Changed
 - Fixed some minor bugs in the rescaling of the Fermi constant for some decays in the HDECAY subroutine (the numerical effect of the bugs on the branching ratios and partial decay widths is negligible).
