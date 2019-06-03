@@ -1,3 +1,7 @@
+## [1.1.3] - 2019-06-03
+### Changed
+- Fixed a bug which prevented the program to compute the electroweak partial decay widths if RENSCHEM=0 was set.
+
 ## [1.1.2] - 2019-05-08
 ### Changed
 - Removed the gitignore statement for the makefile in the subfolder HDECAY in order to track changes made in this file.

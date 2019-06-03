@@ -730,20 +730,25 @@ c MMM changed 19/1/19
             TGBET2HDMRENL(i) = 0.D0
          enddo
       ENDIF
-      IF(IRENSCHEME.EQ.0) then
-         do i=1,17,1
-            READ(NI,111)tmpm12(i)
-         enddo
-         do i=1,17,1
-            AM12RENL(i)=tmpm12(i)
-         enddo
-      ELSEIF(IRENSCHEME.NE.0) then
-         READ(NI,111)ttmpm12
+      READ(NI,111)ttmpm12
          AM12RENL(1)=ttmpm12
          do i=2,17,1
-            AM12RENL(i) = 0.D0
+            AM12RENL(i) = ttmpm12
          enddo
-      ENDIF      
+c      IF(IRENSCHEME.EQ.0) then
+c         do i=1,17,1
+c            READ(NI,111)tmpm12(i)
+c         enddo
+c         do i=1,17,1
+c            AM12RENL(i)=tmpm12(i)
+c         enddo
+c      ELSEIF(IRENSCHEME.NE.0) then
+c         READ(NI,111)ttmpm12
+c         AM12RENL(1)=ttmpm12
+c         do i=2,17,1
+c            AM12RENL(i) = 0.D0
+c         enddo
+c      ENDIF      
 c      call THDMCP_HDEC(TGBET2HDMRENL(1),ALPH2HDMRENL(1),IRENSCHEME)
 c
 c
@@ -963,20 +968,25 @@ c
             TGBET2HDMRENH(i) = 0.D0
          enddo
       ENDIF
-      IF(IRENSCHEME.EQ.0) then
-         do i=1,17,1
-            READ(NI,111)tmpm12(i)
-         enddo
-         do i=1,17,1
-            AM12RENH(i)=tmpm12(i)
-         enddo
-      ELSEIF(IRENSCHEME.NE.0) then
-         READ(NI,111)ttmpm12
+      READ(NI,111)ttmpm12
          AM12RENH(1)=ttmpm12
          do i=2,17,1
-            AM12RENH(i) = 0.D0
+            AM12RENH(i) = ttmpm12
          enddo
-      ENDIF            
+c      IF(IRENSCHEME.EQ.0) then
+c         do i=1,17,1
+c            READ(NI,111)tmpm12(i)
+c         enddo
+c         do i=1,17,1
+c            AM12RENH(i)=tmpm12(i)
+c         enddo
+c      ELSEIF(IRENSCHEME.NE.0) then
+c         READ(NI,111)ttmpm12
+c         AM12RENH(1)=ttmpm12
+c         do i=2,17,1
+c            AM12RENH(i) = 0.D0
+c         enddo
+c      ENDIF            
 c
       READ(NI,*)
       IF(IRENSCHEME.EQ.0) then
@@ -1200,20 +1210,25 @@ c
             TGBET2HDMRENA(i) = 0.D0
          enddo
       ENDIF
-      IF(IRENSCHEME.EQ.0) then
-         do i=1,17,1
-            READ(NI,111)tmpm12(i)
-         enddo
-         do i=1,17,1
-            AM12RENA(i)=tmpm12(i)
-         enddo
-      ELSEIF(IRENSCHEME.NE.0) then
-         READ(NI,111)ttmpm12
+      READ(NI,111)ttmpm12
          AM12RENA(1)=ttmpm12
          do i=2,17,1
-            AM12RENA(i) = 0.D0
+            AM12RENA(i) = ttmpm12
          enddo
-      ENDIF            
+c      IF(IRENSCHEME.EQ.0) then
+c         do i=1,17,1
+c            READ(NI,111)tmpm12(i)
+c         enddo
+c         do i=1,17,1
+c            AM12RENA(i)=tmpm12(i)
+c         enddo
+c      ELSEIF(IRENSCHEME.NE.0) then
+c         READ(NI,111)ttmpm12
+c         AM12RENA(1)=ttmpm12
+c         do i=2,17,1
+c            AM12RENA(i) = 0.D0
+c         enddo
+c      ENDIF            
 c
       READ(NI,*)
       IF(IRENSCHEME.EQ.0) then
@@ -1376,20 +1391,25 @@ c
             TGBET2HDMRENHP(i) = 0.D0
          enddo
       ENDIF
-      IF(IRENSCHEME.EQ.0) then
-         do i=1,17,1
-            READ(NI,111)tmpm12(i)
-         enddo
-         do i=1,17,1
-            AM12RENHP(i)=tmpm12(i)
-         enddo
-      ELSEIF(IRENSCHEME.NE.0) then
-         READ(NI,111)ttmpm12
+      READ(NI,111)ttmpm12
          AM12RENHP(1)=ttmpm12
          do i=2,17,1
-            AM12RENHP(i) = 0.D0
+            AM12RENHP(i) = ttmpm12
          enddo
-      ENDIF      
+c      IF(IRENSCHEME.EQ.0) then
+c         do i=1,17,1
+c            READ(NI,111)tmpm12(i)
+c         enddo
+c         do i=1,17,1
+c            AM12RENHP(i)=tmpm12(i)
+c         enddo
+c      ELSEIF(IRENSCHEME.NE.0) then
+c         READ(NI,111)ttmpm12
+c         AM12RENHP(1)=ttmpm12
+c         do i=2,17,1
+c            AM12RENHP(i) = 0.D0
+c         enddo
+c      ENDIF      
 c     
       READ(NI,*)
       IF(IRENSCHEME.EQ.0) then
@@ -3272,7 +3292,7 @@ c ----------------------------------- c
 c MMM changed 10/7/18
       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
       write(nout,61) 1,'2HDECAY     # decay calculator'
-      write(nout,61) 2,'1.1.1       # version number'
+      write(nout,61) 2,'1.1.3       # version number'
       endif
 c end MMM changed 10/7/18
 c MMM changed 10/7/18      
@@ -5765,7 +5785,7 @@ c ----------------------------------- c
       write(nou1,105)
       write(nou1,51) 'DCINFO','Decay Program information'
       write(nou1,61) 1,'2HDECAY     # decay calculator'
-      write(nou1,61) 2,'1.1.1       # version number'
+      write(nou1,61) 2,'1.1.3       # version number'
       
 c ----------------------- c
 c The SM input parameters c

@@ -11,8 +11,8 @@
 #   Authors:    Marcel Krause (marcel.krause@kit.edu)                                                                                      #
 #               Prof. Dr. M. Margarete Muehlleitner (margarete.muehlleitner@kit.edu)                                                       #
 #               Dr. Michael Spira (michael.spira@psi.ch)                                                                                   #
-#   Version:    1.1.2                                                                                                                      #
-#   Date:       08.05.2019                                                                                                                 #
+#   Version:    1.1.3                                                                                                                      #
+#   Date:       03.06.2019                                                                                                                 #
 #   Copyright:  Copyright (C) 2018-2019, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira                                    #
 #   License:    GNU General Public License (GNU GPL-3.0-or-later)                                                                          #
 #                                                                                                                                          #
@@ -79,7 +79,7 @@ if __name__ == "__main__":
 	print('''
 +---------------------------------------+
 |                                       |
-|             2HDECAY 1.1.2             |
+|             2HDECAY 1.1.3             |
 |                                       |
 |                             /         |
 |                            /          |
