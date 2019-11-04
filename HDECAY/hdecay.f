@@ -3292,7 +3292,7 @@ c ----------------------------------- c
 c MMM changed 10/7/18
       if(i2hdm.eq.1.and.ielw2hdm.eq.0) then
       write(nout,61) 1,'2HDECAY     # decay calculator'
-      write(nout,61) 2,'1.1.3       # version number'
+      write(nout,61) 2,'1.1.4       # version number'
       endif
 c end MMM changed 10/7/18
 c MMM changed 10/7/18      
@@ -5785,7 +5785,7 @@ c ----------------------------------- c
       write(nou1,105)
       write(nou1,51) 'DCINFO','Decay Program information'
       write(nou1,61) 1,'2HDECAY     # decay calculator'
-      write(nou1,61) 2,'1.1.3       # version number'
+      write(nou1,61) 2,'1.1.4       # version number'
       
 c ----------------------- c
 c The SM input parameters c

@@ -4,17 +4,17 @@ A program for the Calculation of Electroweak One-Loop Corrections to Higgs Decay
 
 ## Program information
 
-**Program** 2HDECAY 1.1.3
+**Program** 2HDECAY 1.1.4
 
-**Date** 03.06.2019
+**Date** 04.11.2019
 
-**Authors** [Marcel Krause](mailto:marcel.krause@kit.edu), [M. Margarete Mühlleitner](mailto:margarete.muehlleitner@kit.edu) and [Michael Spira](mailto:michael.spira@psi.ch)
+**Authors** [Marcel Krause](mailto:marcel.krause@alumni.kit.edu), [M. Margarete Mühlleitner](mailto:margarete.muehlleitner@kit.edu) and [Michael Spira](mailto:michael.spira@psi.ch)
 
-**Manual** https://arxiv.org/abs/1810.00768
+**Manual** [Comp. Phys. Commun. 246 (2020) 106852](https://www.sciencedirect.com/science/article/pii/S0010465519302292), [arXiv:1810.00768 [hep-ph]](https://arxiv.org/abs/1810.00768)
 
 **Citations** When you use this program, please acknowledge the work of our and other groups by citing the following papers:
 - The manual for 2HDECAY:
-  - M. Krause, M. Muhlleitner, M. Spira, arXiv:1810.00768
+  - M. Krause, M. Muhlleitner, M. Spira, Comp. Phys. Commun. 246 (2020) 106852, arXiv:1810.00768 (hep-ph)
 - The manuals for HDECAY:
   - A. Djouadi, J. Kalinowski, M. Spira, Comp. Phys. Commun. 108 (1998) 56, hep-ph/9704448
   - A. Djouadi, J. Kalinowski, M. Muhlleitner, M. Spira, arXiv:1801.09506 (hep-ph)
@@ -33,7 +33,7 @@ A program for the Calculation of Electroweak One-Loop Corrections to Higgs Decay
 
 **License** GNU General Public License (GNU GPL-3.0-or-later). 2HDECAY is released under GNU General Public License (GNU GPL-3.0-or-later). This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You have received a copy ([LICENSE.md](LICENSE.md)) of the GNU General Public License along with this program.
 
-**Contact** For feedback, complaints and bug reports, please send an e-mail to <marcel.krause@kit.edu>, <margarete.muehlleitner@kit.edu> and <michael.spira@psi.ch>.
+**Contact** For feedback, complaints and bug reports, please send an e-mail to <marcel.krause@alumni.kit.edu>, <margarete.muehlleitner@kit.edu> and <michael.spira@psi.ch>.
 
 ## Getting Started
 

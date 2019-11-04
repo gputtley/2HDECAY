@@ -8,11 +8,11 @@
 #                                                                                                                                          #
 #   Purpose:    A program for the calculation One-Loop Electroweak Corrections to Higgs Decays in the                                      #
 #               Two-Higgs-Doublet Model (2HDM) Including State-of-the-Art QCD Corrections                                                  #
-#   Authors:    Marcel Krause (marcel.krause@kit.edu)                                                                                      #
+#   Authors:    Dr. Marcel Krause (marcel.krause@alumni.kit.edu)                                                                           #
 #               Prof. Dr. M. Margarete Muehlleitner (margarete.muehlleitner@kit.edu)                                                       #
 #               Dr. Michael Spira (michael.spira@psi.ch)                                                                                   #
-#   Version:    1.1.3                                                                                                                      #
-#   Date:       03.06.2019                                                                                                                 #
+#   Version:    1.1.4                                                                                                                      #
+#   Date:       04.11.2019                                                                                                                 #
 #   Copyright:  Copyright (C) 2018-2019, Marcel Krause, Milada Margarete Muehlleitner and Michael Spira                                    #
 #   License:    GNU General Public License (GNU GPL-3.0-or-later)                                                                          #
 #                                                                                                                                          #
@@ -31,7 +31,7 @@
 #   Citation:   When you use this program, please acknowledge the work of our and other groups by citing the                               #
 #               following papers:                                                                                                          #
 #                   The manual for 2HDECAY:                                                                                                #
-#                    - M. Krause, M. Muhlleitner, M. Spira, arXiv:1810.00768                                                               #
+#                    - M. Krause, M. Muhlleitner, M. Spira, Comp. Phys. Commun. 246 (2020) 106852, arXiv:1810.00768 (hep-ph)               #
 #                   The manuals for HDECAY:                                                                                                #
 #                    - A. Djouadi, J. Kalinowski, M. Spira, Comp. Phys. Commun. 108 (1998) 56, hep-ph/9704448                              #
 #                    - A. Djouadi, J. Kalinowski, M. Muhlleitner, M. Spira, arXiv:1801.09506 (hep-ph)                                      #
@@ -79,7 +79,7 @@ if __name__ == "__main__":
 	print('''
 +---------------------------------------+
 |                                       |
-|             2HDECAY 1.1.3             |
+|             2HDECAY 1.1.4             |
 |                                       |
 |                             /         |
 |                            /          |
@@ -96,7 +96,7 @@ if __name__ == "__main__":
 
 When you use this program please cite:
 	The manual for 2HDECAY:
-	 - M. Krause, M. Muhlleitner, M. Spira, arXiv:1810.00768
+	 - M. Krause, M. Muhlleitner, M. Spira, Comp. Phys. Commun. 246 (2020) 106852, arXiv:1810.00768 (hep-ph)
 	The manuals for HDECAY:
 	 - A. Djouadi, J. Kalinowski, M. Spira, Comp. Phys. Commun. 108 (1998) 56, hep-ph/9704448
 	 - A. Djouadi, J. Kalinowski, M. Muhlleitner, M. Spira, arXiv:1801.09506 (hep-ph)
@@ -299,7 +299,7 @@ Copyright 2018-2019, Marcel Krause, Milada Margarete Muehlleitner and Michael Sp
 	print('''
 When you use this program please cite:
 	The manual for 2HDECAY:
-	 - M. Krause, M. Muhlleitner, M. Spira, arXiv:1810.00768
+	 - M. Krause, M. Muhlleitner, M. Spira, Comp. Phys. Commun. 246 (2020) 106852, arXiv:1810.00768 (hep-ph)
 	The manuals for HDECAY:
 	 - A. Djouadi, J. Kalinowski, M. Spira, Comp. Phys. Commun. 108 (1998) 56, hep-ph/9704448
 	 - A. Djouadi, J. Kalinowski, M. Muhlleitner, M. Spira, arXiv:1801.09506 (hep-ph)

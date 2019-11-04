@@ -1,3 +1,9 @@
+## [1.1.4] - 2019-11-04
+### Added
+- Added the journal information.
+### Changed
+-  Changed the mail address of one of the authors.
+
 ## [1.1.3] - 2019-06-03
 ### Changed
 - Fixed a bug which prevented the program to compute the electroweak partial decay widths if RENSCHEM=0 was set.
